@@ -1,1 +1,0 @@
-../brackets/code-style-fixer/code-style-fixer.sh
