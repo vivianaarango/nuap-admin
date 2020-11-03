@@ -16943,7 +16943,7 @@ canvas {
 }
 
 .app-footer {
-  display: flex;
+  display: none;
   flex-wrap: wrap;
   align-items: center;
   padding: 0 1rem;
@@ -17411,7 +17411,7 @@ canvas {
   flex-direction: column;
   padding: 0;
   color: #fff;
-  background: #485779;
+  background: #000000;
 }
 
 .sidebar .sidebar-close {
@@ -17546,7 +17546,7 @@ canvas {
 
 .sidebar .nav-link.active {
   color: #fff;
-  background: #4273FA;
+  background: #da6700;
 }
 
 .sidebar .nav-link.active .nav-icon {
@@ -17555,7 +17555,7 @@ canvas {
 
 .sidebar .nav-link:hover {
   color: #fff;
-  background: #4273FA;
+  background: #da6700;
 }
 
 .sidebar .nav-link:hover .nav-icon {

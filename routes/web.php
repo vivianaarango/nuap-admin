@@ -17,6 +17,15 @@ Route::get('/', function () {
     return redirect('/admin');
 });
 
+/* Login */
+Route::post('/admin/user-login', 'Admin\UsersController');
+/* User list */
+Route::get('/admin/user-list', 'Admin\UsersController@list');
+/* View create user */
+Route::get('/admin/user-create', 'Admin\UsersController@create');
+/* Store user */
+Route::post('/admin/user-store', 'Admin\UsersController@store');
+
 /* Auto-generated admin routes */
 Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(function () {
     Route::get('/admin/admin-users',                            'Admin\AdminUsersController@index');
