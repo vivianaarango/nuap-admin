@@ -12,6 +12,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
 /**
@@ -52,7 +53,7 @@ class UsersController extends Controller
         $user = $user[0];
 
         if ($user->role == User::ADMIN_ROLE) {
-            $request->session()->put('user', $user);
+            Session::put('user', $user);
             return redirect('admin/user-wholesaler-list');
         }
 
@@ -65,11 +66,21 @@ class UsersController extends Controller
 
     /**
      * @param Request $request
+     * @return Application|RedirectResponse|Redirector
+     */
+    public function logout(Request $request)
+    {
+        Session::remove('user');
+        return redirect('admin/login');
+    }
+
+    /**
+     * @param Request $request
      * @return array|Factory|Application|RedirectResponse|View
      */
     public function listWholesaler(Request $request)
     {
-        $user = $request->session()->get('user');
+        $user = Session::get('user');
 
         if (isset($user) && $user->role == User::ADMIN_ROLE) {
             /* @noinspection PhpUndefinedMethodInspection  */
@@ -93,23 +104,11 @@ class UsersController extends Controller
 
     /**
      * @param Request $request
-     * @return array
-     */
-    /*public function verifySession(Request $request)
-    {
-        if ($request->ajax()) {
-            dd("etsetst");
-            //return ['redirect' => url('admin/posts'), 'message' => trans('brackets/admin-ui::admin.operation.succeeded')];
-        }
-    }*/
-
-    /**
-     * @param Request $request
      * @return Factory|Application|RedirectResponse|View
      */
     public function create(Request $request)
     {
-        $user = $request->session()->get('user');
+        $user = Session::get('user');
 
         if (isset($user) && $user->role == User::ADMIN_ROLE) {
             return view('admin.users.create', [
@@ -126,7 +125,7 @@ class UsersController extends Controller
      */
     public function store(CreateUsers $request)
     {
-        $user = $request->session()->get('user');
+        $user = Session::get('user');
 
         if (isset($user) && $user->role == User::ADMIN_ROLE) {
             $sanitized = $request->getModifiedData();

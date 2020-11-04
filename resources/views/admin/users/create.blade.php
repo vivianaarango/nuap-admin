@@ -46,17 +46,18 @@
 @endsection
 
 <script>
-    function displayOptions() {
+    function displayOptions()
+    {
         let role = document.getElementById('role')
         let commission = document.getElementById('commission-block');
         let discount = document.getElementById('discount-block');
 
         if (role.value === 'Mayorista') {
-            commission.style.visibility = 'visible';
-            discount.style.visibility = 'visible';
+            commission.style.display = 'flex';
+            discount.style.display = 'flex';
         } else {
-            commission.style.visibility = 'hidden';
-            discount.style.visibility = 'hidden';
+            commission.style.display = 'none';
+            discount.style.display = 'none';
         }
     }
 </script>

@@ -25,6 +25,9 @@ Route::get('/admin/user-wholesaler-list', 'Admin\UsersController@listWholesaler'
 Route::get('/admin/user-create', 'Admin\UsersController@create');
 /* Store user */
 Route::post('/admin/user-store', 'Admin\UsersController@store');
+/* Logout */
+Route::get('/admin/user-logout', 'Admin\UsersController@logout');
+
 
 /* Auto-generated admin routes */
 Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(function () {

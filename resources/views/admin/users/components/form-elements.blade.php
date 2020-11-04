@@ -82,7 +82,7 @@
     </div>
 </div>
 
-<div style="visibility: hidden" id="commission-block" class="form-group row align-items-center" :class="{'has-danger': errors.has('commission'), 'has-success': this.fields.commission && this.fields.commission.valid }">
+<div style="display: none" id="commission-block" class="form-group row align-items-center" :class="{'has-danger': errors.has('commission'), 'has-success': this.fields.commission && this.fields.commission.valid }">
     <label for="commission" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">Comisión</label>
     <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-7'">
         <input type="number" step="0.1" v-model="form.commission" v-validate="''" @input="validate($event)" class="form-control" :class="{'form-control-danger': errors.has('commission'), 'form-control-success': this.fields.commission && this.fields.commission.valid}" id="commission" name="commission" placeholder="Comisión">
@@ -90,7 +90,7 @@
     </div>
 </div>
 
-<div style="visibility: hidden" id="discount-block" class="form-group row align-items-center" :class="{'has-danger': errors.has('discount'), 'has-success': this.fields.discount && this.fields.discount.valid }">
+<div style="display: none" id="discount-block" class="form-group row align-items-center" :class="{'has-danger': errors.has('discount'), 'has-success': this.fields.discount && this.fields.discount.valid }">
     <label for="discount" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">Descuento</label>
     <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-7'">
         <input type="number" step="0.1" v-model="form.discount" v-validate="''" @input="validate($event)" class="form-control" :class="{'form-control-danger': errors.has('discount'), 'form-control-success': this.fields.discount && this.fields.discount.valid}" id="discount" name="discount" placeholder="Descuento">
