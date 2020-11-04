@@ -2,21 +2,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\AdminUser\StoreAdminUser;
 use App\Http\Requests\Admin\Users\CreateUsers;
 use App\Http\Requests\Admin\Users\LoginUsers;
-use App\Models\Article;
 use App\Models\User;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
-use Brackets\AdminAuth\Models\AdminUser;
 use Brackets\AdminListing\Facades\AdminListing;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
-use Illuminate\Support\Collection;
 use Illuminate\View\View;
 
 /**
@@ -58,7 +53,7 @@ class UsersController extends Controller
 
         if ($user->role == User::ADMIN_ROLE) {
             $request->session()->put('user', $user);
-            return redirect('admin/user-list');
+            return redirect('admin/user-wholesaler-list');
         }
 
         if ($user->role == User::WHOLESALER_ROLE) {
@@ -66,23 +61,27 @@ class UsersController extends Controller
         }
 
         return redirect()->back();
-
     }
 
     /**
      * @param Request $request
      * @return array|Factory|Application|RedirectResponse|View
      */
-    public function list(Request $request)
+    public function listWholesaler(Request $request)
     {
         $user = $request->session()->get('user');
-        $data = AdminListing::create(User::class)->processRequestAndGet(
-            $request,
-            ['id', 'name', 'lastname', 'email', 'phone', 'role', 'status', 'last_logged_in'],
-            ['id', 'role', 'last_logged_in']
-        );
 
         if (isset($user) && $user->role == User::ADMIN_ROLE) {
+            /* @noinspection PhpUndefinedMethodInspection  */
+            $data = AdminListing::create(User::class)
+                ->modifyQuery(function($query) {
+                    $query->where('role', User::WHOLESALER_ROLE);
+                })->processRequestAndGet(
+                    $request,
+                    ['id', 'name', 'lastname', 'email', 'phone', 'commission', 'discount', 'status', 'last_logged_in'],
+                    ['id', 'last_logged_in']
+                );
+
             return view('admin.users.index', [
                 'data' => $data,
                 'activation' => $user->role
@@ -135,9 +134,12 @@ class UsersController extends Controller
         }
 
         if ($request->ajax()) {
-            return ['redirect' => url('admin/user-list'), 'message' => trans('brackets/admin-ui::admin.operation.succeeded')];
+            return [
+                'redirect' => url('admin/user-wholesaler-list'),
+                'message' => trans('brackets/admin-ui::admin.operation.succeeded')
+            ];
         }
 
-        return redirect('admin/user-list');
+        return redirect('admin/user-wholesaler-list');
     }
 }

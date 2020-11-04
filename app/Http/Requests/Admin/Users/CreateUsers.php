@@ -2,7 +2,6 @@
 namespace App\Http\Requests\Admin\Users;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 /**
  * Class CreateUsers
@@ -15,7 +14,7 @@ class CreateUsers extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => ['required', 'string'],
@@ -26,6 +25,8 @@ class CreateUsers extends FormRequest
             'identity_number' => ['required', 'string'],
             'role' => ['required', 'string'],
             'phone' => ['required', 'string'],
+            'commission' => ['numeric', 'min:0.0','max:100.00'],
+            'discount' => ['numeric', 'min:0.0','max:100.00'],
         ];
     }
 
@@ -34,7 +35,7 @@ class CreateUsers extends FormRequest
      *
      * @return array
      */
-    public function getModifiedData()
+    public function getModifiedData(): array
     {
         $data = $this->only(collect($this->rules())->keys()->all());
 

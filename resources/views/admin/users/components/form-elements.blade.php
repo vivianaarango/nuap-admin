@@ -72,7 +72,7 @@
 <div class="form-group row align-items-center" :class="{'has-danger': errors.has('role'), 'has-success': this.fields.role && this.fields.role.valid }">
     <label for="role" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">Tipo de usuario</label>
     <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-7'">
-        <select v-model="form.role" @input="validate($event)" class="form-control" name="role">
+        <select v-model="form.role" @input="validate($event)" onchange="displayOptions()" class="form-control" id="role" name="role">
             <option value="Administrador">Administrador</option>
             <option value="Mayorista">Mayorista</option>
             <option value="Comercio">Comercio</option>
@@ -82,3 +82,18 @@
     </div>
 </div>
 
+<div style="visibility: hidden" id="commission-block" class="form-group row align-items-center" :class="{'has-danger': errors.has('commission'), 'has-success': this.fields.commission && this.fields.commission.valid }">
+    <label for="commission" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">Comisión</label>
+    <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-7'">
+        <input type="number" step="0.1" v-model="form.commission" v-validate="''" @input="validate($event)" class="form-control" :class="{'form-control-danger': errors.has('commission'), 'form-control-success': this.fields.commission && this.fields.commission.valid}" id="commission" name="commission" placeholder="Comisión">
+        <div v-if="errors.has('commission')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('commission') }}</div>
+    </div>
+</div>
+
+<div style="visibility: hidden" id="discount-block" class="form-group row align-items-center" :class="{'has-danger': errors.has('discount'), 'has-success': this.fields.discount && this.fields.discount.valid }">
+    <label for="discount" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">Descuento</label>
+    <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-7'">
+        <input type="number" step="0.1" v-model="form.discount" v-validate="''" @input="validate($event)" class="form-control" :class="{'form-control-danger': errors.has('discount'), 'form-control-success': this.fields.discount && this.fields.discount.valid}" id="discount" name="discount" placeholder="Descuento">
+        <div v-if="errors.has('discount')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('discount') }}</div>
+    </div>
+</div>

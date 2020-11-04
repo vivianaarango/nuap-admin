@@ -14,11 +14,14 @@ use Illuminate\Database\Eloquent\Model;
  * @property string email
  * @property string password
  * @property string role
+ * @property float discount
+ * @property float commission
  * @property string last_logged_in
  * @property boolean status
  * @property mixed first
  * @package App\Models
  * @method static where(string $string, string $email)
+ * @method static create(array $sanitized)
  */
 class User extends Model
 {
@@ -50,28 +53,37 @@ class User extends Model
     /**
      * @var string
      */
-    protected $table = "users";
+    protected $table = 'users';
 
+    /**
+     * @var string[]
+     */
     protected $fillable = [
-        "name",
-        "lastname",
-        "identity_type",
-        "identity_number",
-        "phone",
-        "email",
-        "password",
-        "status",
-        "role",
-        "last_logged_in",
+        'name',
+        'lastname',
+        'identity_type',
+        'identity_number',
+        'phone',
+        'email',
+        'password',
+        'status',
+        'role',
+        'discount',
+        'commission',
+        'last_logged_in',
     ];
 
-    protected $hidden = [
+    /**
+     * @var array
+     */
+    protected $hidden = [];
 
-    ];
-
+    /**
+     * @var string[]
+     */
     protected $dates = [
-        "last_logged_in",
-        "created_at",
-        "updated_at",
+        'last_logged_in',
+        'created_at',
+        'updated_at',
     ];
 }

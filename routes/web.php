@@ -20,7 +20,7 @@ Route::get('/', function () {
 /* Login */
 Route::post('/admin/user-login', 'Admin\UsersController');
 /* User list */
-Route::get('/admin/user-list', 'Admin\UsersController@list');
+Route::get('/admin/user-wholesaler-list', 'Admin\UsersController@listWholesaler');
 /* View create user */
 Route::get('/admin/user-create', 'Admin\UsersController@create');
 /* Store user */

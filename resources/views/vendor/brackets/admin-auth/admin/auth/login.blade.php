@@ -72,19 +72,11 @@
 
 <script>
     window.onload = function() {
-        console.log("asfafa")
+        let session = sessionStorage.getItem('active')
+        let getUrl = window.location;
+        let baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+        if (session === 'true') {
+            location.href=baseUrl+"/user-wholesaler-list";
+        }
     };
-
-    $(document).ready(function() {
-        console.log("sikdsldkgnsdlgns")
-       /* $.ajax({
-            url: 'https://reqres.in/api/users',
-            success: function(respuesta) {
-                console.log("l dsngvsodgvnasvfn sav malsvm al")
-            },
-            error: function() {
-                console.log("No se ha podido obtener la información");
-            }
-        });*/
-    });
 </script>

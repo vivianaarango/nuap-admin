@@ -5,9 +5,11 @@ Vue.component('admin-user-form', {
     data: function() {
         return {
             form: {
-                first_name:  '' ,
-                last_name:  '' ,
+                name:  '' ,
+                lastname:  '' ,
                 email:  '' ,
+                discount:  0.0 ,
+                commission:  0.0 ,
                 password:  '' ,
                 activated:  false ,
                 forbidden:  false ,

@@ -12,6 +12,8 @@ use Illuminate\Support\Collection;
 class DbUsersRepository implements DbUsersRepositoryInterface
 {
     /**
+     * Login to users type admin or wholesaler
+     *
      * @param string $email
      * @param string $password
      * @return Collection
@@ -21,13 +23,14 @@ class DbUsersRepository implements DbUsersRepositoryInterface
         return User::where('email', $email)
             ->where('password', $password)
             ->where('status', User::STATUS_ACTIVE)
+            ->whereIn('role', [User::ADMIN_ROLE, User::WHOLESALER_ROLE])
             ->get();
     }
 
     /**
-     * @return Collection
+     * @return User[]
      */
-    public function getUsers(): Collection
+    public function getUsers(): iterable
     {
         return User::all();
     }

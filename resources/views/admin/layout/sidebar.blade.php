@@ -2,9 +2,9 @@
     @if($activation =='Administrador')
         <nav class="sidebar-nav">
             <ul class="nav">
-                <!--<li class="nav-title">{{ trans('brackets/admin-ui::admin.sidebar.content') }}</li>-->
-                <li class="nav-item"><a class="nav-link" href="{{ url('admin/user-list') }}"><i class="nav-icon icon-user"></i>#1: Usuarios</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ url('admin/articles') }}"><i class="nav-icon icon-plane"></i>#1: Standard</a></li>
+                <li class="nav-title">Usuarios</li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('admin/user-create') }}"><i class="nav-icon icon-plus"></i>Nuevo Usuario</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('admin/user-wholesaler-list') }}"><i class="nav-icon icon-user"></i>Mayoristas</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/posts') }}"><i class="nav-icon icon-globe"></i> #2: With media</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/translatable-articles') }}"><i class="nav-icon icon-ghost"></i> #3: Translatable</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/exports') }}"><i class="nav-icon icon-drop"></i> #4: With export</a></li>

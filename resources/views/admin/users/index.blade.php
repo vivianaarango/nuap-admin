@@ -8,14 +8,14 @@
     <admin-user-listing
         :data="{{ $data->toJson() }}"
         :activation="!!'{{ $activation }}'"
-        :url="'{{ url('admin/user-list') }}'"
+        :url="'{{ url('admin/user-wholesaler-list') }}'"
         inline-template>
 
         <div class="row">
             <div class="col">
                 <div class="card">
                     <div class="card-header">
-                        <i class="fa fa-align-justify"></i> {{ trans('admin.admin-user.actions.index') }}
+                        <i class="fa fa-align-justify"></i>  Mayoristas
                         <a class="btn btn-primary btn-spinner btn-sm pull-right m-b-0" href="{{ url('admin/user-create') }}" role="button"><i class="fa fa-plus"></i>&nbsp; Nuevo usuario</a>
                     </div>
                     <div class="card-body" v-cloak>
@@ -49,10 +49,10 @@
                                     <th is='sortable' :column="'last_name'">Apellido</th>
                                     <th is='sortable' :column="'email'">Correo electrónico</th>
                                     <th is='sortable' :column="'phone'">Teléfono</th>
-                                    <th is='sortable' :column="'role'">Role</th>
+                                    <th is='sortable' :column="'commission'">Comisión</th>
+                                    <th is='sortable' :column="'discount'">Descuento</th>
                                     <th is='sortable' :column="'activated'">Activo</th>
                                     <th is='sortable' :column="'last_logged_id'">Última sesión</th>
-
                                     <th></th>
                                 </tr>
                             </thead>
@@ -63,7 +63,8 @@
                                     <td >@{{ item.lastname }}</td>
                                     <td >@{{ item.email }}</td>
                                     <td >@{{ item.phone }}</td>
-                                    <td >@{{ item.role }}</td>
+                                    <td >@{{ item.commission }}</td>
+                                    <td >@{{ item.discount }}</td>
                                     <td v-if="item.status === true">
                                         <label class="switch switch-3d switch-success">
                                             <input type="checkbox" class="switch-input" v-model="collection[index].activated" @change="toggleSwitch(item.resource_url, 'activated', collection[index])">
@@ -79,9 +80,9 @@
                                     <td >@{{ item.last_logged_in }}</td>
                                     <td>
                                         <div class="row no-gutters">
-                                            <div class="col-auto">
+                                            <!--<div class="col-auto">
                                                 <button class="btn btn-sm btn-warning" v-show="!item.activated" @click="resendActivation(item.resource_url + '/resend-activation')" title="Resend activation" role="button"><i class="fa fa-envelope-o"></i></button>
-                                            </div>
+                                            </div>-->
                                             <div class="col-auto">
                                                 <a class="btn btn-sm btn-spinner btn-info" :href="item.resource_url + '/edit'" title="{{ trans('brackets/admin-ui::admin.btn.edit') }}" role="button"><i class="fa fa-edit"></i></a>
                                             </div>
@@ -107,7 +108,7 @@
 		                    <i class="icon-magnifier"></i>
                             <h3>{{ trans('brackets/admin-ui::admin.index.no_items') }}</h3>
                             <p>{{ trans('brackets/admin-ui::admin.index.try_changing_items') }}</p>
-                            <a class="btn btn-primary btn-spinner" href="{{ url('admin/user-list') }}" role="button"><i class="fa fa-plus"></i>&nbsp; {{ trans('brackets/admin-ui::admin.btn.new') }} AdminUser</a>
+                            <a class="btn btn-primary btn-spinner" href="{{ url('admin/user-wholesaler-list') }}" role="button"><i class="fa fa-plus"></i>&nbsp; {{ trans('brackets/admin-ui::admin.btn.new') }} AdminUser</a>
 	                    </div>
                     </div>
                 </div>
@@ -116,3 +117,12 @@
     </admin-user-listing>
 
 @endsection
+
+<script>
+    window.onload = function() {
+        let session = sessionStorage.getItem('active')
+        if (session === null) {
+            sessionStorage.setItem('active', 'true');
+        }
+    }
+</script>
