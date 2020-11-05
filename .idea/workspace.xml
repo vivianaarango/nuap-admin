@@ -5,11 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d6cb72cc-2713-41b0-95f6-aeada7aa8696" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Nuapp Admin.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Nuapp Admin.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/ProfileController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/ProfileController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/UsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/UsersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/Users/CreateUsers.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Admin/Users/CreateUsers.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/Contracts/DbUsersRepositoryInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/Contracts/DbUsersRepositoryInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/DbUsersRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/DbUsersRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/cache/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/cache/config.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/cache/packages.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/cache/services.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/auth.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/layout/profile-dropdown.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/layout/profile-dropdown.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/profile/edit-password.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/profile/edit-password.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/profile/edit-profile.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/profile/edit-profile.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/users/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/users/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/vendor/brackets/admin-auth/admin/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/vendor/brackets/admin-auth/admin/auth/login.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -171,7 +182,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../merqueo-dashboard" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../merqueo-producto-api" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -180,6 +191,11 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources/views/admin/users" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
@@ -197,6 +213,7 @@
       <updated>1604347154945</updated>
       <workItem from="1604347158457" duration="25564000" />
       <workItem from="1604413073649" duration="1045000" />
+      <workItem from="1604587484401" duration="596000" />
     </task>
     <servers />
   </component>
@@ -204,34 +221,38 @@
     <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="585" y="209" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1604371736080">
-      <screen x="0" y="27" width="1920" height="1053" />
+    <state x="416" y="155" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1604541062741">
+      <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state x="416" y="155" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.27.1366.741@0.27.1366.741" timestamp="1604351884469" />
+    <state x="416" y="155" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.27.1366.741@0.27.1366.741" timestamp="1604541062741" />
     <state x="585" y="209" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1604371736080" />
-    <state x="655" y="209" width="424" height="491" key="FileChooserDialogImpl" timestamp="1604414120040">
-      <screen x="0" y="27" width="1920" height="1053" />
+    <state x="466" y="155" width="424" height="491" key="FileChooserDialogImpl" timestamp="1604548014586">
+      <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state x="466" y="155" width="424" height="491" key="FileChooserDialogImpl/0.27.1366.741@0.27.1366.741" timestamp="1604349084799" />
+    <state x="466" y="155" width="424" height="491" key="FileChooserDialogImpl/0.27.1366.741@0.27.1366.741" timestamp="1604548014586" />
     <state x="655" y="209" width="424" height="491" key="FileChooserDialogImpl/0.27.1920.1053@0.27.1920.1053" timestamp="1604414120040" />
-    <state x="672" y="442" width="399" height="164" key="NewPhpFileDialog" timestamp="1604371559134">
-      <screen x="0" y="27" width="1920" height="1053" />
+    <state x="478" y="319" width="399" height="164" key="NewPhpFileDialog" timestamp="1604533251468">
+      <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state x="478" y="319" width="399" height="164" key="NewPhpFileDialog/0.27.1366.741@0.27.1366.741" timestamp="1604350045294" />
+    <state x="478" y="319" width="399" height="164" key="NewPhpFileDialog/0.27.1366.741@0.27.1366.741" timestamp="1604533251468" />
     <state x="672" y="442" key="NewPhpFileDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1604371559134" />
+    <state x="100" y="127" width="1166" height="541" key="com.intellij.history.integration.ui.views.SelectionHistoryDialog" timestamp="1604549068037">
+      <screen x="0" y="27" width="1366" height="741" />
+    </state>
+    <state x="100" y="127" width="1166" height="541" key="com.intellij.history.integration.ui.views.SelectionHistoryDialog/0.27.1366.741@0.27.1366.741" timestamp="1604549068037" />
     <state x="632" y="170" width="683" height="772" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1604361252895">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="632" y="170" width="683" height="772" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.27.1920.1053@0.27.1920.1053" timestamp="1604361252895" />
-    <state x="527" y="159" width="903" height="788" key="find.popup" timestamp="1604369269825">
-      <screen x="0" y="27" width="1920" height="1053" />
+    <state x="375" y="120" width="679" height="554" key="find.popup" timestamp="1604546524795">
+      <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state x="375" y="120" width="642" height="554" key="find.popup/0.27.1366.741@0.27.1366.741" timestamp="1604353075330" />
+    <state x="375" y="120" width="679" height="554" key="find.popup/0.27.1366.741@0.27.1366.741" timestamp="1604546524795" />
     <state x="527" y="159" width="903" height="788" key="find.popup/0.27.1920.1053@0.27.1920.1053" timestamp="1604369269825" />
-    <state x="486" y="115" width="945" height="964" key="search.everywhere.popup" timestamp="1604372605434">
-      <screen x="0" y="27" width="1920" height="1053" />
+    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1604548572591">
+      <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup/0.27.1366.741@0.27.1366.741" timestamp="1604351740973" />
+    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup/0.27.1366.741@0.27.1366.741" timestamp="1604548572591" />
     <state x="486" y="115" width="945" height="964" key="search.everywhere.popup/0.27.1920.1053@0.27.1920.1053" timestamp="1604372605434" />
   </component>
   <component name="XDebuggerManager">

@@ -6,11 +6,9 @@ use App\Http\Requests\Admin\Users\CreateUsers;
 use App\Http\Requests\Admin\Users\LoginUsers;
 use App\Models\User;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
-use Brackets\AdminListing\Facades\AdminListing;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
@@ -65,48 +63,30 @@ class UsersController extends Controller
     }
 
     /**
-     * @param Request $request
      * @return Application|RedirectResponse|Redirector
      */
-    public function logout(Request $request)
-    {
-        Session::remove('user');
-        return redirect('admin/login');
-    }
-
-    /**
-     * @param Request $request
-     * @return array|Factory|Application|RedirectResponse|View
-     */
-    public function listWholesaler(Request $request)
-    {
+    public function validateSession(){
         $user = Session::get('user');
-
-        if (isset($user) && $user->role == User::ADMIN_ROLE) {
-            /* @noinspection PhpUndefinedMethodInspection  */
-            $data = AdminListing::create(User::class)
-                ->modifyQuery(function($query) {
-                    $query->where('role', User::WHOLESALER_ROLE);
-                })->processRequestAndGet(
-                    $request,
-                    ['id', 'name', 'lastname', 'email', 'phone', 'commission', 'discount', 'status', 'last_logged_in'],
-                    ['id', 'last_logged_in']
-                );
-
-            return view('admin.users.index', [
-                'data' => $data,
-                'activation' => $user->role
-            ]);
+        if (!is_null($user)) {
+            return redirect('admin/user-wholesaler-list');
         } else {
-            return redirect()->back();
+            return redirect('admin/login');
         }
     }
 
     /**
-     * @param Request $request
+     * @return Application|RedirectResponse|Redirector
+     */
+    public function logout()
+    {
+        Session::remove('user');
+        return redirect('/admin/user-session');
+    }
+
+    /**
      * @return Factory|Application|RedirectResponse|View
      */
-    public function create(Request $request)
+    public function create()
     {
         $user = Session::get('user');
 
@@ -115,7 +95,7 @@ class UsersController extends Controller
                 'activation' => $user->role
             ]);
         } else {
-            return redirect()->back();
+            return redirect('/admin/user-session');
         }
     }
 

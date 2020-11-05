@@ -1,116 +1,112 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\Contracts\DbUsersRepositoryInterface;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\ValidationException;
+use Illuminate\View\View;
 
+/**
+ * Class ProfileController
+ * @package App\Http\Controllers\Admin
+ */
 class ProfileController extends Controller
 {
-    public $adminUser;
+    /**
+     * @var DbUsersRepositoryInterface
+     */
+    private $dbUserRepository;
 
     /**
-     * Guard used for admin user
-     *
-     * @var string
+     * ProfileController constructor.
+     * @param DbUsersRepositoryInterface $dbUserRepository
      */
-    protected $guard = 'admin';
-
-    public function __construct()
-    {
-        // TODO add authorization
-        $this->guard = config('admin-auth.defaults.guard');
+    public function __construct(
+        DbUsersRepositoryInterface $dbUserRepository
+    ) {
+        $this->dbUserRepository = $dbUserRepository;
     }
 
     /**
-     * Get logged user before each method
-     *
-     * @param Request $request
+     * @return Factory|Application|View
      */
-    protected function setUser($request)
+    public function edit()
     {
-        if (empty($request->user($this->guard))) {
-            abort(404, 'Admin User not found');
+        $user = Session::get('user');
+        if (!is_null($user)) {
+            return view('admin.profile.edit-profile', [
+                'user' => $user,
+                'activation' => $user->role
+            ]);
+        } else {
+            return redirect('admin/login');
         }
-
-        $this->adminUser = $request->user($this->guard);
     }
 
     /**
-     * Show the form for editing logged user profile.
-     *
      * @param Request $request
-     * @return \Illuminate\Http\Response
+     * @return array|Application|RedirectResponse|Response|Redirector
+     * @throws ValidationException
      */
-    public function editProfile(Request $request)
+    public function update(Request $request)
     {
-        $this->setUser($request);
-
-        return view('admin.profile.edit-profile', [
-            'adminUser' => $this->adminUser,
-        ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response|array
-     */
-    public function updateProfile(Request $request)
-    {
-        $this->setUser($request);
-        $adminUser = $this->adminUser;
-
-        // Validate the request
         $this->validate($request, [
-            'first_name' => ['nullable', 'string'],
-            'last_name' => ['nullable', 'string'],
-            'language' => ['sometimes', 'string'],
-
+            'name' => ['nullable', 'string'],
+            'lastname' => ['nullable', 'string'],
+            'email' => ['nullable', 'string', 'email'],
+            'phone' => ['nullable', 'string']
         ]);
 
-        // Sanitize input
-        $sanitized = $request->only([
-            'first_name',
-            'last_name',
-            'language',
+        $user = $this->dbUserRepository->updateUser(
+            $request['id'],
+            $request['name'],
+            $request['lastname'],
+            $request['phone'],
+            $request['email']
+        );
 
-        ]);
-
-        // Update changed values AdminUser
-        $this->adminUser->update($sanitized);
+        Session::put('user', $user);
 
         if ($request->ajax()) {
-            return ['redirect' => url('admin/profile'), 'message' => trans('brackets/admin-ui::admin.operation.succeeded')];
+            return [
+                'redirect' => url('admin/edit-profile'),
+                'message' => 'njcnjdncjdcndjcnjdcnjdncdjcnd'
+            ];
         }
 
-        return redirect('admin/profile');
+        return redirect('admin/edit-profle');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param Request $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function editPassword(Request $request)
+    /*public function editPassword(Request $request)
     {
         $this->setUser($request);
 
         return view('admin.profile.edit-password', [
             'adminUser' => $this->adminUser,
         ]);
-    }
+    }*/
 
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response|array
+     * @param Request $request
+     * @return Response|array
      */
-    public function updatePassword(Request $request)
+    /*public function updatePassword(Request $request)
     {
         $this->setUser($request);
 
@@ -119,5 +115,5 @@ class ProfileController extends Controller
         }
 
         return redirect('admin/password');
-    }
+    }*/
 }

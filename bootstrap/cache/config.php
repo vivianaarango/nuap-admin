@@ -25,16 +25,16 @@
   array (
     'defaults' => 
     array (
-      'guard' => 'Administrador',
+      'guard' => 'admin',
       'passwords' => 'admin_users',
       'activations' => 'admin_users',
     ),
     'check_forbidden' => false,
     'activation_enabled' => false,
     'login_redirect' => '/admin',
-    'logout_redirect' => '/admin/login',
-    'password_reset_redirect' => '/admin/login',
-    'activation_redirect' => '/admin/login',
+    'logout_redirect' => '/admin/user-login',
+    'password_reset_redirect' => '/admin/user-login',
+    'activation_redirect' => '/admin/user-login',
     'self_activation_form_enabled' => true,
     'use_routes' => true,
   ),
@@ -144,7 +144,7 @@
     ),
     'guards' => 
     array (
-      'Administrador' => 
+      'admin' => 
       array (
         'driver' => 'session',
         'provider' => 'admin_users',
@@ -302,12 +302,12 @@
       'pusher' => 
       array (
         'driver' => 'pusher',
-        'key' => '',
-        'secret' => '',
-        'app_id' => '',
+        'key' => NULL,
+        'secret' => NULL,
+        'app_id' => NULL,
         'options' => 
         array (
-          'cluster' => 'mt1',
+          'cluster' => NULL,
           'encrypted' => true,
         ),
       ),

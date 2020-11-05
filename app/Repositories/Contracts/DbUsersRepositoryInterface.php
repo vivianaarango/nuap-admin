@@ -18,7 +18,24 @@ interface DbUsersRepositoryInterface
     public function findUserByEmailAndPassword(string $email, string $password): Collection;
 
     /**
-     * @return User[]
+     * @param int $userID
+     * @param string $name
+     * @param string $lastname
+     * @param string $phone
+     * @param string $email
+     * @return User
      */
-    public function getUsers(): iterable;
+    public function updateUser(
+        int $userID,
+        string $name,
+        string $lastname,
+        string $phone,
+        string $email
+    ): User;
+
+    /**
+     * @param int $userID
+     * @return User
+     */
+    public function findByID(int $userID): User;
 }

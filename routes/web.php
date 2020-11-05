@@ -14,19 +14,30 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return redirect('/admin');
+    return redirect('/admin/user-session');
 });
 
+### Users
 /* Login */
 Route::post('/admin/user-login', 'Admin\UsersController');
-/* User list */
-Route::get('/admin/user-wholesaler-list', 'Admin\UsersController@listWholesaler');
-/* View create user */
+/* View create */
 Route::get('/admin/user-create', 'Admin\UsersController@create');
-/* Store user */
+/* Store */
 Route::post('/admin/user-store', 'Admin\UsersController@store');
 /* Logout */
 Route::get('/admin/user-logout', 'Admin\UsersController@logout');
+/* Validate session */
+Route::get('/admin/user-session', 'Admin\UsersController@validateSession');
+
+### Profile
+/* Edit */
+Route::get('/admin/edit-profile', 'Admin\ProfileController@edit');
+/* Update */
+Route::post('/admin/update-profile', 'Admin\ProfileController@update');
+
+### Wholesaler
+/* List */
+Route::get('/admin/user-wholesaler-list', 'Admin\WholesalerController@list');
 
 
 /* Auto-generated admin routes */

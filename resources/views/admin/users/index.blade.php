@@ -120,9 +120,9 @@
 
 <script>
     window.onload = function() {
-        let session = sessionStorage.getItem('active')
+        /*let session = sessionStorage.getItem('active')
         if (session === null) {
             sessionStorage.setItem('active', 'true');
-        }
+        }*/
     }
 </script>

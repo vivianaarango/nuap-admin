@@ -36,7 +36,7 @@ return [
     */
 
     'guards' => [
-        'Administrador' => [
+        'admin' => [
             'driver' => 'session',
             'provider' => 'admin_users',
         ],

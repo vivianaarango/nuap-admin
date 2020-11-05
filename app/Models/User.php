@@ -1,7 +1,15 @@
 <?php
 namespace App\Models;
 
+use Brackets\Media\Exceptions\Collections\MediaCollectionAlreadyDefined;
+use Brackets\Media\HasMedia\HasMediaCollections;
+use Brackets\Media\HasMedia\HasMediaCollectionsTrait;
+use Brackets\Media\HasMedia\HasMediaThumbsTrait;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Image\Exceptions\InvalidManipulation;
+use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
+use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
+use Spatie\MediaLibrary\Media;
 
 /**
  * Class User
@@ -13,6 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string phone
  * @property string email
  * @property string password
+ * @property string image_url
  * @property string role
  * @property float discount
  * @property float commission
@@ -23,8 +32,11 @@ use Illuminate\Database\Eloquent\Model;
  * @method static where(string $string, string $email)
  * @method static create(array $sanitized)
  */
-class User extends Model
+class User extends Model implements HasMediaCollections, HasMediaConversions
 {
+    use HasMediaCollectionsTrait;
+    use HasMediaThumbsTrait;
+
     /**
      * @var boolean
      */
@@ -66,6 +78,7 @@ class User extends Model
         'phone',
         'email',
         'password',
+        'image_url',
         'status',
         'role',
         'discount',
@@ -86,4 +99,44 @@ class User extends Model
         'created_at',
         'updated_at',
     ];
+
+    public function registerMediaCollections()
+    {
+        $this->addMediaCollection('avatar')
+            ->accepts('image/*');
+    }
+
+    public function registerMediaConversions(Media $media = null)
+    {
+        $this->autoRegisterThumb200();
+
+        $this->addMediaConversion('thumb_75')
+            ->width(75)
+            ->height(75)
+            ->fit('crop', 75, 75)
+            ->optimize()
+            ->performOnCollections('avatar')
+            ->nonQueued();
+
+        $this->addMediaConversion('thumb_150')
+            ->width(150)
+            ->height(150)
+            ->fit('crop', 150, 150)
+            ->optimize()
+            ->performOnCollections('avatar')
+            ->nonQueued();
+    }
+
+    public function autoRegisterThumb200()
+    {
+        $this->getMediaCollections()->filter->isImage()->each(function ($mediaCollection) {
+            $this->addMediaConversion('thumb_200')
+                ->width(200)
+                ->height(200)
+                ->fit('crop', 200, 200)
+                ->optimize()
+                ->performOnCollections($mediaCollection->getName())
+                ->nonQueued();;
+        });
+    }
 }
