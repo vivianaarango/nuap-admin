@@ -72,11 +72,11 @@
 <div class="form-group row align-items-center" :class="{'has-danger': errors.has('role'), 'has-success': this.fields.role && this.fields.role.valid }">
     <label for="role" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">Tipo de usuario</label>
     <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-7'">
-        <select v-model="form.role" @input="validate($event)" onchange="displayOptions()" class="form-control" id="role" name="role">
+        <select v-model="form.role" @input="validate($event)" @change="onChange($event)" class="form-control" id="role" name="role">
             <option value="Administrador">Administrador</option>
             <option value="Mayorista">Mayorista</option>
             <option value="Comercio">Comercio</option>
-            <option value="Comercio">Usuario</option>
+            <option value="Usuario">Usuario</option>
         </select>
         <div v-if="errors.has('role')" class="form-control-feedback form-text" v-cloak>@{{errors.first('role') }}</div>
     </div>

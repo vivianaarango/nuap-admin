@@ -12,8 +12,8 @@ class AddDiscountAndComissionToUsersTable extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->float('discount')->after('role');
-            $table->float('commission')->after('role');
+            $table->float('discount')->after('role')->default(0.0);
+            $table->float('commission')->after('role')->default(0.0);
         });
     }
 

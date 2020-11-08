@@ -44,20 +44,3 @@
     </div>
 
 @endsection
-
-<script>
-    function displayOptions()
-    {
-        let role = document.getElementById('role')
-        let commission = document.getElementById('commission-block');
-        let discount = document.getElementById('discount-block');
-
-        if (role.value === 'Mayorista') {
-            commission.style.display = 'flex';
-            discount.style.display = 'flex';
-        } else {
-            commission.style.display = 'none';
-            discount.style.display = 'none';
-        }
-    }
-</script>

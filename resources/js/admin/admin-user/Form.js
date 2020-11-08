@@ -17,5 +17,20 @@ Vue.component('admin-user-form', {
                 
             }
         }
+    },
+    methods: {
+        onChange(event) {
+            let role = event.target.value
+            let commission = document.getElementById('commission-block');
+            let discount = document.getElementById('discount-block');
+
+            if (role === 'Mayorista') {
+                commission.style.display = 'flex';
+                discount.style.display = 'flex';
+            } else {
+                commission.style.display = 'none';
+                discount.style.display = 'none';
+            }
+        }
     }
 });
