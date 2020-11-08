@@ -100,12 +100,20 @@ class User extends Model implements HasMediaCollections, HasMediaConversions
         'updated_at',
     ];
 
+    /**
+     * @return array|void
+     * @throws MediaCollectionAlreadyDefined
+     */
     public function registerMediaCollections()
     {
         $this->addMediaCollection('avatar')
             ->accepts('image/*');
     }
 
+    /**
+     * @param Media|null $media
+     * @throws InvalidManipulation
+     */
     public function registerMediaConversions(Media $media = null)
     {
         $this->autoRegisterThumb200();

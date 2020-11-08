@@ -76,8 +76,7 @@ class ProfileController extends Controller
 
         if ($request->ajax()) {
             return [
-                'redirect' => url('admin/edit-profile'),
-                'message' => 'njcnjdncjdcndjcnjdcnjdncdjcnd'
+                'redirect' => url('admin/edit-profile')
             ];
         }
 

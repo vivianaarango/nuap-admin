@@ -9,6 +9,7 @@ use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
@@ -44,7 +45,7 @@ class UsersController extends Controller
         $user = $this->dbUserRepository->findUserByEmailAndPassword($request['email'], $password);
 
         if (!count($user)) {
-            return redirect()->back();
+            return redirect('admin/login');
         }
 
         /* @var User $user */
@@ -63,14 +64,23 @@ class UsersController extends Controller
     }
 
     /**
-     * @return Application|RedirectResponse|Redirector
+     * @param Request $request
+     * @return array|Application|RedirectResponse|Redirector
      */
-    public function validateSession(){
+    public function validateSession(Request $request)
+    {
         $user = Session::get('user');
         if (!is_null($user)) {
             return redirect('admin/user-wholesaler-list');
         } else {
-            return redirect('admin/login');
+            if ($request->ajax()) {
+                return [
+                    'redirect' => url('admin/login'),
+                    'message' => 'session not exist'
+                ];
+            } else {
+                return redirect('admin/login');
+            }
         }
     }
 
