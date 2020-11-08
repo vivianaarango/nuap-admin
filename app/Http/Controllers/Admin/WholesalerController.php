@@ -52,7 +52,7 @@ class WholesalerController extends Controller
                     ['id', 'last_logged_in']
                 );
 
-            return view('admin.users.index', [
+            return view('admin.wholesalers.index', [
                 'data' => $data,
                 'activation' => $user->role
             ]);

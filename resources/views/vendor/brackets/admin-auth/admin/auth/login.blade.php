@@ -68,15 +68,3 @@
         document.getElementById('password').dispatchEvent(new Event('input'));
     </script>
 @endsection
-
-<script>
-    window.onload = function()
-    {
-      /*  let session = sessionStorage.getItem('active')
-        let getUrl = window.location;
-        let baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
-        if (session === 'true') {
-            location.href=baseUrl+"/user-wholesaler-list";
-        }*/
-    };
-</script>

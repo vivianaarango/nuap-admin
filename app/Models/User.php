@@ -5,9 +5,10 @@ use Brackets\Media\Exceptions\Collections\MediaCollectionAlreadyDefined;
 use Brackets\Media\HasMedia\HasMediaCollections;
 use Brackets\Media\HasMedia\HasMediaCollectionsTrait;
 use Brackets\Media\HasMedia\HasMediaThumbsTrait;
+use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Application;
 use Spatie\Image\Exceptions\InvalidManipulation;
-use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 use Spatie\MediaLibrary\Media;
 
@@ -100,6 +101,21 @@ class User extends Model implements HasMediaCollections, HasMediaConversions
         'updated_at',
     ];
 
+    /**
+     * @var string[]
+     */
+    protected $appends = ['resource_url'];
+
+    /**
+     * @return UrlGenerator|Application|string
+     */
+    public function getResourceUrlAttribute()
+    {
+        return url('/admin/users/'.$this->getKey());
+    }
+
+
+    /**********************************************************************/
     /**
      * @return array|void
      * @throws MediaCollectionAlreadyDefined

@@ -64,7 +64,7 @@ class ProfileController extends Controller
             'phone' => ['nullable', 'string']
         ]);
 
-        $user = $this->dbUserRepository->updateUser(
+        $user = $this->dbUserRepository->updateProfileUser(
             $request['id'],
             $request['name'],
             $request['lastname'],

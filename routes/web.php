@@ -17,7 +17,9 @@ Route::get('/', function () {
     return redirect('/admin/user-session');
 });
 
-### Users
+### Users ###
+/* Validate session */
+Route::get('/admin/user-session', 'Admin\UsersController@validateSession');
 /* Login */
 Route::post('/admin/user-login', 'Admin\UsersController');
 /* View create */
@@ -26,10 +28,12 @@ Route::get('/admin/user-create', 'Admin\UsersController@create');
 Route::post('/admin/user-store', 'Admin\UsersController@store');
 /* Logout */
 Route::get('/admin/user-logout', 'Admin\UsersController@logout');
-/* Validate session */
-Route::get('/admin/user-session', 'Admin\UsersController@validateSession');
+/* View edit */
+Route::get('/admin/users/{user}/edit','Admin\UsersController@edit')->name('admin/users/edit');
+/* Update */
+Route::post('/admin/users/{user}', 'Admin\UsersController@update')->name('admin/users/update');
 
-### Profile
+### Profile ###
 /* Edit */
 Route::get('/admin/edit-profile', 'Admin\ProfileController@edit');
 /* Update */

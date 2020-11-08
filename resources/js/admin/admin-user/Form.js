@@ -31,6 +31,6 @@ Vue.component('admin-user-form', {
                 commission.style.display = 'none';
                 discount.style.display = 'none';
             }
-        }
+        },
     }
 });

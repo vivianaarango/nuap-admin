@@ -13,6 +13,7 @@
             <admin-user-form
                 :action="'{{ url('admin/user-store') }}'"
                 :activation="!!'{{ $activation }}'"
+                :showFields="'{{ $showFields }}'"
                 v-cloak
                 inline-template>
 

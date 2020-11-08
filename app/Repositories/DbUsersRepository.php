@@ -35,7 +35,7 @@ class DbUsersRepository implements DbUsersRepositoryInterface
      * @param string $email
      * @return User
      */
-    public function updateUser(
+    public function updateProfileUser(
         int $userID,
         string $name,
         string $lastname,
@@ -73,6 +73,57 @@ class DbUsersRepository implements DbUsersRepositoryInterface
     ): User {
         $user = $this->findById($userID);
         $user->password = $password;
+        $user->save();
+
+        return $user;
+    }
+
+    /**
+     * @param int $userID
+     * @param string $name
+     * @param string $lastname
+     * @param string $identityType
+     * @param string $identityNumber
+     * @param string $phone
+     * @param string $email
+     * @param string $role
+     * @param float|null $commission
+     * @param float|null $discount
+     * @param string|null $password
+     * @return User
+     */
+    public function updateUser(
+        int $userID,
+        string $name,
+        string $lastname,
+        string $identityType,
+        string $identityNumber,
+        string $phone,
+        string $email,
+        string $role,
+        float $commission = null,
+        float $discount = null,
+        string $password = null
+    ): User {
+        $user = $this->findById($userID);
+        $user->name = $name;
+        $user->lastname = $lastname;
+        $user->identity_type = $identityType;
+        $user->identity_number = $identityNumber;
+        $user->phone = $phone;
+        $user->email = $email;
+        $user->role = $role;
+
+        if (!is_null($commission)){
+            $user->commission = $commission;
+        }
+        if (!is_null($discount)){
+            $user->discount = $discount;
+        }
+        if (!is_null($password)){
+            $user->password = $password;
+        }
+
         $user->save();
 
         return $user;
