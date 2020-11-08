@@ -5,7 +5,9 @@ Vue.component('profile-edit-password-form', {
     methods: {
         onSuccess(data) {
             if(data.notify) {
-                this.$notify({ type: data.notify.type, title: data.notify.title, text: data.notify.message});
+                document.getElementById("password").value = ''
+                document.getElementById("password_confirmation").value = '';
+                this.$notify({ type: 'data.notify.type', title: data.notify.title, text: data.notify.message});
             } else if (data.redirect) {
                 window.location.replace(data.redirect);
             }

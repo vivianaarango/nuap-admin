@@ -75,7 +75,15 @@ class ProfileController extends Controller
         Session::put('user', $user);
 
         if ($request->ajax()) {
-            return ['redirect' => url('admin/edit-profile')];
+            return [
+                'notify' =>
+                    [
+                        'type' => 'success',
+                        'message' => 'Se ha actualizado exitosamente tu perfil',
+                        'title' => 'Editar perfil',
+                        'redirect' => url('admin/edit-profile')
+                    ]
+            ];
         }
 
         return redirect('admin/edit-profle');
@@ -87,8 +95,9 @@ class ProfileController extends Controller
     public function editPassword()
     {
         $user = Session::get('user');
-        $user->password = null;
+
         if (!is_null($user)) {
+            $user->password = null;
             return view('admin.profile.edit-password', [
                 'user' => $user,
                 'activation' => $user->role
@@ -119,7 +128,15 @@ class ProfileController extends Controller
         Session::put('user', $user);
 
         if ($request->ajax()) {
-            return ['redirect' => url('admin/edit-password')];
+            return [
+                'notify' =>
+                    [
+                    'type' => 'success',
+                    'message' => 'Se ha actualizado exitosamente tu contraseña',
+                    'title' => 'Cambio de cotraseña',
+                    'redirect' => url('admin/edit-profile')
+                ]
+            ];
         }
 
         return redirect('admin/edit-password');

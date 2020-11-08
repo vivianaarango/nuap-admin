@@ -1,4 +1,5 @@
 <div class="sidebar">
+    <div id="role" style="visibility: hidden">{{ $activation }}</div>
     @if($activation =='Administrador')
         <nav class="sidebar-nav">
             <ul class="nav">
@@ -25,3 +26,10 @@
         ene o
     @endif
 </div>
+
+<script>
+    window.onload = function()
+    {
+        document.getElementsByClassName("hidden-md-down")[0].innerHTML = document.getElementById('role').textContent
+    }
+</script>
