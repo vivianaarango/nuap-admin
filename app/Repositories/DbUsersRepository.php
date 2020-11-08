@@ -61,4 +61,20 @@ class DbUsersRepository implements DbUsersRepositoryInterface
         return User::where('status', User::STATUS_ACTIVE)
             ->findOrFail($userID);
     }
+
+    /**
+     * @param int $userID
+     * @param string $password
+     * @return User
+     */
+    public function updatePassword(
+        int $userID,
+        string $password
+    ): User {
+        $user = $this->findById($userID);
+        $user->password = $password;
+        $user->save();
+
+        return $user;
+    }
 }

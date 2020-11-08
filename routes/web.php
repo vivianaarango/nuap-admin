@@ -34,6 +34,10 @@ Route::get('/admin/user-session', 'Admin\UsersController@validateSession');
 Route::get('/admin/edit-profile', 'Admin\ProfileController@edit');
 /* Update */
 Route::post('/admin/update-profile', 'Admin\ProfileController@update');
+/* Edit password */
+Route::get('/admin/edit-password', 'Admin\ProfileController@editPassword');
+/* Update password */
+Route::post('/admin/update-password', 'Admin\ProfileController@updatePassword');
 
 ### Wholesaler
 /* List */

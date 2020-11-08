@@ -75,44 +75,53 @@ class ProfileController extends Controller
         Session::put('user', $user);
 
         if ($request->ajax()) {
-            return [
-                'redirect' => url('admin/edit-profile')
-            ];
+            return ['redirect' => url('admin/edit-profile')];
         }
 
         return redirect('admin/edit-profle');
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Request $request
-     * @return Response
+     * @return Factory|Application|Response|View
      */
-    /*public function editPassword(Request $request)
+    public function editPassword()
     {
-        $this->setUser($request);
-
-        return view('admin.profile.edit-password', [
-            'adminUser' => $this->adminUser,
-        ]);
-    }*/
+        $user = Session::get('user');
+        $user->password = null;
+        if (!is_null($user)) {
+            return view('admin.profile.edit-password', [
+                'user' => $user,
+                'activation' => $user->role
+            ]);
+        } else {
+            return redirect('admin/login');
+        }
+    }
 
 
     /**
-     * Update the specified resource in storage.
-     *
      * @param Request $request
-     * @return Response|array
+     * @return array|Application|RedirectResponse|Response|Redirector
+     * @throws ValidationException
      */
-    /*public function updatePassword(Request $request)
+    public function updatePassword(Request $request)
     {
-        $this->setUser($request);
+        $this->validate($request, [
+            'password' => [
+                'required',
+                'confirmed',
+                'min:8',
+                'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9]).*$/', 'string'
+            ]
+        ]);
+
+        $user = $this->dbUserRepository->updatePassword($request['id'], md5($request['password']));
+        Session::put('user', $user);
 
         if ($request->ajax()) {
-            return ['redirect' => url('admin/password'), 'message' => trans('brackets/admin-ui::admin.operation.succeeded')];
+            return ['redirect' => url('admin/edit-password')];
         }
 
-        return redirect('admin/password');
-    }*/
+        return redirect('admin/edit-password');
+    }
 }

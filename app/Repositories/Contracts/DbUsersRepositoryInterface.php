@@ -38,4 +38,14 @@ interface DbUsersRepositoryInterface
      * @return User
      */
     public function findByID(int $userID): User;
+
+    /**
+     * @param int $userID
+     * @param string $password
+     * @return User
+     */
+    public function updatePassword(
+        int $userID,
+        string $password
+    ): User;
 }
