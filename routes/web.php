@@ -32,6 +32,8 @@ Route::get('/admin/user-logout', 'Admin\UsersController@logout');
 Route::get('/admin/users/{user}/edit','Admin\UsersController@edit')->name('admin/users/edit');
 /* Update */
 Route::post('/admin/users/{user}', 'Admin\UsersController@update')->name('admin/users/update');
+/* Delete */
+Route::delete('/admin/users/{user}', 'Admin\UsersController@delete')->name('admin/users/delete');
 
 ### Profile ###
 /* Edit */

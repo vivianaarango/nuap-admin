@@ -4,6 +4,7 @@ namespace App\Repositories;
 use App\Models\User;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use Illuminate\Support\Collection;
+use Exception;
 
 /**
  * Class DbUsersRepository
@@ -127,5 +128,29 @@ class DbUsersRepository implements DbUsersRepositoryInterface
         $user->save();
 
         return $user;
+    }
+
+    /**
+     * @param int $userID
+     * @param string $lastLogin
+     * @return User
+     */
+    public function updateLastLogin(int $userID, string $lastLogin): User
+    {
+        $user = $this->findById($userID);
+        $user->last_logged_in = $lastLogin;
+        $user->save();
+
+        return $user;
+    }
+
+    /**
+     * @param int $userID
+     * @return bool
+     * @throws Exception
+     */
+    public function deleteUser(int $userID): bool {
+        $user = $this->findById($userID);
+        return $user->delete();
     }
 }

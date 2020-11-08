@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\Users\LoginUsers;
 use App\Http\Requests\Admin\Users\UpdateUsers;
 use App\Models\User;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
@@ -55,6 +56,7 @@ class UsersController extends Controller
 
         if ($user->role == User::ADMIN_ROLE) {
             Session::put('user', $user);
+            $this->dbUserRepository->updateLastLogin($user->id, now());
             return redirect('admin/user-wholesaler-list');
         }
 
@@ -186,5 +188,25 @@ class UsersController extends Controller
         }
 
         return redirect('admin/user-wholesaler-list');
+    }
+
+    /**
+     * @param User $user
+     * @return ResponseFactory|Application|RedirectResponse|Response
+     */
+    public function delete(User $user)
+    {
+        $adminUser = Session::get('user');
+
+        if (isset($adminUser) && $adminUser->role == User::ADMIN_ROLE) {
+            $deleteValidation = $this->dbUserRepository->deleteUser($user->id);
+            if ($deleteValidation) {
+                return response(['redirect' => url('admin/user-wholesaler-list')]);
+            } else {
+                return response(['message' => 'Ha ocurrido un error.']);
+            }
+        } else {
+            return redirect('admin/user-session');
+        }
     }
 }

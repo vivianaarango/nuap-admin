@@ -76,4 +76,17 @@ interface DbUsersRepositoryInterface
         float $discount = null,
         string $password = null
     ): User;
+
+    /**
+     * @param int $userID
+     * @param string $lastLogin
+     * @return User
+     */
+    public function updateLastLogin(int $userID, string $lastLogin): User;
+
+    /**
+     * @param int $userID
+     * @return bool
+     */
+    public function deleteUser(int $userID): bool;
 }
