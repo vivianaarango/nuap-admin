@@ -59,8 +59,7 @@ class DbUsersRepository implements DbUsersRepositoryInterface
      */
     public function findByID(int $userID): User
     {
-        return User::where('status', User::STATUS_ACTIVE)
-            ->findOrFail($userID);
+        return User::findOrFail($userID);
     }
 
     /**
@@ -149,8 +148,17 @@ class DbUsersRepository implements DbUsersRepositoryInterface
      * @return bool
      * @throws Exception
      */
-    public function deleteUser(int $userID): bool {
+    public function deleteUser(int $userID): bool
+    {
         $user = $this->findById($userID);
         return $user->delete();
+    }
+
+    public function changeStatus(int $userID, bool $status): User {
+        $user = $this->findById($userID);
+        $user->status = $status;
+        $user->save();
+
+        return $user;
     }
 }

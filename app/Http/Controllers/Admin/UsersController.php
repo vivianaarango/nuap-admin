@@ -209,4 +209,25 @@ class UsersController extends Controller
             return redirect('admin/user-session');
         }
     }
+
+    /**
+     * @param User $user
+     * @return Response|Factory|Application|View
+     */
+    public function changeStatus(User $user)
+    {
+        $userAdmin = Session::get('user');
+
+        if (isset($userAdmin) && $userAdmin->role == User::ADMIN_ROLE) {
+            if ($user->status == User::STATUS_ACTIVE) {
+                $this->dbUserRepository->changeStatus($user->id, User::STATUS_INACTIVE);
+            } else {
+                $this->dbUserRepository->changeStatus($user->id, User::STATUS_ACTIVE);
+            }
+
+            return response(['redirect' => url('admin/user-wholesaler-list')]);
+        } else {
+            return redirect('/admin/user-session');
+        }
+    }
 }

@@ -89,4 +89,11 @@ interface DbUsersRepositoryInterface
      * @return bool
      */
     public function deleteUser(int $userID): bool;
+
+    /**
+     * @param int $userID
+     * @param bool $status
+     * @return User
+     */
+    public function changeStatus(int $userID, bool $status): User;
 }

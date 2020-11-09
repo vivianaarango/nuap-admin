@@ -34,6 +34,8 @@ Route::get('/admin/users/{user}/edit','Admin\UsersController@edit')->name('admin
 Route::post('/admin/users/{user}', 'Admin\UsersController@update')->name('admin/users/update');
 /* Delete */
 Route::delete('/admin/users/{user}', 'Admin\UsersController@delete')->name('admin/users/delete');
+/* Change status */
+Route::post('/admin/users/{user}/status', 'Admin\UsersController@changeStatus')->name('admin/users/status');
 
 ### Profile ###
 /* Edit */

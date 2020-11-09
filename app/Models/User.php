@@ -32,6 +32,7 @@ use Spatie\MediaLibrary\Media;
  * @package App\Models
  * @method static where(string $string, string $email)
  * @method static create(array $sanitized)
+ * @method static findOrFail(int $userID)
  */
 class User extends Model implements HasMediaCollections, HasMediaConversions
 {
@@ -42,6 +43,11 @@ class User extends Model implements HasMediaCollections, HasMediaConversions
      * @var boolean
      */
     public const STATUS_ACTIVE = true;
+
+    /**
+     * @var boolean
+     */
+    public const STATUS_INACTIVE = false;
 
     /**
      * @var string
