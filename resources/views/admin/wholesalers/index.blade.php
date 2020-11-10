@@ -1,7 +1,7 @@
 @extends('brackets/admin-ui::admin.layout.default')
 
 <head>
-    <title>Usuarios</title>
+    <title>Mayoristas</title>
 </head>
 
 @section('body')
@@ -29,7 +29,14 @@
                                         </span>
                                     </div>
                                 </div>
-
+                                <div class="col col-lg-5 col-xl-3 form-group">
+                                    <div class="input-group">
+                                        <input type="number" name="days" id="days" class="form-control" placeholder="Días sin iniciar sesión" v-model="days" />
+                                        <span class="input-group-append">
+                                            <button type="button" class="btn btn-success"><i class="fa fa-search"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
                                 <div class="col-sm-auto form-group ">
                                     <select class="form-control" v-model="pagination.state.per_page">
                                         <option value="10">10</option>
@@ -46,13 +53,13 @@
                                 <tr>
                                     <th is='sortable' :column="'id'">ID</th>
                                     <th is='sortable' :column="'name'">Nombre</th>
-                                    <th is='sortable' :column="'last_name'">Apellido</th>
+                                    <th is='sortable' :column="'lastname'">Apellido</th>
                                     <th is='sortable' :column="'email'">Correo electrónico</th>
                                     <th is='sortable' :column="'phone'">Teléfono</th>
                                     <th is='sortable' :column="'commission'">Comisión</th>
                                     <th is='sortable' :column="'discount'">Descuento</th>
                                     <th is='sortable' :column="'activated'">Activo</th>
-                                    <th is='sortable' :column="'last_logged_id'">Última sesión</th>
+                                    <th is='sortable' :column="'last_logged_in'">Última sesión</th>
                                     <th></th>
                                 </tr>
                             </thead>
