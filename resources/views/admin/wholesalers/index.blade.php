@@ -9,6 +9,7 @@
         :data="{{ $data->toJson() }}"
         :activation="!!'{{ $activation }}'"
         :url="'{{ url('admin/user-wholesaler-list') }}'"
+        :days="'{{ $days }}'"
         inline-template>
 
         <div class="row">
@@ -29,14 +30,6 @@
                                         </span>
                                     </div>
                                 </div>
-                                <div class="col col-lg-5 col-xl-3 form-group">
-                                    <div class="input-group">
-                                        <input type="number" name="days" id="days" class="form-control" placeholder="Días sin iniciar sesión" v-model="days" />
-                                        <span class="input-group-append">
-                                            <button type="button" class="btn btn-success"><i class="fa fa-search"></i></button>
-                                        </span>
-                                    </div>
-                                </div>
                                 <div class="col-sm-auto form-group ">
                                     <select class="form-control" v-model="pagination.state.per_page">
                                         <option value="10">10</option>
@@ -47,7 +40,6 @@
 
                             </div>
                         </form>
-
                         <table class="table table-hover table-listing">
                             <thead>
                                 <tr>
@@ -113,10 +105,20 @@
 
 	                   <div class="no-items-found" v-if="!collection.length > 0">
 		                    <i class="icon-magnifier"></i>
-                            <h3>{{ trans('brackets/admin-ui::admin.index.no_items') }}</h3>
-                            <p>{{ trans('brackets/admin-ui::admin.index.try_changing_items') }}</p>
-                            <a class="btn btn-primary btn-spinner" href="{{ url('admin/user-wholesaler-list') }}" role="button"><i class="fa fa-plus"></i>&nbsp; {{ trans('brackets/admin-ui::admin.btn.new') }} AdminUser</a>
+                            <h3>No se encontraron registros</h3>
+                            <p>Intenta cambiando los filtros o agregando uno nuevo</p>
+                            <a class="btn btn-primary btn-spinner" href="{{ url('admin/user-create') }}" role="button"><i class="fa fa-plus"></i>&nbspNuevo usuario</a>
 	                    </div>
+                        <form method="get" :action="this.url">
+                            <div class="col col-lg-6 col-xl-4 form-group float-right">
+                                <div class="input-group">
+                                    <input type="number" value="{{$days}}" name="days" id="days" class="form-control" placeholder="Días sin iniciar sesión"/>
+                                    <span class="input-group-append">
+                                        <button type="submit" class="btn btn-success"><i class="fa fa-search"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -124,12 +126,3 @@
     </admin-user-listing>
 
 @endsection
-
-<script>
-    window.onload = function() {
-        /*let session = sessionStorage.getItem('active')
-        if (session === null) {
-            sessionStorage.setItem('active', 'true');
-        }*/
-    }
-</script>
