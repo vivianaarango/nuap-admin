@@ -26,6 +26,7 @@ class CreateCommercesTable extends Migration
             $table->string('address');
             $table->string('latitude');
             $table->string('longitude');
+            $table->float('commission')->default(0.0);
             $table->enum('type', [
                 'Cigarreria',
                 'Drogueria',

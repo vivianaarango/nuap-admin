@@ -8,19 +8,15 @@ use Illuminate\Foundation\Application;
 /**
  * Class User
  * @property int id
- * @property string name
- * @property string lastname
- * @property string identity_type
- * @property string identity_number
- * @property string phone
  * @property string email
+ * @property string phone
+ * @property boolean phone_validated
+ * @property string phone_validated_date
  * @property string password
- * @property string image_url
- * @property string role
- * @property float discount
- * @property float commission
- * @property string last_logged_in
  * @property boolean status
+ * @property string role
+ * @property string last_logged_in
+ *
  * @property mixed first
  * @package App\Models
  * @method static where(string $string, string $email)

@@ -26,6 +26,7 @@ class CreateDistributorsTable extends Migration
             $table->string('address');
             $table->string('latitude');
             $table->string('longitude');
+            $table->float('commission')->default(0.0);
             $table->enum('type', ['Mayorista', 'Distribuidor']);
             $table->string('name_legal_representative');
             $table->string('cc_legal_representative');
