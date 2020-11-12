@@ -1,16 +1,9 @@
 <?php
 namespace App\Models;
 
-use Brackets\Media\Exceptions\Collections\MediaCollectionAlreadyDefined;
-use Brackets\Media\HasMedia\HasMediaCollections;
-use Brackets\Media\HasMedia\HasMediaCollectionsTrait;
-use Brackets\Media\HasMedia\HasMediaThumbsTrait;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Application;
-use Spatie\Image\Exceptions\InvalidManipulation;
-use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
-use Spatie\MediaLibrary\Media;
 
 /**
  * Class User
@@ -34,11 +27,8 @@ use Spatie\MediaLibrary\Media;
  * @method static create(array $sanitized)
  * @method static findOrFail(int $userID)
  */
-class User extends Model implements HasMediaCollections, HasMediaConversions
+class User extends Model
 {
-    use HasMediaCollectionsTrait;
-    use HasMediaThumbsTrait;
-
     /**
      * @var boolean
      */
@@ -78,18 +68,13 @@ class User extends Model implements HasMediaCollections, HasMediaConversions
      * @var string[]
      */
     protected $fillable = [
-        'name',
-        'lastname',
-        'identity_type',
-        'identity_number',
-        'phone',
         'email',
+        'phone',
+        'phone_validated',
+        'phone_validated_date',
         'password',
-        'image_url',
         'status',
         'role',
-        'discount',
-        'commission',
         'last_logged_in',
     ];
 
@@ -103,6 +88,7 @@ class User extends Model implements HasMediaCollections, HasMediaConversions
      */
     protected $dates = [
         'last_logged_in',
+        'phone_validated_date',
         'created_at',
         'updated_at',
     ];
@@ -118,55 +104,5 @@ class User extends Model implements HasMediaCollections, HasMediaConversions
     public function getResourceUrlAttribute()
     {
         return url('/admin/users/'.$this->getKey());
-    }
-
-
-    /**********************************************************************/
-    /**
-     * @return array|void
-     * @throws MediaCollectionAlreadyDefined
-     */
-    public function registerMediaCollections()
-    {
-        $this->addMediaCollection('avatar')
-            ->accepts('image/*');
-    }
-
-    /**
-     * @param Media|null $media
-     * @throws InvalidManipulation
-     */
-    public function registerMediaConversions(Media $media = null)
-    {
-        $this->autoRegisterThumb200();
-
-        $this->addMediaConversion('thumb_75')
-            ->width(75)
-            ->height(75)
-            ->fit('crop', 75, 75)
-            ->optimize()
-            ->performOnCollections('avatar')
-            ->nonQueued();
-
-        $this->addMediaConversion('thumb_150')
-            ->width(150)
-            ->height(150)
-            ->fit('crop', 150, 150)
-            ->optimize()
-            ->performOnCollections('avatar')
-            ->nonQueued();
-    }
-
-    public function autoRegisterThumb200()
-    {
-        $this->getMediaCollections()->filter->isImage()->each(function ($mediaCollection) {
-            $this->addMediaConversion('thumb_200')
-                ->width(200)
-                ->height(200)
-                ->fit('crop', 200, 200)
-                ->optimize()
-                ->performOnCollections($mediaCollection->getName())
-                ->nonQueued();;
-        });
     }
 }

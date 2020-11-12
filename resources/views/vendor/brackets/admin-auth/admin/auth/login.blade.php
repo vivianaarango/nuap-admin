@@ -18,7 +18,9 @@
                             <form class="form-horizontal" role="form" method="POST" action="{{ url('/admin/user-login') }}" novalidate>
                                 {{ csrf_field() }}
                                 <div class="auth-header">
-                                    <h1 class="auth-title">Login</h1>
+                                    <div class="center-block">
+                                        <img src="{{URL::asset('images/nuap.jpg')}}" style="width:40%" class="img-responsive mx-auto d-block">
+                                    </div>
                                     <p class="auth-subtitle">Bienvenido a Nuap</p>
                                     <p class="auth-subtitle"><br>Usa tus credenciales para acceder a la plataforma<br></p>
                                 </div>

@@ -17411,7 +17411,7 @@ canvas {
   flex-direction: column;
   padding: 0;
   color: #fff;
-  background: #000000;
+  background: #294d9a;
 }
 
 .sidebar .sidebar-close {
@@ -17546,7 +17546,7 @@ canvas {
 
 .sidebar .nav-link.active {
   color: #fff;
-  background: #da6700;
+  background: #2d3093;
 }
 
 .sidebar .nav-link.active .nav-icon {
@@ -17555,7 +17555,7 @@ canvas {
 
 .sidebar .nav-link:hover {
   color: #fff;
-  background: #da6700;
+  background: #2d3093;
 }
 
 .sidebar .nav-link:hover .nav-icon {
@@ -21518,8 +21518,8 @@ body {
 
 .btn-primary,
 .btn-info {
-  background-color: #4273FA;
-  border-color: #4273FA;
+  background-color: #2d3093;
+  border-color: #1a1362;
 }
 
 .btn-primary:hover,
@@ -22174,7 +22174,7 @@ small select {
 
 .app-header.navbar .navbar-brand img {
   max-width: 200px;
-  max-height: 20px;
+  max-height: 45px;
 }
 
 .dropdown-toggle {
@@ -22708,7 +22708,8 @@ div.trumbowyg-dropdown-table table td.active {
 .avatar-initials {
   background-color: #4273FA;
   color: white;
-  display: inline-block;
+  /*display: inline-block;*/
+  display: none;
   margin: 0 10px;
   letter-spacing: 0;
   width: 35px;

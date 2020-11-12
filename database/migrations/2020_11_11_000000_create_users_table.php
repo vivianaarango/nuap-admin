@@ -18,17 +18,14 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('lastname');
-            $table->enum('identity_type', ['Cédula', 'Nit', 'Cédula de extranjería']);
-            $table->string('identity_number');
-            $table->string('phone', 10);
             $table->string('email')->unique();
+            $table->string('phone', 10);
+            $table->boolean('phone_validated')->default(false);
+            $table->dateTime('phone_validated_date');
             $table->string('password');
-            $table->string('image_url')->nullable();
+            $table->boolean('status')->default(false);
             $table->enum('role', ['Administrador', 'Mayorista', 'Comercio', 'Usuario']);
             $table->dateTime('last_logged_in');
-            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }

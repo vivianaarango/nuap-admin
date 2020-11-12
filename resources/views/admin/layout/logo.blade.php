@@ -1,7 +1,3 @@
 <a href="{{ url('admin/user-session') }}" class="navbar-brand">
-    {{-- You may use plain text as a logo instead of image --}}
-    <img src="" alt="nuap">
-
-    {{--Text Logo--}}
-
+    <img src="{{URL::asset('images/nuap.jpg')}}" alt="nuap" class="img-responsive">
 </a>
