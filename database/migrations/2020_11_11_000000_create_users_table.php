@@ -21,10 +21,10 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('phone', 10);
             $table->boolean('phone_validated')->default(false);
-            $table->dateTime('phone_validated_date');
+            $table->dateTime('phone_validated_date')->nullable();
             $table->string('password');
             $table->boolean('status')->default(false);
-            $table->enum('role', ['Administrador', 'Mayorista', 'Comercio', 'Usuario']);
+            $table->enum('role', ['Administrador', 'Distribuidor', 'Comercio', 'Usuario']);
             $table->dateTime('last_logged_in');
             $table->timestamps();
         });

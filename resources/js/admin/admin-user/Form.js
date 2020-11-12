@@ -19,7 +19,7 @@ Vue.component('admin-user-form', {
         }
     },
     methods: {
-        onChange(event) {
+        /*onChange(event) {
             let role = event.target.value
             let commission = document.getElementById('commission-block');
             let discount = document.getElementById('discount-block');
@@ -31,6 +31,6 @@ Vue.component('admin-user-form', {
                 commission.style.display = 'none';
                 discount.style.display = 'none';
             }
-        },
+        },*/
     }
 });

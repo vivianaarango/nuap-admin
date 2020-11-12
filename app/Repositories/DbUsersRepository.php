@@ -154,9 +154,49 @@ class DbUsersRepository implements DbUsersRepositoryInterface
         return $user->delete();
     }
 
+    /**
+     * @param int $userID
+     * @param bool $status
+     * @return User
+     */
     public function changeStatus(int $userID, bool $status): User {
         $user = $this->findById($userID);
         $user->status = $status;
+        $user->save();
+
+        return $user;
+    }
+
+    /**
+     * @param string $email
+     * @param string $phone
+     * @param string $phone_validated
+     * @param string $password
+     * @param string $status
+     * @param string $role
+     * @param string $last_logged_in
+     * @param string|null $phone_validated_date
+     * @return User
+     */
+    public function createUser(
+        string $email,
+        string $phone,
+        string $phone_validated,
+        string $password,
+        string $status,
+        string $role,
+        string $last_logged_in,
+        string $phone_validated_date = null
+    ): User {
+        $user = new User();
+        $user->email = $email;
+        $user->phone = $phone;
+        $user->$phone_validated = $phone_validated;
+        $user->$password = $password;
+        $user->$status = $status;
+        $user->role = $role;
+        $user->last_logged_in = $last_logged_in;
+        $user->phone_validated_date = $phone_validated_date ?? null;
         $user->save();
 
         return $user;

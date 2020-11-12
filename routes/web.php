@@ -37,6 +37,12 @@ Route::delete('/admin/users/{user}', 'Admin\UsersController@delete')->name('admi
 /* Change status */
 Route::post('/admin/users/{user}/status', 'Admin\UsersController@changeStatus')->name('admin/users/status');
 
+### Admin ###
+/* View create */
+Route::get('/admin/admin-users-create', 'Admin\AdminUsersController@create');
+/* Store */
+Route::post('/admin/admin-users-store', 'Admin\AdminUsersController@store');
+
 ### Profile ###
 /* Edit */
 Route::get('/admin/edit-profile', 'Admin\ProfileController@edit');
@@ -47,7 +53,7 @@ Route::get('/admin/edit-password', 'Admin\ProfileController@editPassword');
 /* Update password */
 Route::post('/admin/update-password', 'Admin\ProfileController@updatePassword');
 
-### Wholesaler
+### Distributor
 /* List */
 Route::get('/admin/user-wholesaler-list', 'Admin\WholesalerController@list');
 
