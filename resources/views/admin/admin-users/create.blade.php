@@ -16,7 +16,7 @@
 
                 <form class="form-horizontal form-create" method="post" @submit.prevent="onSubmit" :action="this.action">
                     <div class="card-header">
-                        <i class="fa fa-plus"></i>&nbsp; Nuevo Usuario
+                        <i class="fa fa-plus"></i>&nbsp; Nuevo Administrador
                     </div>
                     <div class="card-body">
                         @include('admin.admin-users.components.form-elements')

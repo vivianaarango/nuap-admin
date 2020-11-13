@@ -56,6 +56,16 @@ class User extends Model
     public const USER_ROLE = 'Usuario';
 
     /**
+     * @var boolean
+     */
+    public const PHONE_VALIDATED = true;
+
+    /**
+     * @var boolean
+     */
+    public const PHONE_NOT_VALIDATED = false;
+
+    /**
      * @var string
      */
     protected $table = 'users';

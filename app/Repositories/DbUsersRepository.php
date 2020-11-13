@@ -196,7 +196,7 @@ class DbUsersRepository implements DbUsersRepositoryInterface
         $user->$status = $status;
         $user->role = $role;
         $user->last_logged_in = $last_logged_in;
-        $user->phone_validated_date = $phone_validated_date ?? null;
+        $user->phone_validated_date = $phone_validated_date;
         $user->save();
 
         return $user;

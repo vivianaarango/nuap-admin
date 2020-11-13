@@ -2,8 +2,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Users\CreateUsers;
+use App\Http\Requests\Admin\AdminUser\CreateAdminUsers;
 use App\Models\User;
+use App\Repositories\Contracts\DbAdminUsersRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
@@ -24,13 +25,21 @@ class AdminUsersController extends Controller
     private $dbUserRepository;
 
     /**
+     * @var DbAdminUsersRepositoryInterface
+     */
+    private $dbAdminUserRepository;
+
+    /**
      * UsersController constructor.
      * @param DbUsersRepositoryInterface $dbUserRepository
+     * @param DbAdminUsersRepositoryInterface $dbAdminUserRepository
      */
     public function __construct(
-        DbUsersRepositoryInterface $dbUserRepository
+        DbUsersRepositoryInterface $dbUserRepository,
+        DbAdminUsersRepositoryInterface $dbAdminUserRepository
     ) {
         $this->dbUserRepository = $dbUserRepository;
+        $this->dbAdminUserRepository = $dbAdminUserRepository;
     }
 
     /**
@@ -50,16 +59,20 @@ class AdminUsersController extends Controller
     }
 
     /**
-     * @param CreateUsers $request
+     * @param CreateAdminUsers $request
      * @return array|Application|RedirectResponse|Redirector
      */
-    public function store(CreateUsers $request)
+    public function store(CreateAdminUsers $request)
     {
         $user = Session::get('user');
 
         if (isset($user) && $user->role == User::ADMIN_ROLE) {
             $sanitized = $request->getModifiedData();
-            User::create($sanitized);
+            dd($sanitized);
+            /*$this->dbUserRepository->createUser(
+
+            );
+            User::create($sanitized);*/
         }
 
         if ($request->ajax()) {

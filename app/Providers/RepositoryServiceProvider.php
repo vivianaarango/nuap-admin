@@ -1,7 +1,9 @@
 <?php
 namespace App\Providers;
 
+use App\Repositories\Contracts\DbAdminUsersRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
+use App\Repositories\DbAdminUsersRepository;
 use App\Repositories\DbUsersRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -20,7 +22,8 @@ class RepositoryServiceProvider extends ServiceProvider
      * @var array
      */
     protected $classes = [
-        DbUsersRepositoryInterface::class => DbUsersRepository::class
+        DbUsersRepositoryInterface::class => DbUsersRepository::class,
+        DbAdminUsersRepositoryInterface::class => DbAdminUsersRepository::class
     ];
 
     /**
