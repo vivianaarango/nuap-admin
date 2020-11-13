@@ -2,7 +2,6 @@
 namespace App\Repositories\Contracts;
 
 use App\Models\AdminUser;
-use App\Models\User;
 
 /**
  * Interface DbAdminUsersRepositoryInterface
@@ -13,28 +12,16 @@ interface DbAdminUsersRepositoryInterface
     /**
      * @param int $userID
      * @param string $name
-     * @param string $lastname
-     * @param string $identityType
+     * @param string $lastName
      * @param string $identityNumber
-     * @param string $phone
-     * @param string $email
-     * @param string $role
-     * @param float|null $commission
-     * @param float|null $discount
-     * @param string|null $password
-     * @return User
+     * @param string|null $imageUrl
+     * @return AdminUser
      */
-    public function saveAdminUser(
+    public function createAdminUser(
         int $userID,
         string $name,
-        string $lastname,
-        string $identityType,
+        string $lastName,
         string $identityNumber,
-        string $phone,
-        string $email,
-        string $role,
-        float $commission = null,
-        float $discount = null,
-        string $password = null
+        string $imageUrl = null
     ): AdminUser;
 }
