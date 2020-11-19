@@ -2,6 +2,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AdminUser;
+use App\Models\User;
+use App\Repositories\Contracts\DbAdminUsersRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
@@ -25,13 +28,21 @@ class ProfileController extends Controller
     private $dbUserRepository;
 
     /**
+     * @var DbAdminUsersRepositoryInterface
+     */
+    private $dbAdminUserRepository;
+
+    /**
      * ProfileController constructor.
      * @param DbUsersRepositoryInterface $dbUserRepository
+     * @param DbAdminUsersRepositoryInterface $dbAdminUserRepository
      */
     public function __construct(
-        DbUsersRepositoryInterface $dbUserRepository
+        DbUsersRepositoryInterface $dbUserRepository,
+        DbAdminUsersRepositoryInterface $dbAdminUserRepository
     ) {
         $this->dbUserRepository = $dbUserRepository;
+        $this->dbAdminUserRepository = $dbAdminUserRepository;
     }
 
     /**
@@ -40,9 +51,18 @@ class ProfileController extends Controller
     public function edit()
     {
         $user = Session::get('user');
-        if (!is_null($user)) {
+        if (isset($user) && $user->role == User::ADMIN_ROLE) {
+            /* @var $userInfo AdminUser */
+            $userInfo = $this->dbAdminUserRepository->findByUserID($user->id);
+            $data = [
+                "user_id" => $user->id,
+                "email" => $user->email,
+                "phone" => $user->phone,
+                "name" => $userInfo[0]->name,
+                "last_name" => $userInfo[0]->last_name
+            ];;
             return view('admin.profile.edit-profile', [
-                'user' => $user,
+                'user' => json_encode($data),
                 'activation' => $user->role
             ]);
         } else {

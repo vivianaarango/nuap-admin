@@ -2,6 +2,7 @@
 namespace App\Repositories\Contracts;
 
 use App\Models\AdminUser;
+use Illuminate\Support\Collection;
 
 /**
  * Interface DbAdminUsersRepositoryInterface
@@ -24,4 +25,10 @@ interface DbAdminUsersRepositoryInterface
         string $identityNumber,
         string $imageUrl = null
     ): AdminUser;
+
+    /**
+     * @param int $userID
+     * @return Collection
+     */
+    public function findByUserID(int $userID): Collection;
 }

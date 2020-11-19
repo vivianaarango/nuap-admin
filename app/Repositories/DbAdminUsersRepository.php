@@ -3,6 +3,7 @@ namespace App\Repositories;
 
 use App\Models\AdminUser;
 use App\Repositories\Contracts\DbAdminUsersRepositoryInterface;
+use Illuminate\Support\Collection;
 
 /**
  * Class DbAdminUsersRepository
@@ -34,5 +35,15 @@ class DbAdminUsersRepository implements DbAdminUsersRepositoryInterface
         $adminUser->save();
 
         return $adminUser;
+    }
+
+    /**
+     * @param int $userID
+     * @return Collection
+     */
+    public function findByUserID(int $userID): Collection
+    {
+        return AdminUser::where('user_id', $userID)
+            ->get();
     }
 }
