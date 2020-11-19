@@ -30,24 +30,26 @@ class DbUsersRepository implements DbUsersRepositoryInterface
 
     /**
      * @param int $userID
-     * @param string $name
-     * @param string $lastname
      * @param string $phone
      * @param string $email
+     * @param bool $phoneValidated
      * @return User
      */
     public function updateProfileUser(
         int $userID,
-        string $name,
-        string $lastname,
         string $phone,
-        string $email
+        string $email,
+        bool $phoneValidated
     ): User {
         $user = $this->findById($userID);
-        $user->name = $name;
-        $user->lastname = $lastname;
         $user->phone = $phone;
         $user->email = $email;
+
+        if (!$phoneValidated) {
+            $user->phone_validated = $phoneValidated;
+            $user->phone_validated_date = null;
+        }
+
         $user->save();
 
         return $user;

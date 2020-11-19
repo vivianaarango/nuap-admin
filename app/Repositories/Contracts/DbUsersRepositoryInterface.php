@@ -19,18 +19,16 @@ interface DbUsersRepositoryInterface
 
     /**
      * @param int $userID
-     * @param string $name
-     * @param string $lastname
      * @param string $phone
      * @param string $email
+     * @param bool $phoneValidated
      * @return User
      */
     public function updateProfileUser(
         int $userID,
-        string $name,
-        string $lastname,
         string $phone,
-        string $email
+        string $email,
+        bool $phoneValidated
     ): User;
 
     /**

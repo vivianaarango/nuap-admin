@@ -80,30 +80,40 @@ class ProfileController extends Controller
         $this->validate($request, [
             'name' => ['nullable', 'string'],
             'lastname' => ['nullable', 'string'],
-            'email' => ['nullable', 'string', 'email'],
-            'phone' => ['nullable', 'string']
+            'email' => ['nullable', 'string', 'email', 'unique:users,email,'.$request['user_id']],
+            'phone' => ['nullable', 'string', 'unique:users,phone,'.$request['user_id']],
         ]);
 
-        $user = $this->dbUserRepository->updateProfileUser(
-            $request['id'],
-            $request['name'],
-            $request['lastname'],
-            $request['phone'],
-            $request['email']
-        );
+        $user = Session::get('user');
+        if (isset($user) && $user->role == User::ADMIN_ROLE) {
+            if ($request['phone'] != $user->phone){
+                $phoneValidated = false;
+            }
+            $user = $this->dbUserRepository->updateProfileUser(
+                $request['user_id'],
+                $request['phone'],
+                $request['email'],
+                isset($phoneValidated) ? $phoneValidated : true
+            );
+            $this->dbAdminUserRepository->updateProfileAdminUser(
+                $request['user_id'],
+                $request['name'],
+                $request['last_name']
+            );
 
-        Session::put('user', $user);
+            Session::put('user', $user);
 
-        if ($request->ajax()) {
-            return [
-                'notify' =>
-                    [
-                        'type' => 'success',
-                        'message' => 'Se ha actualizado exitosamente tu perfil',
-                        'title' => 'Editar perfil',
-                        'redirect' => url('admin/edit-profile')
-                    ]
-            ];
+            if ($request->ajax()) {
+                return [
+                    'notify' =>
+                        [
+                            'type' => 'success',
+                            'message' => 'Se ha actualizado exitosamente tu perfil',
+                            'title' => 'Editar perfil',
+                            'redirect' => url('admin/edit-profile')
+                        ]
+                ];
+            }
         }
 
         return redirect('admin/edit-profle');

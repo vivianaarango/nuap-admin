@@ -31,4 +31,16 @@ interface DbAdminUsersRepositoryInterface
      * @return Collection
      */
     public function findByUserID(int $userID): Collection;
+
+    /**
+     * @param int $userID
+     * @param string $name
+     * @param string $lastName
+     * @return AdminUser
+     */
+    public function updateProfileAdminUser(
+        int $userID,
+        string $name,
+        string $lastName
+    ): AdminUser;
 }

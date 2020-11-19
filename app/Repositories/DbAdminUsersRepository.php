@@ -46,4 +46,23 @@ class DbAdminUsersRepository implements DbAdminUsersRepositoryInterface
         return AdminUser::where('user_id', $userID)
             ->get();
     }
+
+    /**
+     * @param int $userID
+     * @param string $name
+     * @param string $lastName
+     * @return AdminUser
+     */
+    public function updateProfileAdminUser(
+        int $userID,
+        string $name,
+        string $lastName
+    ): AdminUser {
+        $adminUser = $this->findByUserID($userID)[0];
+        $adminUser->name = $name;
+        $adminUser->last_name = $lastName;
+        $adminUser->save();
+
+        return $adminUser;
+    }
 }
