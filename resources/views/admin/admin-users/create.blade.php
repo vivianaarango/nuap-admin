@@ -9,7 +9,7 @@
     <div class="container-xl">
         <div class="card">
             <admin-user-form
-                    :action="'{{ url('admin/user-store') }}'"
+                    :action="'{{ url('admin/admin-users-store') }}'"
                     :activation="!!'{{ $activation }}'"
                     v-cloak
                     inline-template>

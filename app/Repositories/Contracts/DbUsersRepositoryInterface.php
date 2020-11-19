@@ -100,9 +100,9 @@ interface DbUsersRepositoryInterface
     /**
      * @param string $email
      * @param string $phone
-     * @param string $phone_validated
+     * @param bool $phone_validated
      * @param string $password
-     * @param string $status
+     * @param bool $status
      * @param string $role
      * @param string $last_logged_in
      * @param string|null $phone_validated_date
@@ -111,9 +111,9 @@ interface DbUsersRepositoryInterface
     public function createUser(
         string $email,
         string $phone,
-        string $phone_validated,
+        bool $phone_validated,
         string $password,
-        string $status,
+        bool $status,
         string $role,
         string $last_logged_in,
         string $phone_validated_date = null

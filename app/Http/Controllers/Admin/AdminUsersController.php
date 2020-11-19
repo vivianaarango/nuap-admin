@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AdminUser\CreateAdminUsers;
+use App\Models\AdminUser;
 use App\Models\User;
 use App\Repositories\Contracts\DbAdminUsersRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
@@ -65,19 +66,16 @@ class AdminUsersController extends Controller
     public function store(CreateAdminUsers $request)
     {
         $user = Session::get('user');
-
         if (isset($user) && $user->role == User::ADMIN_ROLE) {
-            $sanitized = $request->getModifiedData();
-            dd($sanitized);
-            /*$this->dbUserRepository->createUser(
-
-            );
-            User::create($sanitized);*/
+            $data = $request->getModifiedData();
+            $user = User::create($data);
+            $data['user_id'] = $user->id;
+            AdminUser::create($data);
         }
 
         if ($request->ajax()) {
             return [
-                'redirect' => url('admin/user-wholesaler-list'),
+                'redirect' => url('admin/admin-users-create'),
                 'message' => trans('brackets/admin-ui::admin.operation.succeeded')
             ];
         }

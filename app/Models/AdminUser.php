@@ -15,6 +15,7 @@ use Illuminate\Foundation\Application;
  * @property string image_url
  *
  * @package App\Models
+ * @method static create(array $data)
  */
 class AdminUser extends Model
 {
@@ -27,6 +28,7 @@ class AdminUser extends Model
      * @var string[]
      */
     protected $fillable = [
+        'user_id',
         'name',
         'last_name',
         'identity_number',

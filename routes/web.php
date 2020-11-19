@@ -22,20 +22,20 @@ Route::get('/', function () {
 Route::get('/admin/user-session', 'Admin\UsersController@validateSession');
 /* Login */
 Route::post('/admin/user-login', 'Admin\UsersController');
-/* View create */
-Route::get('/admin/user-create', 'Admin\UsersController@create');
-/* Store */
-Route::post('/admin/user-store', 'Admin\UsersController@store');
 /* Logout */
 Route::get('/admin/user-logout', 'Admin\UsersController@logout');
+/* View create */
+//Route::get('/admin/user-create', 'Admin\UsersController@create');
+/* Store */
+//Route::post('/admin/user-store', 'Admin\UsersController@store');
 /* View edit */
-Route::get('/admin/users/{user}/edit','Admin\UsersController@edit')->name('admin/users/edit');
+//Route::get('/admin/users/{user}/edit','Admin\UsersController@edit')->name('admin/users/edit');
 /* Update */
-Route::post('/admin/users/{user}', 'Admin\UsersController@update')->name('admin/users/update');
+//Route::post('/admin/users/{user}', 'Admin\UsersController@update')->name('admin/users/update');
 /* Delete */
-Route::delete('/admin/users/{user}', 'Admin\UsersController@delete')->name('admin/users/delete');
+//Route::delete('/admin/users/{user}', 'Admin\UsersController@delete')->name('admin/users/delete');
 /* Change status */
-Route::post('/admin/users/{user}/status', 'Admin\UsersController@changeStatus')->name('admin/users/status');
+//Route::post('/admin/users/{user}/status', 'Admin\UsersController@changeStatus')->name('admin/users/status');
 
 ### Admin ###
 /* View create */
@@ -56,6 +56,10 @@ Route::post('/admin/update-password', 'Admin\ProfileController@updatePassword');
 ### Distributor
 /* List */
 Route::get('/admin/user-wholesaler-list', 'Admin\WholesalerController@list');
+
+
+
+
 
 
 /* Auto-generated admin routes */

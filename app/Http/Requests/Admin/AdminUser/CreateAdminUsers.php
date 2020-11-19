@@ -5,8 +5,8 @@ use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class CreateUsers
- * @package App\Http\Requests\Admin\Users
+ * Class CreateAdminUsers
+ * @package App\Http\Requests\Admin\AdminUser
  */
 class CreateAdminUsers extends FormRequest
 {
@@ -18,8 +18,8 @@ class CreateAdminUsers extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'email', 'string'],
-            'phone' => ['required', 'string'],
+            'email' => ['required', 'email', 'string', 'unique:users'],
+            'phone' => ['required', 'string', 'unique:users'],
             'password' => ['required', 'confirmed', 'min:8', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9]).*$/', 'string'],
             'name' => ['required', 'string'],
             'last_name' => ['required', 'string'],
@@ -36,7 +36,7 @@ class CreateAdminUsers extends FormRequest
     {
         $data = $this->only(collect($this->rules())->keys()->all());
 
-        $date['role'] = User::ADMIN_ROLE;
+        $data['role'] = User::ADMIN_ROLE;
         $data['status'] = User::STATUS_ACTIVE;
         $data['last_logged_in'] = now();
         $data['password'] = md5($data['password']);

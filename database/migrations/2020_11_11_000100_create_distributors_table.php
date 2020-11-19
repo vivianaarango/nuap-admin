@@ -32,7 +32,6 @@ class CreateDistributorsTable extends Migration
             $table->string('cc_legal_representative');
             $table->string('contact_legal_representative');
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
