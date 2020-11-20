@@ -23453,3 +23453,13 @@ div.trumbowyg-dropdown-table table td.active {
   }
 }
 
+.map {
+  width: 100%;
+  height: 36vh;
+  position: relative;
+}
+.content-map {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}

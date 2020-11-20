@@ -1,7 +1,7 @@
 @extends('brackets/admin-ui::admin.layout.default')
 
 <head>
-    <title>Mayoristas</title>
+    <title>Distribuidores</title>
     <link rel="icon" href="{{URL::asset('images/nuap.png')}}"/>
 </head>
 
@@ -17,8 +17,8 @@
             <div class="col">
                 <div class="card">
                     <div class="card-header">
-                        <i class="fa fa-align-justify"></i>  Mayoristas
-                        <a class="btn btn-primary btn-spinner btn-sm pull-right m-b-0" href="{{ url('admin/user-create') }}" role="button"><i class="fa fa-plus"></i>&nbsp; Nuevo usuario</a>
+                        <i class="fa fa-align-justify"></i>  Distribuidores
+                        <a class="btn btn-primary btn-spinner btn-sm pull-right m-b-0" href="{{ url('admin/distributor-create') }}" role="button"><i class="fa fa-plus"></i>&nbsp; Nuevo distribuidor</a>
                     </div>
                     <div class="card-body" v-cloak>
                         <form @submit.prevent="">
@@ -108,7 +108,7 @@
 		                    <i class="icon-magnifier"></i>
                             <h3>No se encontraron registros</h3>
                             <p>Intenta cambiando los filtros o agregando uno nuevo</p>
-                            <a class="btn btn-primary btn-spinner" href="{{ url('admin/distributor-create') }}" role="button"><i class="fa fa-plus"></i>&nbspNuevo usuario</a>
+                            <a class="btn btn-primary btn-spinner" href="{{ url('admin/distributor-create') }}" role="button"><i class="fa fa-plus"></i>&nbspNuevo distribuidor</a>
 	                    </div>
                         <form method="get" :action="this.url">
                             <div class="col col-lg-6 col-xl-4 form-group float-right">

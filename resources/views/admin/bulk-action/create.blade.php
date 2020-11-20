@@ -13,7 +13,7 @@
             inline-template>
 
             <form class="form-horizontal form-create" method="post" @submit.prevent="onSubmit" :action="this.action" novalidate>
-                
+
                 <div class="row">
                     <div class="col">
                         <div class="card">
@@ -30,7 +30,7 @@
                         @include('admin.bulk-action.components.form-elements-right')
                     </div>
                 </div>
-                                
+
                 <button type="submit" class="btn btn-primary fixed-cta-button button-save" :disabled="submiting">
                     <i class="fa" :class="submiting ? 'fa-spinner' : 'fa-save'"></i>
                     {{ trans('brackets/admin-ui::admin.btn.save') }}

@@ -41,8 +41,6 @@
     </div>
 </div>
 
-
-
 <div class="form-group row align-items-center" :class="{'has-danger': errors.has('last_name'), 'has-success': this.fields.last_name && this.fields.last_name.valid }">
     <label for="last_name" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">Apellidos</label>
     <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-7'">
