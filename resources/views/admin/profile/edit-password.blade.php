@@ -2,6 +2,7 @@
 
 <head>
     <title>Cambiar contraseña</title>
+    <link rel="icon" href="{{URL::asset('images/nuap.png')}}"/>
 </head>
 
 @section('body')

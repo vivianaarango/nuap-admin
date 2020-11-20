@@ -2,13 +2,14 @@
 
 <head>
     <title>Mayoristas</title>
+    <link rel="icon" href="{{URL::asset('images/nuap.png')}}"/>
 </head>
 
 @section('body')
     <admin-user-listing
         :data="{{ $data->toJson() }}"
         :activation="!!'{{ $activation }}'"
-        :url="'{{ url('admin/user-wholesaler-list') }}'"
+        :url="'{{ url('admin/distributor-list') }}'"
         :days="'{{ $days }}'"
         inline-template>
 
@@ -107,7 +108,7 @@
 		                    <i class="icon-magnifier"></i>
                             <h3>No se encontraron registros</h3>
                             <p>Intenta cambiando los filtros o agregando uno nuevo</p>
-                            <a class="btn btn-primary btn-spinner" href="{{ url('admin/user-create') }}" role="button"><i class="fa fa-plus"></i>&nbspNuevo usuario</a>
+                            <a class="btn btn-primary btn-spinner" href="{{ url('admin/distributor-create') }}" role="button"><i class="fa fa-plus"></i>&nbspNuevo usuario</a>
 	                    </div>
                         <form method="get" :action="this.url">
                             <div class="col col-lg-6 col-xl-4 form-group float-right">

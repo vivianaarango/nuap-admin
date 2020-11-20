@@ -2,22 +2,23 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Users\IndexWholesaler;
+use App\Http\Requests\Admin\Distributor\CreateDistributor;
+use App\Http\Requests\Admin\Distributor\IndexDistributor;
 use App\Models\User;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use Brackets\AdminListing\Facades\AdminListing;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
 /**
- * Class WholesalerController
+ * Class DistributorController
  * @package App\Http\Controllers\Admin
  */
-class WholesalerController extends Controller
+class DistributorController extends Controller
 {
     /**
      * @var string
@@ -40,10 +41,10 @@ class WholesalerController extends Controller
     }
 
     /**
-     * @param IndexWholesaler $request
-     * @return array|Factory|Application|RedirectResponse|View
+     * @param IndexDistributor $request
+     * @return array|Factory|Application|RedirectResponse|Redirector|View
      */
-    public function list(IndexWholesaler $request)
+    public function list(IndexDistributor $request)
     {
         $user = Session::get('user');
 
@@ -80,7 +81,7 @@ class WholesalerController extends Controller
                 return ['data' => $data, 'activation' => $user->role, 'days' => $days];
             }
 
-            return view('admin.wholesalers.index', [
+            return view('admin.distributors.index', [
                 'data' => $data,
                 'activation' => $user->role,
                 'days' => $days
@@ -88,5 +89,44 @@ class WholesalerController extends Controller
         } else {
             return redirect('/admin/user-session');
         }
+    }
+
+    /**
+     * @return Factory|Application|RedirectResponse|View
+     */
+    public function create()
+    {
+        $user = Session::get('user');
+
+        if (isset($user) && $user->role == User::ADMIN_ROLE) {
+            return view('admin.distributors.create', [
+                'activation' => $user->role
+            ]);
+        } else {
+            return redirect('/admin/user-session');
+        }
+    }
+
+    /**
+     * @param CreateDistributor $request
+     * @return array|Application|RedirectResponse|Redirector
+     */
+    public function store(CreateDistributor $request)
+    {
+        $user = Session::get('user');
+
+        if (isset($user) && $user->role == User::ADMIN_ROLE) {
+            $sanitized = $request->getModifiedData();
+            User::create($sanitized);
+
+            if ($request->ajax()) {
+                return [
+                    'redirect' => url('admin/distributor-list'),
+                    'message' => trans('brackets/admin-ui::admin.operation.succeeded')
+                ];
+            }
+        }
+
+        return redirect('admin/distributor-list');
     }
 }

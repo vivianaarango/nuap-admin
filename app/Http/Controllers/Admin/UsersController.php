@@ -2,7 +2,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Users\CreateUsers;
 use App\Http\Requests\Admin\Users\LoginUsers;
 use App\Http\Requests\Admin\Users\UpdateUsers;
 use App\Models\User;
@@ -57,7 +56,7 @@ class UsersController extends Controller
         if ($user->role == User::ADMIN_ROLE) {
             Session::put('user', $user);
             $this->dbUserRepository->updateLastLogin($user->id, now());
-            return redirect('admin/user-wholesaler-list');
+            return redirect('admin/distributor-list');
         }
 
         if ($user->role == User::WHOLESALER_ROLE) {
@@ -74,17 +73,22 @@ class UsersController extends Controller
     public function validateSession(Request $request)
     {
         $user = Session::get('user');
-        if (!is_null($user)) {
-            return redirect('admin/user-wholesaler-list');
+
+        if (!is_null($user) && $user->role == User::ADMIN_ROLE) {
+            return redirect('admin/distributor-list');
+        }
+
+        if (!is_null($user) && $user->role == User::WHOLESALER_ROLE) {
+            dd("Desarrollo");
+        }
+
+        if ($request->ajax()) {
+            return [
+                'redirect' => url('admin/login'),
+                'message' => 'session not exist'
+            ];
         } else {
-            if ($request->ajax()) {
-                return [
-                    'redirect' => url('admin/login'),
-                    'message' => 'session not exist'
-                ];
-            } else {
-                return redirect('admin/login');
-            }
+            return redirect('admin/login');
         }
     }
 
@@ -95,45 +99,6 @@ class UsersController extends Controller
     {
         Session::remove('user');
         return redirect('/admin/user-session');
-    }
-
-    /**
-     * @return Factory|Application|RedirectResponse|View
-     */
-    public function create()
-    {
-        $user = Session::get('user');
-
-        if (isset($user) && $user->role == User::ADMIN_ROLE) {
-            return view('admin.users.create', [
-                'activation' => $user->role
-            ]);
-        } else {
-            return redirect('/admin/user-session');
-        }
-    }
-
-    /**
-     * @param CreateUsers $request
-     * @return array|Application|RedirectResponse|Redirector
-     */
-    public function store(CreateUsers $request)
-    {
-        $user = Session::get('user');
-
-        if (isset($user) && $user->role == User::ADMIN_ROLE) {
-            $sanitized = $request->getModifiedData();
-            User::create($sanitized);
-        }
-
-        if ($request->ajax()) {
-            return [
-                'redirect' => url('admin/user-wholesaler-list'),
-                'message' => trans('brackets/admin-ui::admin.operation.succeeded')
-            ];
-        }
-
-        return redirect('admin/user-wholesaler-list');
     }
 
     /**

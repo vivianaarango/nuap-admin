@@ -6,7 +6,7 @@
                 <li class="nav-title">Administradores</li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/admin-users-create') }}"><i class="nav-icon icon-plus"></i>Nuevo administrador</a></li>
                 <li class="nav-title">Usuarios</li>
-                <li class="nav-item"><a class="nav-link" href="{{ url('admin/user-wholesaler-list') }}"><i class="nav-icon icon-people"></i>Distribuidores</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('admin/distributor-list') }}"><i class="nav-icon icon-people"></i>Distribuidores</a></li>
                 <li class="nav-item"><a class="nav-link" href="#"><i class="nav-icon icon-handbag"></i>Comercios</a></li>
                 <!--<li class="nav-item"><a class="nav-link" href="{{ url('admin/posts') }}"><i class="nav-icon icon-globe"></i> #2: With media</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/translatable-articles') }}"><i class="nav-icon icon-ghost"></i> #3: Translatable</a></li>

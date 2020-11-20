@@ -24,10 +24,6 @@ Route::get('/admin/user-session', 'Admin\UsersController@validateSession');
 Route::post('/admin/user-login', 'Admin\UsersController');
 /* Logout */
 Route::get('/admin/user-logout', 'Admin\UsersController@logout');
-/* View create */
-//Route::get('/admin/user-create', 'Admin\UsersController@create');
-/* Store */
-//Route::post('/admin/user-store', 'Admin\UsersController@store');
 /* View edit */
 //Route::get('/admin/users/{user}/edit','Admin\UsersController@edit')->name('admin/users/edit');
 /* Update */
@@ -55,8 +51,11 @@ Route::post('/admin/update-password', 'Admin\ProfileController@updatePassword');
 
 ### Distributor
 /* List */
-Route::get('/admin/user-wholesaler-list', 'Admin\WholesalerController@list');
-
+Route::get('/admin/distributor-list', 'Admin\DistributorController@list');
+/* View create */
+Route::get('/admin/distributor-create', 'Admin\DistributorController@create');
+/* Store */
+Route::post('/admin/distributor-store', 'Admin\DistributorController@store');
 
 
 

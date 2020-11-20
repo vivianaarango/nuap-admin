@@ -1,13 +1,13 @@
 <?php
-namespace App\Http\Requests\Admin\Users;
+namespace App\Http\Requests\Admin\Distributor;
 
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class CreateUsers
- * @package App\Http\Requests\Admin\Users
+ * Class CreateDistributor
+ * @package App\Http\Requests\Admin\Distributor
  */
-class CreateUsers extends FormRequest
+class CreateDistributor extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
