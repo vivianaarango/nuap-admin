@@ -4,7 +4,7 @@
     <title>Crear Distribuidor</title>
     <link rel="icon" href="{{URL::asset('images/nuap.png')}}"/>
     <script defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcFJ6KrZPpEM93HrS1fUhF2CxD7UTkWdw&callback=initMap">
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcFJ6KrZPpEM93HrS1fUhF2CxD7UTkWdw&libraries=places&callback=initMap">
     </script>
 </head>
 
@@ -41,38 +41,42 @@
 
 @endsection
 <script>
-    function isNumberKey(evt){
-        let charCode = (evt.which) ? evt.which : evt.keyCode
-        return !(charCode > 31 && (charCode < 48 || charCode > 57));
-    }
-    function initMap(){
-        const myLatlng = { lat: 4.6533326, lng: -74.083652 }
-        const map = new google.maps.Map(document.getElementById("map"), {
-            zoom: 10,
-            center: myLatlng,
+    function initMap() {
+        let map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 15,
+            center: {lat: 4.710988599999999, lng: -74.072092 },
         });
-
         let marker = new google.maps.Marker({
-            map,
-            draggable: true,
-            animation: google.maps.Animation.DROP,
-            position: myLatlng,
+            position: {lat: 4.710988599999999, lng: -74.072092 },
+            map: map
         });
-        marker.addListener("click", toggleBounce);
 
-        map.addListener("click", (mapsMouseEvent) => {
-            marker.setMap(null)
-            marker = new google.maps.Marker({
-                position: mapsMouseEvent.latLng,
-                map: map,
+        google.maps.event.addListener(map,'click',function(event) {
+            marker.setPosition(event.latLng);
+            document.getElementById('latitud').value = event.latLng.lat();
+            document.getElementById('longitud').value = event.latLng.lng();
+
+            let geocoder = new google.maps.Geocoder();
+            let yourLocation = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
+
+            geocoder.geocode({ 'latLng': yourLocation },function(results, status) {
+                document.getElementById('address').value = results[0].formatted_address;
             });
         });
+
+        let autocomplete = new google.maps.places.Autocomplete(
+            (document.getElementById('address')),
+            { types: ['geocode'] });
+
+        google.maps.event.addListener(autocomplete, 'place_changed', function() {
+            var place = autocomplete.getPlace();
+            console.log( JSON.stringify(place) );
+            marker.setPosition(new google.maps.LatLng( place.geometry.location.lat(), place.geometry.location.lng()));
+            map.panTo(new google.maps.LatLng( place.geometry.location.lat(), place.geometry.location.lng()));
+
+            document.getElementById('latitud').value = place.geometry.location.lat();
+            document.getElementById('longitud').value = place.geometry.location.lng();
+        });
     }
-    function toggleBounce() {
-        if (marker.getAnimation() !== null) {
-            marker.setAnimation(null);
-        } else {
-            marker.setAnimation(google.maps.Animation.BOUNCE);
-        }
-    }
+
 </script>

@@ -82,6 +82,8 @@
     <label class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">Ubicación</label>
     <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-7'">
         <div class="map">
+            <input type="hidden" name="latitud" id="latitud" title="latitud" value="">
+            <input type="hidden" name="longitud" id="longitud" title="longitud" value="">
             <div class="content-map" id="map"></div>
         </div>
     </div>
