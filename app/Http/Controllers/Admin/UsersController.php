@@ -74,11 +74,11 @@ class UsersController extends Controller
     {
         $user = Session::get('user');
 
-        if (!is_null($user) && $user->role == User::ADMIN_ROLE) {
+        if (isset($user) && $user->role == User::ADMIN_ROLE) {
             return redirect('admin/distributor-list');
         }
 
-        if (!is_null($user) && $user->role == User::WHOLESALER_ROLE) {
+        if (isset($user) && $user->role == User::WHOLESALER_ROLE) {
             dd("Desarrollo");
         }
 

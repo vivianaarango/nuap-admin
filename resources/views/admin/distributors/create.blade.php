@@ -53,8 +53,8 @@
 
         google.maps.event.addListener(map,'click',function(event) {
             marker.setPosition(event.latLng);
-            document.getElementById('latitud').value = event.latLng.lat();
-            document.getElementById('longitud').value = event.latLng.lng();
+            document.getElementById('latitude').value = event.latLng.lat();
+            document.getElementById('longitude').value = event.latLng.lng();
 
             let geocoder = new google.maps.Geocoder();
             let yourLocation = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
@@ -66,17 +66,16 @@
 
         let autocomplete = new google.maps.places.Autocomplete(
             (document.getElementById('address')),
-            { types: ['geocode'] });
+            { types: ['geocode'],
+                componentRestrictions:{'country': 'co'} });
 
         google.maps.event.addListener(autocomplete, 'place_changed', function() {
             var place = autocomplete.getPlace();
-            console.log( JSON.stringify(place) );
             marker.setPosition(new google.maps.LatLng( place.geometry.location.lat(), place.geometry.location.lng()));
             map.panTo(new google.maps.LatLng( place.geometry.location.lat(), place.geometry.location.lng()));
 
-            document.getElementById('latitud').value = place.geometry.location.lat();
-            document.getElementById('longitud').value = place.geometry.location.lng();
+            document.getElementById('latitude').value = place.geometry.location.lat();
+            document.getElementById('longitude').value = place.geometry.location.lng();
         });
     }
-
 </script>

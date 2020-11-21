@@ -45,11 +45,12 @@
                             <thead>
                                 <tr>
                                     <th is='sortable' :column="'id'">ID</th>
-                                    <th is='sortable' :column="'name'">Nombre</th>
-                                    <th is='sortable' :column="'lastname'">Apellido</th>
+                                    <th is='sortable' :column="'business_name'">Razón social</th>
                                     <th is='sortable' :column="'email'">Correo electrónico</th>
                                     <th is='sortable' :column="'phone'">Teléfono</th>
+                                    <th is='sortable' :column="'city'">Ciudad</th>
                                     <th is='sortable' :column="'commission'">Comisión</th>
+                                    <th is='sortable' :column="'name_legal_representative'">Representante legal</th>
                                     <!--<th is='sortable' :column="'discount'">Descuento</th>-->
                                     <th is='sortable' :column="'activated'">Activo</th>
                                     <th is='sortable' :column="'last_logged_in'">Última sesión</th>
@@ -59,11 +60,12 @@
                             <tbody>
                                 <tr v-for="(item, index) in collection">
                                     <td >@{{ item.id }}</td>
-                                    <td >@{{ item.name }}</td>
-                                    <td >@{{ item.lastname }}</td>
+                                    <td >@{{ item.business_name }}</td>
                                     <td >@{{ item.email }}</td>
                                     <td >@{{ item.phone }}</td>
+                                    <td >@{{ item.city }}</td>
                                     <td >@{{ item.commission }}</td>
+                                    <td >@{{ item.name_legal_representative }}</td>
                                    <!-- <td >@{{ item.discount }}</td>-->
                                     <td v-if="item.status === 1">
                                         <label class="switch switch-3d switch-success">

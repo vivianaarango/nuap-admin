@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Requests\Admin\Distributor;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
@@ -17,16 +18,21 @@ class CreateDistributor extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string'],
-            'lastname' => ['required', 'string'],
-            'email' => ['required', 'email', 'string'],
+            'email' => ['required', 'email', 'string', 'unique:users'],
+            'phone' => ['required', 'string', 'unique:users'],
             'password' => ['required', 'confirmed', 'min:8', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9]).*$/', 'string'],
-            'identity_type' => ['required', 'string'],
-            'identity_number' => ['required', 'string'],
-            'role' => ['required', 'string'],
-            'phone' => ['required', 'string'],
+            'business_name' => ['required', 'string'],
+            'city' => ['required', 'string'],
+            'location' => ['required', 'string'],
+            'neighborhood' => ['required', 'string'],
+            //'address' => ['required', 'string'],
+            //'latitude' => ['required', 'string'],
+            //'longitude' => ['required', 'string'],
             'commission' => ['numeric', 'min:0.0','max:100.00'],
-            'discount' => ['numeric', 'min:0.0','max:100.00'],
+            'type' => ['required', 'string'],
+            'name_legal_representative' => ['required', 'string'],
+            'cc_legal_representative' => ['required', 'string'],
+            'contact_legal_representative' => ['required', 'string']
         ];
     }
 
@@ -39,9 +45,16 @@ class CreateDistributor extends FormRequest
     {
         $data = $this->only(collect($this->rules())->keys()->all());
 
-        $data['status'] = true;
+        $data['role'] = User::DISTRIBUTOR_ROLE;
+        $data['status'] = User::STATUS_INACTIVE;
         $data['last_logged_in'] = now();
         $data['password'] = md5($data['password']);
+        $data['phone_validated'] = User::PHONE_NOT_VALIDATED;
+
+        //test
+        $data['address'] = 'prueba';
+        $data['latitude'] = 'prueba';
+        $data['longitude'] = 'prueba';
 
         return $data;
     }

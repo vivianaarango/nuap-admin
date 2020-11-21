@@ -43,7 +43,7 @@ class User extends Model
     /**
      * @var string
      */
-    public const WHOLESALER_ROLE = 'Mayorista';
+    public const DISTRIBUTOR_ROLE = 'Distribuidor';
 
     /**
      * @var string

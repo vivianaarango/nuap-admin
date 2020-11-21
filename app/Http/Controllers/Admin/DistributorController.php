@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Distributor\CreateDistributor;
 use App\Http\Requests\Admin\Distributor\IndexDistributor;
+use App\Models\Distributor;
 use App\Models\User;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use Brackets\AdminListing\Facades\AdminListing;
@@ -69,12 +70,19 @@ class DistributorController extends Controller
             /* @noinspection PhpUndefinedMethodInspection  */
             $data = AdminListing::create(User::class)
                 ->modifyQuery(function($query) {
-                    $query->where('role', User::WHOLESALER_ROLE)
-                        ->where('last_logged_in', '<=', $this->dateToSearch);
+                    $query->select(
+                            'users.*',
+                            'distributors.business_name',
+                            'distributors.city',
+                            'distributors.commission',
+                            'distributors.name_legal_representative'
+                        )->where('role', User::DISTRIBUTOR_ROLE)
+                        ->where('last_logged_in', '<=', $this->dateToSearch)
+                        ->join('distributors', 'users.id', '=', 'distributors.user_id');
                 })->processRequestAndGet(
                     $request,
-                    ['id', 'name', 'lastname', 'email', 'phone', 'commission', 'discount', 'status', 'last_logged_in'],
-                    ['id', 'name', 'lastname', 'email', 'phone', 'commission', 'discount', 'status', 'last_logged_in']
+                    ['id', 'email', 'phone', 'status', 'last_logged_in'],
+                    ['id', 'email', 'phone', 'status', 'last_logged_in']
                 );
 
             if ($request->ajax()) {
@@ -114,17 +122,18 @@ class DistributorController extends Controller
     public function store(CreateDistributor $request)
     {
         $user = Session::get('user');
-
         if (isset($user) && $user->role == User::ADMIN_ROLE) {
-            $sanitized = $request->getModifiedData();
-            User::create($sanitized);
+            $data = $request->getModifiedData();
+            $user = User::create($data);
+            $data['user_id'] = $user->id;
+            Distributor::create($data);
+        }
 
-            if ($request->ajax()) {
-                return [
-                    'redirect' => url('admin/distributor-list'),
-                    'message' => trans('brackets/admin-ui::admin.operation.succeeded')
-                ];
-            }
+        if ($request->ajax()) {
+            return [
+                'redirect' => url('admin/distributor-list'),
+                'message' => trans('brackets/admin-ui::admin.operation.succeeded')
+            ];
         }
 
         return redirect('admin/distributor-list');

@@ -23,6 +23,7 @@ use Illuminate\Foundation\Application;
  * @property string contact_legal_representative
  *
  * @package App\Models
+ * @method static create(array $data)
  */
 class Distributor extends Model
 {
@@ -35,6 +36,7 @@ class Distributor extends Model
      * @var string[]
      */
     protected $fillable = [
+        'user_id',
         'business_name',
         'city',
         'location',

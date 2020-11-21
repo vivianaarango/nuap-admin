@@ -73,7 +73,7 @@
 <div class="form-group row align-items-center" :class="{'has-danger': errors.has('address'), 'has-success': this.fields.address && this.fields.address.valid }">
     <label for="address" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">Dirección</label>
     <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-7'">
-        <input type="text" v-model="form.address" v-validate="'required'" @input="validate($event)" class="form-control" :class="{'form-control-danger': errors.has('address'), 'form-control-success': this.fields.address && this.fields.address.valid}" id="address" name="address" placeholder="Dirección">
+        <input type="text" v-model="form.address" v-validate="''" class="form-control" :class="{'form-control-danger': errors.has('address'), 'form-control-success': this.fields.address && this.fields.address.valid}" id="address" name="address" placeholder="Dirección">
         <div v-if="errors.has('address')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('address') }}</div>
     </div>
 </div>
@@ -81,9 +81,9 @@
 <div class="form-group row align-items-center" >
     <label class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">Ubicación</label>
     <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-7'">
-        <div class="map">
-            <input type="hidden" name="latitud" id="latitud" title="latitud" value="">
-            <input type="hidden" name="longitud" id="longitud" title="longitud" value="">
+        <input type="hidden" v-model="form.latitude" id="latitude" name="latitude">
+        <input type="hidden" v-model="form.longitude" id="longitude" name="longitude">
+        <div class="map-style">
             <div class="content-map" id="map"></div>
         </div>
     </div>
