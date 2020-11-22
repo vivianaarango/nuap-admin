@@ -26,6 +26,7 @@ use Illuminate\Foundation\Application;
  * @package App\Models
  * @method static create(array $data)
  * @method static where(string $string, int $userID)
+ * @method static findOrFail(int $distributorID)
  */
 class Distributor extends Model
 {
@@ -76,6 +77,6 @@ class Distributor extends Model
      */
     public function getResourceUrlAttribute()
     {
-        return url('/admin/distributors/'.$this->getKey());
+        return url('/admin/distributor/'.$this->getKey());
     }
 }

@@ -153,40 +153,8 @@ class UsersController extends Controller
         } else {
             return redirect('/admin/user-session');
         }
-    }
 
-    /**
-     * @param UpdateUsers $request
-     * @return array|Application|RedirectResponse|Redirector
-     */
-    public function update(UpdateUsers $request)
-    {
-        $adminUser = Session::get('user');
-
-        if (isset($adminUser) && $adminUser->role == User::ADMIN_ROLE) {
-            $this->dbUserRepository->updateUser(
-                $request['id'],
-                $request['name'],
-                $request['lastname'],
-                $request['identity_type'],
-                $request['identity_number'],
-                $request['phone'],
-                $request['email'],
-                $request['role'],
-                is_null($request['commission']) ? null : $request['commission'],
-                is_null($request['discount']) ? null : $request['discount'],
-                is_null($request['password']) ? null : md5($request['password'])
-            );
-        }
-
-        if ($request->ajax()) {
-            return [
-                'redirect' => url('admin/user-wholesaler-list'),
-                'message' => trans('brackets/admin-ui::admin.operation.succeeded')
-            ];
-        }
-
-        return redirect('admin/user-wholesaler-list');
+        return redirect('/admin/user-session');
     }
 
     /**

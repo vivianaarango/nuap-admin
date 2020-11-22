@@ -30,9 +30,6 @@ Route::post('/admin/users/{user}/status', 'Admin\UsersController@changeStatus')-
 Route::delete('/admin/users/{user}', 'Admin\UsersController@delete')->name('admin/users/delete');
 /* View edit */
 Route::get('/admin/users/{user}/edit','Admin\UsersController@edit')->name('admin/users/edit');
-/* Update */
-//Route::post('/admin/users/{user}', 'Admin\UsersController@update')->name('admin/users/update');
-
 
 ### Admin ###
 /* View create */
@@ -58,4 +55,4 @@ Route::get('/admin/distributor-create', 'Admin\DistributorController@create');
 /* Store */
 Route::post('/admin/distributor-store', 'Admin\DistributorController@store');
 /* Update */
-Route::post('/admin/distributor/{user}', 'Admin\DistributorController@update')->name('admin/distributor/update');
+Route::post('/admin/distributor/{distributor}', 'Admin\DistributorController@update')->name('admin/distributor/update');

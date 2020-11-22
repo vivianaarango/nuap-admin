@@ -6,14 +6,16 @@ use App\Http\Requests\Admin\Distributor\CreateDistributor;
 use App\Http\Requests\Admin\Distributor\IndexDistributor;
 use App\Models\Distributor;
 use App\Models\User;
+use App\Repositories\Contracts\DbDistributorRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use Brackets\AdminListing\Facades\AdminListing;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Response;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 /**
@@ -33,13 +35,21 @@ class DistributorController extends Controller
     private $dbUserRepository;
 
     /**
+     * @var DbDistributorRepositoryInterface
+     */
+    private $dbDistributorRepository;
+
+    /**
      * UsersController constructor.
      * @param DbUsersRepositoryInterface $dbUserRepository
+     * @param DbDistributorRepositoryInterface $dbDistributorRepository
      */
     public function __construct(
-        DbUsersRepositoryInterface $dbUserRepository
+        DbUsersRepositoryInterface $dbUserRepository,
+        DbDistributorRepositoryInterface $dbDistributorRepository
     ) {
         $this->dbUserRepository = $dbUserRepository;
+        $this->dbDistributorRepository = $dbDistributorRepository;
     }
 
     /**
@@ -138,5 +148,72 @@ class DistributorController extends Controller
         }
 
         return redirect('admin/distributor-list');
+    }
+
+    /**
+     * @param Request $request
+     * @return array|Application|RedirectResponse|Redirector
+     * @throws ValidationException
+     */
+    public function update(Request $request)
+    {
+        $this->validate($request, [
+            'email' => ['nullable', 'string', 'email', 'unique:users,email,'.$request['user_id']],
+            'phone' => ['nullable', 'string', 'unique:users,phone,'.$request['user_id']],
+            'password' => ['nullable', 'confirmed', 'min:8', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9]).*$/', 'string'],
+            'business_name' => ['required', 'string'],
+            'city' => ['required', 'string'],
+            'location' => ['required', 'string'],
+            'neighborhood' => ['required', 'string'],
+            'address' => ['required', 'string'],
+            'latitude' => ['required', 'string'],
+            'longitude' => ['required', 'string'],
+            'commission' => ['numeric', 'min:0.0','max:100.00'],
+            'type' => ['required', 'string'],
+            'name_legal_representative' => ['required', 'string'],
+            'cc_legal_representative' => ['required', 'string'],
+            'contact_legal_representative' => ['required', 'string']
+        ]);
+
+        $adminUser = Session::get('user');
+
+        if (isset($adminUser) && $adminUser->role == User::ADMIN_ROLE) {
+            $user = $this->dbUserRepository->findByID($request['user_id']);
+            if ($request['phone'] != $user->phone) {
+                $phoneValidated = false;
+            }
+            $user = $this->dbUserRepository->updateUser(
+                $request['user_id'],
+                $request['email'],
+                $request['phone'],
+                isset($phoneValidated) ? $phoneValidated : true,
+                is_null($request['password']) ? null : md5($request['password'])
+            );
+            $this->dbDistributorRepository->updateDistributor(
+                $request['distributor_id'],
+                $request['user_id'],
+                $request['business_name'],
+                $request['city'],
+                $request['location'],
+                $request['neighborhood'],
+                $request['address'],
+                $request['latitude'],
+                $request['longitude'],
+                $request['commission'],
+                $request['type'],
+                $request['name_legal_representative'],
+                $request['cc_legal_representative'],
+                $request['contact_legal_representative']
+            );
+
+            if ($request->ajax()) {
+                return [
+                    'redirect' => url('admin/distributor-list'),
+                    'message' => trans('brackets/admin-ui::admin.operation.succeeded')
+                ];
+            }
+        }
+
+        return redirect('admin/validate-session');
     }
 }

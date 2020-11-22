@@ -65,9 +65,7 @@ class DbUsersRepository implements DbUsersRepositoryInterface
             $user->phone_validated = $phoneValidated;
             $user->phone_validated_date = null;
         }
-
         $user->save();
-
         return $user;
     }
 
@@ -98,52 +96,31 @@ class DbUsersRepository implements DbUsersRepositoryInterface
 
     /**
      * @param int $userID
-     * @param string $name
-     * @param string $lastname
-     * @param string $identityType
-     * @param string $identityNumber
-     * @param string $phone
      * @param string $email
-     * @param string $role
-     * @param float|null $commission
-     * @param float|null $discount
+     * @param string $phone
+     * @param bool $phoneValidated
      * @param string|null $password
      * @return User
      */
     public function updateUser(
         int $userID,
-        string $name,
-        string $lastname,
-        string $identityType,
-        string $identityNumber,
-        string $phone,
         string $email,
-        string $role,
-        float $commission = null,
-        float $discount = null,
+        string $phone,
+        bool $phoneValidated,
         string $password = null
     ): User {
         $user = $this->findById($userID);
-        $user->name = $name;
-        $user->lastname = $lastname;
-        $user->identity_type = $identityType;
-        $user->identity_number = $identityNumber;
         $user->phone = $phone;
         $user->email = $email;
-        $user->role = $role;
-
-        if (!is_null($commission)){
-            $user->commission = $commission;
-        }
-        if (!is_null($discount)){
-            $user->discount = $discount;
-        }
         if (!is_null($password)){
             $user->password = $password;
         }
+        if (!$phoneValidated) {
+            $user->phone_validated = $phoneValidated;
+            $user->phone_validated_date = null;
+        }
 
         $user->save();
-
         return $user;
     }
 

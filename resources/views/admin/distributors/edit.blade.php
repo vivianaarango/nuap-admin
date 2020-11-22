@@ -25,7 +25,7 @@
                     </div>
 
                     <div class="card-body">
-                        @include('admin.distributors.components.form-elements')
+                        @include('admin.distributors.components.form-edit-elements')
                     </div>
 
                     <div class="card-footer">
