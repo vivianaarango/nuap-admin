@@ -24,6 +24,7 @@ use Illuminate\Foundation\Application;
  *
  * @package App\Models
  * @method static create(array $data)
+ * @method static where(string $string, int $userID)
  */
 class Distributor extends Model
 {

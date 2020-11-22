@@ -2,6 +2,7 @@
 namespace App\Repositories;
 
 use App\Models\User;
+use App\Repositories\Contracts\DbDistributorRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use Illuminate\Support\Collection;
 use Exception;
@@ -12,6 +13,21 @@ use Exception;
  */
 class DbUsersRepository implements DbUsersRepositoryInterface
 {
+    /**
+     * @var DbDistributorRepositoryInterface
+     */
+    private $dbDistributorRepository;
+
+    /**
+     * DbUsersRepository constructor.
+     * @param DbDistributorRepositoryInterface $dbDistributorRepository
+     */
+    public function __construct(
+        DbDistributorRepositoryInterface $dbDistributorRepository
+    ) {
+        $this->dbDistributorRepository = $dbDistributorRepository;
+    }
+
     /**
      * Login to users type admin or wholesaler
      *
@@ -24,7 +40,7 @@ class DbUsersRepository implements DbUsersRepositoryInterface
         return User::where('email', $email)
             ->where('password', $password)
             ->where('status', User::STATUS_ACTIVE)
-            ->whereIn('role', [User::ADMIN_ROLE, User::WHOLESALER_ROLE])
+            ->whereIn('role', [User::ADMIN_ROLE, User::DISTRIBUTOR_ROLE])
             ->get();
     }
 
@@ -153,6 +169,16 @@ class DbUsersRepository implements DbUsersRepositoryInterface
     public function deleteUser(int $userID): bool
     {
         $user = $this->findById($userID);
+
+        if ($user->role == User::DISTRIBUTOR_ROLE){
+            $distributor = $this->dbDistributorRepository->findByUserID($user->id);
+            $distributor->delete();
+        }
+
+        if ($user->role == User::COMMERCE_ROLE){
+            dd('desarrollo');
+        }
+
         return $user->delete();
     }
 

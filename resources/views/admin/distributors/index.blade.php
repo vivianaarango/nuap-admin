@@ -51,7 +51,6 @@
                                     <th is='sortable' :column="'city'">Ciudad</th>
                                     <th is='sortable' :column="'commission'">Comisión</th>
                                     <th is='sortable' :column="'name_legal_representative'">Representante legal</th>
-                                    <!--<th is='sortable' :column="'discount'">Descuento</th>-->
                                     <th is='sortable' :column="'activated'">Activo</th>
                                     <th is='sortable' :column="'last_logged_in'">Última sesión</th>
                                     <th></th>
@@ -64,9 +63,8 @@
                                     <td >@{{ item.email }}</td>
                                     <td >@{{ item.phone }}</td>
                                     <td >@{{ item.city }}</td>
-                                    <td >@{{ item.commission }}</td>
+                                    <td >@{{ item.commission }}%</td>
                                     <td >@{{ item.name_legal_representative }}</td>
-                                   <!-- <td >@{{ item.discount }}</td>-->
                                     <td v-if="item.status === 1">
                                         <label class="switch switch-3d switch-success">
                                             <input type="checkbox" class="switch-input" v-model="collection[index].status" @change="toggleSwitch(item.resource_url+'/status', 'status', collection[index])">
@@ -82,9 +80,6 @@
                                     <td >@{{ item.last_logged_in }}</td>
                                     <td>
                                         <div class="row no-gutters">
-                                            <!--<div class="col-auto">
-                                                <button class="btn btn-sm btn-warning" v-show="!item.activated" @click="resendActivation(item.resource_url + '/resend-activation')" title="Resend activation" role="button"><i class="fa fa-envelope-o"></i></button>
-                                            </div>-->
                                             <div class="col-auto">
                                                 <a class="btn btn-sm btn-spinner btn-info" :href="item.resource_url + '/edit'" title="Editar" role="button"><i class="fa fa-edit"></i></a>
                                             </div>

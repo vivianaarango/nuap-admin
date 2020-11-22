@@ -24,14 +24,15 @@ Route::get('/admin/user-session', 'Admin\UsersController@validateSession');
 Route::post('/admin/user-login', 'Admin\UsersController');
 /* Logout */
 Route::get('/admin/user-logout', 'Admin\UsersController@logout');
+/* Change status */
+Route::post('/admin/users/{user}/status', 'Admin\UsersController@changeStatus')->name('admin/users/status');
+/* Delete */
+Route::delete('/admin/users/{user}', 'Admin\UsersController@delete')->name('admin/users/delete');
 /* View edit */
 //Route::get('/admin/users/{user}/edit','Admin\UsersController@edit')->name('admin/users/edit');
 /* Update */
 //Route::post('/admin/users/{user}', 'Admin\UsersController@update')->name('admin/users/update');
-/* Delete */
-//Route::delete('/admin/users/{user}', 'Admin\UsersController@delete')->name('admin/users/delete');
-/* Change status */
-//Route::post('/admin/users/{user}/status', 'Admin\UsersController@changeStatus')->name('admin/users/status');
+
 
 ### Admin ###
 /* View create */

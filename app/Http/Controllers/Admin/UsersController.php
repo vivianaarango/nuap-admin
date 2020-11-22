@@ -78,7 +78,7 @@ class UsersController extends Controller
             return redirect('admin/distributor-list');
         }
 
-        if (isset($user) && $user->role == User::WHOLESALER_ROLE) {
+        if (isset($user) && $user->role == User::DISTRIBUTOR_ROLE) {
             dd("Desarrollo");
         }
 
@@ -190,7 +190,7 @@ class UsersController extends Controller
                 $this->dbUserRepository->changeStatus($user->id, User::STATUS_ACTIVE);
             }
 
-            return response(['redirect' => url('admin/user-wholesaler-list')]);
+            return response(['redirect' => url('admin/distributor-list')]);
         } else {
             return redirect('/admin/user-session');
         }
