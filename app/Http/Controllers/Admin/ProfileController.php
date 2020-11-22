@@ -60,7 +60,7 @@ class ProfileController extends Controller
                 "phone" => $user->phone,
                 "name" => $userInfo[0]->name,
                 "last_name" => $userInfo[0]->last_name
-            ];;
+            ];
             return view('admin.profile.edit-profile', [
                 'user' => json_encode($data),
                 'activation' => $user->role

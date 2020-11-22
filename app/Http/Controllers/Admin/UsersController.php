@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Users\LoginUsers;
 use App\Http\Requests\Admin\Users\UpdateUsers;
 use App\Models\User;
+use App\Repositories\Contracts\DbDistributorRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\View\Factory;
@@ -28,13 +29,21 @@ class UsersController extends Controller
     private $dbUserRepository;
 
     /**
+     * @var DbDistributorRepositoryInterface
+     */
+    private $dbDistributorRepository;
+
+    /**
      * UsersController constructor.
      * @param DbUsersRepositoryInterface $dbUserRepository
+     * @param DbDistributorRepositoryInterface $dbDistributorRepository
      */
     public function __construct(
-        DbUsersRepositoryInterface $dbUserRepository
+        DbUsersRepositoryInterface $dbUserRepository,
+        DbDistributorRepositoryInterface $dbDistributorRepository
     ) {
         $this->dbUserRepository = $dbUserRepository;
+        $this->dbDistributorRepository = $dbDistributorRepository;
     }
 
     /**
@@ -110,12 +119,37 @@ class UsersController extends Controller
         $userAdmin = Session::get('user');
 
         if (isset($userAdmin) && $userAdmin->role == User::ADMIN_ROLE) {
-            $user->password = null;
-            return view('admin.users.edit', [
-                'user' => $user,
-                'activation' => $userAdmin->role,
-                'showFields' => true
-            ]);
+            $data = [
+                'user_id' => $user->id,
+                'email' => $user->email,
+                'phone' => $user->phone,
+                'password' => null
+            ];
+
+            if ($user->role == User::DISTRIBUTOR_ROLE){
+                $distributor = $this->dbDistributorRepository->findByUserID($user->id);
+                $data['distributor_id'] = $distributor->id;
+                $data['business_name'] = $distributor->business_name;
+                $data['city'] = $distributor->city;
+                $data['location'] = $distributor->location;
+                $data['neighborhood'] = $distributor->neighborhood;
+                $data['address'] = $distributor->address;
+                $data['latitude'] = $distributor->latitude;
+                $data['longitude'] = $distributor->longitude;
+                $data['commission'] = $distributor->commission;
+                $data['type'] = $distributor->type;
+                $data['name_legal_representative'] = $distributor->name_legal_representative;
+                $data['cc_legal_representative'] = $distributor->cc_legal_representative;
+                $data['contact_legal_representative'] = $distributor->contact_legal_representative;
+
+                return view('admin.distributors.edit', [
+                    'user' => json_encode($data),
+                    'activation' => $userAdmin->role,
+                    'url' => $distributor->resource_url,
+                    'business_name' => $distributor->business_name
+                ]);
+            }
+
         } else {
             return redirect('/admin/user-session');
         }
