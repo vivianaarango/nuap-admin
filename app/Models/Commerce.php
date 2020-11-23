@@ -21,6 +21,7 @@ use Illuminate\Foundation\Application;
  * @property string name_legal_representative
  * @property string cc_legal_representative
  * @property string contact_legal_representative
+ * @property string resource_url
  *
  * @package App\Models
  * @method static create(array $data)

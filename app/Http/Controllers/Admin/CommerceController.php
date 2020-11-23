@@ -6,6 +6,7 @@ use App\Http\Requests\Admin\Commerce\CreateCommerce;
 use App\Http\Requests\Admin\Commerce\IndexCommerce;
 use App\Models\Commerce;
 use App\Models\User;
+use App\Repositories\Contracts\DbCommerceRepositoryInterface;
 use App\Repositories\Contracts\DbDistributorRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use Brackets\AdminListing\Facades\AdminListing;
@@ -35,21 +36,21 @@ class CommerceController extends Controller
     private $dbUserRepository;
 
     /**
-     * @var
+     * @var DbCommerceRepositoryInterface
      */
     private $dbCommerceRepository;
 
     /**
-     * CommeceController constructor.
+     * CommerceController constructor.
      * @param DbUsersRepositoryInterface $dbUserRepository
-     * @param DbDistributorRepositoryInterface $dbDistributorRepository
+     * @param DbCommerceRepositoryInterface $dbCommerceRepository
      */
     public function __construct(
-        DbUsersRepositoryInterface $dbUserRepository
-        //DbDistributorRepositoryInterface $dbDistributorRepository
+        DbUsersRepositoryInterface $dbUserRepository,
+        DbCommerceRepositoryInterface $dbCommerceRepository
     ) {
         $this->dbUserRepository = $dbUserRepository;
-        //$this->dbDistributorRepository = $dbDistributorRepository;
+        $this->dbCommerceRepository = $dbCommerceRepository;
     }
 
     /**
@@ -156,7 +157,7 @@ class CommerceController extends Controller
      * @return array|Application|RedirectResponse|Redirector
      * @throws ValidationException
      */
-    /*public function update(Request $request)
+    public function update(Request $request)
     {
         $this->validate($request, [
             'email' => ['nullable', 'string', 'email', 'unique:users,email,'.$request['user_id']],
@@ -183,15 +184,15 @@ class CommerceController extends Controller
             if ($request['phone'] != $user->phone) {
                 $phoneValidated = false;
             }
-            $user = $this->dbUserRepository->updateUser(
+            $this->dbUserRepository->updateUser(
                 $request['user_id'],
                 $request['email'],
                 $request['phone'],
                 isset($phoneValidated) ? $phoneValidated : true,
                 is_null($request['password']) ? null : md5($request['password'])
             );
-            $this->dbDistributorRepository->updateDistributor(
-                $request['distributor_id'],
+            $this->dbCommerceRepository->updateCommerce(
+                $request['commerce_id'],
                 $request['user_id'],
                 $request['business_name'],
                 $request['city'],
@@ -209,12 +210,12 @@ class CommerceController extends Controller
 
             if ($request->ajax()) {
                 return [
-                    'redirect' => url('admin/distributor-list'),
+                    'redirect' => url('admin/commerce-list'),
                     'message' => trans('brackets/admin-ui::admin.operation.succeeded')
                 ];
             }
         }
 
         return redirect('admin/validate-session');
-    }*/
+    }
 }

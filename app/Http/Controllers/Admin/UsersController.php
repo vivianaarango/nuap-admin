@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Users\LoginUsers;
 use App\Models\User;
+use App\Repositories\Contracts\DbCommerceRepositoryInterface;
 use App\Repositories\Contracts\DbDistributorRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -33,16 +34,24 @@ class UsersController extends Controller
     private $dbDistributorRepository;
 
     /**
+     * @var DbCommerceRepositoryInterface
+     */
+    private $dbCommerceRepository;
+
+    /**
      * UsersController constructor.
      * @param DbUsersRepositoryInterface $dbUserRepository
      * @param DbDistributorRepositoryInterface $dbDistributorRepository
+     * @param DbCommerceRepositoryInterface $dbCommerceRepository
      */
     public function __construct(
         DbUsersRepositoryInterface $dbUserRepository,
-        DbDistributorRepositoryInterface $dbDistributorRepository
+        DbDistributorRepositoryInterface $dbDistributorRepository,
+        DbCommerceRepositoryInterface $dbCommerceRepository
     ) {
         $this->dbUserRepository = $dbUserRepository;
         $this->dbDistributorRepository = $dbDistributorRepository;
+        $this->dbCommerceRepository = $dbCommerceRepository;
     }
 
     /**
@@ -146,6 +155,30 @@ class UsersController extends Controller
                     'activation' => $userAdmin->role,
                     'url' => $distributor->resource_url,
                     'business_name' => $distributor->business_name
+                ]);
+            }
+
+            if ($user->role == User::COMMERCE_ROLE) {
+                $commerce = $this->dbCommerceRepository->findByUserID($user->id);
+                $data['commerce_id'] = $commerce->id;
+                $data['business_name'] = $commerce->business_name;
+                $data['city'] = $commerce->city;
+                $data['location'] = $commerce->location;
+                $data['neighborhood'] = $commerce->neighborhood;
+                $data['address'] = $commerce->address;
+                $data['latitude'] = $commerce->latitude;
+                $data['longitude'] = $commerce->longitude;
+                $data['commission'] = $commerce->commission;
+                $data['type'] = $commerce->type;
+                $data['name_legal_representative'] = $commerce->name_legal_representative;
+                $data['cc_legal_representative'] = $commerce->cc_legal_representative;
+                $data['contact_legal_representative'] = $commerce->contact_legal_representative;
+
+                return view('admin.commerces.edit', [
+                    'user' => json_encode($data),
+                    'activation' => $userAdmin->role,
+                    'url' => $commerce->resource_url,
+                    'business_name' => $commerce->business_name
                 ]);
             }
 

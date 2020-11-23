@@ -129,8 +129,15 @@
     <label for="type" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">Tipo</label>
     <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-7'">
         <select v-model="form.type" @input="validate($event)" class="form-control" id="type" name="type">
-            <option value="Distribuidor">Distribuidor</option>
-            <option value="Mayorista">Mayorista</option>
+            <option value="Cigarreria">Cigarreria</option>
+            <option value="Drogueria">Drogueria</option>
+            <option value="Ferreteria">Ferreteria</option>
+            <option value="Licorera">Licorera</option>
+            <option value="Miscelanea">Miscelanea</option>
+            <option value="Mini mercado">Mini mercado</option>
+            <option value="Prestador de servicios">Prestador de servicios</option>
+            <option value="Profesional independiente">Profesional independiente</option>
+            <option value="Supermercado">Supermercado</option>
         </select>
         <div v-if="errors.has('type')" class="form-control-feedback form-text" v-cloak>@{{errors.first('type') }}</div>
     </div>

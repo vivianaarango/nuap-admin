@@ -1,7 +1,7 @@
 @extends('brackets/admin-ui::admin.layout.default')
 
 <head>
-    <title>Editar Distribuidor</title>
+    <title>Editar Comercio</title>
     <link rel="icon" href="{{URL::asset('images/nuap.png')}}"/>
     <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcFJ6KrZPpEM93HrS1fUhF2CxD7UTkWdw&libraries=places&callback=initMap"></script>
 </head>
@@ -25,7 +25,7 @@
                     </div>
 
                     <div class="card-body">
-                        @include('admin.distributors.components.form-edit-elements')
+                        @include('admin.commerces.components.form-edit-elements')
                     </div>
 
                     <div class="card-footer">

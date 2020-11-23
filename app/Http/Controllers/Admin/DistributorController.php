@@ -182,7 +182,7 @@ class DistributorController extends Controller
             if ($request['phone'] != $user->phone) {
                 $phoneValidated = false;
             }
-            $user = $this->dbUserRepository->updateUser(
+            $this->dbUserRepository->updateUser(
                 $request['user_id'],
                 $request['email'],
                 $request['phone'],
