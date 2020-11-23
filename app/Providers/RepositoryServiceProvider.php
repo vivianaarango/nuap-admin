@@ -2,9 +2,11 @@
 namespace App\Providers;
 
 use App\Repositories\Contracts\DbAdminUsersRepositoryInterface;
+use App\Repositories\Contracts\DbCommerceRepositoryInterface;
 use App\Repositories\Contracts\DbDistributorRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use App\Repositories\DbAdminUsersRepository;
+use App\Repositories\DbCommerceRepository;
 use App\Repositories\DbDistributorRepository;
 use App\Repositories\DbUsersRepository;
 use Illuminate\Support\ServiceProvider;
@@ -26,7 +28,8 @@ class RepositoryServiceProvider extends ServiceProvider
     protected $classes = [
         DbUsersRepositoryInterface::class => DbUsersRepository::class,
         DbAdminUsersRepositoryInterface::class => DbAdminUsersRepository::class,
-        DbDistributorRepositoryInterface::class => DbDistributorRepository::class
+        DbDistributorRepositoryInterface::class => DbDistributorRepository::class,
+        DbCommerceRepositoryInterface::class => DbCommerceRepository::class
     ];
 
     /**

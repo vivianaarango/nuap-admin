@@ -2,6 +2,7 @@
 namespace App\Repositories;
 
 use App\Models\User;
+use App\Repositories\Contracts\DbCommerceRepositoryInterface;
 use App\Repositories\Contracts\DbDistributorRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use Illuminate\Support\Collection;
@@ -19,13 +20,21 @@ class DbUsersRepository implements DbUsersRepositoryInterface
     private $dbDistributorRepository;
 
     /**
+     * @var DbCommerceRepositoryInterface
+     */
+    private $dbCommerceRepository;
+
+    /**
      * DbUsersRepository constructor.
      * @param DbDistributorRepositoryInterface $dbDistributorRepository
+     * @param DbCommerceRepositoryInterface $dbCommerceRepository
      */
     public function __construct(
-        DbDistributorRepositoryInterface $dbDistributorRepository
+        DbDistributorRepositoryInterface $dbDistributorRepository,
+        DbCommerceRepositoryInterface $dbCommerceRepository
     ) {
         $this->dbDistributorRepository = $dbDistributorRepository;
+        $this->dbCommerceRepository = $dbCommerceRepository;
     }
 
     /**
@@ -153,7 +162,8 @@ class DbUsersRepository implements DbUsersRepositoryInterface
         }
 
         if ($user->role == User::COMMERCE_ROLE){
-            dd('desarrollo');
+            $commerce = $this->dbCommerceRepository->findByUserID($user->id);
+            $commerce->delete();
         }
 
         return $user->delete();

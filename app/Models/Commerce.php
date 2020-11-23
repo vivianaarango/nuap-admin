@@ -24,6 +24,8 @@ use Illuminate\Foundation\Application;
  *
  * @package App\Models
  * @method static create(array $data)
+ * @method static where(string $string, int $userID)
+ * @method static findOrFail(int $commerceID)
  */
 class Commerce extends Model
 {

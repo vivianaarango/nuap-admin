@@ -125,7 +125,7 @@ class UsersController extends Controller
                 'password' => null
             ];
 
-            if ($user->role == User::DISTRIBUTOR_ROLE){
+            if ($user->role == User::DISTRIBUTOR_ROLE) {
                 $distributor = $this->dbDistributorRepository->findByUserID($user->id);
                 $data['distributor_id'] = $distributor->id;
                 $data['business_name'] = $distributor->business_name;
