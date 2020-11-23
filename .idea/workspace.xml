@@ -5,13 +5,39 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d6cb72cc-2713-41b0-95f6-aeada7aa8696" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Http/Requests/Admin/Commerce/CreateCommerce.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/DistributorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/DistributorController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/UsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/UsersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/Distributor/CreateDistributor.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Admin/Distributor/CreateDistributor.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Distributor.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Distributor.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/distributors/components/form-elements.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/distributors/components/form-elements.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/distributors/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/distributors/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/Article/DestroyArticle.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/Article/IndexArticle.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/Article/StoreArticle.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/Article/UpdateArticle.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/ArticlesWithRelationship/DestroyArticlesWithRelationship.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/ArticlesWithRelationship/IndexArticlesWithRelationship.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/ArticlesWithRelationship/StoreArticlesWithRelationship.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/ArticlesWithRelationship/UpdateArticlesWithRelationship.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/BulkAction/DestroyBulkAction.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/BulkAction/IndexBulkAction.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/BulkAction/StoreBulkAction.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/BulkAction/UpdateBulkAction.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/Export/DestroyExport.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/Export/IndexExport.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/Export/StoreExport.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/Export/UpdateExport.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/Post/DestroyPost.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/Post/IndexPost.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/Post/StorePost.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/Post/UpdatePost.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/Tag/DestroyTag.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/Tag/IndexTag.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Admin/Commerce/IndexCommerce.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/Tag/StoreTag.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/Tag/UpdateTag.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/TranslatableArticle/DestroyTranslatableArticle.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/TranslatableArticle/IndexTranslatableArticle.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/TranslatableArticle/StoreTranslatableArticle.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/TranslatableArticle/UpdateTranslatableArticle.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/layout/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/layout/sidebar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -173,7 +199,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../merqueo-producto-api" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -185,11 +211,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources/views/admin" />
+      <recent name="$PROJECT_DIR$/app/Http/Requests/Admin" />
       <recent name="$PROJECT_DIR$/app/Http/Requests/Admin/Distributor" />
-      <recent name="$PROJECT_DIR$/resources/views/admin/distributor" />
-      <recent name="$PROJECT_DIR$/resources/views/admin/users/components" />
-      <recent name="$PROJECT_DIR$/resources/views/admin/wholesalers" />
-      <recent name="$PROJECT_DIR$/resources/views/admin/users" />
+      <recent name="$PROJECT_DIR$/resources/views/admin/distributors/components" />
+      <recent name="$PROJECT_DIR$/resources/views/admin/distributors" />
     </key>
   </component>
   <component name="RunManager">
@@ -225,7 +251,9 @@
       <workItem from="1605834514401" duration="15607000" />
       <workItem from="1605878157961" duration="3943000" />
       <workItem from="1605907705050" duration="42000" />
-      <workItem from="1605985776572" duration="3229000" />
+      <workItem from="1605985776572" duration="25769000" />
+      <workItem from="1606067411468" duration="922000" />
+      <workItem from="1606102367485" duration="1877000" />
     </task>
     <servers />
   </component>
@@ -237,26 +265,26 @@
       <screen x="0" y="27" width="1366" height="741" />
     </state>
     <state x="389" y="27" width="577" height="741" key="#JavaScript/0.27.1366.741@0.27.1366.741" timestamp="1605755577397" />
-    <state x="657" y="27" width="699" height="741" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1605835253973">
+    <state x="657" y="27" width="699" height="741" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1606104050933">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state x="657" y="27" width="699" height="741" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.27.1366.741@0.27.1366.741" timestamp="1605835253973" />
+    <state x="657" y="27" width="699" height="741" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.27.1366.741@0.27.1366.741" timestamp="1606104050933" />
     <state x="923" y="27" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1605150568098" />
-    <state x="416" y="155" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1605990964817">
+    <state x="416" y="155" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1606014358825">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state x="416" y="155" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.27.1366.741@0.27.1366.741" timestamp="1605990964817" />
-    <state x="585" y="209" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1604875807367" />
-    <state x="466" y="155" width="424" height="491" key="FileChooserDialogImpl" timestamp="1605907745074">
+    <state x="416" y="155" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.27.1366.741@0.27.1366.741" timestamp="1606014358825" />
+    <state x="585" y="209" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1606007312558" />
+    <state x="657" y="200" width="424" height="491" key="FileChooserDialogImpl" timestamp="1606005736385">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="466" y="155" width="424" height="491" key="FileChooserDialogImpl/0.27.1366.741@0.27.1366.741" timestamp="1605992401689" />
+    <state x="657" y="200" width="424" height="491" key="FileChooserDialogImpl/0.27.1920.1053@0.27.1920.1053" timestamp="1606005736385" />
+    <state x="478" y="319" width="399" height="164" key="NewPhpFileDialog" timestamp="1606102583768">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state x="466" y="155" width="424" height="491" key="FileChooserDialogImpl/0.27.1366.741@0.27.1366.741" timestamp="1605907745074" />
-    <state x="657" y="200" width="424" height="491" key="FileChooserDialogImpl/0.27.1920.1053@0.27.1920.1053" timestamp="1605896279601" />
-    <state x="478" y="319" width="399" height="164" key="NewPhpFileDialog" timestamp="1605755108869">
-      <screen x="0" y="27" width="1366" height="741" />
-    </state>
-    <state x="478" y="319" width="399" height="164" key="NewPhpFileDialog/0.27.1366.741@0.27.1366.741" timestamp="1605755108869" />
-    <state x="672" y="442" width="399" height="164" key="NewPhpFileDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1605148029237" />
+    <state x="478" y="319" width="399" height="164" key="NewPhpFileDialog/0.27.1366.741@0.27.1366.741" timestamp="1606102583768" />
+    <state x="672" y="442" width="399" height="164" key="NewPhpFileDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1606004900367" />
     <state x="0" y="27" width="1366" height="741" key="com.intellij.history.integration.ui.views.SelectionHistoryDialog" timestamp="1604881170233">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
@@ -270,20 +298,21 @@
       <screen x="0" y="27" width="1366" height="741" />
     </state>
     <state x="462" y="310" width="431" height="181" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.27.1366.741@0.27.1366.741" timestamp="1604974687848" />
-    <state x="375" y="120" width="679" height="554" key="find.popup" timestamp="1605836573154">
+    <state x="375" y="120" width="747" height="554" key="find.popup" timestamp="1606067679746">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state x="375" y="120" width="679" height="554" key="find.popup/0.27.1366.741@0.27.1366.741" timestamp="1605836573154" />
+    <state x="375" y="120" width="747" height="554" key="find.popup/0.27.1366.741@0.27.1366.741" timestamp="1606067679746" />
     <state x="527" y="159" width="903" height="788" key="find.popup/0.27.1920.1053@0.27.1920.1053" timestamp="1605649746961" />
-    <state x="347" y="174" key="run.anything.popup" timestamp="1605841624997">
-      <screen x="0" y="27" width="1366" height="741" />
+    <state x="488" y="236" key="run.anything.popup" timestamp="1606000036501">
+      <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="347" y="174" key="run.anything.popup/0.27.1366.741@0.27.1366.741" timestamp="1605841624997" />
-    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1605992039575">
+    <state x="488" y="236" key="run.anything.popup/0.27.1920.1053@0.27.1920.1053" timestamp="1606000036501" />
+    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1606104041964">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup/0.27.1366.741@0.27.1366.741" timestamp="1605992039575" />
-    <state x="486" y="115" width="945" height="964" key="search.everywhere.popup/0.27.1920.1053@0.27.1920.1053" timestamp="1605878213499" />
+    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup/0.27.1366.741@0.27.1366.741" timestamp="1606104041964" />
+    <state x="486" y="115" width="945" height="964" key="search.everywhere.popup/0.27.1920.1053@0.27.1920.1053" timestamp="1606008874061" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

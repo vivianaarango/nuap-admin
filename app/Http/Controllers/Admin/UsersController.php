@@ -3,7 +3,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Users\LoginUsers;
-use App\Http\Requests\Admin\Users\UpdateUsers;
 use App\Models\User;
 use App\Repositories\Contracts\DbDistributorRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
@@ -68,7 +67,7 @@ class UsersController extends Controller
             return redirect('admin/distributor-list');
         }
 
-        if ($user->role == User::WHOLESALER_ROLE) {
+        if ($user->role == User::DISTRIBUTOR_ROLE) {
             dd('En desarrollo');
         }
 
@@ -166,12 +165,7 @@ class UsersController extends Controller
         $adminUser = Session::get('user');
 
         if (isset($adminUser) && $adminUser->role == User::ADMIN_ROLE) {
-            $deleteValidation = $this->dbUserRepository->deleteUser($user->id);
-            if ($deleteValidation) {
-                return response(['redirect' => url('admin/user-wholesaler-list')]);
-            } else {
-                return response(['message' => 'Ha ocurrido un error.']);
-            }
+            $this->dbUserRepository->deleteUser($user->id);
         } else {
             return redirect('admin/user-session');
         }
@@ -190,6 +184,14 @@ class UsersController extends Controller
                 $this->dbUserRepository->changeStatus($user->id, User::STATUS_INACTIVE);
             } else {
                 $this->dbUserRepository->changeStatus($user->id, User::STATUS_ACTIVE);
+            }
+
+            if ($user->role == User::DISTRIBUTOR_ROLE) {
+                return response(['redirect' => url('admin/distributor-list')]);
+            }
+
+            if ($user->role == User::COMMERCE_ROLE) {
+                return response(['redirect' => url('admin/commerce-list')]);
             }
 
             return response(['redirect' => url('admin/distributor-list')]);

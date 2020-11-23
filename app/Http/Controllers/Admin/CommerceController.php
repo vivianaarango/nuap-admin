@@ -2,9 +2,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Distributor\CreateDistributor;
-use App\Http\Requests\Admin\Distributor\IndexDistributor;
-use App\Models\Distributor;
+use App\Http\Requests\Admin\Commerce\CreateCommerce;
+use App\Http\Requests\Admin\Commerce\IndexCommerce;
+use App\Models\Commerce;
 use App\Models\User;
 use App\Repositories\Contracts\DbDistributorRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
@@ -19,10 +19,10 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 /**
- * Class DistributorController
+ * Class CommerceController
  * @package App\Http\Controllers\Admin
  */
-class DistributorController extends Controller
+class CommerceController extends Controller
 {
     /**
      * @var string
@@ -35,28 +35,28 @@ class DistributorController extends Controller
     private $dbUserRepository;
 
     /**
-     * @var DbDistributorRepositoryInterface
+     * @var
      */
-    private $dbDistributorRepository;
+    private $dbCommerceRepository;
 
     /**
-     * DistributorController constructor.
+     * CommeceController constructor.
      * @param DbUsersRepositoryInterface $dbUserRepository
      * @param DbDistributorRepositoryInterface $dbDistributorRepository
      */
     public function __construct(
-        DbUsersRepositoryInterface $dbUserRepository,
-        DbDistributorRepositoryInterface $dbDistributorRepository
+        DbUsersRepositoryInterface $dbUserRepository
+        //DbDistributorRepositoryInterface $dbDistributorRepository
     ) {
         $this->dbUserRepository = $dbUserRepository;
-        $this->dbDistributorRepository = $dbDistributorRepository;
+        //$this->dbDistributorRepository = $dbDistributorRepository;
     }
 
     /**
-     * @param IndexDistributor $request
+     * @param IndexCommerce $request
      * @return array|Factory|Application|RedirectResponse|Redirector|View
      */
-    public function list(IndexDistributor $request)
+    public function list(IndexCommerce $request)
     {
         $user = Session::get('user');
 
@@ -82,14 +82,15 @@ class DistributorController extends Controller
             $data = AdminListing::create(User::class)
                 ->modifyQuery(function($query) {
                     $query->select(
-                            'users.*',
-                            'distributors.business_name',
-                            'distributors.city',
-                            'distributors.commission',
-                            'distributors.name_legal_representative'
-                        )->where('role', User::DISTRIBUTOR_ROLE)
+                        'users.*',
+                        'commerces.business_name',
+                        'commerces.type',
+                        'commerces.city',
+                        'commerces.commission',
+                        'commerces.name_legal_representative'
+                    )->where('role', User::COMMERCE_ROLE)
                         ->where('last_logged_in', '<=', $this->dateToSearch)
-                        ->join('distributors', 'users.id', '=', 'distributors.user_id');
+                        ->join('commerces', 'users.id', '=', 'commerces.user_id');
                 })->processRequestAndGet(
                     $request,
                     ['id', 'email', 'phone', 'status', 'last_logged_in'],
@@ -100,7 +101,7 @@ class DistributorController extends Controller
                 return ['data' => $data, 'activation' => $user->role, 'days' => $days];
             }
 
-            return view('admin.distributors.index', [
+            return view('admin.commerces.index', [
                 'data' => $data,
                 'activation' => $user->role,
                 'days' => $days
@@ -118,7 +119,7 @@ class DistributorController extends Controller
         $user = Session::get('user');
 
         if (isset($user) && $user->role == User::ADMIN_ROLE) {
-            return view('admin.distributors.create', [
+            return view('admin.commerces.create', [
                 'activation' => $user->role
             ]);
         } else {
@@ -127,27 +128,27 @@ class DistributorController extends Controller
     }
 
     /**
-     * @param CreateDistributor $request
+     * @param CreateCommerce $request
      * @return array|Application|RedirectResponse|Redirector
      */
-    public function store(CreateDistributor $request)
+    public function store(CreateCommerce $request)
     {
         $user = Session::get('user');
         if (isset($user) && $user->role == User::ADMIN_ROLE) {
             $data = $request->getModifiedData();
             $user = User::create($data);
             $data['user_id'] = $user->id;
-            Distributor::create($data);
+            Commerce::create($data);
         }
 
         if ($request->ajax()) {
             return [
-                'redirect' => url('admin/distributor-list'),
+                'redirect' => url('admin/commerce-list'),
                 'message' => trans('brackets/admin-ui::admin.operation.succeeded')
             ];
         }
 
-        return redirect('admin/distributor-list');
+        return redirect('admin/commerce-list');
     }
 
     /**
@@ -155,7 +156,7 @@ class DistributorController extends Controller
      * @return array|Application|RedirectResponse|Redirector
      * @throws ValidationException
      */
-    public function update(Request $request)
+    /*public function update(Request $request)
     {
         $this->validate($request, [
             'email' => ['nullable', 'string', 'email', 'unique:users,email,'.$request['user_id']],
@@ -215,5 +216,5 @@ class DistributorController extends Controller
         }
 
         return redirect('admin/validate-session');
-    }
+    }*/
 }

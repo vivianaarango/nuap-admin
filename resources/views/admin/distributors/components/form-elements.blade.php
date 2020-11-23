@@ -45,7 +45,6 @@
     <label for="city" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">Ciudad</label>
     <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-7'">
         <select v-model="form.city" @input="validate($event)" class="form-control" id="city" name="city" required>
-            <option value="">-</option>
             <option value="Arauca">Arauca</option>
             <option value="Armenia">Armenia</option>
             <option value="Barranquilla">Barranquilla</option>

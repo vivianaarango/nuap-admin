@@ -56,3 +56,13 @@ Route::get('/admin/distributor-create', 'Admin\DistributorController@create');
 Route::post('/admin/distributor-store', 'Admin\DistributorController@store');
 /* Update */
 Route::post('/admin/distributor/{distributor}', 'Admin\DistributorController@update')->name('admin/distributor/update');
+
+### Commerce
+/* List */
+Route::get('/admin/commerce-list', 'Admin\CommerceController@list');
+/* View create */
+Route::get('/admin/commerce-create', 'Admin\CommerceController@create');
+/* Store */
+Route::post('/admin/commerce-store', 'Admin\CommerceController@store');
+/* Update */
+Route::post('/admin/commerce/{commerce}', 'Admin\CommerceController@update')->name('admin/commerce/update');

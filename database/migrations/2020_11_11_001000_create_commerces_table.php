@@ -35,6 +35,7 @@ class CreateCommercesTable extends Migration
                 'Miscelanea',
                 'Mini mercado',
                 'Prestador de servicios',
+                'Profesional independiente',
                 'Supermercado'
             ]);
             $table->string('name_legal_representative');

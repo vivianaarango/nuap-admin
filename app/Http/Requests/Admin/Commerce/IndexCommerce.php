@@ -1,22 +1,14 @@
 <?php
-
-namespace App\Http\Requests\Admin\Tag;
+namespace App\Http\Requests\Admin\Commerce;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Gate;
 
-class IndexTag extends FormRequest
+/**
+ * Class IndexCommerce
+ * @package App\Http\Requests\Admin\Commerce
+ */
+class IndexCommerce extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return Gate::allows('admin.tag.index');
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -25,12 +17,11 @@ class IndexTag extends FormRequest
     public function rules()
     {
         return [
-            'orderBy' => 'in:id,name|nullable',
+            'orderBy' => 'in:id,email,phone,business_name,type,city,commission,name_legal_representative,last_logged_in|nullable',
             'orderDirection' => 'in:asc,desc|nullable',
             'search' => 'string|nullable',
             'page' => 'integer|nullable',
             'per_page' => 'integer|nullable',
-
         ];
     }
 }

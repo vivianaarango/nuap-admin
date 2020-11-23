@@ -23,6 +23,7 @@ use Illuminate\Foundation\Application;
  * @property string contact_legal_representative
  *
  * @package App\Models
+ * @method static create(array $data)
  */
 class Commerce extends Model
 {
@@ -35,6 +36,7 @@ class Commerce extends Model
      * @var string[]
      */
     protected $fillable = [
+        'user_id',
         'business_name',
         'city',
         'location',
@@ -72,6 +74,6 @@ class Commerce extends Model
      */
     public function getResourceUrlAttribute()
     {
-        return url('/admin/commerces/'.$this->getKey());
+        return url('/admin/commerce/'.$this->getKey());
     }
 }

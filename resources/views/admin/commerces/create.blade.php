@@ -1,7 +1,7 @@
 @extends('brackets/admin-ui::admin.layout.default')
 
 <head>
-    <title>Crear Distribuidor</title>
+    <title>Crear Comercio</title>
     <link rel="icon" href="{{URL::asset('images/nuap.png')}}"/>
     <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcFJ6KrZPpEM93HrS1fUhF2CxD7UTkWdw&libraries=places&callback=initMap"></script>
 </head>
@@ -11,18 +11,18 @@
     <div class="container-xl">
         <div class="card">
             <admin-user-form
-                    :action="'{{ url('admin/distributor-store') }}'"
+                    :action="'{{ url('admin/commerce-store') }}'"
                     :activation="!!'{{ $activation }}'"
                     v-cloak
                     inline-template>
 
                 <form class="form-horizontal form-create" method="post" @submit.prevent="onSubmit" :action="this.action">
                     <div class="card-header">
-                        <i class="fa fa-plus"></i>&nbsp; Nuevo Distribuidor
+                        <i class="fa fa-plus"></i>&nbsp; Nuevo Comercio
                     </div>
 
                     <div class="card-body">
-                        @include('admin.distributors.components.form-elements')
+                        @include('admin.commerces.components.form-elements')
                     </div>
 
                     <div class="card-footer">
