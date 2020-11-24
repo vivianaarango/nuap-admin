@@ -14,7 +14,7 @@
                 :action="'{{ $url }}'"
                 :data="{{ $user }}"
                 :activation="!!'{{ $activation }}'"
-                :business_name="{{ $business_name }}"
+                :business_name="'{{ $business_name }}'"
                 v-cloak
                 inline-template>
             

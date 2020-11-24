@@ -14,10 +14,10 @@
                 :action="'{{ $url }}'"
                 :data="{{ $user }}"
                 :activation="!!'{{ $activation }}'"
-                :business_name="{{ $business_name }}"
+                :business_name="'{{ $business_name }}'"
                 v-cloak
                 inline-template>
-            
+
                 <form class="form-horizontal form-edit" method="post" @submit.prevent="onSubmit" :action="this.action">
 
                     <div class="card-header">
