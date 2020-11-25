@@ -26,11 +26,7 @@
 
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-2 text-center">
-                                <div class="avatar-upload">
-
-                                </div>
-                            </div>
+                            <div class="col-md-2 text-center"></div>
                             <div class="col-md-8">
                                 <div class="form-group row align-items-center" :class="{'has-danger': errors.has('name'), 'has-success': this.fields.name && this.fields.name.valid }">
                                     <label for="name" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">Nombres</label>

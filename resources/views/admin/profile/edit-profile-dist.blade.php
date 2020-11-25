@@ -21,6 +21,7 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
+                            <div class="col-md-2 text-center"></div>
                             <div class="col-md-8">
                                 <div class="form-group row align-items-center" :class="{'has-danger': errors.has('business_name'), 'has-success': this.fields.business_name && this.fields.business_name.valid }">
                                     <label for="business_name" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">Razón Social</label>

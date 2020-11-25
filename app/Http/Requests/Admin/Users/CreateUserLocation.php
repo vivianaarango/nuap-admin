@@ -17,6 +17,7 @@ class CreateUserLocation extends FormRequest
     public function rules(): array
     {
         return [
+            'role' => ['required', 'string'],
             'user_id' => ['required', 'string'],
             'city' => ['required', 'string'],
             'location' => ['required', 'string'],

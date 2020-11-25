@@ -79,7 +79,7 @@ class UsersController extends Controller
         }
 
         if ($user->role == User::DISTRIBUTOR_ROLE) {
-            return redirect('/admin/edit-password');
+            return redirect('/admin/edit-profile-distributor');
         }
 
         return redirect()->back();
@@ -98,7 +98,7 @@ class UsersController extends Controller
         }
 
         if (isset($user) && $user->role == User::DISTRIBUTOR_ROLE) {
-            return redirect('/admin/edit-password');
+            return redirect('/admin/edit-profile-distributor');
         }
 
         if ($request->ajax()) {
@@ -256,13 +256,11 @@ class UsersController extends Controller
             UserLocation::create($data);
         }
 
-        if ($request->ajax()) {
-            return [
-                'redirect' => url('admin/commerce-list'),
-                'message' => trans('brackets/admin-ui::admin.operation.succeeded')
-            ];
+        if ($request->role == User::COMMERCE_ROLE){
+            return redirect('admin/commerce-list');
         }
-
-        return redirect('admin/commerce-list');
+        if ($request->role == User::DISTRIBUTOR_ROLE){
+            return redirect('admin/distributor-list');
+        }
     }
 }

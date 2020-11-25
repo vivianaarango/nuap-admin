@@ -13,6 +13,7 @@
                 <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
                 <form class="form-horizontal form-create">
                     <input type="hidden" id="user_id" name="user_id" value="{{ $user->id }}">
+                    <input type="hidden" id="role" name="role" value="{{ $user->role }}">
                     <div class="card-header">
                         <i class="fa fa-plus"></i>&nbsp; Agregar Ubicación
                     </div>
