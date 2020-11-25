@@ -69,15 +69,15 @@ class UsersController extends Controller
 
         /* @var User $user */
         $user = $user[0];
+        Session::put('user', $user);
+        $this->dbUserRepository->updateLastLogin($user->id, now());
 
         if ($user->role == User::ADMIN_ROLE) {
-            Session::put('user', $user);
-            $this->dbUserRepository->updateLastLogin($user->id, now());
             return redirect('admin/distributor-list');
         }
 
         if ($user->role == User::DISTRIBUTOR_ROLE) {
-            dd('En desarrollo');
+            return redirect('admin/edit-profile-distributor');
         }
 
         return redirect()->back();

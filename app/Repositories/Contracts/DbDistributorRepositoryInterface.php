@@ -20,12 +20,6 @@ interface DbDistributorRepositoryInterface
      * @param int $distributorID
      * @param int $userID
      * @param string $businessName
-     * @param string $city
-     * @param string $location
-     * @param string $neighborhood
-     * @param string $address
-     * @param string $latitude
-     * @param string $longitude
      * @param float $commission
      * @param string $type
      * @param string $nameLegalRepresentative
@@ -37,12 +31,6 @@ interface DbDistributorRepositoryInterface
         int $distributorID,
         int $userID,
         string $businessName,
-        string $city,
-        string $location,
-        string $neighborhood,
-        string $address,
-        string $latitude,
-        string $longitude,
         float $commission,
         string $type,
         string $nameLegalRepresentative,

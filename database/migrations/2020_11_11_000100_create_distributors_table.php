@@ -20,12 +20,6 @@ class CreateDistributorsTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->string('business_name');
-            $table->string('city');
-            $table->string('location');
-            $table->string('neighborhood');
-            $table->string('address');
-            $table->string('latitude');
-            $table->string('longitude');
             $table->float('commission')->default(0.0);
             $table->enum('type', ['Mayorista', 'Distribuidor']);
             $table->string('name_legal_representative');

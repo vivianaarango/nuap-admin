@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AdminUser;
 use App\Models\User;
 use App\Repositories\Contracts\DbAdminUsersRepositoryInterface;
+use App\Repositories\Contracts\DbDistributorRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
@@ -33,16 +34,24 @@ class ProfileController extends Controller
     private $dbAdminUserRepository;
 
     /**
+     * @var DbDistributorRepositoryInterface
+     */
+    private $dbDistributorRepository;
+
+    /**
      * ProfileController constructor.
      * @param DbUsersRepositoryInterface $dbUserRepository
      * @param DbAdminUsersRepositoryInterface $dbAdminUserRepository
+     * @param DbDistributorRepositoryInterface $dbDistributorRepository
      */
     public function __construct(
         DbUsersRepositoryInterface $dbUserRepository,
-        DbAdminUsersRepositoryInterface $dbAdminUserRepository
+        DbAdminUsersRepositoryInterface $dbAdminUserRepository,
+        DbDistributorRepositoryInterface $dbDistributorRepository
     ) {
         $this->dbUserRepository = $dbUserRepository;
         $this->dbAdminUserRepository = $dbAdminUserRepository;
+        $this->dbDistributorRepository = $dbDistributorRepository;
     }
 
     /**
@@ -133,7 +142,7 @@ class ProfileController extends Controller
                 'activation' => $user->role
             ]);
         } else {
-            return redirect('admin/login');
+            return redirect('/admin/user-session');
         }
     }
 
@@ -170,5 +179,29 @@ class ProfileController extends Controller
         }
 
         return redirect('admin/edit-password');
+    }
+
+    /**
+     * @return Factory|Application|View
+     */
+    public function editDistributor()
+    {
+        $user = Session::get('user');
+        if (isset($user) && $user->role == User::DISTRIBUTOR_ROLE) {
+            $distributor = $this->dbDistributorRepository->findByUserID($user->id);
+            dd($distributor);
+            $data = [
+                "user_id" => $user->id,
+                "email" => $user->email,
+                "phone" => $user->phone,
+                "business_name" => $distributor->business_name
+            ];
+            return view('admin.profile.edit-profile-distributor', [
+                'user' => json_encode($data),
+                'activation' => $user->role
+            ]);
+        } else {
+            return redirect('/admin/user-session');
+        }
     }
 }

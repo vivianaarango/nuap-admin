@@ -25,12 +25,6 @@ class DbDistributorRepository implements DbDistributorRepositoryInterface
      * @param int $distributorID
      * @param int $userID
      * @param string $businessName
-     * @param string $city
-     * @param string $location
-     * @param string $neighborhood
-     * @param string $address
-     * @param string $latitude
-     * @param string $longitude
      * @param float $commission
      * @param string $type
      * @param string $nameLegalRepresentative
@@ -42,12 +36,6 @@ class DbDistributorRepository implements DbDistributorRepositoryInterface
         int $distributorID,
         int $userID,
         string $businessName,
-        string $city,
-        string $location,
-        string $neighborhood,
-        string $address,
-        string $latitude,
-        string $longitude,
         float $commission,
         string $type,
         string $nameLegalRepresentative,
@@ -57,12 +45,6 @@ class DbDistributorRepository implements DbDistributorRepositoryInterface
         $distributor = $this->findById($distributorID);
         $distributor->user_id = $userID;
         $distributor->business_name = $businessName;
-        $distributor->city = $city;
-        $distributor->location = $location;
-        $distributor->neighborhood = $neighborhood;
-        $distributor->address = $address;
-        $distributor->latitude = $latitude;
-        $distributor->longitude = $longitude;
         $distributor->commission = $commission;
         $distributor->type = $type;
         $distributor->name_legal_representative = $nameLegalRepresentative;

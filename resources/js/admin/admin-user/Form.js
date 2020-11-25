@@ -9,7 +9,23 @@ Vue.component('c', {
                 name:  '' ,
                 last_name:  '' ,
                 password:  '' ,
-                identity_number:  ''
+                identity_number:  '',
+                latitude: '',
+                longitude: '',
+                address: ''
+            }
+        }
+    },
+    methods: {
+        onSuccess: function onSuccess(data) {
+            if (data.notify) {
+                this.$notify({
+                    type: data.notify.type,
+                    title: data.notify.title,
+                    text: data.notify.message
+                });
+            } else if (data.redirect) {
+                window.location.replace(data.redirect);
             }
         }
     }

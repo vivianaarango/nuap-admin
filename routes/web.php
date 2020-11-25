@@ -42,6 +42,8 @@ Route::post('/admin/admin-users-store', 'Admin\AdminUsersController@store');
 Route::get('/admin/edit-profile', 'Admin\ProfileController@edit');
 /* Update */
 Route::post('/admin/update-profile', 'Admin\ProfileController@update');
+/* Edit distributor */
+Route::get('/admin/edit-profile-distributor', 'Admin\ProfileController@editDistributor');
 /* Edit password */
 Route::get('/admin/edit-password', 'Admin\ProfileController@editPassword');
 /* Update password */

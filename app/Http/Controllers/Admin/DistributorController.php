@@ -84,7 +84,6 @@ class DistributorController extends Controller
                     $query->select(
                             'users.*',
                             'distributors.business_name',
-                            'distributors.city',
                             'distributors.commission',
                             'distributors.name_legal_representative'
                         )->where('role', User::DISTRIBUTOR_ROLE)
@@ -162,12 +161,6 @@ class DistributorController extends Controller
             'phone' => ['nullable', 'string', 'unique:users,phone,'.$request['user_id']],
             'password' => ['nullable', 'confirmed', 'min:8', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9]).*$/', 'string'],
             'business_name' => ['required', 'string'],
-            'city' => ['required', 'string'],
-            'location' => ['required', 'string'],
-            'neighborhood' => ['required', 'string'],
-            'address' => ['required', 'string'],
-            'latitude' => ['required', 'string'],
-            'longitude' => ['required', 'string'],
             'commission' => ['numeric', 'min:0.0','max:100.00'],
             'type' => ['required', 'string'],
             'name_legal_representative' => ['required', 'string'],
@@ -193,12 +186,6 @@ class DistributorController extends Controller
                 $request['distributor_id'],
                 $request['user_id'],
                 $request['business_name'],
-                $request['city'],
-                $request['location'],
-                $request['neighborhood'],
-                $request['address'],
-                $request['latitude'],
-                $request['longitude'],
                 $request['commission'],
                 $request['type'],
                 $request['name_legal_representative'],
