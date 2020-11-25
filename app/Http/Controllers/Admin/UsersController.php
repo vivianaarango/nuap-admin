@@ -2,8 +2,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Users\CreateUserLocation;
 use App\Http\Requests\Admin\Users\LoginUsers;
 use App\Models\User;
+use App\Models\UserLocation;
 use App\Repositories\Contracts\DbCommerceRepositoryInterface;
 use App\Repositories\Contracts\DbDistributorRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
@@ -222,5 +224,45 @@ class UsersController extends Controller
         } else {
             return redirect('/admin/user-session');
         }
+    }
+
+    /**
+     * @param User $user
+     * @return Response|Factory|Application|View
+     */
+    public function location(User $user)
+    {
+        $userAdmin = Session::get('user');
+
+        if (isset($userAdmin) && $userAdmin->role == User::ADMIN_ROLE) {
+            return view('admin.users.add-location', [
+                'user' => ($user),
+                'activation' => $userAdmin->role
+            ]);
+        }
+
+        return redirect('/admin/user-session');
+    }
+
+    /**
+     * @param CreateUserLocation $request
+     * @return array|Application|RedirectResponse|Redirector
+     */
+    public function storeLocation(CreateUserLocation $request)
+    {
+        $user = Session::get('user');
+        if (isset($user) && $user->role == User::ADMIN_ROLE) {
+            $data = $request->getModifiedData();
+            UserLocation::create($data);
+        }
+
+        if ($request->ajax()) {
+            return [
+                'redirect' => url('admin/commerce-list'),
+                'message' => trans('brackets/admin-ui::admin.operation.succeeded')
+            ];
+        }
+
+        return redirect('admin/commerce-list');
     }
 }

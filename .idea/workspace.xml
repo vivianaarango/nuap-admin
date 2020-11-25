@@ -5,13 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d6cb72cc-2713-41b0-95f6-aeada7aa8696" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/users/components/form-add-location-elements.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/ProfileController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/ProfileController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/UsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/UsersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/admin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/admin/admin-user/Form.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/admin/admin-user/Form.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/distributors/components/form-elements.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/distributors/components/form-elements.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/distributors/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/distributors/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_11_24_100000_create_user_locations_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_11_24_100000_create_user_locations_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/admin.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/admin.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/commerces/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/commerces/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/users/components/form-edit-elements.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/users/components/form-elements.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/users/create.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/users/edit.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/users/index.blade.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -191,7 +195,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../merqueo-producto-api" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../architecturebackend" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -247,6 +251,8 @@
       <workItem from="1606067411468" duration="922000" />
       <workItem from="1606102367485" duration="1877000" />
       <workItem from="1606226559368" duration="4965000" />
+      <workItem from="1606262814446" duration="16072000" />
+      <workItem from="1606316604516" duration="3178000" />
     </task>
     <servers />
   </component>
@@ -258,30 +264,30 @@
       <screen x="0" y="27" width="1366" height="741" />
     </state>
     <state x="389" y="27" width="577" height="741" key="#JavaScript/0.27.1366.741@0.27.1366.741" timestamp="1605755577397" />
-    <state x="314" y="189" width="728" height="423" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1606183907331">
+    <state x="314" y="189" width="728" height="423" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1606271423694">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state x="314" y="189" width="728" height="423" key="#com.intellij.fileTypes.FileTypeChooser/0.27.1366.741@0.27.1366.741" timestamp="1606183907331" />
+    <state x="314" y="189" width="728" height="423" key="#com.intellij.fileTypes.FileTypeChooser/0.27.1366.741@0.27.1366.741" timestamp="1606271423694" />
     <state x="657" y="27" width="699" height="741" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1606104050933">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
     <state x="657" y="27" width="699" height="741" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.27.1366.741@0.27.1366.741" timestamp="1606104050933" />
     <state x="923" y="27" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1605150568098" />
-    <state x="416" y="155" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1606014358825">
+    <state x="416" y="155" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1606279569287">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state x="416" y="155" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.27.1366.741@0.27.1366.741" timestamp="1606014358825" />
+    <state x="416" y="155" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.27.1366.741@0.27.1366.741" timestamp="1606279569287" />
     <state x="585" y="209" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1606007312558" />
-    <state x="657" y="200" width="424" height="491" key="FileChooserDialogImpl" timestamp="1606231931221">
+    <state x="657" y="200" width="424" height="491" key="FileChooserDialogImpl" timestamp="1606318228303">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="466" y="155" width="424" height="491" key="FileChooserDialogImpl/0.27.1366.741@0.27.1366.741" timestamp="1605992401689" />
-    <state x="657" y="200" width="424" height="491" key="FileChooserDialogImpl/0.27.1920.1053@0.27.1920.1053" timestamp="1606231931221" />
-    <state x="478" y="319" width="399" height="164" key="NewPhpFileDialog" timestamp="1606102583768">
-      <screen x="0" y="27" width="1366" height="741" />
+    <state x="657" y="200" width="424" height="491" key="FileChooserDialogImpl/0.27.1920.1053@0.27.1920.1053" timestamp="1606318228303" />
+    <state x="672" y="442" width="399" height="164" key="NewPhpFileDialog" timestamp="1606323019173">
+      <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state x="478" y="319" width="399" height="164" key="NewPhpFileDialog/0.27.1366.741@0.27.1366.741" timestamp="1606102583768" />
-    <state x="672" y="442" width="399" height="164" key="NewPhpFileDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1606004900367" />
+    <state x="598" y="314" width="399" height="164" key="NewPhpFileDialog/0.27.1366.741@0.27.1366.741" timestamp="1606275820583" />
+    <state x="672" y="442" width="399" height="164" key="NewPhpFileDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1606323019173" />
     <state x="100" y="127" width="1166" height="541" key="VCS.FileHistoryDialog" timestamp="1606192211804">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
@@ -303,21 +309,21 @@
       <screen x="0" y="27" width="1366" height="741" />
     </state>
     <state x="462" y="310" width="431" height="181" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.27.1366.741@0.27.1366.741" timestamp="1604974687848" />
-    <state x="527" y="159" width="903" height="788" key="find.popup" timestamp="1606227134623">
-      <screen x="0" y="27" width="1920" height="1053" />
+    <state x="375" y="120" width="747" height="554" key="find.popup" timestamp="1606279014655">
+      <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state x="375" y="120" width="747" height="554" key="find.popup/0.27.1366.741@0.27.1366.741" timestamp="1606197089487" />
+    <state x="375" y="120" width="747" height="554" key="find.popup/0.27.1366.741@0.27.1366.741" timestamp="1606279014655" />
     <state x="527" y="159" width="903" height="788" key="find.popup/0.27.1920.1053@0.27.1920.1053" timestamp="1606227134623" />
     <state x="488" y="236" key="run.anything.popup" timestamp="1606000036501">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="347" y="174" key="run.anything.popup/0.27.1366.741@0.27.1366.741" timestamp="1605841624997" />
     <state x="488" y="236" key="run.anything.popup/0.27.1920.1053@0.27.1920.1053" timestamp="1606000036501" />
-    <state x="486" y="115" width="945" height="964" key="search.everywhere.popup" timestamp="1606227045945">
+    <state x="486" y="115" width="945" height="964" key="search.everywhere.popup" timestamp="1606322988283">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup/0.27.1366.741@0.27.1366.741" timestamp="1606192858517" />
-    <state x="486" y="115" width="945" height="964" key="search.everywhere.popup/0.27.1920.1053@0.27.1920.1053" timestamp="1606227045945" />
+    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup/0.27.1366.741@0.27.1366.741" timestamp="1606279547696" />
+    <state x="486" y="115" width="945" height="964" key="search.everywhere.popup/0.27.1920.1053@0.27.1920.1053" timestamp="1606322988283" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

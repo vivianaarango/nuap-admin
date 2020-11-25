@@ -30,6 +30,11 @@ Route::post('/admin/users/{user}/status', 'Admin\UsersController@changeStatus')-
 Route::delete('/admin/users/{user}', 'Admin\UsersController@delete')->name('admin/users/delete');
 /* View edit */
 Route::get('/admin/users/{user}/edit','Admin\UsersController@edit')->name('admin/users/edit');
+/* View add location */
+Route::get('/admin/users/{user}/add-location', 'Admin\UsersController@location')->name('admin/users/add-location');
+/* Store */
+Route::post('/admin/users/store-location', 'Admin\UsersController@storeLocation');
+
 
 ### Admin ###
 /* View create */
