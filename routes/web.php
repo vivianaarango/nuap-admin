@@ -34,7 +34,10 @@ Route::get('/admin/users/{user}/edit','Admin\UsersController@edit')->name('admin
 Route::get('/admin/users/{user}/add-location', 'Admin\UsersController@location')->name('admin/users/add-location');
 /* Store */
 Route::post('/admin/users/store-location', 'Admin\UsersController@storeLocation');
-
+/* View add document */
+Route::get('/admin/users/{user}/add-document', 'Admin\UsersController@document')->name('admin/users/add-document');
+/* Store */
+Route::post('/admin/users/store-documents', 'Admin\UsersController@storeDocuments');
 
 ### Admin ###
 /* View create */

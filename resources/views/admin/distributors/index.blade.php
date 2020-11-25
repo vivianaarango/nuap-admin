@@ -82,6 +82,9 @@
                                                 <a class="btn btn-sm btn-spinner btn-success" :href="item.resource_url+'/add-location'" title="Agregar ubicación" role="button"><i class="fa fa-map-marker"></i></a>
                                             </div>
                                             <div class="col-auto">
+                                                <a class="btn btn-sm btn-spinner btn-warning" :href="item.resource_url+'/add-document'" title="Agregar documentos" role="button"><i class="fa fa-file-archive-o"></i></a>
+                                            </div>
+                                            <div class="col-auto">
                                                 <a class="btn btn-sm btn-spinner btn-info" :href="item.resource_url+'/edit'" title="Editar" role="button"><i class="fa fa-edit"></i></a>
                                             </div>
                                             <form class="col" @submit.prevent="deleteItem(item.resource_url)">

@@ -141,7 +141,7 @@ class DistributorController extends Controller
         }
 
         if ($request->ajax()) {
-            return [
+           return [
                 'redirect' => url('admin/distributor-list'),
                 'message' => trans('brackets/admin-ui::admin.operation.succeeded')
             ];

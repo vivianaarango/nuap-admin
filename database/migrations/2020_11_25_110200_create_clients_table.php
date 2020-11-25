@@ -5,9 +5,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 /**
- * Class CreateUserLocationsTable
+ * Class CreateClientsTable
  */
-class CreateUserLocationsTable extends Migration
+class CreateClientsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,12 +16,14 @@ class CreateUserLocationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_locations', function (Blueprint $table) {
+        Schema::create('clients', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->string('name');
-            $table->string('last_name');
-            $table->string('identity_number');
+            $table->string('city');
+            $table->string('location');
+            $table->string('neighborhood');
+            $table->string('latitude');
+            $table->string('longitude');
             $table->timestamps();
         });
     }
@@ -33,6 +35,6 @@ class CreateUserLocationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_locations');
+        Schema::dropIfExists('clients');
     }
 }
