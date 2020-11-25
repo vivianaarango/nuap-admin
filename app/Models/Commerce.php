@@ -10,12 +10,6 @@ use Illuminate\Foundation\Application;
  * @property int id
  * @property int user_id
  * @property string business_name
- * @property string city
- * @property string location
- * @property string neighborhood
- * @property string address
- * @property string latitude
- * @property string longitude
  * @property string commission
  * @property string type
  * @property string name_legal_representative
@@ -41,12 +35,6 @@ class Commerce extends Model
     protected $fillable = [
         'user_id',
         'business_name',
-        'city',
-        'location',
-        'neighborhood',
-        'address',
-        'latitude',
-        'longitude',
         'commission',
         'type',
         'name_legal_representative',

@@ -42,12 +42,6 @@ class DbCommerceRepository implements DbCommerceRepositoryInterface
         int $commerceID,
         int $userID,
         string $businessName,
-        string $city,
-        string $location,
-        string $neighborhood,
-        string $address,
-        string $latitude,
-        string $longitude,
         float $commission,
         string $type,
         string $nameLegalRepresentative,
@@ -57,12 +51,6 @@ class DbCommerceRepository implements DbCommerceRepositoryInterface
         $commerce = $this->findById($commerceID);
         $commerce->user_id = $userID;
         $commerce->business_name = $businessName;
-        $commerce->city = $city;
-        $commerce->location = $location;
-        $commerce->neighborhood = $neighborhood;
-        $commerce->address = $address;
-        $commerce->latitude = $latitude;
-        $commerce->longitude = $longitude;
         $commerce->commission = $commission;
         $commerce->type = $type;
         $commerce->name_legal_representative = $nameLegalRepresentative;

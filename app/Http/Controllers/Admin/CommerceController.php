@@ -7,7 +7,6 @@ use App\Http\Requests\Admin\Commerce\IndexCommerce;
 use App\Models\Commerce;
 use App\Models\User;
 use App\Repositories\Contracts\DbCommerceRepositoryInterface;
-use App\Repositories\Contracts\DbDistributorRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use Brackets\AdminListing\Facades\AdminListing;
 use Illuminate\Contracts\View\Factory;
@@ -86,7 +85,6 @@ class CommerceController extends Controller
                         'users.*',
                         'commerces.business_name',
                         'commerces.type',
-                        'commerces.city',
                         'commerces.commission',
                         'commerces.name_legal_representative'
                     )->where('role', User::COMMERCE_ROLE)
@@ -164,12 +162,6 @@ class CommerceController extends Controller
             'phone' => ['nullable', 'string', 'unique:users,phone,'.$request['user_id']],
             'password' => ['nullable', 'confirmed', 'min:8', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9]).*$/', 'string'],
             'business_name' => ['required', 'string'],
-            'city' => ['required', 'string'],
-            'location' => ['required', 'string'],
-            'neighborhood' => ['required', 'string'],
-            'address' => ['required', 'string'],
-            'latitude' => ['required', 'string'],
-            'longitude' => ['required', 'string'],
             'commission' => ['numeric', 'min:0.0','max:100.00'],
             'type' => ['required', 'string'],
             'name_legal_representative' => ['required', 'string'],
@@ -195,12 +187,6 @@ class CommerceController extends Controller
                 $request['commerce_id'],
                 $request['user_id'],
                 $request['business_name'],
-                $request['city'],
-                $request['location'],
-                $request['neighborhood'],
-                $request['address'],
-                $request['latitude'],
-                $request['longitude'],
                 $request['commission'],
                 $request['type'],
                 $request['name_legal_representative'],

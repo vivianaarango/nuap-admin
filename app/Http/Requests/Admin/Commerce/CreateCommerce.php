@@ -22,12 +22,6 @@ class CreateCommerce extends FormRequest
             'phone' => ['required', 'string', 'unique:users'],
             'password' => ['required', 'confirmed', 'min:8', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9]).*$/', 'string'],
             'business_name' => ['required', 'string'],
-            'city' => ['required', 'string'],
-            'location' => ['required', 'string'],
-            'neighborhood' => ['required', 'string'],
-            //'address' => ['required', 'string'],
-            //'latitude' => ['required', 'string'],
-            //'longitude' => ['required', 'string'],
             'commission' => ['numeric', 'min:0.0','max:100.00'],
             'type' => ['required', 'string'],
             'name_legal_representative' => ['required', 'string'],
@@ -50,11 +44,6 @@ class CreateCommerce extends FormRequest
         $data['last_logged_in'] = now();
         $data['password'] = md5($data['password']);
         $data['phone_validated'] = User::PHONE_NOT_VALIDATED;
-
-        //test
-        $data['address'] = 'prueba';
-        $data['latitude'] = 'prueba';
-        $data['longitude'] = 'prueba';
 
         return $data;
     }

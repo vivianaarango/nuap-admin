@@ -49,7 +49,6 @@
                                     <th is='sortable' :column="'type'">Tipo de comercio</th>
                                     <th is='sortable' :column="'email'">Correo electrónico</th>
                                     <th is='sortable' :column="'phone'">Teléfono</th>
-                                    <th is='sortable' :column="'city'">Ciudad</th>
                                     <th is='sortable' :column="'commission'">Comisión</th>
                                     <th is='sortable' :column="'name_legal_representative'">Representante legal</th>
                                     <th is='sortable' :column="'activated'">Activo</th>
@@ -64,7 +63,6 @@
                                     <td >@{{ item.type }}</td>
                                     <td >@{{ item.email }}</td>
                                     <td >@{{ item.phone }}</td>
-                                    <td >@{{ item.city }}</td>
                                     <td >@{{ item.commission }}%</td>
                                     <td >@{{ item.name_legal_representative }}</td>
                                     <td v-if="item.status === 1">
