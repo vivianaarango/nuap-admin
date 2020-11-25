@@ -165,7 +165,6 @@ class DistributorController extends Controller
             'nit' => ['required', 'string'],
             'second_phone' => ['required', 'string'],
             'commission' => ['required', 'numeric', 'min:0.0','max:100.00'],
-            'type' => ['required', 'string'],
             'name_legal_representative' => ['required', 'string'],
             'cc_legal_representative' => ['required', 'string'],
             'contact_legal_representative' => ['required', 'string']
@@ -192,7 +191,6 @@ class DistributorController extends Controller
                 $request['nit'],
                 $request['second_phone'],
                 $request['commission'],
-                $request['type'],
                 $request['name_legal_representative'],
                 $request['cc_legal_representative'],
                 $request['contact_legal_representative']

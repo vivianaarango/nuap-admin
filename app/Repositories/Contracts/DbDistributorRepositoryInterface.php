@@ -23,7 +23,6 @@ interface DbDistributorRepositoryInterface
      * @param string $nit
      * @param string $secondPhone
      * @param float $commission
-     * @param string $type
      * @param string $nameLegalRepresentative
      * @param string $ccLegalRepresentative
      * @param string $contactLegalRepresentative
@@ -36,7 +35,6 @@ interface DbDistributorRepositoryInterface
         string $nit,
         string $secondPhone,
         float $commission,
-        string $type,
         string $nameLegalRepresentative,
         string $ccLegalRepresentative,
         string $contactLegalRepresentative

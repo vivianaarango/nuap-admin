@@ -25,12 +25,8 @@ class DbCommerceRepository implements DbCommerceRepositoryInterface
      * @param int $commerceID
      * @param int $userID
      * @param string $businessName
-     * @param string $city
-     * @param string $location
-     * @param string $neighborhood
-     * @param string $address
-     * @param string $latitude
-     * @param string $longitude
+     * @param string $nit
+     * @param string $secondPhone
      * @param float $commission
      * @param string $type
      * @param string $nameLegalRepresentative
@@ -42,6 +38,8 @@ class DbCommerceRepository implements DbCommerceRepositoryInterface
         int $commerceID,
         int $userID,
         string $businessName,
+        string $nit,
+        string $secondPhone,
         float $commission,
         string $type,
         string $nameLegalRepresentative,
@@ -51,6 +49,8 @@ class DbCommerceRepository implements DbCommerceRepositoryInterface
         $commerce = $this->findById($commerceID);
         $commerce->user_id = $userID;
         $commerce->business_name = $businessName;
+        $commerce->nit = $nit;
+        $commerce->second_phone = $secondPhone;
         $commerce->commission = $commission;
         $commerce->type = $type;
         $commerce->name_legal_representative = $nameLegalRepresentative;

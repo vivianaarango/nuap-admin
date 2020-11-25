@@ -20,12 +20,8 @@ interface DbCommerceRepositoryInterface
      * @param int $commerceID
      * @param int $userID
      * @param string $businessName
-     * @param string $city
-     * @param string $location
-     * @param string $neighborhood
-     * @param string $address
-     * @param string $latitude
-     * @param string $longitude
+     * @param string $nit
+     * @param string $secondPhone
      * @param float $commission
      * @param string $type
      * @param string $nameLegalRepresentative
@@ -37,6 +33,8 @@ interface DbCommerceRepositoryInterface
         int $commerceID,
         int $userID,
         string $businessName,
+        string $nit,
+        string $secondPhone,
         float $commission,
         string $type,
         string $nameLegalRepresentative,

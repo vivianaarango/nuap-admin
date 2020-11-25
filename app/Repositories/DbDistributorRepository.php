@@ -28,7 +28,6 @@ class DbDistributorRepository implements DbDistributorRepositoryInterface
      * @param string $nit
      * @param string $secondPhone
      * @param float $commission
-     * @param string $type
      * @param string $nameLegalRepresentative
      * @param string $ccLegalRepresentative
      * @param string $contactLegalRepresentative
@@ -41,7 +40,6 @@ class DbDistributorRepository implements DbDistributorRepositoryInterface
         string $nit,
         string $secondPhone,
         float $commission,
-        string $type,
         string $nameLegalRepresentative,
         string $ccLegalRepresentative,
         string $contactLegalRepresentative
@@ -52,7 +50,6 @@ class DbDistributorRepository implements DbDistributorRepositoryInterface
         $distributor->nit = $nit;
         $distributor->second_phone = $secondPhone;
         $distributor->commission = $commission;
-        $distributor->type = $type;
         $distributor->name_legal_representative = $nameLegalRepresentative;
         $distributor->cc_legal_representative = $ccLegalRepresentative;
         $distributor->contact_legal_representative = $contactLegalRepresentative;
