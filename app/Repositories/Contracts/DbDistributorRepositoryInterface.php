@@ -20,6 +20,8 @@ interface DbDistributorRepositoryInterface
      * @param int $distributorID
      * @param int $userID
      * @param string $businessName
+     * @param string $nit
+     * @param string $secondPhone
      * @param float $commission
      * @param string $type
      * @param string $nameLegalRepresentative
@@ -31,6 +33,8 @@ interface DbDistributorRepositoryInterface
         int $distributorID,
         int $userID,
         string $businessName,
+        string $nit,
+        string $secondPhone,
         float $commission,
         string $type,
         string $nameLegalRepresentative,

@@ -10,6 +10,8 @@ use Illuminate\Foundation\Application;
  * @property int id
  * @property int user_id
  * @property string business_name
+ * @property string nit
+ * @property string second_phone
  * @property string commission
  * @property string type
  * @property string name_legal_representative
@@ -35,6 +37,8 @@ class Distributor extends Model
     protected $fillable = [
         'user_id',
         'business_name',
+        'nit',
+        'second_phone',
         'commission',
         'type',
         'name_legal_representative',

@@ -14,6 +14,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
@@ -157,11 +158,13 @@ class DistributorController extends Controller
     public function update(Request $request)
     {
         $this->validate($request, [
-            'email' => ['nullable', 'string', 'email', 'unique:users,email,'.$request['user_id']],
-            'phone' => ['nullable', 'string', 'unique:users,phone,'.$request['user_id']],
+            'email' => ['required', 'string', 'email', 'unique:users,email,'.$request['user_id']],
+            'phone' => ['required', 'string', 'unique:users,phone,'.$request['user_id']],
             'password' => ['nullable', 'confirmed', 'min:8', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9]).*$/', 'string'],
             'business_name' => ['required', 'string'],
-            'commission' => ['numeric', 'min:0.0','max:100.00'],
+            'nit' => ['required', 'string'],
+            'second_phone' => ['required', 'string'],
+            'commission' => ['required', 'numeric', 'min:0.0','max:100.00'],
             'type' => ['required', 'string'],
             'name_legal_representative' => ['required', 'string'],
             'cc_legal_representative' => ['required', 'string'],
@@ -186,6 +189,8 @@ class DistributorController extends Controller
                 $request['distributor_id'],
                 $request['user_id'],
                 $request['business_name'],
+                $request['nit'],
+                $request['second_phone'],
                 $request['commission'],
                 $request['type'],
                 $request['name_legal_representative'],

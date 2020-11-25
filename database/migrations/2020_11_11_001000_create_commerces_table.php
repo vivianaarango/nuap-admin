@@ -20,6 +20,8 @@ class CreateCommercesTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->string('business_name');
+            $table->string('nit');
+            $table->string('second_phone');
             $table->float('commission')->default(0.0);
             $table->enum('type', [
                 'Cigarreria',

@@ -25,6 +25,8 @@ class DbDistributorRepository implements DbDistributorRepositoryInterface
      * @param int $distributorID
      * @param int $userID
      * @param string $businessName
+     * @param string $nit
+     * @param string $secondPhone
      * @param float $commission
      * @param string $type
      * @param string $nameLegalRepresentative
@@ -36,6 +38,8 @@ class DbDistributorRepository implements DbDistributorRepositoryInterface
         int $distributorID,
         int $userID,
         string $businessName,
+        string $nit,
+        string $secondPhone,
         float $commission,
         string $type,
         string $nameLegalRepresentative,
@@ -45,6 +49,8 @@ class DbDistributorRepository implements DbDistributorRepositoryInterface
         $distributor = $this->findById($distributorID);
         $distributor->user_id = $userID;
         $distributor->business_name = $businessName;
+        $distributor->nit = $nit;
+        $distributor->second_phone = $secondPhone;
         $distributor->commission = $commission;
         $distributor->type = $type;
         $distributor->name_legal_representative = $nameLegalRepresentative;
