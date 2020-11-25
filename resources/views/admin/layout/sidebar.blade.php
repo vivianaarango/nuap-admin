@@ -25,7 +25,13 @@
         </nav>
         <button class="sidebar-minimizer brand-minimizer" type="button"></button>
     @else
-        ene o
+        <nav class="sidebar-nav">
+            <ul class="nav">
+                <li class="nav-title">Productos</li>
+                <li class="nav-item"><a class="nav-link" href=""><i class="nav-icon icon-plus"></i>Inventario</a></li>
+            </ul>
+        </nav>
+        <button class="sidebar-minimizer brand-minimizer" type="button"></button>
     @endif
 </div>
 

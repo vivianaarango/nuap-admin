@@ -77,7 +77,7 @@ class UsersController extends Controller
         }
 
         if ($user->role == User::DISTRIBUTOR_ROLE) {
-            return redirect('admin/edit-profile-distributor');
+            return redirect('/admin/edit-password');
         }
 
         return redirect()->back();
@@ -96,7 +96,7 @@ class UsersController extends Controller
         }
 
         if (isset($user) && $user->role == User::DISTRIBUTOR_ROLE) {
-            dd("Desarrollo");
+            return redirect('/admin/edit-password');
         }
 
         if ($request->ajax()) {

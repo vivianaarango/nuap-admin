@@ -189,14 +189,14 @@ class ProfileController extends Controller
         $user = Session::get('user');
         if (isset($user) && $user->role == User::DISTRIBUTOR_ROLE) {
             $distributor = $this->dbDistributorRepository->findByUserID($user->id);
-            dd($distributor);
             $data = [
-                "user_id" => $user->id,
-                "email" => $user->email,
-                "phone" => $user->phone,
-                "business_name" => $distributor->business_name
+                'user_id' => $user->id,
+                'email' => $user->email,
+                'phone' => $user->phone,
+                'business_name' => $distributor->business_name,
+                'nit' => $distributor->nit
             ];
-            return view('admin.profile.edit-profile-distributor', [
+            return view('admin.profile.edit-profile-dist', [
                 'user' => json_encode($data),
                 'activation' => $user->role
             ]);
