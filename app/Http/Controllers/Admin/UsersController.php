@@ -272,11 +272,12 @@ class UsersController extends Controller
      */
     public function document(User $user)
     {
+        $documents = 'documents/'.$user->phone;
         $userAdmin = Session::get('user');
 
         if (isset($userAdmin) && $userAdmin->role == User::ADMIN_ROLE) {
             return view('admin.users.add-documents', [
-                'user' => ($user),
+                'user' => $user,
                 'activation' => $userAdmin->role
             ]);
         }
@@ -297,53 +298,77 @@ class UsersController extends Controller
                 mkdir($documents, 0777);
             }
 
-            $rut = (isset($_FILES['rut'])) ? $_FILES['rut'] : null;
-            $commerceRoom = (isset($_FILES['commerce_room'])) ? $_FILES['commerce_room'] : null;
-            $ccLegalRepresentative = (isset($_FILES['cc_legal_representative'])) ? $_FILES['cc_legal_representative'] : null;
-            $establishmentImage = (isset($_FILES['establishment_image'])) ? $_FILES['establishment_image'] : null;
-            $interiorImage = (isset($_FILES['interior_image'])) ? $_FILES['interior_image'] : null;
-            $contract = (isset($_FILES['contract'])) ? $_FILES['contract'] : null;
+            $rut = $_FILES['rut'];
+            $commerceRoom = $_FILES['commerce_room'];
+            $ccLegalRepresentative = $_FILES['cc_legal_representative'];
+            $establishmentImage = $_FILES['establishment_image'];
+            $interiorImage = $_FILES['interior_image'];
+            $contract = $_FILES['contract'];
 
-            if ($rut) {
+            if ($rut['name'] != '') {
                 $ext = pathinfo($rut['name'], PATHINFO_EXTENSION);
-                $destinationRoute = "{$documents}/1.Rut.{$ext}";
+                $urlRut = "{$documents}/1.Rut.{$ext}";
+                $destinationRoute = $urlRut;
                 move_uploaded_file($rut['tmp_name'], $destinationRoute);
             }
 
-            if ($commerceRoom) {
+            if ($commerceRoom['name'] != '') {
                 $ext = pathinfo($commerceRoom['name'], PATHINFO_EXTENSION);
-                $destinationRoute = "{$documents}/2.Camara de comercio.{$ext}";
+                $urlCommerceRoom = "{$documents}/2.Camara de comercio.{$ext}";
+                $destinationRoute = $urlCommerceRoom;
                 move_uploaded_file($commerceRoom['tmp_name'], $destinationRoute);
             }
 
-            if ($ccLegalRepresentative) {
+            if ($ccLegalRepresentative['name'] != '') {
                 $ext = pathinfo($ccLegalRepresentative['name'], PATHINFO_EXTENSION);
-                $destinationRoute = "{$documents}/3.Cedula del representante legal.{$ext}";
+                $urlCCLegalRepresentative = "{$documents}/3.Cedula del representante legal.{$ext}";
+                $destinationRoute = $urlCCLegalRepresentative;
                 move_uploaded_file($ccLegalRepresentative['tmp_name'], $destinationRoute);
             }
 
-            if ($establishmentImage) {
+            if ($establishmentImage['name'] != '') {
                 $ext = pathinfo($establishmentImage['name'], PATHINFO_EXTENSION);
-                $destinationRoute = "{$documents}/4.Foto del establecimiento.{$ext}";
+                $urlEstablishmentImage = "{$documents}/4.Foto del establecimiento.{$ext}";
+                $destinationRoute = $urlEstablishmentImage;
                 move_uploaded_file($establishmentImage['tmp_name'], $destinationRoute);
             }
 
-            if ($interiorImage) {
+            if ($interiorImage['name'] != '') {
                 $ext = pathinfo($interiorImage['name'], PATHINFO_EXTENSION);
-                $destinationRoute = "{$documents}/5.Foto estanteria, caja, bodega.{$ext}";
+                $urlInteriorImage = "{$documents}/5.Foto estanteria, caja, bodega.{$ext}";
+                $destinationRoute = $urlInteriorImage;
                 move_uploaded_file($interiorImage['tmp_name'], $destinationRoute);
             }
 
-            if ($contract) {
+            if ($contract['name'] != '') {
                 $ext = pathinfo($contract['name'], PATHINFO_EXTENSION);
-                $destinationRoute = "{$documents}/6.Contrato.{$ext}";
+                $urlContract = "{$documents}/6.Contrato.{$ext}";
+                $destinationRoute = $urlContract;
                 move_uploaded_file($contract['tmp_name'], $destinationRoute);
             }
 
-            if ($request->role == User::COMMERCE_ROLE){
+            if ($request->role == User::COMMERCE_ROLE) {
+                $this->dbCommerceRepository->saveDocuments(
+                    $request->user_id,
+                    isset($urlRut) ? $urlRut : null,
+                    isset($urlCommerceRoom) ? $urlCommerceRoom : null,
+                    isset($urlCCLegalRepresentative) ? $urlCCLegalRepresentative : null,
+                    isset($urlEstablishmentImage) ? $urlEstablishmentImage : null,
+                    isset($urlInteriorImage) ? $urlInteriorImage : null ,
+                    isset($urlContract) ? $urlContract : null
+                );
                 return redirect('admin/commerce-list');
             }
-            if ($request->role == User::DISTRIBUTOR_ROLE){
+            if ($request->role == User::DISTRIBUTOR_ROLE) {
+                $this->dbDistributorRepository->saveDocuments(
+                    $request->user_id,
+                    isset($urlRut) ? $urlRut : null,
+                    isset($urlCommerceRoom) ? $urlCommerceRoom : null,
+                    isset($urlCCLegalRepresentative) ? $urlCCLegalRepresentative : null,
+                    isset($urlEstablishmentImage) ? $urlEstablishmentImage : null,
+                    isset($urlInteriorImage) ? $urlInteriorImage : null ,
+                    isset($urlContract) ? $urlContract : null
+                );
                 return redirect('admin/distributor-list');
             }
         }

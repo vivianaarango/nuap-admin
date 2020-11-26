@@ -23468,3 +23468,7 @@ div.trumbowyg-dropdown-table table td.active {
   margin-top: 0em;
   margin-block-end: 1em;
 }
+.btn-link {
+  background-color: #60abcf;
+  border-color: #60b5cf;
+}

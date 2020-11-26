@@ -17,6 +17,12 @@ use Illuminate\Foundation\Application;
  * @property string name_legal_representative
  * @property string cc_legal_representative
  * @property string contact_legal_representative
+ * @property string url_rut
+ * @property string url_commerce_room
+ * @property string url_cc_legal_representative
+ * @property string url_establishment_image
+ * @property string url_interior_image
+ * @property string url_contract
  * @property string resource_url
  *
  * @package App\Models
@@ -43,7 +49,13 @@ class Commerce extends Model
         'type',
         'name_legal_representative',
         'cc_legal_representative',
-        'contact_legal_representative'
+        'contact_legal_representative',
+        'url_rut',
+        'url_commerce_room',
+        'url_cc_legal_representative',
+        'url_establishment_image',
+        'url_interior_image',
+        'url_contract'
     ];
 
     /**

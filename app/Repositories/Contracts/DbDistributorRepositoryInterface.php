@@ -45,4 +45,24 @@ interface DbDistributorRepositoryInterface
      * @return Distributor
      */
     public function findByID(int $distributorID): Distributor;
+
+    /**
+     * @param int $userID
+     * @param string|null $rut
+     * @param string|null $commerceRoom
+     * @param string|null $ccLegalRepresentative
+     * @param string|null $establishmentImage
+     * @param string|null $interiorImage
+     * @param string|null $contract
+     * @return Distributor
+     */
+    public function saveDocuments(
+        int $userID,
+        string $rut = null,
+        string $commerceRoom = null,
+        string $ccLegalRepresentative = null,
+        string $establishmentImage = null,
+        string $interiorImage = null,
+        string $contract = null
+    ): Distributor;
 }

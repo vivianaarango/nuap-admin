@@ -69,4 +69,47 @@ class DbCommerceRepository implements DbCommerceRepositoryInterface
     {
         return Commerce::findOrFail($commerceID);
     }
+
+    /**
+     * @param int $userID
+     * @param string|null $rut
+     * @param string|null $commerceRoom
+     * @param string|null $ccLegalRepresentative
+     * @param string|null $establishmentImage
+     * @param string|null $interiorImage
+     * @param string|null $contract
+     * @return Commerce
+     */
+    public function saveDocuments(
+        int $userID,
+        string $rut = null,
+        string $commerceRoom = null,
+        string $ccLegalRepresentative = null,
+        string $establishmentImage = null,
+        string $interiorImage = null,
+        string $contract = null
+    ): Commerce {
+        $commerce = $this->findByUserID($userID);
+
+        if (!is_null($rut))
+            $commerce->url_rut = $rut;
+
+        if (!is_null($commerceRoom))
+            $commerce->url_commerce_room = $commerceRoom;
+
+        if (!is_null($rut))
+            $commerce->url_cc_legal_representative = $ccLegalRepresentative;
+
+        if (!is_null($establishmentImage))
+            $commerce->url_establishment_image = $establishmentImage;
+
+        if (!is_null($interiorImage))
+            $commerce->url_interior_image = $interiorImage;
+
+        if (!is_null($contract))
+            $commerce->url_contract = $contract;
+
+        $commerce->save();
+        return $commerce;
+    }
 }

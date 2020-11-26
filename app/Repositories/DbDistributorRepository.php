@@ -66,4 +66,47 @@ class DbDistributorRepository implements DbDistributorRepositoryInterface
     {
         return Distributor::findOrFail($distributorID);
     }
+
+    /**
+     * @param int $userID
+     * @param string|null $rut
+     * @param string|null $commerceRoom
+     * @param string|null $ccLegalRepresentative
+     * @param string|null $establishmentImage
+     * @param string|null $interiorImage
+     * @param string|null $contract
+     * @return Distributor
+     */
+    public function saveDocuments(
+        int $userID,
+        string $rut = null,
+        string $commerceRoom = null,
+        string $ccLegalRepresentative = null,
+        string $establishmentImage = null,
+        string $interiorImage = null,
+        string $contract = null
+    ): Distributor {
+        $distributor = $this->findByUserID($userID);
+
+        if (!is_null($rut))
+            $distributor->url_rut = $rut;
+
+        if (!is_null($commerceRoom))
+            $distributor->url_commerce_room = $commerceRoom;
+
+        if (!is_null($rut))
+            $distributor->url_cc_legal_representative = $ccLegalRepresentative;
+
+        if (!is_null($establishmentImage))
+            $distributor->url_establishment_image = $establishmentImage;
+
+        if (!is_null($interiorImage))
+            $distributor->url_interior_image = $interiorImage;
+
+        if (!is_null($contract))
+            $distributor->url_contract = $contract;
+
+        $distributor->save();
+        return $distributor;
+    }
 }
