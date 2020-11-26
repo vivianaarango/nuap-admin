@@ -1,6 +1,6 @@
 <div class="sidebar">
     <div id="role" style="visibility: hidden">{{ $activation }}</div>
-    @if($activation =='Administrador')
+    @if($activation == 'Administrador')
         <nav class="sidebar-nav">
             <ul class="nav">
                 <li class="nav-title">Administradores</li>

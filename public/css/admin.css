@@ -23472,3 +23472,9 @@ div.trumbowyg-dropdown-table table td.active {
   background-color: #60abcf;
   border-color: #60b5cf;
 }
+.not-active {
+  pointer-events: none;
+  cursor: default;
+  background-color: #d6d6d6;
+  border-color: #dadada;
+}

@@ -272,11 +272,18 @@ class UsersController extends Controller
      */
     public function document(User $user)
     {
-        $documents = 'documents/'.$user->phone;
         $userAdmin = Session::get('user');
 
         if (isset($userAdmin) && $userAdmin->role == User::ADMIN_ROLE) {
+            $urls = [];
+            if ($user->role == User::DISTRIBUTOR_ROLE) {
+                $urls = $this->dbDistributorRepository->findByUserID($user->id);
+            }
+            if ($user->role == User::COMMERCE_ROLE) {
+                $urls = $this->dbCommerceRepository->findByUserID($user->id);
+            }
             return view('admin.users.add-documents', [
+                'urls' => $urls,
                 'user' => $user,
                 'activation' => $userAdmin->role
             ]);
