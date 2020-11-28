@@ -96,14 +96,14 @@
                             </tbody>
                         </table>
 
-                        <div class="row" v-if="pagination.state.total > 0">
+                        <!--<div class="row" v-if="pagination.state.total > 0">
                             <div class="col-sm">
                                 <span class="pagination-caption">{{ trans('brackets/admin-ui::admin.pagination.overview') }}</span>
                             </div>
                             <div class="col-sm-auto">
                                 <pagination></pagination>
                             </div>
-                        </div>
+                        </div>-->
 
 	                   <div class="no-items-found" v-if="!collection.length > 0">
 		                    <i class="icon-magnifier"></i>

@@ -72,7 +72,7 @@ class CommerceController extends Controller
                 }
             }
 
-            if (!is_null($days)){
+            if (!is_null($days) && $days != 0) {
                 $this->dateToSearch = date("Y-m-d",strtotime($this->dateToSearch." - ".$days." days"));
             } else {
                 $this->dateToSearch = date("Y-m-d",strtotime($this->dateToSearch." + 1 days"));
