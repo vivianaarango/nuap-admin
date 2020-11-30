@@ -5,11 +5,11 @@
         <div v-if="errors.has('rut')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('rut') }}</div>
     </div>
     @if($urls->url_rut == null)
-        <a target="_blank" class="btn btn-sm btn-link not-active" class="col-auto" href="../../../{{ $urls->url_rut }}" title="Ver" role="button">
+        <a target="_blank" class="btn btn-sm btn-link-documents not-active" class="col-auto" href="../../../{{ $urls->url_rut }}" title="Ver" role="button">
             <i class="fa fa-mail-forward"></i>
         </a>
     @else
-        <a target="_blank" class="btn btn-sm btn-link" class="col-auto" href="../../../{{ $urls->url_rut }}" title="Ver" role="button">
+        <a target="_blank" class="btn btn-sm btn-link-documents" class="col-auto" href="../../../{{ $urls->url_rut }}" title="Ver" role="button">
             <i class="fa fa-mail-forward"></i>
         </a>
     @endif
@@ -22,11 +22,11 @@
         <div v-if="errors.has('commerce_room')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('commerce_room') }}</div>
     </div>
     @if($urls->url_commerce_room == null)
-        <a target="_blank" class="btn btn-sm btn-link not-active" href="../../../{{ $urls->url_commerce_room }}" class="col-auto" href="item.resource_url+'/add-document'" title="Ver" role="button">
+        <a target="_blank" class="btn btn-sm btn-link-documents not-active" href="../../../{{ $urls->url_commerce_room }}" class="col-auto" href="item.resource_url+'/add-document'" title="Ver" role="button">
             <i class="fa fa-mail-forward"></i>
         </a>
     @else
-        <a target="_blank" class="btn btn-sm btn-link" href="../../../{{ $urls->url_commerce_room }}" class="col-auto" href="item.resource_url+'/add-document'" title="Ver" role="button">
+        <a target="_blank" class="btn btn-sm btn-link-documents" href="../../../{{ $urls->url_commerce_room }}" class="col-auto" href="item.resource_url+'/add-document'" title="Ver" role="button">
             <i class="fa fa-mail-forward"></i>
         </a>
     @endif
@@ -39,11 +39,11 @@
         <div v-if="errors.has('cc_legal_representative')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('cc_legal_representative') }}</div>
     </div>
     @if($urls->url_cc_legal_representative == null)
-        <a target="_blank" class="btn btn-sm btn-link not-active" href="../../../{{ $urls->url_cc_legal_representative }}" class="col-auto" href="item.resource_url+'/add-document'" title="Ver" role="button">
+        <a target="_blank" class="btn btn-sm btn-link-documents not-active" href="../../../{{ $urls->url_cc_legal_representative }}" class="col-auto" href="item.resource_url+'/add-document'" title="Ver" role="button">
             <i class="fa fa-mail-forward"></i>
         </a>
     @else
-        <a target="_blank" class="btn btn-sm btn-link" href="../../../{{ $urls->url_cc_legal_representative }}" class="col-auto" href="item.resource_url+'/add-document'" title="Ver" role="button">
+        <a target="_blank" class="btn btn-sm btn-link-documents" href="../../../{{ $urls->url_cc_legal_representative }}" class="col-auto" href="item.resource_url+'/add-document'" title="Ver" role="button">
             <i class="fa fa-mail-forward"></i>
         </a>
     @endif
@@ -56,11 +56,11 @@
         <div v-if="errors.has('establishment_image')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('establishment_image') }}</div>
     </div>
     @if($urls->url_establishment_image == null)
-        <a target="_blank" class="btn btn-sm btn-link not-active" href="../../../{{ $urls->url_establishment_image }}" class="col-auto" href="item.resource_url+'/add-document'" title="Ver" role="button">
+        <a target="_blank" class="btn btn-sm btn-link-documents not-active" href="../../../{{ $urls->url_establishment_image }}" class="col-auto" href="item.resource_url+'/add-document'" title="Ver" role="button">
             <i class="fa fa-mail-forward"></i>
         </a>
     @else
-        <a target="_blank" class="btn btn-sm btn-link" href="../../../{{ $urls->url_establishment_image }}" class="col-auto" href="item.resource_url+'/add-document'" title="Ver" role="button">
+        <a target="_blank" class="btn btn-sm btn-link-documents" href="../../../{{ $urls->url_establishment_image }}" class="col-auto" href="item.resource_url+'/add-document'" title="Ver" role="button">
             <i class="fa fa-mail-forward"></i>
         </a>
     @endif
@@ -73,11 +73,11 @@
         <div v-if="errors.has('interior_image')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('interior_image') }}</div>
     </div>
     @if($urls->url_interior_image == null)
-        <a target="_blank" class="btn btn-sm btn-link not-active" href="../../../{{ $urls->url_interior_image }}" class="col-auto" href="item.resource_url+'/add-document'" title="Ver" role="button">
+        <a target="_blank" class="btn btn-sm btn-link-documents not-active" href="../../../{{ $urls->url_interior_image }}" class="col-auto" href="item.resource_url+'/add-document'" title="Ver" role="button">
             <i class="fa fa-mail-forward"></i>
         </a>
     @else
-        <a target="_blank" class="btn btn-sm btn-link" href="../../../{{ $urls->url_interior_image }}" class="col-auto" href="item.resource_url+'/add-document'" title="Ver" role="button">
+        <a target="_blank" class="btn btn-sm btn-link-documents" href="../../../{{ $urls->url_interior_image }}" class="col-auto" href="item.resource_url+'/add-document'" title="Ver" role="button">
             <i class="fa fa-mail-forward"></i>
         </a>
     @endif
@@ -90,11 +90,11 @@
         <div v-if="errors.has('contract')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('contract') }}</div>
     </div>
     @if($urls->url_contract == null)
-        <a target="_blank" class="btn btn-sm btn-link not-active" href="../../../{{ $urls->url_contract }}" class="col-auto" href="item.resource_url+'/add-document'" title="Ver" role="button">
+        <a target="_blank" class="btn btn-sm btn-link-documents not-active" href="../../../{{ $urls->url_contract }}" class="col-auto" href="item.resource_url+'/add-document'" title="Ver" role="button">
             <i class="fa fa-mail-forward"></i>
         </a>
     @else
-        <a target="_blank" class="btn btn-sm btn-link" href="../../../{{ $urls->url_contract }}" class="col-auto" href="item.resource_url+'/add-document'" title="Ver" role="button">
+        <a target="_blank" class="btn btn-sm btn-link-documents" href="../../../{{ $urls->url_contract }}" class="col-auto" href="item.resource_url+'/add-document'" title="Ver" role="button">
             <i class="fa fa-mail-forward"></i>
         </a>
     @endif
