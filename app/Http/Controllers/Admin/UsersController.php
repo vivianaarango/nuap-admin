@@ -302,7 +302,7 @@ class UsersController extends Controller
         if (isset($user) && $user->role == User::ADMIN_ROLE) {
             $documents = 'documents/'.$request->phone;
             if (!is_dir($documents)) {
-                mkdir($documents, 0777);
+                mkdir($documents, 0777, true);
             }
 
             $rut = $_FILES['rut'];
