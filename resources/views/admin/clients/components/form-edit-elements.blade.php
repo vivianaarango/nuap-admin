@@ -33,76 +33,27 @@
     </div>
 </div>
 
-<div class="form-group row align-items-center" :class="{'has-danger': errors.has('business_name'), 'has-success': this.fields.business_name && this.fields.business_name.valid }">
-    <label for="business_name" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">Razón Social</label>
+<div class="form-group row align-items-center" :class="{'has-danger': errors.has('name'), 'has-success': this.fields.name && this.fields.name.valid }">
+    <label for="name" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">Nombre</label>
     <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-7'">
-        <input type="text" v-model="form.business_name" v-validate="'required'" @input="validate($event)" class="form-control" :class="{'form-control-danger': errors.has('business_name'), 'form-control-success': this.fields.business_name && this.fields.business_name.valid}" id="business_name" name="business_name" placeholder="Razón Social">
-        <div v-if="errors.has('business_name')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('business_name') }}</div>
+        <input type="text" v-model="form.name" v-validate="''" @input="validate($event)" class="form-control" :class="{'form-control-danger': errors.has('name'), 'form-control-success': this.fields.name && this.fields.name.valid}" id="name" name="name" placeholder="Nombre">
+        <div v-if="errors.has('name')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('name') }}</div>
     </div>
 </div>
 
-<div class="form-group row align-items-center" :class="{'has-danger': errors.has('nit'), 'has-success': this.fields.nit && this.fields.nit.valid }">
-    <label for="nit" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">Nit</label>
+<div class="form-group row align-items-center" :class="{'has-danger': errors.has('nit'), 'has-success': this.fields.last_name && this.fields.last_name.valid }">
+    <label for="last_name" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">Apellido</label>
     <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-7'">
-        <input type="text" v-model="form.nit" v-validate="'required'" @input="validate($event)" class="form-control" :class="{'form-control-danger': errors.has('nit'), 'form-control-success': this.fields.nit && this.fields.nit.valid}" id="nit" name="nit" placeholder="Nit">
-        <div v-if="errors.has('nit')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('nit') }}</div>
+        <input type="text" v-model="form.last_name" v-validate="''" @input="validate($event)" class="form-control" :class="{'form-control-danger': errors.has('last_name'), 'form-control-success': this.fields.last_name && this.fields.last_name.valid}" id="last_name" name="last_name" placeholder="Apellido">
+        <div v-if="errors.has('last_name')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('last_name') }}</div>
     </div>
 </div>
 
-<div class="form-group row align-items-center" :class="{'has-danger': errors.has('second_phone'), 'has-success': this.fields.second_phone && this.fields.second_phone.valid }">
-    <label for="second_phone" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">Segundo Teléfono</label>
+<div class="form-group row align-items-center" :class="{'has-danger': errors.has('identity_number'), 'has-success': this.fields.identity_number && this.fields.identity_number.valid }">
+    <label for="identity_number" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">Número de Identificación</label>
     <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-7'">
-        <input onkeypress="return isNumberKey(event)" type="text" v-model="form.second_phone" v-validate="'required'" @input="validate($event)" class="form-control" :class="{'form-control-danger': errors.has('second_phone'), 'form-control-success': this.fields.second_phone && this.fields.second_phone.valid}" id="second_phone" name="second_phone" placeholder="Segundo Teléfono">
-        <div v-if="errors.has('second_phone')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('second_phone') }}</div>
+        <input onkeypress="return isNumberKey(event)" type="text" v-model="form.identity_number" v-validate="''" @input="validate($event)" class="form-control" :class="{'form-control-danger': errors.has('identity_number'), 'form-control-success': this.fields.identity_number && this.fields.identity_number.valid}" id="identity_number" name="identity_number" placeholder="Número de Identificación">
+        <div v-if="errors.has('identity_number')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('identity_number') }}</div>
     </div>
 </div>
 
-<div id="commission-block" class="form-group row align-items-center" :class="{'has-danger': errors.has('commission'), 'has-success': this.fields.commission && this.fields.commission.valid }">
-    <label for="commission" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">Comisión</label>
-    <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-7'">
-        <input min="0" max="100" type="number" step="0.1" v-model="form.commission" v-validate="'required'" @input="validate($event)" class="form-control" :class="{'form-control-danger': errors.has('commission'), 'form-control-success': this.fields.commission && this.fields.commission.valid}" id="commission" name="commission" placeholder="Comisión">
-        <div v-if="errors.has('commission')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('commission') }}</div>
-    </div>
-</div>
-
-<div class="form-group row align-items-center" :class="{'has-danger': errors.has('type'), 'has-success': this.fields.type && this.fields.type.valid }">
-    <label for="type" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">Tipo</label>
-    <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-7'">
-        <select v-model="form.type" @input="validate($event)" class="form-control" id="type" name="type">
-            <option value="Cigarreria">Cigarreria</option>
-            <option value="Drogueria">Drogueria</option>
-            <option value="Ferreteria">Ferreteria</option>
-            <option value="Licorera">Licorera</option>
-            <option value="Miscelanea">Miscelanea</option>
-            <option value="Mini mercado">Mini mercado</option>
-            <option value="Prestador de servicios">Prestador de servicios</option>
-            <option value="Profesional independiente">Profesional independiente</option>
-            <option value="Supermercado">Supermercado</option>
-        </select>
-        <div v-if="errors.has('type')" class="form-control-feedback form-text" v-cloak>@{{errors.first('type') }}</div>
-    </div>
-</div>
-
-<div class="form-group row align-items-center" :class="{'has-danger': errors.has('name_legal_representative'), 'has-success': this.fields.name_legal_representative && this.fields.name_legal_representative.valid }">
-    <label for="name_legal_representative" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">Representante Legal</label>
-    <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-7'">
-        <input type="text" v-model="form.name_legal_representative" v-validate="'required'" @input="validate($event)" class="form-control" :class="{'form-control-danger': errors.has('name_legal_representative'), 'form-control-success': this.fields.name_legal_representative && this.fields.name_legal_representative.valid}" id="name_legal_representative" name="name_legal_representative" placeholder="Representante Legal">
-        <div v-if="errors.has('name_legal_representative')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('name_legal_representative') }}</div>
-    </div>
-</div>
-
-<div class="form-group row align-items-center" :class="{'has-danger': errors.has('cc_legal_representative'), 'has-success': this.fields.cc_legal_representative && this.fields.cc_legal_representative.valid }">
-    <label for="cc_legal_representative" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">Identificación Representante Legal</label>
-    <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-7'">
-        <input onkeypress="return isNumberKey(event)" type="text" v-model="form.cc_legal_representative" v-validate="'required'" @input="validate($event)" class="form-control" :class="{'form-control-danger': errors.has('cc_legal_representative'), 'form-control-success': this.fields.cc_legal_representative && this.fields.cc_legal_representative.valid}" id="cc_legal_representative" name="cc_legal_representative" placeholder="Identificación Representante Legal">
-        <div v-if="errors.has('cc_legal_representative')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('cc_legal_representative') }}</div>
-    </div>
-</div>
-
-<div class="form-group row align-items-center" :class="{'has-danger': errors.has('contact_legal_representative'), 'has-success': this.fields.contact_legal_representative && this.fields.contact_legal_representative.valid }">
-    <label for="contact_legal_representative" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">Contacto Principal</label>
-    <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-7'">
-        <input onkeypress="return isNumberKey(event)" type="text" v-model="form.contact_legal_representative" v-validate="'required'" @input="validate($event)" class="form-control" :class="{'form-control-danger': errors.has('contact_legal_representative'), 'form-control-success': this.fields.contact_legal_representative && this.fields.contact_legal_representative.valid}" id="contact_legal_representative" name="contact_legal_representative" placeholder="Contacto Principal">
-        <div v-if="errors.has('contact_legal_representative')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('contact_legal_representative') }}</div>
-    </div>
-</div>

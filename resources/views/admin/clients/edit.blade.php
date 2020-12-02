@@ -1,7 +1,7 @@
 @extends('brackets/admin-ui::admin.layout.default')
 
 <head>
-    <title>Editar Comercio</title>
+    <title>Editar Cliente</title>
     <link rel="icon" href="{{URL::asset('images/nuap.png')}}"/>
 </head>
 
@@ -24,7 +24,7 @@
                     </div>
 
                     <div class="card-body">
-                        @include('admin.commerces.components.form-edit-elements')
+                        @include('admin.clients.components.form-edit-elements')
                     </div>
 
                     <div class="card-footer">

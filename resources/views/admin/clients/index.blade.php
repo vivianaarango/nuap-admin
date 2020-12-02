@@ -60,7 +60,7 @@
                                     <td >@{{ item.id }}</td>
                                     <td >@{{ item.name }}</td>
                                     <td >@{{ item.last_name }}</td>
-                                    <td >@{{ item.identity_number }}%</td>
+                                    <td >@{{ item.identity_number }}</td>
                                     <td >@{{ item.email }}</td>
                                     <td >@{{ item.phone }}</td>
                                     <td v-if="item.status === 1">

@@ -156,20 +156,15 @@ class ClientController extends Controller
      * @return array|Application|RedirectResponse|Redirector
      * @throws ValidationException
      */
-    /*public function update(Request $request)
+    public function update(Request $request)
     {
         $this->validate($request, [
             'email' => ['nullable', 'string', 'email', 'unique:users,email,'.$request['user_id']],
             'phone' => ['nullable', 'string', 'unique:users,phone,'.$request['user_id']],
             'password' => ['nullable', 'confirmed', 'min:8', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9]).*$/', 'string'],
-            'business_name' => ['required', 'string'],
-            'nit' => ['required', 'string'],
-            'second_phone' => ['required', 'string'],
-            'commission' => ['numeric', 'min:0.0','max:100.00'],
-            'type' => ['required', 'string'],
-            'name_legal_representative' => ['required', 'string'],
-            'cc_legal_representative' => ['required', 'string'],
-            'contact_legal_representative' => ['required', 'string']
+            'name' => ['required', 'string'],
+            'last_name' => ['required', 'string'],
+            'identity_number' => ['required', 'string'],
         ]);
 
         $adminUser = Session::get('user');
@@ -186,27 +181,22 @@ class ClientController extends Controller
                 isset($phoneValidated) ? $phoneValidated : true,
                 is_null($request['password']) ? null : md5($request['password'])
             );
-            $this->dbCommerceRepository->updateCommerce(
-                $request['commerce_id'],
+            $this->dbClientRepository->updateClient(
+                $request['client_id'],
                 $request['user_id'],
-                $request['business_name'],
-                $request['nit'],
-                $request['second_phone'],
-                $request['commission'],
-                $request['type'],
-                $request['name_legal_representative'],
-                $request['cc_legal_representative'],
-                $request['contact_legal_representative']
+                $request['name'],
+                $request['last_name'],
+                $request['identity_number']
             );
 
             if ($request->ajax()) {
                 return [
-                    'redirect' => url('admin/commerce-list'),
+                    'redirect' => url('admin/client-list'),
                     'message' => trans('brackets/admin-ui::admin.operation.succeeded')
                 ];
             }
         }
 
         return redirect('admin/validate-session');
-    }*/
+    }
 }

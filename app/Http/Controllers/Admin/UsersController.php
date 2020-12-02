@@ -6,6 +6,7 @@ use App\Http\Requests\Admin\Users\CreateUserLocation;
 use App\Http\Requests\Admin\Users\LoginUsers;
 use App\Models\User;
 use App\Models\UserLocation;
+use App\Repositories\Contracts\DbClientRepositoryInterface;
 use App\Repositories\Contracts\DbCommerceRepositoryInterface;
 use App\Repositories\Contracts\DbDistributorRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
@@ -41,19 +42,27 @@ class UsersController extends Controller
     private $dbCommerceRepository;
 
     /**
+     * @var DbClientRepositoryInterface
+     */
+    private $dbClientRepository;
+
+    /**
      * UsersController constructor.
      * @param DbUsersRepositoryInterface $dbUserRepository
      * @param DbDistributorRepositoryInterface $dbDistributorRepository
      * @param DbCommerceRepositoryInterface $dbCommerceRepository
+     * @param DbClientRepositoryInterface $dbClientRepository
      */
     public function __construct(
         DbUsersRepositoryInterface $dbUserRepository,
         DbDistributorRepositoryInterface $dbDistributorRepository,
-        DbCommerceRepositoryInterface $dbCommerceRepository
+        DbCommerceRepositoryInterface $dbCommerceRepository,
+        DbClientRepositoryInterface $dbClientRepository
     ) {
         $this->dbUserRepository = $dbUserRepository;
         $this->dbDistributorRepository = $dbDistributorRepository;
         $this->dbCommerceRepository = $dbCommerceRepository;
+        $this->dbClientRepository = $dbClientRepository;
     }
 
     /**
@@ -175,6 +184,21 @@ class UsersController extends Controller
                 ]);
             }
 
+            if ($user->role == User::USER_ROLE) {
+                $client = $this->dbClientRepository->findByUserID($user->id);
+                $data['client_id'] = $client->id;
+                $data['name'] = $client->name;
+                $data['last_name'] = $client->last_name;
+                $data['identity_number'] = $client->identity_number;
+
+                return view('admin.clients.edit', [
+                    'user' => json_encode($data),
+                    'activation' => $userAdmin->role,
+                    'url' => $client->resource_url,
+                    'business_name' => $client->name
+                ]);
+            }
+
         } else {
             return redirect('/admin/user-session');
         }
@@ -224,7 +248,7 @@ class UsersController extends Controller
                 return response(['redirect' => url('admin/client-list')]);
             }
 
-            return response(['redirect' => url('admin/distributor-list')]);
+            return response(['redirect' => url('admin/user-session')]);
         } else {
             return redirect('/admin/user-session');
         }
