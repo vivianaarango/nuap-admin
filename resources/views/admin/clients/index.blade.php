@@ -106,7 +106,7 @@
 		                    <i class="icon-magnifier"></i>
                             <h3>No se encontraron registros</h3>
                             <p>Intenta cambiando los filtros o agregando uno nuevo</p>
-                            <a class="btn btn-primary btn-spinner" href="{{ url('admin/commerce-create') }}" role="button"><i class="fa fa-plus"></i>&nbspNuevo cliente</a>
+                            <a class="btn btn-primary btn-spinner" href="{{ url('admin/client-create') }}" role="button"><i class="fa fa-plus"></i>&nbspNuevo cliente</a>
 	                    </div>
                         <form method="get" :action="this.url">
                             <div class="col col-lg-6 col-xl-4 form-group float-right">

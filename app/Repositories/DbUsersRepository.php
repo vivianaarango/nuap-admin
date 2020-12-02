@@ -2,6 +2,7 @@
 namespace App\Repositories;
 
 use App\Models\User;
+use App\Repositories\Contracts\DbClientRepositoryInterface;
 use App\Repositories\Contracts\DbCommerceRepositoryInterface;
 use App\Repositories\Contracts\DbDistributorRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
@@ -25,16 +26,24 @@ class DbUsersRepository implements DbUsersRepositoryInterface
     private $dbCommerceRepository;
 
     /**
+     * @var DbClientRepositoryInterface
+     */
+    private $dbClientRepository;
+
+    /**
      * DbUsersRepository constructor.
      * @param DbDistributorRepositoryInterface $dbDistributorRepository
      * @param DbCommerceRepositoryInterface $dbCommerceRepository
+     * @param DbClientRepositoryInterface $dbClientRepository
      */
     public function __construct(
         DbDistributorRepositoryInterface $dbDistributorRepository,
-        DbCommerceRepositoryInterface $dbCommerceRepository
+        DbCommerceRepositoryInterface $dbCommerceRepository,
+        DbClientRepositoryInterface $dbClientRepository
     ) {
         $this->dbDistributorRepository = $dbDistributorRepository;
         $this->dbCommerceRepository = $dbCommerceRepository;
+        $this->dbClientRepository = $dbClientRepository;
     }
 
     /**
@@ -164,6 +173,11 @@ class DbUsersRepository implements DbUsersRepositoryInterface
         if ($user->role == User::COMMERCE_ROLE){
             $commerce = $this->dbCommerceRepository->findByUserID($user->id);
             $commerce->delete();
+        }
+
+        if ($user->role == User::USER_ROLE){
+            $client = $this->dbClientRepository->findByUserID($user->id);
+            $client->delete();
         }
 
         return $user->delete();

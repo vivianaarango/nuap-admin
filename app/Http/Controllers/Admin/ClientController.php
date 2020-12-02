@@ -2,8 +2,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Client\CreateClient;
 use App\Http\Requests\Admin\Client\IndexClient;
 use App\Http\Requests\Admin\Commerce\CreateCommerce;
+use App\Models\Client;
 use App\Models\User;
 use App\Repositories\Contracts\DbClientRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
@@ -87,7 +89,7 @@ class ClientController extends Controller
                         'clients.identity_number'
                     )->where('role', User::USER_ROLE)
                         ->where('last_logged_in', '<=', $this->dateToSearch)
-                        ->join('commerces', 'users.id', '=', 'commerces.user_id')
+                        ->join('clients', 'users.id', '=', 'clients.user_id')
                         ->orderBy('id', 'desc');;
                 })->processRequestAndGet(
                     $request,
@@ -112,42 +114,42 @@ class ClientController extends Controller
     /**
      * @return Factory|Application|RedirectResponse|View
      */
-    /*public function create()
+    public function create()
     {
         $user = Session::get('user');
 
         if (isset($user) && $user->role == User::ADMIN_ROLE) {
-            return view('admin.commerces.create', [
+            return view('admin.clients.create', [
                 'activation' => $user->role
             ]);
         } else {
             return redirect('/admin/user-session');
         }
-    }*/
+    }
 
     /**
-     * @param CreateCommerce $request
+     * @param CreateClient $request
      * @return array|Application|RedirectResponse|Redirector
      */
-    /*public function store(CreateCommerce $request)
+    public function store(CreateClient $request)
     {
         $user = Session::get('user');
         if (isset($user) && $user->role == User::ADMIN_ROLE) {
             $data = $request->getModifiedData();
             $user = User::create($data);
             $data['user_id'] = $user->id;
-            Commerce::create($data);
+            Client::create($data);
         }
 
         if ($request->ajax()) {
             return [
-                'redirect' => url('admin/commerce-list'),
+                'redirect' => url('admin/client-list'),
                 'message' => trans('brackets/admin-ui::admin.operation.succeeded')
             ];
         }
 
-        return redirect('admin/commerce-list');
-    }*/
+        return redirect('admin/client-list');
+    }
 
     /**
      * @param Request $request

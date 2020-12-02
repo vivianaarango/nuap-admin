@@ -220,6 +220,10 @@ class UsersController extends Controller
                 return response(['redirect' => url('admin/commerce-list')]);
             }
 
+            if ($user->role == User::USER_ROLE) {
+                return response(['redirect' => url('admin/client-list')]);
+            }
+
             return response(['redirect' => url('admin/distributor-list')]);
         } else {
             return redirect('/admin/user-session');

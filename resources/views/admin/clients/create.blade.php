@@ -1,7 +1,7 @@
 @extends('brackets/admin-ui::admin.layout.default')
 
 <head>
-    <title>Crear Comercio</title>
+    <title>Crear Cliente</title>
     <link rel="icon" href="{{URL::asset('images/nuap.png')}}"/>
 </head>
 
@@ -10,18 +10,18 @@
     <div class="container-xl">
         <div class="card">
             <admin-user-form
-                    :action="'{{ url('admin/commerce-store') }}'"
+                    :action="'{{ url('admin/client-store') }}'"
                     :activation="!!'{{ $activation }}'"
                     v-cloak
                     inline-template>
 
                 <form class="form-horizontal form-create" method="post" @submit.prevent="onSubmit" :action="this.action">
                     <div class="card-header">
-                        <i class="fa fa-plus"></i>&nbsp; Nuevo Comercio
+                        <i class="fa fa-plus"></i>&nbsp; Nuevo Cliente
                     </div>
 
                     <div class="card-body">
-                        @include('admin.commerces.components.form-elements')
+                        @include('admin.clients.components.form-elements')
                     </div>
 
                     <div class="card-footer">
