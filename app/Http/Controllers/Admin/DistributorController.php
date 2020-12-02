@@ -14,7 +14,6 @@ use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
@@ -89,7 +88,8 @@ class DistributorController extends Controller
                             'distributors.name_legal_representative'
                         )->where('role', User::DISTRIBUTOR_ROLE)
                         ->where('last_logged_in', '<=', $this->dateToSearch)
-                        ->join('distributors', 'users.id', '=', 'distributors.user_id');
+                        ->join('distributors', 'users.id', '=', 'distributors.user_id')
+                        ->orderBy('id', 'desc');
                 })->processRequestAndGet(
                     $request,
                     ['id', 'email', 'phone', 'status', 'last_logged_in'],

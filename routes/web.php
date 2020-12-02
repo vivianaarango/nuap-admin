@@ -76,3 +76,13 @@ Route::get('/admin/commerce-create', 'Admin\CommerceController@create');
 Route::post('/admin/commerce-store', 'Admin\CommerceController@store');
 /* Update */
 Route::post('/admin/commerce/{commerce}', 'Admin\CommerceController@update')->name('admin/commerce/update');
+
+### Client
+/* List */
+Route::get('/admin/client-list', 'Admin\ClientController@list');
+/* View create */
+Route::get('/admin/client-create', 'Admin\ClientController@create');
+/* Store */
+Route::post('/admin/client-store', 'Admin\ClientController@store');
+/* Update */
+Route::post('/admin/client/{client}', 'Admin\ClientController@update')->name('admin/client/update');

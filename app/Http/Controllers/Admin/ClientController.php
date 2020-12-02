@@ -2,9 +2,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Client\IndexClient;
 use App\Http\Requests\Admin\Commerce\CreateCommerce;
-use App\Http\Requests\Admin\Commerce\IndexCommerce;
-use App\Models\Commerce;
 use App\Models\User;
 use App\Repositories\Contracts\DbClientRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
@@ -40,9 +39,9 @@ class ClientController extends Controller
     private $dbClientRepository;
 
     /**
-     * CommerceController constructor.
+     * ClientController constructor.
      * @param DbUsersRepositoryInterface $dbUserRepository
-     * @param DbClientRepositoryInterface $dbCommerceRepository
+     * @param DbClientRepositoryInterface $dbClientRepository
      */
     public function __construct(
         DbUsersRepositoryInterface $dbUserRepository,
@@ -53,10 +52,10 @@ class ClientController extends Controller
     }
 
     /**
-     * @param IndexCommerce $request
+     * @param IndexClient $request
      * @return array|Factory|Application|RedirectResponse|Redirector|View
      */
-    public function list(IndexCommerce $request)
+    public function list(IndexClient $request)
     {
         $user = Session::get('user');
 
@@ -83,13 +82,13 @@ class ClientController extends Controller
                 ->modifyQuery(function($query) {
                     $query->select(
                         'users.*',
-                        'commerces.business_name',
-                        'commerces.type',
-                        'commerces.commission',
-                        'commerces.name_legal_representative'
-                    )->where('role', User::COMMERCE_ROLE)
+                        'clients.name',
+                        'clients.last_name',
+                        'clients.identity_number'
+                    )->where('role', User::USER_ROLE)
                         ->where('last_logged_in', '<=', $this->dateToSearch)
-                        ->join('commerces', 'users.id', '=', 'commerces.user_id');
+                        ->join('commerces', 'users.id', '=', 'commerces.user_id')
+                        ->orderBy('id', 'desc');;
                 })->processRequestAndGet(
                     $request,
                     ['id', 'email', 'phone', 'status', 'last_logged_in'],
@@ -100,7 +99,7 @@ class ClientController extends Controller
                 return ['data' => $data, 'activation' => $user->role, 'days' => $days];
             }
 
-            return view('admin.commerces.index', [
+            return view('admin.clients.index', [
                 'data' => $data,
                 'activation' => $user->role,
                 'days' => $days
@@ -113,7 +112,7 @@ class ClientController extends Controller
     /**
      * @return Factory|Application|RedirectResponse|View
      */
-    public function create()
+    /*public function create()
     {
         $user = Session::get('user');
 
@@ -124,13 +123,13 @@ class ClientController extends Controller
         } else {
             return redirect('/admin/user-session');
         }
-    }
+    }*/
 
     /**
      * @param CreateCommerce $request
      * @return array|Application|RedirectResponse|Redirector
      */
-    public function store(CreateCommerce $request)
+    /*public function store(CreateCommerce $request)
     {
         $user = Session::get('user');
         if (isset($user) && $user->role == User::ADMIN_ROLE) {
@@ -148,14 +147,14 @@ class ClientController extends Controller
         }
 
         return redirect('admin/commerce-list');
-    }
+    }*/
 
     /**
      * @param Request $request
      * @return array|Application|RedirectResponse|Redirector
      * @throws ValidationException
      */
-    public function update(Request $request)
+    /*public function update(Request $request)
     {
         $this->validate($request, [
             'email' => ['nullable', 'string', 'email', 'unique:users,email,'.$request['user_id']],
@@ -207,5 +206,5 @@ class ClientController extends Controller
         }
 
         return redirect('admin/validate-session');
-    }
+    }*/
 }

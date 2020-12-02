@@ -2,10 +2,12 @@
 namespace App\Providers;
 
 use App\Repositories\Contracts\DbAdminUsersRepositoryInterface;
+use App\Repositories\Contracts\DbClientRepositoryInterface;
 use App\Repositories\Contracts\DbCommerceRepositoryInterface;
 use App\Repositories\Contracts\DbDistributorRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use App\Repositories\DbAdminUsersRepository;
+use App\Repositories\DbClientRepository;
 use App\Repositories\DbCommerceRepository;
 use App\Repositories\DbDistributorRepository;
 use App\Repositories\DbUsersRepository;
@@ -29,7 +31,8 @@ class RepositoryServiceProvider extends ServiceProvider
         DbUsersRepositoryInterface::class => DbUsersRepository::class,
         DbAdminUsersRepositoryInterface::class => DbAdminUsersRepository::class,
         DbDistributorRepositoryInterface::class => DbDistributorRepository::class,
-        DbCommerceRepositoryInterface::class => DbCommerceRepository::class
+        DbCommerceRepositoryInterface::class => DbCommerceRepository::class,
+        DbClientRepositoryInterface::class => DbClientRepository::class
     ];
 
     /**
