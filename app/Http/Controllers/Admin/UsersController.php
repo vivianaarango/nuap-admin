@@ -10,6 +10,7 @@ use App\Repositories\Contracts\DbClientRepositoryInterface;
 use App\Repositories\Contracts\DbCommerceRepositoryInterface;
 use App\Repositories\Contracts\DbDistributorRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
+use Brackets\AdminListing\Facades\AdminListing;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
@@ -26,6 +27,11 @@ use Illuminate\View\View;
  */
 class UsersController extends Controller
 {
+    /**
+     * @var User
+     */
+    private $user;
+
     /**
      * @var DbUsersRepositoryInterface
      */
@@ -256,15 +262,29 @@ class UsersController extends Controller
 
     /**
      * @param User $user
+     * @param Request $request
      * @return Response|Factory|Application|View
      */
-    public function location(User $user)
+    public function location(User $user, Request $request)
     {
         $userAdmin = Session::get('user');
+        $this->user = $user;
 
         if (isset($userAdmin) && $userAdmin->role == User::ADMIN_ROLE) {
+            /* @noinspection PhpUndefinedMethodInspection  */
+            $data = AdminListing::create(UserLocation::class)
+                ->modifyQuery(function($query) {
+                    $query->where('user_id', $this->user->id)
+                        ->orderBy('id', 'desc');
+                })->processRequestAndGet(
+                    $request,
+                    ['id', 'city', 'location', 'neighborhood', 'address'],
+                    ['id', 'city', 'location', 'neighborhood', 'address']
+                );
+
             return view('admin.users.add-location', [
-                'user' => ($user),
+                'data' => $data,
+                'user' => $user,
                 'activation' => $userAdmin->role
             ]);
         }

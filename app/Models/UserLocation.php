@@ -4,6 +4,7 @@ namespace App\Models;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\Request;
 
 /**
  * Class UserLocation
@@ -12,12 +13,13 @@ use Illuminate\Foundation\Application;
  * @property string city
  * @property string location
  * @property string neighborhood
+ * @property string address
  * @property string latitude
  * @property string longitude
  * @property string resource_url
  *
  * @package App\Models
- * @method static create(\Illuminate\Http\Request $request)
+ * @method static create(Request $request)
  */
 class UserLocation extends Model
 {
@@ -34,6 +36,7 @@ class UserLocation extends Model
         'city',
         'location',
         'neighborhood',
+        'address',
         'latitude',
         'longitude',
     ];

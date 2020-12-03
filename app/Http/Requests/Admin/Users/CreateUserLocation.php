@@ -22,6 +22,7 @@ class CreateUserLocation extends FormRequest
             'city' => ['required', 'string'],
             'location' => ['required', 'string'],
             'neighborhood' => ['required', 'string'],
+            'address' => ['required', 'string'],
             'latitude' => ['required', 'string'],
             'longitude' => ['required', 'string']
         ];
