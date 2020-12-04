@@ -2,6 +2,7 @@
 namespace App\Repositories\Contracts;
 
 use App\Models\User;
+use App\Models\UserLocation;
 use Illuminate\Support\Collection;
 
 /**
@@ -77,6 +78,12 @@ interface DbUsersRepositoryInterface
     public function deleteUser(int $userID): bool;
 
     /**
+     * @param int $userLocation
+     * @return bool
+     */
+    public function deleteUserLocation(int $userLocation): bool;
+
+    /**
      * @param int $userID
      * @param bool $status
      * @return User
@@ -104,4 +111,10 @@ interface DbUsersRepositoryInterface
         string $last_logged_in,
         string $phone_validated_date = null
     ): User;
+
+    /**
+     * @param int $userLocationID
+     * @return UserLocation
+     */
+    public function findByUserLocationID(int $userLocationID): UserLocation;
 }

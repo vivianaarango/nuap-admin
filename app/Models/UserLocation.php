@@ -20,6 +20,8 @@ use Illuminate\Http\Request;
  *
  * @package App\Models
  * @method static create(Request $request)
+ * @method static findOrFail(int $userID)
+ * @method static where(string $string, int $userLocationID)
  */
 class UserLocation extends Model
 {

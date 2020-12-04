@@ -32,6 +32,70 @@
             </form>
         </div>
     </div>
+    <admin-user-listing
+            :data="{{ $data->toJson() }}"
+            :activation="!!'{{ $activation }}'"
+            :url="'{{ $url }}'"
+            inline-template>
+
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body" v-cloak>
+                        <form @submit.prevent="">
+                            <div class="row justify-content-md-between">
+                                <div class="col col-lg-7 col-xl-5 form-group"></div>
+                                <div class="col-sm-auto form-group ">
+                                    <select class="form-control" v-model="pagination.state.per_page">
+                                        <option value="10">10</option>
+                                        <option value="25">25</option>
+                                        <option value="100">100</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                        <table class="table table-hover table-listing">
+                            <thead>
+                            <tr>
+                                <th is='sortable' :column="'id'">ID</th>
+                                <th is='sortable' :column="'city'">Ciudad</th>
+                                <th is='sortable' :column="'location'">Localidad</th>
+                                <th is='sortable' :column="'neighborhood'">Barrio</th>
+                                <th is='sortable' :column="'address'">Dirección</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="(item, index) in collection">
+                                <td >@{{ item.id }}</td>
+                                <td >@{{ item.city }}</td>
+                                <td >@{{ item.location }}</td>
+                                <td >@{{ item.neighborhood }}</td>
+                                <td >@{{ item.address }}</td>
+                                <td>
+                                    <div class="row no-gutters">
+                                        <form class="col" @submit.prevent="deleteItem(item.resource_url)">
+                                            <button type="submit" class="btn btn-sm btn-danger" title="Eliminar"><i class="fa fa-trash-o"></i></button>
+                                        </form>
+                                        <!--<div class="col-auto">
+                                            <a class="btn btn-sm btn-danger" :href="item.resource_url+'/delete-location'" title="Agregar ubicación" role="button"><i class="fa fa-trash-o"></i></a>
+                                        </div>-->
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="no-items-found" v-if="!collection.length > 0">
+                            <i class="icon-magnifier"></i>
+                            <h3>No se encontraron registros</h3>
+                            <p>Intenta cambiando los filtros o agregando uno nuevo</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </admin-user-listing>
 @endsection
 <script>
     function initMap() {

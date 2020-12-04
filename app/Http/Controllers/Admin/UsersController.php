@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Users\CreateUserLocation;
+use App\Http\Requests\Admin\Users\IndexUserLocation;
 use App\Http\Requests\Admin\Users\LoginUsers;
 use App\Models\User;
 use App\Models\UserLocation;
@@ -262,10 +263,10 @@ class UsersController extends Controller
 
     /**
      * @param User $user
-     * @param Request $request
+     * @param IndexUserLocation $request
      * @return Response|Factory|Application|View
      */
-    public function location(User $user, Request $request)
+    public function location(IndexUserLocation $request, User $user)
     {
         $userAdmin = Session::get('user');
         $this->user = $user;
@@ -285,7 +286,8 @@ class UsersController extends Controller
             return view('admin.users.add-location', [
                 'data' => $data,
                 'user' => $user,
-                'activation' => $userAdmin->role
+                'activation' => $userAdmin->role,
+                'url' => url()->current()
             ]);
         }
 
@@ -429,5 +431,33 @@ class UsersController extends Controller
         }
 
         return redirect('/admin/user-session');
+    }
+
+    /**
+     * @param UserLocation $userLocation
+     * @param int $userLocationID
+     * @return Application|RedirectResponse|Redirector
+     */
+    public function deleteLocation(UserLocation $userLocation, int $userLocationID)
+    {
+        $adminUser = Session::get('user');
+        if (isset($adminUser) && $adminUser->role == User::ADMIN_ROLE) {
+            $userLocation = $this->dbUserRepository->findByUserLocationID($userLocationID);
+            $this->dbUserRepository->deleteUserLocation($userLocationID);
+            $user = $this->dbUserRepository->findByID($userLocation->user_id);
+
+            if ($user->role == User::DISTRIBUTOR_ROLE) {
+                return redirect('admin/distributor-list');
+            }
+            if ($user->role == User::COMMERCE_ROLE) {
+                return redirect('admin/commerce-list');
+            }
+            if ($user->role == User::USER_ROLE) {
+                return redirect('admin/client-list');
+            }
+
+        } else {
+            return redirect('admin/user-session');
+        }
     }
 }

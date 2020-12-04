@@ -2,6 +2,7 @@
 namespace App\Repositories;
 
 use App\Models\User;
+use App\Models\UserLocation;
 use App\Repositories\Contracts\DbClientRepositoryInterface;
 use App\Repositories\Contracts\DbCommerceRepositoryInterface;
 use App\Repositories\Contracts\DbDistributorRepositoryInterface;
@@ -184,6 +185,16 @@ class DbUsersRepository implements DbUsersRepositoryInterface
     }
 
     /**
+     * @param int $userLocation
+     * @return bool
+     * @throws Exception
+     */
+    public function deleteUserLocation(int $userLocation): bool {
+        $userLoc = $this->findByUserLocationID($userLocation);
+        return $userLoc->delete();
+    }
+
+    /**
      * @param int $userID
      * @param bool $status
      * @return User
@@ -230,4 +241,14 @@ class DbUsersRepository implements DbUsersRepositoryInterface
 
         return $user;
     }
+
+    /**
+     * @param int $userLocationID
+     * @return UserLocation
+     */
+    public function findByUserLocationID(int $userLocationID): UserLocation
+    {
+        return UserLocation::findOrFail($userLocationID);
+    }
+
 }
