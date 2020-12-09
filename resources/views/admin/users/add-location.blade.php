@@ -42,18 +42,6 @@
             <div class="col">
                 <div class="card">
                     <div class="card-body" v-cloak>
-                        <form @submit.prevent="">
-                            <div class="row justify-content-md-between">
-                                <div class="col col-lg-7 col-xl-5 form-group"></div>
-                                <div class="col-sm-auto form-group ">
-                                    <select class="form-control" v-model="pagination.state.per_page">
-                                        <option value="10">10</option>
-                                        <option value="25">25</option>
-                                        <option value="100">100</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </form>
                         <table class="table table-hover table-listing">
                             <thead>
                             <tr>
