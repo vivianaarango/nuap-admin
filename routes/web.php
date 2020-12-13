@@ -17,6 +17,12 @@ Route::get('/', function () {
     return redirect('/admin/user-session');
 });
 
+### Home ###
+/* Comming soon */
+Route::get('/', function (){
+    return view('admin.home.index');
+});
+
 ### Users ###
 /* Validate session */
 Route::get('/admin/user-session', 'Admin\UsersController@validateSession');
