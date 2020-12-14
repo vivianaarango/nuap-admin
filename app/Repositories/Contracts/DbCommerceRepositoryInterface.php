@@ -67,4 +67,9 @@ interface DbCommerceRepositoryInterface
         string $interiorImage = null,
         string $contract = null
     ): Commerce;
+
+    /**
+     * @return Collection
+     */
+    public function findValidCommercesToAddProducts(): Collection;
 }

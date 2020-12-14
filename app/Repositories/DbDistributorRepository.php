@@ -2,6 +2,7 @@
 namespace App\Repositories;
 
 use App\Models\Distributor;
+use App\Models\User;
 use App\Repositories\Contracts\DbDistributorRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -108,5 +109,20 @@ class DbDistributorRepository implements DbDistributorRepositoryInterface
 
         $distributor->save();
         return $distributor;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function findValidDistributorsToAddProducts(): Collection
+    {
+        return Distributor::with([
+            'users' => function ($query) {
+                $query->where('status', User::STATUS_ACTIVE)
+                    ->where('role', User::COMMERCE_ROLE);
+            },
+        ])
+        ->orderBy('id', 'desc')
+        ->get();
     }
 }

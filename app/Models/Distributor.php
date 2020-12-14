@@ -3,6 +3,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Application;
 
 /**
@@ -36,6 +37,14 @@ class Distributor extends Model
      * @var string
      */
     protected $table = 'distributors';
+
+    /**
+     * @return BelongsTo
+     */
+    public function users()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     /**
      * @var string[]

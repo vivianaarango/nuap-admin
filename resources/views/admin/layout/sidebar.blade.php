@@ -9,6 +9,8 @@
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/distributor-list') }}"><i class="nav-icon icon-grid"></i>Distribuidores</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/commerce-list') }}"><i class="nav-icon icon-handbag"></i>Comercios</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/client-list') }}"><i class="nav-icon icon-user"></i>Clientes</a></li>
+                <li class="nav-title">Productos</li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('admin/products-create') }}"><i class="nav-icon icon-plus"></i>Inventario</a></li>
                 <!--<li class="nav-item"><a class="nav-link" href="{{ url('admin/posts') }}"><i class="nav-icon icon-globe"></i> #2: With media</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/translatable-articles') }}"><i class="nav-icon icon-ghost"></i> #3: Translatable</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/exports') }}"><i class="nav-icon icon-drop"></i> #4: With export</a></li>

@@ -13,10 +13,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return redirect('/admin/user-session');
-});
-
 ### Home ###
 /* Comming soon */
 Route::get('/', function (){
@@ -44,6 +40,8 @@ Route::post('/admin/users/store-location', 'Admin\UsersController@storeLocation'
 Route::get('/admin/users/{user}/add-document', 'Admin\UsersController@document')->name('admin/users/add-document');
 /* Store */
 Route::post('/admin/users/store-documents', 'Admin\UsersController@storeDocuments');
+/* Delete location */
+Route::delete('/admin/user-location/{user}', 'Admin\UsersController@deleteLocation')->name('admin/users/deleteLocation');
 
 ### Admin ###
 /* View create */
@@ -93,5 +91,8 @@ Route::post('/admin/client-store', 'Admin\ClientController@store');
 /* Update */
 Route::post('/admin/client/{client}', 'Admin\ClientController@update')->name('admin/client/update');
 
-/* Delete */
-Route::delete('/admin/user-location/{user}', 'Admin\UsersController@deleteLocation')->name('admin/users/deleteLocation');
+### Products ###
+/* View create */
+Route::get('/admin/products-create', 'Admin\ProductController@create');
+/* Store */
+Route::post('/admin/products-store', 'Admin\ProductController@store');

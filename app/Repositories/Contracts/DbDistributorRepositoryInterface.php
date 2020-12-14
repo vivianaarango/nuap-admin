@@ -65,4 +65,9 @@ interface DbDistributorRepositoryInterface
         string $interiorImage = null,
         string $contract = null
     ): Distributor;
+
+    /**
+     * @return Collection
+     */
+    public function findValidDistributorsToAddProducts(): Collection;
 }

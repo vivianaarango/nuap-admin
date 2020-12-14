@@ -250,5 +250,4 @@ class DbUsersRepository implements DbUsersRepositoryInterface
     {
         return UserLocation::findOrFail($userLocationID);
     }
-
 }

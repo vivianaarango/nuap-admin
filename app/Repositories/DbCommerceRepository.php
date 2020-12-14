@@ -2,6 +2,7 @@
 namespace App\Repositories;
 
 use App\Models\Commerce;
+use App\Models\User;
 use App\Repositories\Contracts\DbCommerceRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -111,5 +112,20 @@ class DbCommerceRepository implements DbCommerceRepositoryInterface
 
         $commerce->save();
         return $commerce;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function findValidCommercesToAddProducts(): Collection
+    {
+        return Commerce::with([
+                'users' => function ($query) {
+                    $query->where('status', User::STATUS_ACTIVE)
+                        ->where('role', User::COMMERCE_ROLE);
+                },
+            ])
+        ->orderBy('id', 'desc')
+        ->get();
     }
 }

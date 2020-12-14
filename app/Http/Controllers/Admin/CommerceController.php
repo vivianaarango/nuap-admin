@@ -90,7 +90,7 @@ class CommerceController extends Controller
                     )->where('role', User::COMMERCE_ROLE)
                         ->where('last_logged_in', '<=', $this->dateToSearch)
                         ->join('commerces', 'users.id', '=', 'commerces.user_id')
-                        ->orderBy('id', 'desc');;
+                        ->orderBy('id', 'desc');
                 })->processRequestAndGet(
                     $request,
                     ['id', 'email', 'phone', 'status', 'last_logged_in'],
