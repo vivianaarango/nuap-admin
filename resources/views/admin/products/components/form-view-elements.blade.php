@@ -80,8 +80,8 @@
 </div>
 
 <div class="form-group row align-items-center" :class="{'has-danger': errors.has('special_price'), 'has-success': this.fields.special_price && this.fields.special_price.valid }">
-    <label for="special_price" class="col-form-label text-md-right" :class="'col-md-3'"><b>Precio Especial:</b></label>
+    <label for="special_price" class="col-form-label text-md-right" :class="'col-md-3'"><b>Descuento:</b></label>
     <div :class="'col-md-4 col-md-9 col-xl-7'">
-        <label for="special_price" class="col-form-label text-md-right">{{ $product['special_price'] }}</label>
+        <label for="special_price" class="col-form-label text-md-right">{{ $product['special_price'] }}%</label>
     </div>
 </div>

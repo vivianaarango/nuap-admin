@@ -70,4 +70,11 @@ interface DbDistributorRepositoryInterface
      * @return Collection
      */
     public function findValidDistributorsToAddProducts(): Collection;
+
+    /**
+     * @param int $distributorID
+     * @param float $commission
+     * @return Distributor
+     */
+    public function updateCommission(int $distributorID, float $commission): Distributor;
 }

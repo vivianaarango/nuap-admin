@@ -96,9 +96,9 @@
 </div>
 
 <div class="form-group row align-items-center" :class="{'has-danger': errors.has('special_price'), 'has-success': this.fields.special_price && this.fields.special_price.valid }">
-    <label for="special_price" class="col-form-label text-md-right" :class="'col-md-3'">Precio Especial</label>
+    <label for="special_price" class="col-form-label text-md-right" :class="'col-md-3'">Descuento</label>
     <div :class="'col-md-4 col-md-9 col-xl-7'">
-        <input value="{{ $product['special_price'] }}" type="number" required class="form-control" :class="{'form-control-danger': errors.has('special_price'), 'form-control-success': this.fields.special_price && this.fields.special_price.valid}" id="special_price" name="special_price" placeholder="Precio Especial">
+        <input value="{{ $product['special_price'] }}" min="0" max="100" type="number" step="0.1" required class="form-control" :class="{'form-control-danger': errors.has('special_price'), 'form-control-success': this.fields.special_price && this.fields.special_price.valid}" id="special_price" name="special_price" placeholder="Precio Especial">
         <div v-if="errors.has('special_price')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('special_price') }}</div>
     </div>
 </div>
@@ -125,7 +125,7 @@
     <div class="ml-md-auto" :class="'col-md-9'">
         <input value="{{ $product['has_special_price'] }}" class="form-check-input" id="has_special_price" type="checkbox" v-validate="''" data-vv-name="has_special_price"  name="has_special_price">
         <label class="form-check-label" for="has_special_price">
-            Precio especial
+            Activar Descuento
         </label>
         <div v-if="errors.has('has_special_price')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('has_special_price') }}</div>
     </div>

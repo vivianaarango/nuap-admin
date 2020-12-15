@@ -70,6 +70,10 @@ Route::get('/admin/distributor-create', 'Admin\DistributorController@create');
 Route::post('/admin/distributor-store', 'Admin\DistributorController@store');
 /* Update */
 Route::post('/admin/distributor/{distributor}', 'Admin\DistributorController@update')->name('admin/distributor/update');
+/* Edit Commissions */
+Route::get('/admin/distributor-edit-commission', 'Admin\DistributorController@editCommission');
+/* Update Commissions */
+Route::post('/admin/distributor-update-commission', 'Admin\DistributorController@updateCommission');
 
 ### Commerce
 /* List */

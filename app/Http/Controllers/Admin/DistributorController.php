@@ -13,7 +13,9 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
+use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
@@ -205,5 +207,73 @@ class DistributorController extends Controller
         }
 
         return redirect('admin/user-session');
+    }
+
+    /**
+     * @param IndexDistributor $request
+     * @return array|Factory|Application|RedirectResponse|Redirector|View
+     */
+    public function editCommission(IndexDistributor $request)
+    {
+        $user = Session::get('user');
+
+        if (isset($user) && $user->role == User::ADMIN_ROLE) {
+            /* @noinspection PhpUndefinedMethodInspection  */
+            $data = AdminListing::create(Distributor::class)
+                ->modifyQuery(function($query) {
+                    $query->select(
+                        'distributors.*',
+                        'distributors.commission',
+                        'distributors.name_legal_representative'
+                    )
+                        ->join('users', 'users.id', '=', 'distributors.user_id')
+                        ->where('users.role', User::DISTRIBUTOR_ROLE)
+                        ->where('users.status', User::STATUS_ACTIVE)
+                        ->orderBy('distributors.id', 'desc');
+                })->processRequestAndGet(
+                    $request,
+                    ['id', 'business_name', 'commission', 'name_legal_representative'],
+                    ['id', 'business_name', 'commission', 'name_legal_representative']
+                );
+
+            /*if ($request->ajax()) {
+                return ['data' => $data, 'activation' => $user->role];
+            }*/
+            if ($request->ajax()) {
+                if ($request->has('bulk')) {
+                    return [
+                        'bulkItems' => $data->pluck('id')
+                    ];
+                }
+                return ['data' => $data];
+            }
+
+            return view('admin.distributors.commission', [
+                'data' => $data,
+                'activation' => $user->role,
+            ]);
+        } else {
+            return redirect('/admin/user-session');
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return ResponseFactory|Application|RedirectResponse|Response
+     */
+    public function updateCommission(Request $request)
+    {
+        $newCommission = $request->data['commission'];
+        $idsDistributors = $request->data['ids'];
+
+        foreach ($idsDistributors as $item) {
+            $this->dbDistributorRepository->updateCommission($item, $newCommission);
+        }
+
+        if ($request->ajax()) {
+            return response(['message' => trans('Se ha actualizado la comisión correctamente')]);
+        }
+
+        return redirect()->back();
     }
 }

@@ -125,4 +125,18 @@ class DbDistributorRepository implements DbDistributorRepositoryInterface
         ->orderBy('id', 'desc')
         ->get();
     }
+
+    /**
+     * @param int $distributorID
+     * @param float $commission
+     * @return Distributor
+     */
+    public function updateCommission(int $distributorID, float $commission): Distributor
+    {
+        $distributor = $this->findByID($distributorID);
+        $distributor->commission = $commission;
+        $distributor->save();
+
+        return $distributor;
+    }
 }

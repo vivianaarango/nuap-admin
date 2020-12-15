@@ -5,11 +5,10 @@ Vue.component('bulk-action-form', {
     data: function() {
         return {
             form: {
-                title:  '' ,
+                commission:  '' ,
                 perex:  '' ,
                 published_at:  '' ,
                 enabled:  false ,
-                
             }
         }
     }
