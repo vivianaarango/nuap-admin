@@ -18,7 +18,7 @@ class IndexProduct extends FormRequest
     public function rules()
     {
         return [
-            'orderBy' => 'in:id,name,description,image,category,brand,status,stock,purchase_price,sale_price|nullable',
+            'orderBy' => 'in:id,name,description,image,brand,status,stock,purchase_price,sale_price|nullable',
             'orderDirection' => 'in:asc,desc|nullable',
             'search' => 'string|nullable',
             'page' => 'integer|nullable',

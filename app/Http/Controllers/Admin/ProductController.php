@@ -72,13 +72,13 @@ class ProductController extends Controller
                 ->modifyQuery(function($query) {
                     $query->select(
                         'products.*',
-                        'categories.name as category'
+                        'categories.name as category_id'
                     )->join('categories', 'categories.id', '=', 'products.category_id')
                     ->orderBy('id', 'desc');
                 })->processRequestAndGet(
                     $request,
-                    ['id', 'name', 'description', 'image', 'category', 'brand', 'status', 'stock', 'purchase_price', 'sale_price'],
-                    ['id', 'name', 'description', 'image', 'category', 'brand', 'status', 'stock', 'purchase_price', 'sale_price']
+                    ['id', 'name', 'description', 'image', 'category_id', 'brand', 'status', 'stock', 'purchase_price', 'sale_price'],
+                    ['id', 'name', 'description', 'image', 'category_id', 'brand', 'status', 'stock', 'purchase_price', 'sale_price']
                 );
 
             if ($request->ajax()) {
@@ -276,6 +276,22 @@ class ProductController extends Controller
         $adminUser = Session::get('user');
 
         if (isset($adminUser) && $adminUser->role == User::ADMIN_ROLE) {
+            $productImages = 'product-images/user/'.$request['user_id'];
+
+            if (!is_dir($productImages)) {
+                mkdir($productImages, 0777, true);
+            }
+            $image = null;
+            $images = $_FILES['image'];
+            if ($images['name'] != '') {
+                $ext = pathinfo($images['name'], PATHINFO_EXTENSION);
+                $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                $urlImage = "{$productImages}/".substr(str_shuffle($permitted_chars), 0, 16).".{$ext}";
+                $destinationRoute = $urlImage;
+                move_uploaded_file($images['tmp_name'], $destinationRoute);
+                $image = $urlImage;
+            }
+
             $this->dbProductRepository->update(
                 $request['product_id'],
                 $request['category_id'],
@@ -289,7 +305,8 @@ class ProductController extends Controller
                 $request['height'],
                 $request['purchase_price'],
                 $request['sale_price'],
-                $request['special_price']
+                $request['special_price'],
+                $image
             );
 
             if ($request->ajax()) {
@@ -303,5 +320,25 @@ class ProductController extends Controller
         }
 
         return redirect('admin/user-session');
+    }
+
+    /**
+     * @param Product $product
+     * @return Response|Factory|Application|View
+     */
+    public function view(Product $product)
+    {
+        $userAdmin = Session::get('user');
+
+        if (isset($userAdmin) && $userAdmin->role == User::ADMIN_ROLE) {
+            $product = $this->dbProductRepository->findByID($product->id);
+            return view('admin.products.view', [
+                'product' => $product,
+                'activation' => $userAdmin->role,
+                'categories' => Category::all(),
+            ]);
+        }
+
+        return redirect('/admin/user-session');
     }
 }

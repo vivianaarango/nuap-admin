@@ -11,6 +11,7 @@
             <form id="form-basic" method="post" enctype="multipart/form-data" action="{{ $url }}">
                 <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
                 <input type="hidden" name="product_id" id="product_id-token" value="{{ $product['product_id'] }}" />
+                <input type="hidden" name="user_id" id="product_id-token" value="{{ $product['user_id'] }}" />
                 <form class="form-horizontal form-create">
                     <div class="card-header">
                         <i class="fa fa-plus"></i>&nbsp; Editar Producto

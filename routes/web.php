@@ -106,3 +106,5 @@ Route::delete('/admin/product/{product}', 'Admin\ProductController@delete')->nam
 Route::get('/admin/product/{product}/edit','Admin\ProductController@edit')->name('admin/product/edit');
 /* Update */
 Route::post('/admin/product/{product}', 'Admin\ProductController@update')->name('admin/product/update');
+/* View */
+Route::get('/admin/product/{product}/view', 'Admin\ProductController@view')->name('admin/product/view');

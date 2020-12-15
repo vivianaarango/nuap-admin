@@ -43,6 +43,7 @@ interface DbProductRepositoryInterface
      * @param float $purchasePrice
      * @param float $salePrice
      * @param float $specialPrice
+     * @param string|null $image
      * @return Product
      */
     public function update(
@@ -58,6 +59,7 @@ interface DbProductRepositoryInterface
         float $height,
         float $purchasePrice,
         float $salePrice,
-        float $specialPrice
+        float $specialPrice,
+        string $image = null
     ): Product;
 }

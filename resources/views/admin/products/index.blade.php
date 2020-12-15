@@ -46,7 +46,7 @@
                                 <th is='sortable' :column="'id'">ID</th>
                                 <th is='sortable' :column="'name'">Nombre</th>
                                 <th is='sortable' :column="'description'">Descripción</th>
-                                <th is='sortable' :column="'category'">Categoría</th>
+                                <th is='sortable' :column="'category_id'">Categoría</th>
                                 <th is='sortable' :column="'brand'">Marca</th>
                                 <th is='sortable' :column="'stock'">Inventario</th>
                                 <th is='sortable' :column="'purchase_price'">Precio de Compra</th>
@@ -61,7 +61,7 @@
                                 <td >@{{ item.id }}</td>
                                 <td >@{{ item.name }}</td>
                                 <td >@{{ item.description }}</td>
-                                <td >@{{ item.category }}</td>
+                                <td >@{{ item.category_id }}</td>
                                 <td >@{{ item.brand }}</td>
                                 <td >@{{ item.stock }}</td>
                                 <td >@{{ item.purchase_price }}</td>
@@ -80,6 +80,9 @@
                                 </td>
                                 <td>
                                     <div class="row no-gutters">
+                                        <div class="col-auto">
+                                            <a class="btn btn-sm btn-spinner btn-warning" :href="item.resource_url+'/view'" title="Ver producto" role="button"><i class="fa fa-eye"></i></a>
+                                        </div>
                                         <div class="col-auto">
                                             <a class="btn btn-sm btn-spinner btn-info" :href="item.resource_url+'/edit'" title="Editar" role="button"><i class="fa fa-edit"></i></a>
                                         </div>

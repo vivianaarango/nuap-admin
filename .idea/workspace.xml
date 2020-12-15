@@ -7,8 +7,10 @@
     <list default="true" id="d6cb72cc-2713-41b0-95f6-aeada7aa8696" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/ProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/ProductController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/Product/IndexProduct.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Admin/Product/IndexProduct.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Repositories/Contracts/DbProductRepositoryInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/Contracts/DbProductRepositoryInterface.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Repositories/DbProductRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/DbProductRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/products/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/products/edit.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/admin/products/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/products/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
@@ -261,7 +263,7 @@
       <workItem from="1607043376737" duration="3781000" />
       <workItem from="1607089068540" duration="947000" />
       <workItem from="1607094086473" duration="17000" />
-      <workItem from="1607993419344" duration="10638000" />
+      <workItem from="1607993419344" duration="14002000" />
     </task>
     <servers />
   </component>
