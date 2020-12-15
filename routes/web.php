@@ -92,7 +92,13 @@ Route::post('/admin/client-store', 'Admin\ClientController@store');
 Route::post('/admin/client/{client}', 'Admin\ClientController@update')->name('admin/client/update');
 
 ### Products ###
+/* List */
+Route::get('/admin/product-list', 'Admin\ProductController@list');
 /* View create */
-Route::get('/admin/products-create', 'Admin\ProductController@create');
+Route::get('/admin/product-create', 'Admin\ProductController@create');
 /* Store */
-Route::post('/admin/products-store', 'Admin\ProductController@store');
+Route::post('/admin/product-store', 'Admin\ProductController@store');
+/* Change status */
+Route::post('/admin/product/{product}/status', 'Admin\ProductController@changeStatus')->name('admin/product/status');
+/* Delete */
+Route::delete('/admin/product/{product}', 'Admin\ProductController@delete')->name('admin/product/delete');

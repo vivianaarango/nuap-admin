@@ -8,7 +8,7 @@
 @section('body')
     <div class="container-xl">
         <div class="card">
-            <form id="form-basic" method="post" enctype="multipart/form-data" action="{{ url('admin/products-store') }}">
+            <form id="form-basic" method="post" enctype="multipart/form-data" action="{{ url('admin/product-store') }}">
                 <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
                 <form class="form-horizontal form-create">
                     <div class="card-header">

@@ -1,16 +1,22 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Product\IndexProduct;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
 use App\Repositories\Contracts\DbCommerceRepositoryInterface;
 use App\Repositories\Contracts\DbDistributorRepositoryInterface;
+use App\Repositories\Contracts\DbProductRepositoryInterface;
+use Brackets\AdminListing\Facades\AdminListing;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
@@ -32,16 +38,60 @@ class ProductController extends Controller
     private $dbDistributorRepository;
 
     /**
-     * UsersController constructor.
+     * @var DbProductRepositoryInterface
+     */
+    private $dbProductRepository;
+
+    /**
+     * ProductController constructor.
      * @param DbCommerceRepositoryInterface $dbCommerceRepository
      * @param DbDistributorRepositoryInterface $dbDistributorRepository
+     * @param DbProductRepositoryInterface $dbProductRepository
      */
     public function __construct(
         DbCommerceRepositoryInterface $dbCommerceRepository,
-        DbDistributorRepositoryInterface $dbDistributorRepository
+        DbDistributorRepositoryInterface $dbDistributorRepository,
+        DbProductRepositoryInterface $dbProductRepository
     ) {
         $this->dbCommerceRepository = $dbCommerceRepository;
         $this->dbDistributorRepository = $dbDistributorRepository;
+        $this->dbProductRepository = $dbProductRepository;
+    }
+
+    /**
+     * @param IndexProduct $request
+     * @return array|Factory|Application|RedirectResponse|Redirector|View
+     */
+    public function list(IndexProduct $request)
+    {
+        $user = Session::get('user');
+
+        if (isset($user) && $user->role == User::ADMIN_ROLE) {
+            /* @noinspection PhpUndefinedMethodInspection  */
+            $data = AdminListing::create(Product::class)
+                ->modifyQuery(function($query) {
+                    $query->select(
+                        'products.*',
+                        'categories.name as category'
+                    )->join('categories', 'categories.id', '=', 'products.category_id')
+                    ->orderBy('id', 'desc');
+                })->processRequestAndGet(
+                    $request,
+                    ['id', 'name', 'description', 'image', 'category', 'brand', 'status', 'stock', 'purchase_price', 'sale_price'],
+                    ['id', 'name', 'description', 'image', 'category', 'brand', 'status', 'stock', 'purchase_price', 'sale_price']
+                );
+
+            if ($request->ajax()) {
+                return ['data' => $data, 'activation' => $user->role];
+            }
+
+            return view('admin.products.index', [
+                'data' => $data,
+                'activation' => $user->role
+            ]);
+        } else {
+            return redirect('/admin/user-session');
+        }
     }
 
     /**
@@ -123,15 +173,52 @@ class ProductController extends Controller
 
             if ($request->ajax()) {
                 return [
-                    'redirect' => url('admin/products-create'),
+                    'redirect' => url('admin/products-list'),
                     'message' => trans('brackets/admin-ui::admin.operation.succeeded')
                 ];
             }
 
-            return redirect('admin/products-create');
+            return redirect('admin/products-list');
 
         } else {
             return redirect('/admin/user-session');
+        }
+    }
+
+    /**
+     * @param Product $product
+     * @return Response|Factory|Application|View
+     */
+    public function changeStatus(Product $product)
+    {
+        $userAdmin = Session::get('user');
+
+        if (isset($userAdmin) && $userAdmin->role == User::ADMIN_ROLE) {
+            if ($product->status == Product::STATUS_ACTIVE) {
+                $this->dbProductRepository->changeStatus($product->id, Product::STATUS_INACTIVE);
+            } else {
+                $this->dbProductRepository->changeStatus($product->id, Product::STATUS_ACTIVE);
+            }
+
+            return response(['redirect' => url('admin/product-list')]);
+
+        } else {
+            return redirect('/admin/user-session');
+        }
+    }
+
+    /**
+     * @param Product $product
+     * @return ResponseFactory|Application|RedirectResponse|Response
+     */
+    public function delete(Product $product)
+    {
+        $adminUser = Session::get('user');
+
+        if (isset($adminUser) && $adminUser->role == User::ADMIN_ROLE) {
+            $this->dbProductRepository->delete($product->id);
+        } else {
+            return redirect('admin/user-session');
         }
     }
 }
