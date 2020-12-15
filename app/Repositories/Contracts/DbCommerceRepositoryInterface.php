@@ -72,4 +72,11 @@ interface DbCommerceRepositoryInterface
      * @return Collection
      */
     public function findValidCommercesToAddProducts(): Collection;
+
+    /**
+     * @param int $commerceID
+     * @param float $commission
+     * @return Commerce
+     */
+    public function updateCommission(int $commerceID, float $commission): Commerce;
 }

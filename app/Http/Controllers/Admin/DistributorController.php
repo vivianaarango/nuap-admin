@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Distributor\CreateDistributor;
+use App\Http\Requests\Admin\Distributor\IndexCommission;
 use App\Http\Requests\Admin\Distributor\IndexDistributor;
 use App\Models\Distributor;
 use App\Models\User;
@@ -210,10 +211,10 @@ class DistributorController extends Controller
     }
 
     /**
-     * @param IndexDistributor $request
+     * @param IndexCommission $request
      * @return array|Factory|Application|RedirectResponse|Redirector|View
      */
-    public function editCommission(IndexDistributor $request)
+    public function editCommission(IndexCommission $request)
     {
         $user = Session::get('user');
 
@@ -236,9 +237,6 @@ class DistributorController extends Controller
                     ['id', 'business_name', 'commission', 'name_legal_representative']
                 );
 
-            /*if ($request->ajax()) {
-                return ['data' => $data, 'activation' => $user->role];
-            }*/
             if ($request->ajax()) {
                 if ($request->has('bulk')) {
                     return [

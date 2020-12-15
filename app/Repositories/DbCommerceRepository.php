@@ -128,4 +128,18 @@ class DbCommerceRepository implements DbCommerceRepositoryInterface
         ->orderBy('id', 'desc')
         ->get();
     }
+
+    /**
+     * @param int $commerceID
+     * @param float $commission
+     * @return Commerce
+     */
+    public function updateCommission(int $commerceID, float $commission): Commerce
+    {
+        $distributor = $this->findByID($commerceID);
+        $distributor->commission = $commission;
+        $distributor->save();
+
+        return $distributor;
+    }
 }

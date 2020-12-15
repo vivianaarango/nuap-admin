@@ -84,6 +84,10 @@ Route::get('/admin/commerce-create', 'Admin\CommerceController@create');
 Route::post('/admin/commerce-store', 'Admin\CommerceController@store');
 /* Update */
 Route::post('/admin/commerce/{commerce}', 'Admin\CommerceController@update')->name('admin/commerce/update');
+/* Edit Commissions */
+Route::get('/admin/commerce-edit-commission', 'Admin\CommerceController@editCommission');
+/* Update Commissions */
+Route::post('/admin/commerce-update-commission', 'Admin\CommerceController@updateCommission');
 
 ### Client
 /* List */

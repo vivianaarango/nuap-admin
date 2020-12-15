@@ -9,6 +9,7 @@
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/distributor-list') }}"><i class="nav-icon icon-grid"></i>Distribuidores</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/distributor-edit-commission') }}"><i class="nav-icon icon-pin"></i>Comisiones Distribuidores</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/commerce-list') }}"><i class="nav-icon icon-handbag"></i>Comercios</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('admin/commerce-edit-commission') }}"><i class="nav-icon icon-pin"></i>Comisiones Comercios</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/client-list') }}"><i class="nav-icon icon-user"></i>Clientes</a></li>
                 <li class="nav-title">Productos</li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/product-list') }}"><i class="nav-icon icon-plus"></i>Inventario</a></li>

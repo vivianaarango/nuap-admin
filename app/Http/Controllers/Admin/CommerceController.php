@@ -4,15 +4,18 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Commerce\CreateCommerce;
 use App\Http\Requests\Admin\Commerce\IndexCommerce;
+use App\Http\Requests\Admin\Distributor\IndexCommission;
 use App\Models\Commerce;
 use App\Models\User;
 use App\Repositories\Contracts\DbCommerceRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use Brackets\AdminListing\Facades\AdminListing;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\ValidationException;
@@ -208,5 +211,70 @@ class CommerceController extends Controller
         }
 
         return redirect('admin/validate-session');
+    }
+
+    /**
+     * @param IndexCommission $request
+     * @return array|Factory|Application|RedirectResponse|Redirector|View
+     */
+    public function editCommission(IndexCommission $request)
+    {
+        $user = Session::get('user');
+
+        if (isset($user) && $user->role == User::ADMIN_ROLE) {
+            /* @noinspection PhpUndefinedMethodInspection  */
+            $data = AdminListing::create(Commerce::class)
+                ->modifyQuery(function($query) {
+                    $query->select(
+                        'commerces.*',
+                        'commerces.commission',
+                        'commerces.name_legal_representative'
+                    )
+                        ->join('users', 'users.id', '=', 'commerces.user_id')
+                        ->where('users.role', User::COMMERCE_ROLE)
+                        ->where('users.status', User::STATUS_ACTIVE)
+                        ->orderBy('commerces.id', 'desc');
+                })->processRequestAndGet(
+                    $request,
+                    ['id', 'business_name', 'commission', 'name_legal_representative'],
+                    ['id', 'business_name', 'commission', 'name_legal_representative']
+                );
+
+            if ($request->ajax()) {
+                if ($request->has('bulk')) {
+                    return [
+                        'bulkItems' => $data->pluck('id')
+                    ];
+                }
+                return ['data' => $data];
+            }
+
+            return view('admin.commerces.commission', [
+                'data' => $data,
+                'activation' => $user->role,
+            ]);
+        } else {
+            return redirect('/admin/user-session');
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return ResponseFactory|Application|RedirectResponse|Response
+     */
+    public function updateCommission(Request $request)
+    {
+        $newCommission = $request->data['commission'];
+        $idsDistributors = $request->data['ids'];
+
+        foreach ($idsDistributors as $item) {
+            $this->dbCommerceRepository->updateCommission($item, $newCommission);
+        }
+
+        if ($request->ajax()) {
+            return response(['message' => trans('Se ha actualizado la comisión correctamente')]);
+        }
+
+        return redirect()->back();
     }
 }
