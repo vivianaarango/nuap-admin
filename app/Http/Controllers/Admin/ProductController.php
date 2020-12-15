@@ -173,12 +173,12 @@ class ProductController extends Controller
 
             if ($request->ajax()) {
                 return [
-                    'redirect' => url('admin/products-list'),
+                    'redirect' => url('admin/product-list'),
                     'message' => trans('brackets/admin-ui::admin.operation.succeeded')
                 ];
             }
 
-            return redirect('admin/products-list');
+            return redirect('admin/product-list');
 
         } else {
             return redirect('/admin/user-session');
@@ -220,5 +220,88 @@ class ProductController extends Controller
         } else {
             return redirect('admin/user-session');
         }
+    }
+
+    /**
+     * @param Product $product
+     * @return Response|Factory|Application|View
+     */
+    public function edit(Product $product)
+    {
+        $userAdmin = Session::get('user');
+
+        if (isset($userAdmin) && $userAdmin->role == User::ADMIN_ROLE) {
+            $commerces = $this->dbCommerceRepository->findValidCommercesToAddProducts();
+            $distributors = $this->dbDistributorRepository->findValidDistributorsToAddProducts();
+
+            $product = $this->dbProductRepository->findByID($product->id);
+            $data['product_id'] = $product->id;
+            $data['user_id'] = $product->user_id;
+            $data['category_id'] = $product->category_id;
+            $data['name'] = $product->name;
+            $data['brand'] = $product->brand;
+            $data['description'] = $product->description;
+            $data['is_featured'] = $product->is_featured;
+            $data['stock'] = $product->stock;
+            $data['weight'] = $product->weight;
+            $data['length'] = $product->length;
+            $data['width'] = $product->width;
+            $data['height'] = $product->height;
+            $data['purchase_price'] = $product->purchase_price;
+            $data['sale_price'] = $product->sale_price;
+            $data['special_price'] = $product->special_price;
+            $data['has_special_price'] = $product->has_special_price;
+
+            return view('admin.products.edit', [
+                'product' => $data,
+                'activation' => $userAdmin->role,
+                'url' => $product->resource_url,
+                'name' => $product->name,
+                'categories' => Category::all(),
+                'commerces' => $commerces,
+                'distributors' => $distributors
+            ]);
+
+        } else {
+            return redirect('/admin/user-session');
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return array|Application|RedirectResponse|Redirector
+     */
+    public function update(Request $request)
+    {
+        $adminUser = Session::get('user');
+
+        if (isset($adminUser) && $adminUser->role == User::ADMIN_ROLE) {
+            $this->dbProductRepository->update(
+                $request['product_id'],
+                $request['category_id'],
+                $request['name'],
+                $request['brand'],
+                $request['description'],
+                $request['stock'],
+                $request['weight'],
+                $request['length'],
+                $request['width'],
+                $request['height'],
+                $request['purchase_price'],
+                $request['sale_price'],
+                $request['special_price']
+            );
+
+            if ($request->ajax()) {
+                return [
+                    'redirect' => url('admin/product-list'),
+                    'message' => trans('brackets/admin-ui::admin.operation.succeeded')
+                ];
+            }
+
+            return redirect('admin/product-list');
+        }
+
+        return redirect('admin/user-session');
     }
 }

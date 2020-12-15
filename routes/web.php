@@ -102,3 +102,7 @@ Route::post('/admin/product-store', 'Admin\ProductController@store');
 Route::post('/admin/product/{product}/status', 'Admin\ProductController@changeStatus')->name('admin/product/status');
 /* Delete */
 Route::delete('/admin/product/{product}', 'Admin\ProductController@delete')->name('admin/product/delete');
+/* View edit */
+Route::get('/admin/product/{product}/edit','Admin\ProductController@edit')->name('admin/product/edit');
+/* Update */
+Route::post('/admin/product/{product}', 'Admin\ProductController@update')->name('admin/product/update');

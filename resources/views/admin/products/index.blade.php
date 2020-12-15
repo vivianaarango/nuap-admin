@@ -57,7 +57,7 @@
                             </thead>
                             <tbody>
                             <tr v-for="(item, index) in collection">
-                                <!--<img :src="getImageURL(item.image)">-->
+                                <!--<img :src="">-->
                                 <td >@{{ item.id }}</td>
                                 <td >@{{ item.name }}</td>
                                 <td >@{{ item.description }}</td>
@@ -103,11 +103,4 @@
             </div>
         </div>
     </admin-user-listing>
-
 @endsection
-
-<script>
-    function getImageURL($url) {
-        return '../../../'+$url;
-    }
-</script>

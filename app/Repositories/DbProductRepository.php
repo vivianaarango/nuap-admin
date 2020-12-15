@@ -44,4 +44,53 @@ class DbProductRepository implements DbProductRepositoryInterface
         $product = $this->findById($productID);
         return $product->delete();
     }
+
+    /**
+     * @param int $productID
+     * @param int $categoryID
+     * @param string $name
+     * @param string $brand
+     * @param string $description
+     * @param int $stock
+     * @param float $weight
+     * @param float $length
+     * @param float $width
+     * @param float $height
+     * @param float $purchasePrice
+     * @param float $salePrice
+     * @param float $specialPrice
+     * @return Product
+     */
+    public function update(
+        int $productID,
+        int $categoryID,
+        string $name,
+        string $brand,
+        string $description,
+        int $stock,
+        float $weight,
+        float $length,
+        float $width,
+        float $height,
+        float $purchasePrice,
+        float $salePrice,
+        float $specialPrice
+    ): Product {
+        $product = $this->findByID($productID);
+        $product->category_id = $categoryID;
+        $product->name = $name;
+        $product->brand = $brand;
+        $product->description = $description;
+        $product->stock = $stock;
+        $product->weight = $weight;
+        $product->length = $length;
+        $product->width = $width;
+        $product->height = $height;
+        $product->purchase_price = $purchasePrice;
+        $product->sale_price = $salePrice;
+        $product->special_price = $specialPrice;
+        $product->save();
+
+        return $product;
+    }
 }

@@ -204,6 +204,6 @@ class DistributorController extends Controller
             }
         }
 
-        return redirect('admin/validate-session');
+        return redirect('admin/user-session');
     }
 }
