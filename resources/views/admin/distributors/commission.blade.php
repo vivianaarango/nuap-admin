@@ -58,7 +58,7 @@
                                 <tr v-show="(clickedBulkItemsCount > 0) || isClickedAll">
                                     <td class="bg-bulk-info d-table-cell text-center" colspan="6">
                                         <span class="align-middle font-weight-light text-dark">Distribuidores seleccionados @{{ clickedBulkItemsCount }}.  <a href="#" class="text-primary" @click="onBulkItemsClickedAll('/admin/distributor-edit-commission')" v-if="(clickedBulkItemsCount < pagination.state.total)"> <i class="fa" :class="bulkCheckingAllLoader ? 'fa-spinner' : ''"></i> Seleccionar todo</a> <span class="text-primary">|</span> <a
-                                                    href="#" class="text-primary" @click="onBulkItemsClickedAllUncheck()">Deseleccionar todo</a>  </span>
+                                                    href="#" class="text-primary" @click="onBulkItemsClickedAllUncheck()">Eliminar selección</a>  </span>
 
                                         <span class="pull-right pr-2">
                                             <input min="0" max="100" type="number" step="0.1" id="commission" name="commission" v-model="commission">

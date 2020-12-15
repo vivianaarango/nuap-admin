@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d6cb72cc-2713-41b0-95f6-aeada7aa8696" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="d6cb72cc-2713-41b0-95f6-aeada7aa8696" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -184,7 +182,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../ads-api" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin/commerces" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -192,15 +190,16 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources/views/admin/commerces" />
+      <recent name="$PROJECT_DIR$/resources/views/admin/distributors" />
       <recent name="$PROJECT_DIR$/resources/views/admin/products/components" />
       <recent name="$PROJECT_DIR$/app/Http/Requests/Admin/Product" />
       <recent name="$PROJECT_DIR$/resources/views/admin/product/components" />
-      <recent name="$PROJECT_DIR$/resources/views/admin/product" />
-      <recent name="$PROJECT_DIR$/app/Http/Requests/Admin/Client" />
     </key>
   </component>
   <component name="RunManager">
@@ -258,6 +257,7 @@
       <workItem from="1607094086473" duration="17000" />
       <workItem from="1607993419344" duration="14775000" />
       <workItem from="1608039108227" duration="806000" />
+      <workItem from="1608045689632" duration="12239000" />
     </task>
     <servers />
   </component>
