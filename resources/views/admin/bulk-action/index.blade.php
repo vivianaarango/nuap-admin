@@ -38,7 +38,6 @@
                                 </div>
                             </div>
                         </form>
-
                         <table class="table table-hover table-listing">
                             <thead>
                                 <tr>
@@ -48,12 +47,10 @@
                                             #
                                         </label>
                                     </th>
-
                                     <th is='sortable' :column="'id'">{{ trans('admin.bulk-action.columns.id') }}</th>
                                     <th is='sortable' :column="'title'">{{ trans('admin.bulk-action.columns.title') }}</th>
                                     <th is='sortable' class="text-center" :column="'published_at'">{{ trans('admin.bulk-action.columns.published_at') }}</th>
                                     <th is='sortable' :column="'enabled'">{{ trans('admin.bulk-action.columns.enabled') }}</th>
-
                                     <th></th>
                                 </tr>
                                 <tr v-show="(clickedBulkItemsCount > 0) || isClickedAll">
@@ -101,15 +98,12 @@
                                             </form>
                                         </div>
                                     </td>
-                                    
                                     <td>
                                         <label class="switch switch-3d switch-success">
                                             <input type="checkbox" class="switch-input" v-model="collection[index].enabled" @change="toggleSwitch(item.resource_url, 'enabled', collection[index])">
                                             <span class="switch-slider"></span>
                                         </label>
                                     </td>
-
-                                    
                                     <td>
                                         <div class="row no-gutters">
                                             <div class="col-auto">

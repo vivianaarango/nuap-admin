@@ -12,7 +12,8 @@ Vue.component('c', {
                 identity_number:  '',
                 latitude: '',
                 longitude: '',
-                address: ''
+                address: '',
+                is_closed: ''
             }
         }
     },

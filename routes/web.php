@@ -116,3 +116,15 @@ Route::get('/admin/product/{product}/edit','Admin\ProductController@edit')->name
 Route::post('/admin/product/{product}', 'Admin\ProductController@update')->name('admin/product/update');
 /* View */
 Route::get('/admin/product/{product}/view', 'Admin\ProductController@view')->name('admin/product/view');
+
+### Ticket ###
+/* View create */
+Route::get('/admin/ticket-create', 'Admin\TicketController@create');
+/* Store */
+Route::post('/admin/ticket-store', 'Admin\TicketController@store');
+/* List */
+Route::get('/admin/ticket-list', 'Admin\TicketController@list');
+/* Admin List */
+Route::get('/admin/ticket-admin-list', 'Admin\TicketController@adminList');
+/* View Ticket */
+Route::get('/admin/ticket/{ticket}/view', 'Admin\TicketController@view')->name('admin/ticket/view');

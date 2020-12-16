@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="d6cb72cc-2713-41b0-95f6-aeada7aa8696" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/layout/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/layout/sidebar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -184,7 +186,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin/tickets/components" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -197,11 +199,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources/views/admin/tickets/components" />
       <recent name="$PROJECT_DIR$/resources/views/admin/commerces" />
       <recent name="$PROJECT_DIR$/resources/views/admin/distributors" />
       <recent name="$PROJECT_DIR$/resources/views/admin/products/components" />
       <recent name="$PROJECT_DIR$/app/Http/Requests/Admin/Product" />
-      <recent name="$PROJECT_DIR$/resources/views/admin/product/components" />
     </key>
   </component>
   <component name="RunManager">
@@ -260,7 +262,7 @@
       <workItem from="1607993419344" duration="14775000" />
       <workItem from="1608039108227" duration="806000" />
       <workItem from="1608045689632" duration="12239000" />
-      <workItem from="1608068712707" duration="3075000" />
+      <workItem from="1608068712707" duration="6211000" />
     </task>
     <servers />
   </component>
