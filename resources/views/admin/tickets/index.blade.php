@@ -45,6 +45,7 @@
                                 <th is='sortable' :column="'id'">ID</th>
                                 <th is='sortable' :column="'name'">Asunto</th>
                                 <th is='sortable' :column="'description'">Descripción</th>
+                                <th is='sortable' :column="'updated_at'">Última respuesta</th>
                                 <th is='sortable' :column="'init_date'">Fecha de creación</th>
                                 <th is='sortable' :column="'is_closed'">Estado</th>
                                 <th></th>
@@ -55,17 +56,18 @@
                                 <td >@{{ item.id }}</td>
                                 <td >@{{ item.issues }}</td>
                                 <td >@{{ item.description }}</td>
+                                <td >@{{ item.updated_at }}</td>
                                 <td >@{{ item.init_date }}</td>
                                 <td v-if="item.is_closed === 0">
                                     <button disabled style="color: white" class="btn btn-sm btn-success"><i class="fa fa-send"></i>&nbsp;&nbspAbierto</button>
                                 </td>
                                 <td v-if="item.is_closed === 1">
-                                    <button disabled style="color: white" class="btn btn-sm btn-danger"><i class="fa fa-send"></i>&nbsp;&nbspCerrado</button>
+                                    <button disabled style="color: white" class="btn btn-sm btn-danger"><i class="fa fa-lock"></i>&nbsp;&nbspCerrado</button>
                                 </td>
                                 <td>
                                     <div class="row no-gutters">
                                         <div class="col-auto">
-                                            <a class="btn btn-sm btn-spinner btn-info" :href="item.resource_url+'/view'" title="Ver ticket" role="button"><i class="fa fa-eye"></i></a>
+                                            <a class="btn btn-sm btn-spinner btn-info" :href="item.resource_url+'/view'" title="Ver ticket" role="button"><i class="fa fa-commenting"></i></a>
                                         </div>
                                     </div>
                                 </td>

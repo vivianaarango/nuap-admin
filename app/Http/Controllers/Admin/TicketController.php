@@ -5,12 +5,18 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Ticket\IndexTicket;
 use App\Models\Ticket;
+use App\Models\TicketMessage;
 use App\Models\User;
+use App\Repositories\Contracts\DbCommerceRepositoryInterface;
+use App\Repositories\Contracts\DbDistributorRepositoryInterface;
+use App\Repositories\Contracts\DbTicketRepositoryInterface;
 use Brackets\AdminListing\Facades\AdminListing;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
@@ -21,6 +27,37 @@ use Illuminate\View\View;
  */
 class TicketController extends Controller
 {
+    /**
+     * @var DbTicketRepositoryInterface
+     */
+    private $dbTicketRepository;
+
+    /**
+     * @var DbDistributorRepositoryInterface
+     */
+    private $dbDistributorRepository;
+
+    /**
+     * @var DbCommerceRepositoryInterface
+     */
+    private $dbCommerceRepository;
+
+    /**
+     * TicketController constructor.
+     * @param DbTicketRepositoryInterface $dbTicketRepository
+     * @param DbDistributorRepositoryInterface $dbDistributorRepository
+     * @param DbCommerceRepositoryInterface $dbCommerceRepository
+     */
+    public function __construct(
+        DbTicketRepositoryInterface $dbTicketRepository,
+        DbDistributorRepositoryInterface $dbDistributorRepository,
+        DbCommerceRepositoryInterface $dbCommerceRepository
+    ) {
+        $this->dbTicketRepository = $dbTicketRepository;
+        $this->dbDistributorRepository = $dbDistributorRepository;
+        $this->dbCommerceRepository = $dbCommerceRepository;
+    }
+
     /**
      * @param IndexTicket $request
      * @return array|Factory|Application|RedirectResponse|Redirector|View
@@ -35,11 +72,12 @@ class TicketController extends Controller
                 ->modifyQuery(function($query) {
                     $query->where('user_id', Session::get('user')->id)
                         ->orderBy('is_closed', 'asc')
+                        ->orderBy('updated_at', 'desc')
                         ->orderBy('id', 'desc');
                 })->processRequestAndGet(
                     $request,
-                    ['id', 'issues', 'is_closed', 'description', 'init_date'],
-                    ['id', 'issues', 'is_closed', 'description', 'init_date']
+                    ['id', 'issues', 'is_closed', 'description', 'init_date', 'updated_at'],
+                    ['id', 'issues', 'is_closed', 'description', 'init_date', 'updated_at']
                 );
 
             if ($request->ajax()) {
@@ -92,6 +130,7 @@ class TicketController extends Controller
             $message['sender_id'] = $user->id;
             $message['sender_type'] = $user->role;
             $message['sender_date'] = now();
+            TicketMessage::create($message);
 
             if ($request->ajax()) {
                 return [
@@ -124,12 +163,25 @@ class TicketController extends Controller
                         'tickets.*'
                     )->join('users', 'users.id', '=', 'tickets.user_id')
                         ->orderBy('is_closed', 'asc')
+                        ->orderBy('updated_at', 'desc')
                         ->orderBy('id', 'desc');
                 })->processRequestAndGet(
                     $request,
-                    ['id', 'email', 'issues', 'is_closed', 'description', 'init_date'],
-                    ['id', 'email', 'issues', 'is_closed', 'description', 'init_date']
+                    ['id', 'email', 'issues', 'is_closed', 'description', 'init_date', 'updated_at'],
+                    ['id', 'email', 'issues', 'is_closed', 'description', 'init_date', 'updated_at']
                 );
+
+            foreach ($data as $item){
+                if ($item->user_type === User::DISTRIBUTOR_ROLE){
+                    $ticketUser =$this->dbDistributorRepository->findByUserID($item->user_id);
+                    $item->email = $ticketUser->business_name;
+                }
+
+                if ($item->user_type === User::COMMERCE_ROLE){
+                    $ticketUser =$this->dbCommerceRepository->findByUserID($item->user_id);
+                    $item->email = $ticketUser->business_name;
+                }
+            }
 
             if ($request->ajax()) {
                 return ['data' => $data, 'activation' => $user->role];
@@ -142,5 +194,111 @@ class TicketController extends Controller
         } else {
             return redirect('/admin/user-session');
         }
+    }
+
+    /**
+     * @param Ticket $ticket
+     * @return Factory|Application|RedirectResponse|Redirector|View
+     */
+    public function view(Ticket $ticket)
+    {
+        $userAdmin = Session::get('user');
+
+        if (isset($userAdmin) && ($userAdmin->role == User::ADMIN_ROLE || $userAdmin->role == User::DISTRIBUTOR_ROLE)) {
+            $data = $this->dbTicketRepository->findMessagesByTicket($ticket->id);
+
+            foreach ($data as $item){
+                $senderDate = $item->sender_date;
+                $item->sender_date = $this->formatDate($senderDate);
+                $item->role = $this->formatHour($senderDate);
+            }
+
+            return view('admin.tickets.view', [
+                'tittle' => $ticket->issues,
+                'ticket_id' => $ticket->id,
+                'data' => $data,
+                'activation' => $userAdmin->role
+            ]);
+        }
+
+        return redirect('/admin/user-session');
+    }
+
+    /**
+     * @param Request $request
+     * @return array|Factory|Application|RedirectResponse|Redirector|View
+     */
+    public function sendMessage(Request $request)
+    {
+        $user = Session::get('user');
+
+        if (isset($user) && ($user->role == User::ADMIN_ROLE || $user->role == User::DISTRIBUTOR_ROLE)) {
+            $ticket = $this->dbTicketRepository->findByID($request['ticket_id']);
+            $ticket->setUpdatedAt(now());
+            $ticket->save();
+
+            $message['ticket_id'] = $request['ticket_id'];
+            $message['message'] = $request['message'];
+            $message['sender_id'] = $user->id;
+            $message['sender_type'] = $user->role;
+            $message['sender_date'] = now();
+            TicketMessage::create($message);
+
+            if ($user->role === User::DISTRIBUTOR_ROLE) {
+                return redirect('admin/ticket-list');
+            }
+
+            if ($user->role === User::ADMIN_ROLE) {
+                return redirect('admin/ticket-admin-list');
+            }
+        }
+
+        return redirect('/admin/user-session');
+    }
+
+    /**
+     * @param Ticket $ticket
+     * @return ResponseFactory|Application|RedirectResponse|Response
+     */
+    public function close(Ticket $ticket)
+    {
+        $adminUser = Session::get('user');
+
+        if (isset($adminUser) && $adminUser->role == User::ADMIN_ROLE) {
+            $ticket = $this->dbTicketRepository->findByID($ticket->id);
+            $ticket->is_closed = Ticket::CLOSED;
+            $ticket->save();
+        } else {
+            return redirect('admin/user-session');
+        }
+    }
+
+    /**
+     * @param string $date
+     * @return string
+     */
+    private function formatDate(string $date): string
+    {
+        $date = explode(' ',$date);
+        $hora = explode(':',$date[1]);
+        if (!isset($hora[2])) $hora[2] = '00';
+        $hora = date('g:i a',mktime($hora[0],$hora[1],$hora[2],0,0,0));
+        $date = explode('-', $date[0]);
+        $dias = array('Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado');
+        $meses = array('','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
+        $date = $dias[date('w',mktime(0,0,0,$date[1],$date[2],$date[0]))].', '.intval($date[2]).' '.$meses[intval($date[1])];
+        return $date;
+    }
+
+    /**
+     * @param string $date
+     * @return string
+     */
+    private function formatHour(string $date): string
+    {
+        $date = explode(' ',$date);
+        $hora = explode(':',$date[1]);
+        if (!isset($hora[2])) $hora[2] = '00';
+        $hora = date('g:i a',mktime($hora[0],$hora[1],$hora[2],0,0,0)); return $hora;
     }
 }

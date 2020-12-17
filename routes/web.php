@@ -128,3 +128,7 @@ Route::get('/admin/ticket-list', 'Admin\TicketController@list');
 Route::get('/admin/ticket-admin-list', 'Admin\TicketController@adminList');
 /* View Ticket */
 Route::get('/admin/ticket/{ticket}/view', 'Admin\TicketController@view')->name('admin/ticket/view');
+/* Store */
+Route::post('/admin/ticket-send-message', 'Admin\TicketController@sendMessage');
+/* Close */
+Route::delete('/admin/ticket/{ticket}', 'Admin\TicketController@close')->name('admin/ticket/close');

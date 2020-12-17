@@ -65,9 +65,6 @@
                                         <form class="col" @submit.prevent="deleteItem(item.resource_url)">
                                             <button type="submit" class="btn btn-sm btn-danger" title="Eliminar"><i class="fa fa-trash-o"></i></button>
                                         </form>
-                                        <!--<div class="col-auto">
-                                            <a class="btn btn-sm btn-danger" :href="item.resource_url+'/delete-location'" title="Agregar ubicación" role="button"><i class="fa fa-trash-o"></i></a>
-                                        </div>-->
                                     </div>
                                 </td>
                             </tr>

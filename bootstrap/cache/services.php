@@ -202,6 +202,8 @@
     'App\\Repositories\\Contracts\\DbDistributorRepositoryInterface' => 'App\\Providers\\RepositoryServiceProvider',
     'App\\Repositories\\Contracts\\DbCommerceRepositoryInterface' => 'App\\Providers\\RepositoryServiceProvider',
     'App\\Repositories\\Contracts\\DbClientRepositoryInterface' => 'App\\Providers\\RepositoryServiceProvider',
+    'App\\Repositories\\Contracts\\DbProductRepositoryInterface' => 'App\\Providers\\RepositoryServiceProvider',
+    'App\\Repositories\\Contracts\\DbTicketRepositoryInterface' => 'App\\Providers\\RepositoryServiceProvider',
   ),
   'when' => 
   array (
