@@ -18,6 +18,8 @@ use Illuminate\Foundation\Application;
  * @property string payment_date
  *
  * @package App\Models
+ * @method static where(string $string, int $userID)
+ * @method static findOrFail(int $distributorID)
  */
 class Payment extends Model
 {

@@ -15,6 +15,8 @@ use Illuminate\Foundation\Application;
  * @property float total
  *
  * @package App\Models
+ * @method static where(string $string, int $userID)
+ * @method static findOrFail(int $balanceID)
  */
 class Balance extends Model
 {

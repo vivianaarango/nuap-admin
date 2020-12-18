@@ -17,6 +17,8 @@ use Illuminate\Foundation\Application;
  * @property string bank
  *
  * @package App\Models
+ * @method static where(string $string, int $userID)
+ * @method static findOrFail(int $bankAccountID)
  */
 class BankAccount extends Model
 {
