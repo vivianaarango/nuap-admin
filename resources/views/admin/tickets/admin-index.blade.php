@@ -70,16 +70,12 @@
                                         <div class="col-auto">
                                             <a class="btn btn-sm btn-spinner btn-info" :href="item.resource_url+'/view'" title="Ver ticket" role="button"><i class="fa fa-commenting"></i></a>
                                         </div>
-                                        <div v-if="item.is_closed === 0">
-                                            <form class="col" @submit.prevent="closeTicket(item.resource_url)">
-                                                <button type="submit" class="btn btn-sm btn-danger" title="Cerrar Ticket"><i class="fa fa-lock"></i></button>
-                                            </form>
-                                        </div>
-                                        <div v-if="item.is_closed === 1">
-                                            <form class="col" @submit.prevent="closeTicket(item.resource_url)">
-                                                <button disabled type="submit" class="btn btn-sm btn-danger" title="Cerrar Ticket"><i class="fa fa-lock"></i></button>
-                                            </form>
-                                        </div>
+                                        <form v-if="item.is_closed === 0" class="col" @submit.prevent="closeTicket(item.resource_url)">
+                                            <button type="submit" class="btn btn-sm btn-danger" title="Cerrar Ticket"><i class="fa fa-lock"></i></button>
+                                        </form>
+                                        <form v-if="item.is_closed === 1" class="col" @submit.prevent="closeTicket(item.resource_url)">
+                                            <button disabled type="submit" class="btn btn-sm btn-danger" title="Cerrar Ticket"><i class="fa fa-lock"></i></button>
+                                        </form>
 
                                     </div>
                                 </td>
