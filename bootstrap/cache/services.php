@@ -204,6 +204,9 @@
     'App\\Repositories\\Contracts\\DbClientRepositoryInterface' => 'App\\Providers\\RepositoryServiceProvider',
     'App\\Repositories\\Contracts\\DbProductRepositoryInterface' => 'App\\Providers\\RepositoryServiceProvider',
     'App\\Repositories\\Contracts\\DbTicketRepositoryInterface' => 'App\\Providers\\RepositoryServiceProvider',
+    'App\\Repositories\\Contracts\\DbPaymentRepositoryInterface' => 'App\\Providers\\RepositoryServiceProvider',
+    'App\\Repositories\\Contracts\\DbBankAccountRepositoryInterface' => 'App\\Providers\\RepositoryServiceProvider',
+    'App\\Repositories\\Contracts\\DbBalanceRepositoryInterface' => 'App\\Providers\\RepositoryServiceProvider',
   ),
   'when' => 
   array (

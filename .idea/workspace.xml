@@ -6,6 +6,15 @@
   <component name="ChangeListManager">
     <list default="true" id="d6cb72cc-2713-41b0-95f6-aeada7aa8696" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/PaymentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/PaymentController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/BankAccount.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/BankAccount.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Payment.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Payment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/Contracts/DbBankAccountRepositoryInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/Contracts/DbBankAccountRepositoryInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/DbBankAccountRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/DbBankAccountRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/cache/packages.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/cache/services.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/layout/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/layout/sidebar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -183,6 +192,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -264,7 +274,9 @@
       <workItem from="1608168518966" duration="1826000" />
       <workItem from="1608170681758" duration="9556000" />
       <workItem from="1608215819202" duration="325000" />
-      <workItem from="1608267588994" duration="2399000" />
+      <workItem from="1608267588994" duration="3250000" />
+      <workItem from="1608298717625" duration="842000" />
+      <workItem from="1608394096539" duration="9049000" />
     </task>
     <servers />
   </component>

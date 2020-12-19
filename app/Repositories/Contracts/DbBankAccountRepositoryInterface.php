@@ -20,4 +20,11 @@ interface DbBankAccountRepositoryInterface
      * @return BankAccount
      */
     public function findByID(int $bankAccountID): BankAccount;
+
+    /**
+     * @param int $userID
+     * @param int $account
+     * @return mixed
+     */
+    public function findByUserIDAndAccount(int $userID, int $account);
 }

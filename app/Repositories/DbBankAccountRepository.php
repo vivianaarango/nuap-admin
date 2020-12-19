@@ -30,4 +30,16 @@ class DbBankAccountRepository implements DbBankAccountRepositoryInterface
     {
         return BankAccount::findOrFail($bankAccountID);
     }
+
+    /**
+     * @param int $userID
+     * @param int $account
+     * @return mixed
+     */
+    public function findByUserIDAndAccount(int $userID, int $account)
+    {
+        return BankAccount::where('user_id', $userID)
+            ->where('account', $account)
+            ->first();
+    }
 }

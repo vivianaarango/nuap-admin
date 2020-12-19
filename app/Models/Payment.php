@@ -20,13 +20,29 @@ use Illuminate\Foundation\Application;
  * @package App\Models
  * @method static where(string $string, int $userID)
  * @method static findOrFail(int $distributorID)
+ * @method static create($message)
  */
 class Payment extends Model
 {
     /**
      * @var string
      */
-    protected $table = 'balances';
+    public const STATUS_CANCEL = 'Cancelado';
+
+    /**
+     * @var string
+     */
+    public const STATUS_APPROVED = 'Aprobado';
+
+    /**
+     * @var string
+     */
+    public const STATUS_PENDING = 'Pendiente';
+
+    /**
+     * @var string
+     */
+    protected $table = 'payments';
 
     /**
      * @var string[]
