@@ -13,6 +13,8 @@
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/client-list') }}"><i class="nav-icon icon-user"></i>Clientes</a></li>
                 <li class="nav-title">Productos</li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/product-list') }}"><i class="nav-icon icon-plus"></i>Inventario</a></li>
+                <li class="nav-title">Pagos</li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('admin/payment-admin-list') }}"><i class="nav-icon icon-wallet"></i>Solicitudes</a></li>
                 <li class="nav-title">Soporte</li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/ticket-admin-list') }}"><i class="nav-icon icon-envelope"></i>Tickets</a></li>
             </ul>

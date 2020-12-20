@@ -3,11 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Payment\IndexPayment;
 use App\Models\BankAccount;
 use App\Models\Payment;
 use App\Models\User;
 use App\Repositories\Contracts\DbBalanceRepositoryInterface;
 use App\Repositories\Contracts\DbBankAccountRepositoryInterface;
+use App\Repositories\Contracts\DbCommerceRepositoryInterface;
+use App\Repositories\Contracts\DbDistributorRepositoryInterface;
+use App\Repositories\Contracts\DbPaymentRepositoryInterface;
+use Brackets\AdminListing\Facades\AdminListing;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
@@ -33,16 +38,40 @@ class PaymentController extends Controller
     private $dbBankAccountRepository;
 
     /**
+     * @var DbDistributorRepositoryInterface
+     */
+    private $dbDistributorRepository;
+
+    /**
+     * @var DbCommerceRepositoryInterface
+     */
+    private $dbCommerceRepository;
+
+    /**
+     * @var DbPaymentRepositoryInterface
+     */
+    private $dbPaymentRepository;
+
+    /**
      * PaymentController constructor.
      * @param DbBalanceRepositoryInterface $dbBalanceRepository
      * @param DbBankAccountRepositoryInterface $dbBankAccountRepository
+     * @param DbDistributorRepositoryInterface $dbDistributorRepository
+     * @param DbCommerceRepositoryInterface $dbCommerceRepository
+     * @param DbPaymentRepositoryInterface $dbPaymentRepository
      */
     public function __construct(
         DbBalanceRepositoryInterface $dbBalanceRepository,
-        DbBankAccountRepositoryInterface $dbBankAccountRepository
+        DbBankAccountRepositoryInterface $dbBankAccountRepository,
+        DbDistributorRepositoryInterface $dbDistributorRepository,
+        DbCommerceRepositoryInterface $dbCommerceRepository,
+        DbPaymentRepositoryInterface $dbPaymentRepository
     ) {
         $this->dbBalanceRepository = $dbBalanceRepository;
         $this->dbBankAccountRepository = $dbBankAccountRepository;
+        $this->dbDistributorRepository = $dbDistributorRepository;
+        $this->dbCommerceRepository = $dbCommerceRepository;
+        $this->dbPaymentRepository = $dbPaymentRepository;
     }
 
     /**
@@ -107,5 +136,87 @@ class PaymentController extends Controller
         } else {
             return redirect('/admin/user-session');
         }
+    }
+
+    /**
+     * @param IndexPayment $request
+     * @return array|Factory|Application|RedirectResponse|Redirector|View
+     */
+    public function adminList(IndexPayment $request)
+    {
+        $user = Session::get('user');
+
+        if (isset($user) && $user->role == User::ADMIN_ROLE) {
+            /* @noinspection PhpUndefinedMethodInspection  */
+            $data = AdminListing::create(Payment::class)
+                ->modifyQuery(function($query) {
+                    $query->select(
+                        'bank_accounts.bank',
+                        'users.email',
+                        'payments.*'
+                    )->join('users', 'users.id', '=', 'payments.user_id')
+                    ->join('bank_accounts', 'bank_accounts.id', '=', 'payments.account_id')
+                    ->where('users.status', User::STATUS_ACTIVE)
+                    ->orderBy('payments.status', 'asc')
+                    ->orderBy('request_date', 'asc')
+                    ->orderBy('id', 'desc');
+                })->processRequestAndGet(
+                    $request,
+                    ['id', 'email', 'bank', 'value', 'request_date', 'payment_date', 'status', 'updated_at'],
+                    ['id', 'email', 'bank', 'value', 'request_date', 'payment_date', 'status', 'updated_at']
+                );
+
+            foreach ($data as $item){
+                if ($item->user_type === User::DISTRIBUTOR_ROLE){
+                    $ticketUser =$this->dbDistributorRepository->findByUserID($item->user_id);
+                    $item->email = $ticketUser->business_name;
+                }
+
+                if ($item->user_type === User::COMMERCE_ROLE){
+                    $ticketUser =$this->dbCommerceRepository->findByUserID($item->user_id);
+                    $item->email = $ticketUser->business_name;
+                }
+            }
+
+            if ($request->ajax()) {
+                return ['data' => $data, 'activation' => $user->role];
+            }
+
+            return view('admin.payments.admin-index', [
+                'data' => $data,
+                'activation' => $user->role
+            ]);
+        } else {
+            return redirect('/admin/user-session');
+        }
+    }
+
+    /**
+     * @param Payment $payment
+     * @return Factory|Application|RedirectResponse|Redirector|View
+     */
+    public function view(Payment $payment)
+    {
+        $userAdmin = Session::get('user');
+
+        if (isset($userAdmin) && $userAdmin->role == User::ADMIN_ROLE) {
+            $payment = $this->dbPaymentRepository->findByID($payment->id);
+            $account = $this->dbBankAccountRepository->findByID($payment->account_id);
+
+            $user = null;
+            if ($payment->user_type === User::DISTRIBUTOR_ROLE)
+                $user = $this->dbDistributorRepository->findByUserID($payment->user_id);
+            if ($payment->user_type === User::COMMERCE_ROLE)
+                $user = $this->dbCommerceRepository->findByUserID($payment->user_id);
+
+            return view('admin.payments.view', [
+                'payment' => $payment,
+                'activation' => $userAdmin->role,
+                'account' => $account,
+                'user' => $user
+            ]);
+        }
+
+        return redirect('/admin/user-session');
     }
 }

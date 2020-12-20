@@ -139,12 +139,8 @@ Route::get('/admin/payment-create', 'Admin\PaymentController@create');
 /* Store */
 Route::post('/admin/payment-store', 'Admin\PaymentController@store');
 /* List */
-Route::get('/admin/ticket-list', 'Admin\TicketController@list');
+Route::get('/admin/payment-list', 'Admin\PaymentController@list');
 /* Admin List */
-Route::get('/admin/ticket-admin-list', 'Admin\TicketController@adminList');
-/* View Ticket */
-Route::get('/admin/ticket/{ticket}/view', 'Admin\TicketController@view')->name('admin/ticket/view');
-/* Store */
-Route::post('/admin/ticket-send-message', 'Admin\TicketController@sendMessage');
-/* Close */
-Route::delete('/admin/ticket/{ticket}', 'Admin\TicketController@close')->name('admin/ticket/close');
+Route::get('/admin/payment-admin-list', 'Admin\PaymentController@adminList');
+/* View Payment */
+Route::get('/admin/payment/{payment}/view', 'Admin\PaymentController@view')->name('admin/payment/view');

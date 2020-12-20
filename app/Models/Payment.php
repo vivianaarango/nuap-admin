@@ -42,6 +42,11 @@ class Payment extends Model
     /**
      * @var string
      */
+    public const STATUS_REJECTED = 'Rechazado';
+
+    /**
+     * @var string
+     */
     protected $table = 'payments';
 
     /**

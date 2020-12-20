@@ -7,13 +7,13 @@
     <list default="true" id="d6cb72cc-2713-41b0-95f6-aeada7aa8696" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/PaymentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/PaymentController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/BankAccount.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/BankAccount.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/Payment/IndexPayment.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Admin/Payment/IndexPayment.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/Payment.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Payment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/Contracts/DbBankAccountRepositoryInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/Contracts/DbBankAccountRepositoryInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/DbBankAccountRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/DbBankAccountRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bootstrap/cache/packages.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bootstrap/cache/services.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/admin/layout/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/layout/sidebar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/payments/commission.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/payments/components/form-edit-elements.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/payments/components/form-view-elements.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/payments/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/payments/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/payments/edit.blade.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -194,7 +194,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin/payments" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -207,11 +207,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources/views/admin/payments" />
       <recent name="$PROJECT_DIR$/resources/views/admin/tickets/components" />
       <recent name="$PROJECT_DIR$/resources/views/admin/commerces" />
       <recent name="$PROJECT_DIR$/resources/views/admin/distributors" />
       <recent name="$PROJECT_DIR$/resources/views/admin/products/components" />
-      <recent name="$PROJECT_DIR$/app/Http/Requests/Admin/Product" />
     </key>
   </component>
   <component name="RunManager">
@@ -276,7 +276,8 @@
       <workItem from="1608215819202" duration="325000" />
       <workItem from="1608267588994" duration="3250000" />
       <workItem from="1608298717625" duration="842000" />
-      <workItem from="1608394096539" duration="9049000" />
+      <workItem from="1608394096539" duration="12434000" />
+      <workItem from="1608504692525" duration="2730000" />
     </task>
     <servers />
   </component>

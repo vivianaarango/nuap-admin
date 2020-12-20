@@ -22,7 +22,7 @@
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary">
                             <i class="fa fa-download"></i>
-                            &nbsp; Guardar
+                            &nbsp; Solicitar
                         </button>
                     </div>
                 </form>
