@@ -1,3 +1,21 @@
+<div class="form-group row align-items-center" :class="{'has-danger': errors.has('status'), 'has-success': this.fields.status && this.fields.status.valid }">
+    <label for="status" class="col-form-label text-md-right" :class="'col-md-5'"><b>Estado:</b></label>
+    <div :class="'col-md-4 col-md-9 col-xl-7'">
+        @if($payment['status'] === 'Cancelado')
+            <button disabled style="color: white" class="btn btn-sm btn-warning"><i></i>&nbspCancelado</button>
+        @endif
+        @if($payment['status'] === 'Rechazado')
+            <button disabled style="color: white" class="btn btn-sm btn-danger"><i></i>&nbspRechazado</button>
+        @endif
+        @if($payment['status'] === 'Aprobado')
+            <button disabled style="color: white" class="btn btn-sm btn-success"><i></i>&nbspAprobado</button>
+        @endif
+        @if($payment['status'] === 'Pendiente')
+            <button disabled style="color: white" class="btn btn-sm btn-info"><i></i>&nbspPendiente</button>
+        @endif
+    </div>
+</div>
+
 <div class="form-group row align-items-center" :class="{'has-danger': errors.has('value'), 'has-success': this.fields.value && this.fields.value.valid }">
     <label for="value" class="col-form-label text-md-right" :class="'col-md-5'"><b>Valor a pagar:</b></label>
     <div :class="'col-md-4 col-md-9 col-xl-7'">
@@ -55,4 +73,22 @@
         <label for="owner_document" class="col-form-label text-md-right">{{ $account['owner_document'] }}</label>
     </div>
 </div>
+
+@if($payment['status'] === 'Aprobado' || $payment['status'] === 'Pendiente')
+    <div class="form-group row align-items-center" :class="{'has-danger': errors.has('voucher'), 'has-success': this.fields.voucher && this.fields.voucher.valid }">
+        <label for="voucher" class="col-form-label text-md-right" :class="'col-md-5'"><b>Comprobante de Pago:</b></label>
+        <div :class="'col-md-4 col-md-9 col-xl-7'">
+            @if($payment['status'] === 'Pendiente')
+                <input type="file" style="color: #b9c8de" class="" :class="{'form-control-danger': errors.has('voucher'), 'form-control-success': this.fields.voucher && this.fields.voucher.valid}" id="voucher" name="voucher" placeholder="Comprobante de Pago">
+            @else
+                @if($payment['voucher'] != null)
+                    <a style="background-color: #60abcf !important;border-color: #60b5cf !important;" target="_blank" class="btn btn-sm btn-link-documents" href="../../../{{ $payment['voucher'] }}" class="col-auto" href="item.resource_url+'/add-voucher'" title="Ver" role="button">
+                        <i class="fa fa-mail-forward"></i>
+                    </a>
+                @endif
+            @endif
+            <div v-if="errors.has('voucher')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('voucher') }}</div>
+        </div>
+    </div>
+@endif
 

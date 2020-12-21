@@ -12,6 +12,7 @@ use App\Repositories\Contracts\DbBankAccountRepositoryInterface;
 use App\Repositories\Contracts\DbCommerceRepositoryInterface;
 use App\Repositories\Contracts\DbDistributorRepositoryInterface;
 use App\Repositories\Contracts\DbPaymentRepositoryInterface;
+use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use Brackets\AdminListing\Facades\AdminListing;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
@@ -53,25 +54,33 @@ class PaymentController extends Controller
     private $dbPaymentRepository;
 
     /**
+     * @var DbUsersRepositoryInterface
+     */
+    private $dbUserRepository;
+
+    /**
      * PaymentController constructor.
      * @param DbBalanceRepositoryInterface $dbBalanceRepository
      * @param DbBankAccountRepositoryInterface $dbBankAccountRepository
      * @param DbDistributorRepositoryInterface $dbDistributorRepository
      * @param DbCommerceRepositoryInterface $dbCommerceRepository
      * @param DbPaymentRepositoryInterface $dbPaymentRepository
+     * @param DbUsersRepositoryInterface $dbUserRepository
      */
     public function __construct(
         DbBalanceRepositoryInterface $dbBalanceRepository,
         DbBankAccountRepositoryInterface $dbBankAccountRepository,
         DbDistributorRepositoryInterface $dbDistributorRepository,
         DbCommerceRepositoryInterface $dbCommerceRepository,
-        DbPaymentRepositoryInterface $dbPaymentRepository
+        DbPaymentRepositoryInterface $dbPaymentRepository,
+        DbUsersRepositoryInterface $dbUserRepository
     ) {
         $this->dbBalanceRepository = $dbBalanceRepository;
         $this->dbBankAccountRepository = $dbBankAccountRepository;
         $this->dbDistributorRepository = $dbDistributorRepository;
         $this->dbCommerceRepository = $dbCommerceRepository;
         $this->dbPaymentRepository = $dbPaymentRepository;
+        $this->dbUserRepository = $dbUserRepository;
     }
 
     /**
@@ -209,12 +218,73 @@ class PaymentController extends Controller
             if ($payment->user_type === User::COMMERCE_ROLE)
                 $user = $this->dbCommerceRepository->findByUserID($payment->user_id);
 
+            $phone = $this->dbUserRepository->findByID($payment->user_id)->phone;
             return view('admin.payments.view', [
                 'payment' => $payment,
                 'activation' => $userAdmin->role,
                 'account' => $account,
-                'user' => $user
+                'user' => $user,
+                'phone' => $phone
             ]);
+        }
+
+        return redirect('/admin/user-session');
+    }
+
+    /**
+     * @param Request $request
+     * @return Application|RedirectResponse|Redirector
+     */
+    public function uploadVoucher(Request $request)
+    {
+        $user = Session::get('user');
+        if (isset($user) && $user->role == User::ADMIN_ROLE) {
+            $voucherPath = 'voucher/'.$request['phone'];
+            if (!is_dir($voucherPath)) {
+                mkdir($voucherPath, 0777, true);
+            }
+
+            $voucher = $_FILES['voucher'];
+
+            $urlVoucher = null;
+            if ($voucher['name'] != '') {
+                $ext = pathinfo($voucher['name'], PATHINFO_EXTENSION);
+                $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                $urlVoucher = "{$voucherPath}/".substr(str_shuffle($permitted_chars), 0, 16).".{$ext}";
+                $destinationRoute = $urlVoucher;
+                move_uploaded_file($voucher['tmp_name'], $destinationRoute);
+            }
+
+            $payment = $this->dbPaymentRepository->findByID($request['payment_id']);
+            $payment->voucher = $urlVoucher;
+            $payment->payment_date = now();
+            $payment->status = Payment::STATUS_APPROVED;
+            $payment->save();
+
+            $balance = $this->dbBalanceRepository->findByUserID($payment->user_id);
+            $balance->balance = $balance->balance - $request['value'];
+            $balance->paid_out = $balance->paid_out + $request['value'];
+            $balance->save();
+
+            return redirect('/admin/payment-admin-list');
+        }
+
+        return redirect('/admin/user-session');
+    }
+
+    /**
+     * @param Request $request
+     * @return Application|RedirectResponse|Redirector
+     */
+    public function rejectedPayment(Request $request)
+    {
+        $user = Session::get('user');
+        if (isset($user) && $user->role == User::ADMIN_ROLE) {
+            $payment = $this->dbPaymentRepository->findByID($request['payment_id']);
+            $payment->status = Payment::STATUS_REJECTED;
+            $payment->save();
+
+            return redirect('/admin/payment-admin-list');
         }
 
         return redirect('/admin/user-session');

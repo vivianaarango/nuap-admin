@@ -144,3 +144,7 @@ Route::get('/admin/payment-list', 'Admin\PaymentController@list');
 Route::get('/admin/payment-admin-list', 'Admin\PaymentController@adminList');
 /* View Payment */
 Route::get('/admin/payment/{payment}/view', 'Admin\PaymentController@view')->name('admin/payment/view');
+/* Upload Voucher */
+Route::post('/admin/payment/upload-voucher', 'Admin\PaymentController@uploadVoucher');
+/* Rejected Payment */
+Route::post('/admin/payment/rejected-payment', 'Admin\PaymentController@rejectedPayment');
