@@ -26,7 +26,8 @@
                 <li class="nav-title">Productos</li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/product-list') }}"><i class="nav-icon icon-plus"></i>Inventario</a></li>
                 <li class="nav-title">Pagos</li>
-                <li class="nav-item"><a class="nav-link" href="{{ url('admin/payment-create') }}"><i class="nav-icon icon-wallet"></i>Solicitar Pago</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('admin/payment-list') }}"><i class="nav-icon icon-grid"></i>Consultar</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('admin/payment-create') }}"><i class="nav-icon icon-wallet"></i>Solicitar</a></li>
                 <li class="nav-title">Soporte</li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/ticket-list') }}"><i class="nav-icon icon-envelope"></i>Tickets</a></li>
             </ul>

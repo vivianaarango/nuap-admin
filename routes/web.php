@@ -148,3 +148,9 @@ Route::get('/admin/payment/{payment}/view', 'Admin\PaymentController@view')->nam
 Route::post('/admin/payment/upload-voucher', 'Admin\PaymentController@uploadVoucher');
 /* Rejected Payment */
 Route::post('/admin/payment/rejected-payment', 'Admin\PaymentController@rejectedPayment');
+/* List */
+Route::get('/admin/payment-list', 'Admin\PaymentController@list');
+/* Detail */
+Route::get('/admin/payment/{payment}/detail', 'Admin\PaymentController@detail')->name('admin/payment/detail');
+/* Cancel Payment */
+Route::post('/admin/payment/cancel-payment', 'Admin\PaymentController@cancelPayment');

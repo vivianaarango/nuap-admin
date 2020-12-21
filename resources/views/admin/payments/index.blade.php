@@ -7,18 +7,17 @@
 
 @section('body')
     <admin-user-listing
-        :data="{{ $data->toJson() }}"
-        :activation="!!'{{ $activation }}'"
-        :url="'{{ url('admin/distributor-list') }}'"
-        :days="'{{ $days }}'"
-        inline-template>
+            :data="{{ $data->toJson() }}"
+            :activation="!!'{{ $activation }}'"
+            :url="'{{ url('admin/payment-admin-list') }}'"
+            inline-template>
 
         <div class="row">
             <div class="col">
                 <div class="card">
                     <div class="card-header">
                         <i class="fa fa-align-justify"></i>  Solicitudes de Pago
-                        <a class="btn btn-primary btn-spinner btn-sm pull-right m-b-0" href="{{ url('admin/distributor-create') }}" role="button"><i class="fa fa-plus"></i>&nbsp; Nuevo distribuidor</a>
+                        <a class="btn btn-primary btn-spinner btn-sm pull-right m-b-0" href="{{ url('admin/payment-create') }}" role="button"><i class="fa fa-plus"></i>&nbsp; Nueva Solicitud</a>
                     </div>
                     <div class="card-body" v-cloak>
                         <form @submit.prevent="">
@@ -43,84 +42,57 @@
                         </form>
                         <table class="table table-hover table-listing">
                             <thead>
-                                <tr>
-                                    <th is='sortable' :column="'id'">ID</th>
-                                    <th is='sortable' :column="'business_name'">Razón social</th>
-                                    <th is='sortable' :column="'email'">Correo electrónico</th>
-                                    <th is='sortable' :column="'phone'">Teléfono</th>
-                                    <th is='sortable' :column="'commission'">Comisión</th>
-                                    <th is='sortable' :column="'name_legal_representative'">Representante legal</th>
-                                    <th is='sortable' :column="'activated'">Activo</th>
-                                    <th is='sortable' :column="'last_logged_in'">Última sesión</th>
-                                    <th></th>
-                                </tr>
+                            <tr>
+                                <th is='sortable' :column="'id'">ID</th>
+                                <th is='sortable' :column="'bank'">Banco</th>
+                                <th is='sortable' :column="'value'">Valor a pagar</th>
+                                <th is='sortable' :column="'request_date'">Fecha de petición</th>
+                                <th is='sortable' :column="'payment_date'">Fecha de pago</th>
+                                <th is='sortable' :column="'status'"><div class="col text-center">Estado</div></th>
+                                <th></th>
+                            </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(item, index) in collection">
-                                    <td >@{{ item.id }}</td>
-                                    <td >@{{ item.business_name }}</td>
-                                    <td >@{{ item.email }}</td>
-                                    <td >@{{ item.phone }}</td>
-                                    <td >@{{ item.commission }}%</td>
-                                    <td >@{{ item.name_legal_representative }}</td>
-                                    <td v-if="item.status === 1">
-                                        <label class="switch switch-3d switch-success">
-                                            <input type="checkbox" class="switch-input" v-model="collection[index].status" @change="toggleSwitch(item.resource_url+'/status', 'status', collection[index])">
-                                            <span class="switch-slider"></span>
-                                        </label>
-                                    </td>
-                                    <td v-if="item.status === 0">
-                                        <label class="switch switch-3d switch-danger">
-                                            <input type="checkbox" class="switch-input" v-model="collection[index].status" @change="toggleSwitch(item.resource_url+'/status', 'status', collection[index])">
-                                            <span class="switch-slider"></span>
-                                        </label>
-                                    </td>
-                                    <td >@{{ item.last_logged_in }}</td>
-                                    <td>
+                            <tr v-for="(item, index) in collection">
+                                <td >@{{ item.id }}</td>
+                                <td >@{{ item.bank }}</td>
+                                <td >@{{ item.value }}</td>
+                                <td >@{{ item.request_date }}</td>
+                                <td v-if="item.payment_date === null">
+                                    No se ha hecho el pago.
+                                </td>
+                                <td v-if="item.payment_date != null">@{{ item.payment_date }}</td>
+                                <td v-if="item.status === 'Cancelado'">
+                                    <div class="col text-center"><button disabled style="color: white" class="btn btn-sm btn-warning"><i></i>&nbspCancelado</button></div>
+                                </td>
+                                <td v-if="item.status === 'Rechazado'">
+                                    <div class="col text-center"><button disabled style="color: white" class="btn btn-sm btn-danger"><i></i>&nbspRechazado</button></div>
+                                </td>
+                                <td v-if="item.status === 'Aprobado'">
+                                    <div class="col text-center"><button disabled style="color: white" class="btn btn-sm btn-success"><i></i>&nbspAprobado</button></div>
+                                </td>
+                                <td v-if="item.status === 'Pendiente'">
+                                    <div class="col text-center"><button disabled style="color: white" class="btn btn-sm btn-info"><i></i>&nbspPendiente</button></div>
+                                </td>
+                                <td>
+                                    <div class="row no-gutters">
                                         <div class="row no-gutters">
                                             <div class="col-auto">
-                                                <a class="btn btn-sm btn-spinner btn-success" :href="item.resource_url+'/add-location'" title="Agregar ubicación" role="button"><i class="fa fa-map-marker"></i></a>
+                                                <a class="btn btn-sm btn-spinner btn-info" :href="item.resource_url+'/detail'" title="Ver solicitud" role="button"><i class="fa fa-eye"></i></a>
                                             </div>
-                                            <div class="col-auto">
-                                                <a class="btn btn-sm btn-spinner btn-warning" :href="item.resource_url+'/add-document'" title="Agregar documentos" role="button"><i class="fa fa-file-archive-o"></i></a>
-                                            </div>
-                                            <div class="col-auto">
-                                                <a class="btn btn-sm btn-spinner btn-info" :href="item.resource_url+'/edit'" title="Editar" role="button"><i class="fa fa-edit"></i></a>
-                                            </div>
-                                            <form class="col" @submit.prevent="deleteItem(item.resource_url)">
-                                                <button type="submit" class="btn btn-sm btn-danger" title="Eliminar"><i class="fa fa-trash-o"></i></button>
-                                            </form>
                                         </div>
-                                    </td>
-                                </tr>
+                                    </div>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
 
-                        <!--<div class="row" v-if="pagination.state.total > 0">
-                            <div class="col-sm">
-                                <span class="pagination-caption">{{ trans('brackets/admin-ui::admin.pagination.overview') }}</span>
-                            </div>
-                            <div class="col-sm-auto">
-                                <pagination></pagination>
-                            </div>
-                        </div>-->
-
-	                   <div class="no-items-found" v-if="!collection.length > 0">
-		                    <i class="icon-magnifier"></i>
+                        <div class="no-items-found" v-if="!collection.length > 0">
+                            <i class="icon-magnifier"></i>
                             <h3>No se encontraron registros</h3>
-                            <p>Intenta cambiando los filtros o agregando uno nuevo</p>
-                            <a class="btn btn-primary btn-spinner" href="{{ url('admin/distributor-create') }}" role="button"><i class="fa fa-plus"></i>&nbspNuevo distribuidor</a>
-	                    </div>
-                        <form method="get" :action="this.url">
-                            <div class="col col-lg-6 col-xl-4 form-group float-right">
-                                <div class="input-group">
-                                    <input type="number" value="{{$days}}" name="days" id="days" class="form-control" placeholder="Días sin iniciar sesión"/>
-                                    <span class="input-group-append">
-                                        <button type="submit" class="btn btn-success"><i class="fa fa-search"></i></button>
-                                    </span>
-                                </div>
-                            </div>
-                        </form>
+                            <p>Intenta cambiando los filtros o creando una nueva solicitud</p>
+                            <a class="btn btn-primary btn-spinner" href="{{ url('admin/payment-create') }}" role="button"><i class="fa fa-plus"></i>&nbspNueva Solicitud</a>
+                        </div>
                     </div>
                 </div>
             </div>

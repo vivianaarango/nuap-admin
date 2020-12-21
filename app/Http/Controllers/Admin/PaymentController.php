@@ -289,4 +289,92 @@ class PaymentController extends Controller
 
         return redirect('/admin/user-session');
     }
+
+    /**
+     * @param IndexPayment $request
+     * @return array|Factory|Application|RedirectResponse|Redirector|View
+     */
+    public function list(IndexPayment $request)
+    {
+        $user = Session::get('user');
+
+        if (isset($user) && $user->role == User::DISTRIBUTOR_ROLE) {
+            /* @noinspection PhpUndefinedMethodInspection  */
+            $data = AdminListing::create(Payment::class)
+                ->modifyQuery(function($query) {
+                    $query->select(
+                        'bank_accounts.bank',
+                        'payments.*'
+                    )->join('users', 'users.id', '=', 'payments.user_id')
+                        ->join('bank_accounts', 'bank_accounts.id', '=', 'payments.account_id')
+                        ->where('payments.user_id', Session::get('user')->id)
+                        ->where('users.status', User::STATUS_ACTIVE)
+                        ->orderBy('payments.status', 'asc')
+                        ->orderBy('request_date', 'asc')
+                        ->orderBy('id', 'desc');
+                })->processRequestAndGet(
+                    $request,
+                    ['id', 'bank', 'value', 'request_date', 'payment_date', 'status', 'updated_at'],
+                    ['id', 'bank', 'value', 'request_date', 'payment_date', 'status', 'updated_at']
+                );
+
+            if ($request->ajax()) {
+                return ['data' => $data, 'activation' => $user->role];
+            }
+
+            return view('admin.payments.index', [
+                'data' => $data,
+                'activation' => $user->role
+            ]);
+        } else {
+            return redirect('/admin/user-session');
+        }
+    }
+
+    /**
+     * @param Payment $payment
+     * @return Factory|Application|RedirectResponse|Redirector|View
+     */
+    public function detail(Payment $payment)
+    {
+        $userAdmin = Session::get('user');
+
+        if (isset($userAdmin) && $userAdmin->role == User::DISTRIBUTOR_ROLE) {
+            $payment = $this->dbPaymentRepository->findByID($payment->id);
+            $account = $this->dbBankAccountRepository->findByID($payment->account_id);
+
+            $user = null;
+            if ($payment->user_type === User::DISTRIBUTOR_ROLE)
+                $user = $this->dbDistributorRepository->findByUserID($payment->user_id);
+            if ($payment->user_type === User::COMMERCE_ROLE)
+                $user = $this->dbCommerceRepository->findByUserID($payment->user_id);
+
+            return view('admin.payments.detail', [
+                'payment' => $payment,
+                'activation' => $userAdmin->role,
+                'account' => $account,
+                'user' => $user
+            ]);
+        }
+
+        return redirect('/admin/user-session');
+    }
+
+    /**
+     * @param Request $request
+     * @return Application|RedirectResponse|Redirector
+     */
+    public function cancelPayment(Request $request)
+    {
+        $user = Session::get('user');
+        if (isset($user) && $user->role == User::DISTRIBUTOR_ROLE) {
+            $payment = $this->dbPaymentRepository->findByID($request['payment_id']);
+            $payment->status = Payment::STATUS_CANCEL;
+            $payment->save();
+
+            return redirect('/admin/payment-list');
+        }
+
+        return redirect('/admin/user-session');
+    }
 }
