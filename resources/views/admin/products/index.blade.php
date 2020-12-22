@@ -17,6 +17,7 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fa fa-align-justify"></i>  Inventario
+                        <a style="color: white" class="btn btn-success btn-sm pull-right m-b-0 ml-2" href="{{ url('admin/product/export') }}" role="button"><i class="fa fa-file-excel-o"></i>&nbsp;Exportar</a>
                         <a class="btn btn-primary btn-spinner btn-sm pull-right m-b-0" href="{{ url('admin/product-create') }}" role="button"><i class="fa fa-plus"></i>&nbsp; Nuevo producto</a>
                     </div>
                     <div class="card-body" v-cloak>

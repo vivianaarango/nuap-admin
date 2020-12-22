@@ -116,6 +116,9 @@ Route::get('/admin/product/{product}/edit','Admin\ProductController@edit')->name
 Route::post('/admin/product/{product}', 'Admin\ProductController@update')->name('admin/product/update');
 /* View */
 Route::get('/admin/product/{product}/view', 'Admin\ProductController@view')->name('admin/product/view');
+/* Export */
+Route::get('/admin/product/export', 'Admin\ProductController@export')->name('admin/product/export');
+
 
 ### Ticket ###
 /* View create */

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\ProductsExport;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Product\IndexProduct;
 use App\Models\Category;
@@ -340,5 +342,13 @@ class ProductController extends Controller
         }
 
         return redirect('/admin/user-session');
+    }
+
+    /**
+     * Export entities
+     */
+    public function export()
+    {
+        return Excel::download(new ProductsExport, 'exports.xlsx');
     }
 }
