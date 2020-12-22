@@ -6,9 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="d6cb72cc-2713-41b0-95f6-aeada7aa8696" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Exports/ExportsExport.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Exports/ProductsExport.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/ProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/ProductController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/products/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/products/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/admin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/layout/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/layout/sidebar.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -189,7 +189,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin/payments/components" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../infrastructure" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -202,11 +202,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources/views/admin/products" />
       <recent name="$PROJECT_DIR$/resources/views/admin/payments/components" />
       <recent name="$PROJECT_DIR$/resources/views/admin/payments" />
       <recent name="$PROJECT_DIR$/resources/views/admin/tickets/components" />
       <recent name="$PROJECT_DIR$/resources/views/admin/commerces" />
-      <recent name="$PROJECT_DIR$/resources/views/admin/distributors" />
     </key>
   </component>
   <component name="RunManager">
@@ -273,6 +273,7 @@
       <workItem from="1608298717625" duration="842000" />
       <workItem from="1608394096539" duration="12434000" />
       <workItem from="1608504692525" duration="15086000" />
+      <workItem from="1608648033521" duration="356000" />
     </task>
     <servers />
   </component>

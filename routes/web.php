@@ -118,7 +118,10 @@ Route::post('/admin/product/{product}', 'Admin\ProductController@update')->name(
 Route::get('/admin/product/{product}/view', 'Admin\ProductController@view')->name('admin/product/view');
 /* Export */
 Route::get('/admin/product/export', 'Admin\ProductController@export')->name('admin/product/export');
-
+/* Edit Discount */
+Route::get('/admin/product-edit-discount', 'Admin\ProductController@editDiscount');
+/* Update Discount */
+Route::post('/admin/product-update-discount', 'Admin\ProductController@updateDiscount');
 
 ### Ticket ###
 /* View create */

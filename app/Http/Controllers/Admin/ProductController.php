@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Exports\ProductsExport;
+use App\Http\Requests\Admin\Product\IndexDiscount;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Product\IndexProduct;
@@ -22,6 +23,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
  * Class ProductController
@@ -345,10 +347,74 @@ class ProductController extends Controller
     }
 
     /**
-     * Export entities
+     * @return BinaryFileResponse
      */
-    public function export()
+    public function export(): BinaryFileResponse
     {
         return Excel::download(new ProductsExport, 'exports.xlsx');
+    }
+
+    /**
+     * @param IndexDiscount $request
+     * @return array|Factory|Application|RedirectResponse|Redirector|View
+     */
+    public function editDiscount(IndexDiscount $request)
+    {
+        $user = Session::get('user');
+
+        if (isset($user) && $user->role == User::ADMIN_ROLE) {
+            /* @noinspection PhpUndefinedMethodInspection  */
+            $data = AdminListing::create(Product::class)
+                ->modifyQuery(function($query) {
+                    $query->select(
+                        'products.*',
+                        'categories.name as category_id'
+                    )->join('categories', 'categories.id', '=', 'products.category_id')
+                        ->where('status', Product::STATUS_ACTIVE)
+                        ->orderBy('id', 'desc');
+                })->processRequestAndGet(
+                    $request,
+                    ['id', 'name', 'category_id', 'brand', 'special_price'],
+                    ['id', 'name', 'category_id', 'brand', 'special_price']
+                );
+
+            if ($request->ajax()) {
+                if ($request->has('bulk')) {
+                    return [
+                        'bulkItems' => $data->pluck('id')
+                    ];
+                }
+                return ['data' => $data];
+            }
+
+            return view('admin.products.discount', [
+                'data' => $data,
+                'activation' => $user->role,
+            ]);
+        } else {
+            return redirect('/admin/user-session');
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return ResponseFactory|Application|RedirectResponse|Response
+     */
+    public function updateDiscount(Request $request)
+    {
+        $newDiscount = $request->data['commission'];
+        $idsProducts = $request->data['ids'];
+
+        foreach ($idsProducts as $item) {
+            $product = $this->dbProductRepository->findByID($item);
+            $product->special_price = $newDiscount;
+            $product->save();
+        }
+
+        if ($request->ajax()) {
+            return response(['message' => trans('Se ha actualizado el descuento correctamente')]);
+        }
+
+        return redirect()->back();
     }
 }
