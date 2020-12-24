@@ -131,6 +131,7 @@ class ProductController extends Controller
         $data['user_id'] = $request['user_id'];
         $data['category_id'] = $request['category_id'];
         $data['name'] = $request['name'];
+        $data['sku'] = $request['name'];
         $data['brand'] = $request['brand'];
         $data['description'] = $request['description'];
         $data['stock'] = $request['stock'];
@@ -243,6 +244,7 @@ class ProductController extends Controller
             $data['user_id'] = $product->user_id;
             $data['category_id'] = $product->category_id;
             $data['name'] = $product->name;
+            $data['sku'] = $product->sku;
             $data['brand'] = $product->brand;
             $data['description'] = $product->description;
             $data['is_featured'] = $product->is_featured;
@@ -300,6 +302,7 @@ class ProductController extends Controller
                 $request['product_id'],
                 $request['category_id'],
                 $request['name'],
+                $request['sku'],
                 $request['brand'],
                 $request['description'],
                 $request['stock'],

@@ -1,147 +1,199 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-	<head>
+<html lang="es">
+<head>
 	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>NUAP - Esperalo muy pronto</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="Free HTML5 Template by FREEHTML5.CO" />
-	<meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
-	<meta name="author" content="FREEHTML5.CO" />
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0, user-scalable=no" />
+	<!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<!-- SITE TITLE -->
+	<title> Muy Pronto - NUAP</title>
 
-  <!--
-	//////////////////////////////////////////////////////
+	<!-- All CSS Here-->
 
-	FREE HTML5 TEMPLATE
-	DESIGNED & DEVELOPED by FREEHTML5.CO
+	<!-- Bootstrap min CSS -->
+	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+	<!-- Font Awesome CSS -->
+	<link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+	<!--- owl carousel Css-->
+	<link rel="stylesheet" href="assets/owlcarousel/css/owl.carousel.css">
+	<link rel="stylesheet" href="assets/owlcarousel/css/owl.theme.css">
+	<link rel="stylesheet" href="assets/owlcarousel/css/owl.transitions.css">
+	<!-- animate CSS -->
+	<link rel="stylesheet" href="assets/css/animate.css">
+	<!-- magnific CSS -->
+	<link rel="stylesheet" href="assets/css/magnific-popup.css">
+	<!-- slick CSS -->
+	<link rel="stylesheet" href="assets/css/slick-theme.css">
+	<link rel="stylesheet" href="assets/css/slick.css">
+	<!-- themify icons CSS -->
+	<link rel="stylesheet" href="assets/css/themify-icons.css">
+	<!-- Default CSS -->
+	<link rel="stylesheet" href="assets/css/default.css">
+	<!-- Style CSS -->
+	<link rel="stylesheet" href="assets/css/style.css">
+	<!-- Responsive CSS -->
+	<link rel="stylesheet" href="assets/css/responsive.css">
 
-	Website: 		http://freehtml5.co/
-	Email: 			info@freehtml5.co
-	Twitter: 		http://twitter.com/fh5co
-	Facebook: 		https://www.facebook.com/fh5co
-
-	//////////////////////////////////////////////////////
-	 -->
-
-  	<!-- Facebook and Twitter integration -->
-	<meta property="og:title" content=""/>
-	<meta property="og:image" content=""/>
-	<meta property="og:url" content=""/>
-	<meta property="og:site_name" content=""/>
-	<meta property="og:description" content=""/>
-	<meta name="twitter:title" content="" />
-	<meta name="twitter:image" content="" />
-	<meta name="twitter:url" content="" />
-	<meta name="twitter:card" content="" />
-
-	<!-- <link href='https://fonts.googleapis.com/css?family=Work+Sans:400,300,600,400italic,700' rel='stylesheet' type='text/css'> -->
-	<link href="https://fonts.googleapis.com/css?family=Space+Mono" rel="stylesheet">
-
-	<!-- Animate.css -->
-	<link rel="stylesheet" href="css/animate.css">
-	<!-- Icomoon Icon Fonts-->
-	<link rel="stylesheet" href="css/icomoon.css">
-	<!-- Bootstrap  -->
-	<link rel="stylesheet" href="css/bootstrap.css">
-	<!-- Theme style  -->
-	<link rel="stylesheet" href="css/style.css">
-
-	<!-- Modernizr JS -->
-	<script src="js/modernizr-2.6.2.min.js"></script>
-	<!-- FOR IE9 below -->
+	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
-	<script src="js/respond.min.js"></script>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
+</head>
 
-	</head>
-	<body>
+<body data-spy="scroll" data-offset="80">
 
-	<div class="fh5co-loader"></div>
+<!-- START PRELOADER -->
+<div class="preloader">
+	<div class="spinner" >
+		<div class="double-bounce1"></div>
+		<div class="double-bounce2"></div>
+	</div>
+</div>
+<!-- END PRELOADER -->
 
-	<div id="page">
 
-	<div id="fh5co-container" class="js-fullheight">
-		<div class="countdown-wrap js-fullheight">
+
+<!-- start:particles -->
+<section class="particles-section  bg-warning">
+	<div id="particles-js"><canvas class="particles-js-canvas-el" style="width: 100%; height: 100%;" width="1349" height="635"></canvas></div>
+	<div class="content-heading">
+		<div class="container">
 			<div class="row">
-				<div class="col-md-12 text-center">
-					<div class="display-t js-fullheight">
-						<div class="display-tc animate-box">
-							<nav class="fh5co-nav" role="navigation">
-								<div id="fh5co-logo"><a href="index.html">PRONTO<strong>.</strong></a></div>
-							</nav>
-							<img src="images/nuaplogo.png" width="20%">
-							<h1>CONOCERÁS UNA NUEVA SOLUCIÓN PARA TU NEGOCIO</h1>
-							<!-- <div class="simply-countdown simply-countdown-one"></div> -->
-							<div class="row">
-								<div class="col-md-12 desc">
-									<h2><br>¿Deseas recibir mayor infomación ? Escribenos</h2>
-									<h2><br><a href="https://api.whatsapp.com/send?phone=573185551122">Whatsapp</a><br> </h2>
-									<!-- <form class="form-inline" id="fh5co-header-subscribe">
-										<div class="col-md-12 col-md-offset-0">
-											<div class="form-group">
-												<input type="text" class="form-control" id="email" placeholder="Get notify by email">
-												<button type="submit" class="btn btn-primary">Subscribe</button>
-											</div>
-										</div>
-									</form> -->
-									<!-- <ul class="fh5co-social-icons">
-										<li><a href="#"><i class="icon-twitter-with-circle"></i></a></li>
-										<li><a href="#"><i class="icon-facebook-with-circle"></i></a></li>
-										<li><a href="#"><i class="icon-linkedin-with-circle"></i></a></li>
-										<li><a href="#"><i class="icon-dribbble-with-circle"></i></a></li>
-									</ul> -->
-								</div>
-							</div>
+				<div class="col-md-7">
+					<div class="welcome_area_text2 wow  fadeInUp">
+						<h2>MUY PRONTO NUAP</h2>
+						<h3 class="text-white">Una nueva Herramienta que te permitirá acceder a miles de productos y tambien hacer crecer tu negocio.</h3>
+						<div class="about_btn mt-30">
+							<a class="app-button wow fadeInUp" href="#"><i class="fa fa-whatsapp"></i>Contactanos</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-5">
+					<div class="home_img_area2 text-center wow fadeInDown" style="visibility: visible; animation-name: float-bob;">
+						<img src="assets/img/imgnuap.png" class="img-responsive" alt="header-img" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!--end particles-->
+
+<!-- START ABOUT AREA -->
+<section id="about" class="about-area section-padding">
+	<div class="container">
+		<div class="row text-center">
+			<div class="col-md-4 col-sm-6 wow fadeInUp">
+				<div class="single-about js-sm" style="will-change: transform; transform: perspective(1000px) rotateX(0deg) rotateY(0deg);">
+					<div class="single_service_inner">
+						<div class="service-icon">
+							<i class="fa fa-shopping-cart" aria-hidden="true"></i>
+						</div>
+						<div class="service-text ">
+							<h4><a href="">Miles de productos</a></h4>
+							<p>Encuentra todo lo que necesites al mejor precio</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 col-sm-6 wow fadeInUp">
+				<div class="single-about js-sm" style="will-change: transform; transform: perspective(1000px) rotateX(0deg) rotateY(0deg);">
+					<div class="single_service_inner">
+						<div class="service-icon">
+							<i class="fa fa-line-chart" aria-hidden="true"></i>
+						</div>
+						<div class="service-text ">
+							<h4><a href="">Afiliate</a></h4>
+							<p>Comienza a comercializar tus productos por medio de Nuap y haz crecer tus ventas</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 col-sm-6 wow fadeInUp">
+				<div class="single-about js-sm" style="will-change: transform; transform: perspective(1000px) rotateX(0deg) rotateY(0deg);">
+					<div class="single_service_inner">
+						<div class="service-icon">
+							<i class="fa fa-truck" aria-hidden="true"></i>
+						</div>
+						<div class="service-text ">
+							<h4><a href="">Abastece</a></h4>
+							<p>Encuentra el proveedor indicado para tu negocio</p>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="bg-cover js-fullheight" style="background-image:url(images/bgbg.jpg);">
-
-		</div>
 	</div>
-	</div>
+</section>
+<!-- END ABOUT AREA  -->
 
-	<div class="gototop js-top">
-		<a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
-	</div>
+<!-- START FOOTER -->
+<div id="footer" class="footer_area mt-5">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 col-xs-12 text-center">
+				<!-- <div class="single_footer single_footer1 wow fadeInUp">
+                    <a href="index.html"><img src="assets/img/logo.png" alt="logo"></a>
+                    <ul class="footer_menu">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#screenshoot">Screenshots</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#testimonials">Testimonial</a></li>
+                    </ul>
+                    <div class="social_icon">
+                        <a href=""><i class="fa fa-facebook"></i></a>
+                        <a href=""><i class="fa fa-twitter"></i></a>
+                        <a href=""><i class="fa fa-google-plus"></i></a>
+                        <a href=""><i class="fa fa-linkedin"></i></a>
+                        <a href=""><i class="fa fa-instagram"></i></a>
+                    </div>
+                </div> -->
+				<div class="footer_content wow fadeInUp">
+					<p>Nuap &copy; 2020 </p>
+				</div>
+			</div>
+		</div><!-- END ROW -->
+	</div><!--- END CONTAINER -->
+</div>
+<!-- END FOOTER -->
 
-	<!-- jQuery -->
-	<script src="js/jquery.min.js"></script>
-	<!-- jQuery Easing -->
-	<script src="js/jquery.easing.1.3.js"></script>
-	<!-- Bootstrap -->
-	<script src="js/bootstrap.min.js"></script>
-	<!-- Waypoints -->
-	<script src="js/jquery.waypoints.min.js"></script>
+<!-- All JS Here-->
 
-	<!-- Count Down -->
-	<script src="js/simplyCountdown.js"></script>
-	<!-- Main -->
-	<script src="js/main.js"></script>
+<!-- Modernizr JS -->
+<script src="assets/js/vendor/modernizr-3.5.0.min.js"></script>
+<!-- Latest jQuery -->
+<script src="assets/js/vendor/jquery-1.12.4.min.js"></script>
+<!-- Latest compiled and minified Bootstrap -->
+<script src="assets/js/bootstrap.min.js"></script>
+<!-- scrolltopcontrol js -->
+<script src="assets/js/scrolltopcontrol.js"></script>
+<!-- WOW - Reveal Animations When You Scroll -->
+<script src="assets/js/wow.min.js"></script>
+<!-- owl-carousel min js  -->
+<script src="assets/owlcarousel/js/owl.carousel.min.js"></script>
+<!-- slick js  -->
+<script src="assets/js/slick.js"></script>
+<!-- tilt js  -->
+<script src="assets/js/tilt.js"></script>
+<!-- waypoints js  -->
+<script src="assets/js/waypoints.min.js"></script>
+<!-- counterup js  -->
+<script src="assets/js/jquery.counterup.min.js"></script>
+<!-- magnific-popup js  -->
+<script src="assets/js/jquery.magnific-popup.min.js"></script>
+<!-- contact-mail js  -->
+<script src="assets/js/contact-mail.js"></script>
+<!-- particles JS-->
+<script src="assets/js/particles.js"></script>
+<!-- app JS	-->
+<script src="assets/js/app.js"></script>
+<!-- scripts js -->
+<script src="assets/js/scripts.js"></script>
 
-	<script>
-    var d = new Date(new Date().getTime() + 1000 * 120 * 120 * 2000);
-
-    // default example
-    simplyCountdown('.simply-countdown-one', {
-        year: d.getFullYear(),
-        month: d.getMonth() + 1,
-        day: d.getDate()
-    });
-
-    //jQuery example
-    $('#simply-countdown-losange').simplyCountdown({
-        year: d.getFullYear(),
-        month: d.getMonth() + 1,
-        day: d.getDate(),
-        enableUtc: false
-    });
-</script>
-
-	</body>
+</body>
 </html>

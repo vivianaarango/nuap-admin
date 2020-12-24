@@ -57,6 +57,14 @@
     </div>
 </div>
 
+<div class="form-group row align-items-center" :class="{'has-danger': errors.has('sku'), 'has-success': this.fields.sku && this.fields.sku.valid }">
+    <label for="sku" class="col-form-label text-md-right" :class="'col-md-3'">Sku</label>
+    <div :class="'col-md-4 col-md-9 col-xl-7'">
+        <input type="text" required class="form-control" :class="{'form-control-danger': errors.has('sku'), 'form-control-success': this.fields.sku && this.fields.sku.valid}" id="sku" name="sku" placeholder="Sku">
+        <div v-if="errors.has('sku')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('sku') }}</div>
+    </div>
+</div>
+
 <div class="form-group row align-items-center" :class="{'has-danger': errors.has('brand'), 'has-success': this.fields.brand && this.fields.brand.valid }">
     <label for="brand" class="col-form-label text-md-right" :class="'col-md-3'">Marca</label>
     <div :class="'col-md-4 col-md-9 col-xl-7'">

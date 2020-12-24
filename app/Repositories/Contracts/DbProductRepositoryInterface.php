@@ -33,6 +33,7 @@ interface DbProductRepositoryInterface
      * @param int $productID
      * @param int $categoryID
      * @param string $name
+     * @param string $sku
      * @param string $brand
      * @param string $description
      * @param int $stock
@@ -50,6 +51,7 @@ interface DbProductRepositoryInterface
         int $productID,
         int $categoryID,
         string $name,
+        string $sku,
         string $brand,
         string $description,
         int $stock,

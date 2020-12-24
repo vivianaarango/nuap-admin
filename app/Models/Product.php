@@ -11,6 +11,7 @@ use Illuminate\Foundation\Application;
  * @property int user_id
  * @property int category_id
  * @property string name
+ * @property string sku
  * @property string brand
  * @property string description
  * @property boolean status
@@ -56,6 +57,7 @@ class Product extends Model
         'user_id',
         'category_id',
         'name',
+        'sku',
         'brand',
         'description',
         'status',

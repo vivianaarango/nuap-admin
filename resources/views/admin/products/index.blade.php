@@ -46,6 +46,7 @@
                                 <!--<th is='sortable' :column="'id'">Imagen</th>-->
                                 <th is='sortable' :column="'id'">ID</th>
                                 <th is='sortable' :column="'name'">Nombre</th>
+                                <th is='sortable' :column="'sku'">Sku</th>
                                 <th is='sortable' :column="'description'">Descripción</th>
                                 <th is='sortable' :column="'category_id'">Categoría</th>
                                 <th is='sortable' :column="'brand'">Marca</th>
@@ -61,6 +62,7 @@
                                 <!--<img :src="">-->
                                 <td >@{{ item.id }}</td>
                                 <td >@{{ item.name }}</td>
+                                <td >@{{ item.sku }}</td>
                                 <td >@{{ item.description }}</td>
                                 <td >@{{ item.category_id }}</td>
                                 <td >@{{ item.brand }}</td>

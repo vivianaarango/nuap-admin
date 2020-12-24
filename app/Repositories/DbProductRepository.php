@@ -49,6 +49,7 @@ class DbProductRepository implements DbProductRepositoryInterface
      * @param int $productID
      * @param int $categoryID
      * @param string $name
+     * @param string $sku
      * @param string $brand
      * @param string $description
      * @param int $stock
@@ -66,6 +67,7 @@ class DbProductRepository implements DbProductRepositoryInterface
         int $productID,
         int $categoryID,
         string $name,
+        string $sku,
         string $brand,
         string $description,
         int $stock,
@@ -81,6 +83,7 @@ class DbProductRepository implements DbProductRepositoryInterface
         $product = $this->findByID($productID);
         $product->category_id = $categoryID;
         $product->name = $name;
+        $product->sku = $sku;
         $product->brand = $brand;
         $product->description = $description;
         $product->stock = $stock;
