@@ -47,6 +47,16 @@ class ProductController extends Controller
     private $dbProductRepository;
 
     /**
+     * @var string
+     */
+    private $stock;
+
+    /**
+     * @var string
+     */
+    private $stockValue;
+
+    /**
      * ProductController constructor.
      * @param DbCommerceRepositoryInterface $dbCommerceRepository
      * @param DbDistributorRepositoryInterface $dbDistributorRepository
@@ -85,6 +95,11 @@ class ProductController extends Controller
                     ['id', 'name', 'description', 'image', 'category_id', 'brand', 'status', 'stock', 'purchase_price', 'sale_price']
                 );
 
+            foreach ($data as $item) {
+                $item->purchase_price = $this->formatCurrency($item->purchase_price) . ' $';
+                $item->sale_price = $this->formatCurrency($item->sale_price) . ' $';
+            }
+
             if ($request->ajax()) {
                 return ['data' => $data, 'activation' => $user->role];
             }
@@ -120,6 +135,24 @@ class ProductController extends Controller
     }
 
     /**
+     * @return Factory|Application|RedirectResponse|View
+     */
+    public function createDistributor()
+    {
+        $user = Session::get('user');
+
+        if (isset($user) && $user->role == User::DISTRIBUTOR_ROLE) {
+            return view('admin.products.create-distributor', [
+                'activation' => $user->role,
+                'categories' => Category::all(),
+                'user_id' => $user->id
+            ]);
+        } else {
+            return redirect('/admin/user-session');
+        }
+    }
+
+    /**
      * @param Request $request
      * @return array|Application|RedirectResponse|Redirector
      */
@@ -131,7 +164,7 @@ class ProductController extends Controller
         $data['user_id'] = $request['user_id'];
         $data['category_id'] = $request['category_id'];
         $data['name'] = $request['name'];
-        $data['sku'] = $request['name'];
+        $data['sku'] = $request['sku'];
         $data['brand'] = $request['brand'];
         $data['description'] = $request['description'];
         $data['stock'] = $request['stock'];
@@ -158,7 +191,7 @@ class ProductController extends Controller
         }
 
         $user = Session::get('user');
-        if (isset($user) && $user->role == User::ADMIN_ROLE) {
+        if (isset($user) && ($user->role == User::ADMIN_ROLE || $user->role == User::DISTRIBUTOR_ROLE)) {
             $productImages = 'product-images/user/'.$request->user_id;
 
             if (!is_dir($productImages)) {
@@ -176,6 +209,16 @@ class ProductController extends Controller
 
             Product::create($data);
 
+            if ($user->role === User::DISTRIBUTOR_ROLE){
+                if ($request->ajax()) {
+                    return [
+                        'redirect' => url('admin/product-distributor-list'),
+                        'message' => trans('brackets/admin-ui::admin.operation.succeeded')
+                    ];
+                }
+
+                return redirect('admin/product-distributor-list');
+            }
             if ($request->ajax()) {
                 return [
                     'redirect' => url('admin/product-list'),
@@ -220,7 +263,7 @@ class ProductController extends Controller
     {
         $adminUser = Session::get('user');
 
-        if (isset($adminUser) && $adminUser->role == User::ADMIN_ROLE) {
+        if (isset($adminUser) && ($adminUser->role == User::ADMIN_ROLE || $adminUser->role == User::DISTRIBUTOR_ROLE)) {
             $this->dbProductRepository->delete($product->id);
         } else {
             return redirect('admin/user-session');
@@ -235,10 +278,7 @@ class ProductController extends Controller
     {
         $userAdmin = Session::get('user');
 
-        if (isset($userAdmin) && $userAdmin->role == User::ADMIN_ROLE) {
-            $commerces = $this->dbCommerceRepository->findValidCommercesToAddProducts();
-            $distributors = $this->dbDistributorRepository->findValidDistributorsToAddProducts();
-
+        if (isset($userAdmin) && ($userAdmin->role == User::ADMIN_ROLE || $userAdmin->role == User::DISTRIBUTOR_ROLE)) {
             $product = $this->dbProductRepository->findByID($product->id);
             $data['product_id'] = $product->id;
             $data['user_id'] = $product->user_id;
@@ -263,9 +303,7 @@ class ProductController extends Controller
                 'activation' => $userAdmin->role,
                 'url' => $product->resource_url,
                 'name' => $product->name,
-                'categories' => Category::all(),
-                'commerces' => $commerces,
-                'distributors' => $distributors
+                'categories' => Category::all()
             ]);
 
         } else {
@@ -281,7 +319,7 @@ class ProductController extends Controller
     {
         $adminUser = Session::get('user');
 
-        if (isset($adminUser) && $adminUser->role == User::ADMIN_ROLE) {
+        if (isset($adminUser) && ($adminUser->role == User::ADMIN_ROLE || $adminUser->role == User::DISTRIBUTOR_ROLE)) {
             $productImages = 'product-images/user/'.$request['user_id'];
 
             if (!is_dir($productImages)) {
@@ -298,6 +336,13 @@ class ProductController extends Controller
                 $image = $urlImage;
             }
 
+            if ($adminUser->role === User::DISTRIBUTOR_ROLE){
+                $status = Product::STATUS_INACTIVE;
+            } else {
+                $status = $this->dbProductRepository->findByID($request['product_id'])->status;
+            }
+
+
             $this->dbProductRepository->update(
                 $request['product_id'],
                 $request['category_id'],
@@ -313,19 +358,16 @@ class ProductController extends Controller
                 $request['purchase_price'],
                 $request['sale_price'],
                 $request['special_price'],
+                $status,
                 $image
             );
 
-            if ($request->ajax()) {
-                return [
-                    'redirect' => url('admin/product-list'),
-                    'message' => trans('brackets/admin-ui::admin.operation.succeeded')
-                ];
+            if ($adminUser->role === User::DISTRIBUTOR_ROLE){
+                return redirect('admin/product-distributor-list');
             }
 
-            return redirect('admin/product-list');
+            return redirect('admin/product-distributor-list');
         }
-
         return redirect('admin/user-session');
     }
 
@@ -337,8 +379,11 @@ class ProductController extends Controller
     {
         $userAdmin = Session::get('user');
 
-        if (isset($userAdmin) && $userAdmin->role == User::ADMIN_ROLE) {
+        if (isset($userAdmin) && ($userAdmin->role == User::ADMIN_ROLE || $userAdmin->role == User::DISTRIBUTOR_ROLE)) {
             $product = $this->dbProductRepository->findByID($product->id);
+            $product->purchase_price = $this->formatCurrency($product->purchase_price) . ' $';
+            $product->sale_price = $this->formatCurrency($product->sale_price) . ' $';
+
             return view('admin.products.view', [
                 'product' => $product,
                 'activation' => $userAdmin->role,
@@ -419,5 +464,71 @@ class ProductController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    /**
+     * @param IndexProduct $request
+     * @return array|Factory|Application|RedirectResponse|Redirector|View
+     */
+    public function listDistributor(IndexProduct $request)
+    {
+        $user = Session::get('user');
+        $this->stock = '<>';
+        $this->stockValue = '-1';
+
+        if (isset($request['status_stock']) && $request['status_stock'] === 'Disponible') {
+            $this->stock = '>';
+            $this->stockValue = '0';
+        }
+
+        if (isset($request['status_stock']) && $request['status_stock'] === 'No Disponible') {
+            $this->stock = '=';
+            $this->stockValue = '0';
+        }
+        //dd($request['status_stock']);
+        if (isset($user) && $user->role == User::DISTRIBUTOR_ROLE) {
+            /* @noinspection PhpUndefinedMethodInspection  */
+            $data = AdminListing::create(Product::class)
+                ->modifyQuery(function($query) {
+                    $query->select(
+                        'products.*',
+                        'categories.name as category_id'
+                    )->where('user_id', Session::get('user')->id)
+                    ->where('stock', $this->stock, $this->stockValue)
+                    ->join('categories', 'categories.id', '=', 'products.category_id')
+                    ->orderBy('id', 'desc');
+                })->processRequestAndGet(
+                    $request,
+                    ['id', 'name', 'description', 'image', 'category_id', 'brand', 'status', 'stock', 'purchase_price', 'sale_price'],
+                    ['id', 'name', 'description', 'image', 'category_id', 'brand', 'status', 'stock', 'purchase_price', 'sale_price']
+                );
+
+            foreach ($data as $item) {
+                $item->purchase_price = $this->formatCurrency($item->purchase_price) . ' $';
+                $item->sale_price = $this->formatCurrency($item->sale_price) . ' $';
+            }
+
+            if ($request->ajax()) {
+                return ['data' => $data, 'activation' => $user->role];
+            }
+
+            return view('admin.products.index-distributor', [
+                'data' => $data,
+                'activation' => $user->role
+            ]);
+        } else {
+            return redirect('/admin/user-session');
+        }
+    }
+
+    /**
+     * @param $floatcurr
+     * @param string $curr
+     * @return string
+     */
+    public function formatCurrency($floatcurr, $curr = "COP"): string
+    {
+        $currencies['COP'] = array(0,',','.');
+        return number_format($floatcurr, $currencies[$curr][0], $currencies[$curr][1], $currencies[$curr][2]);
     }
 }
