@@ -23478,3 +23478,8 @@ div.trumbowyg-dropdown-table table td.active {
   background-color: #d6d6d6;
   border-color: #dadada;
 }
+
+.btn-status-cancel {
+  background-color: #a2a2a2;
+  border-color: #909090;
+}

@@ -42,6 +42,8 @@ Route::get('/admin/users/{user}/add-document', 'Admin\UsersController@document')
 Route::post('/admin/users/store-documents', 'Admin\UsersController@storeDocuments');
 /* Delete location */
 Route::delete('/admin/user-location/{user}', 'Admin\UsersController@deleteLocation')->name('admin/users/deleteLocation');
+/* View bank account */
+Route::get('/admin/users/{user}/view-account', 'Admin\PaymentController@viewAccount')->name('admin/users/view-account');
 
 ### Admin ###
 /* View create */
@@ -100,10 +102,14 @@ Route::post('/admin/client-store', 'Admin\ClientController@store');
 Route::post('/admin/client/{client}', 'Admin\ClientController@update')->name('admin/client/update');
 
 ### Products ###
+/* List distributor */
+Route::get('/admin/product-distributor-list', 'Admin\ProductController@listDistributor');
 /* List */
 Route::get('/admin/product-list', 'Admin\ProductController@list');
 /* View create */
 Route::get('/admin/product-create', 'Admin\ProductController@create');
+/* View create distributor */
+Route::get('/admin/product-distributor-create', 'Admin\ProductController@createDistributor');
 /* Store */
 Route::post('/admin/product-store', 'Admin\ProductController@store');
 /* Change status */
@@ -139,7 +145,7 @@ Route::post('/admin/ticket-send-message', 'Admin\TicketController@sendMessage');
 /* Close */
 Route::delete('/admin/ticket/{ticket}', 'Admin\TicketController@close')->name('admin/ticket/close');
 
-### Pagos ###
+### Payments ###
 /* View create */
 Route::get('/admin/payment-create', 'Admin\PaymentController@create');
 /* Store */
@@ -160,3 +166,11 @@ Route::get('/admin/payment-list', 'Admin\PaymentController@list');
 Route::get('/admin/payment/{payment}/detail', 'Admin\PaymentController@detail')->name('admin/payment/detail');
 /* Cancel Payment */
 Route::post('/admin/payment/cancel-payment', 'Admin\PaymentController@cancelPayment');
+/* Request Payment */
+Route::post('/admin/payment/request-payment', 'Admin\PaymentController@requestPayment');
+/* Rejected Payment */
+Route::post('/admin/payment/change-status-account', 'Admin\PaymentController@changeStatusAccount');
+
+### Reports
+/* New Users */
+Route::get('/admin/report/new-users', 'Admin\ReportController@users');
