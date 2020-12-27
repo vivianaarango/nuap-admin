@@ -7,23 +7,27 @@
 
 @section('body')
     <div class="container-xl">
-        <div class="card">
-            <form id="form-basic" method="post" enctype="multipart/form-data">
-                <form class="form-horizontal form-create">
-                    <div class="card-header">
-                        <i class="fa fa-plus"></i>&nbsp; Ver Producto
-                    </div>
+        <bulk-action-form
+                v-cloak
+                inline-template>
 
-                    <div class="row">
-                        <div class="col-md-12 col-lg-12 col-xl-5 col-xxl-4">
-                            <img src="../../../{{ $product['image'] }}" alt="nuap" class="img-responsive" height="380px" width="380px">
-                        </div>
-                        <div class="col">
-                            @include('admin.products.components.form-view-elements')
+            <form class="form-horizontal form-edit" method="post" @submit.prevent="onSubmit" :action="this.action" novalidate>
+                <div class="row">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-header">
+                                <i class="fa fa-pencil"></i> Producto
+                            </div>
+                            <div class="card-body">
+                                @include('admin.products.components.form-view-elements')
+                            </div>
                         </div>
                     </div>
-                </form>
+                    <div class="col-md-12 col-lg-12 col-xl-5 col-xxl-4">
+                        @include('admin.products.components.form-view-right-elements')
+                    </div>
+                </div>
             </form>
-        </div>
+        </bulk-action-form>
     </div>
 @endsection

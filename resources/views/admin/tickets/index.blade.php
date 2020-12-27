@@ -74,7 +74,13 @@
                             </tr>
                             </tbody>
                         </table>
-
+                        <div class="row" v-if="pagination.state.total > 0">
+                            <div class="col-sm">
+                            </div>
+                            <div class="col-sm-auto">
+                                <pagination></pagination>
+                            </div>
+                        </div>
                         <div class="no-items-found" v-if="!collection.length > 0">
                             <i class="icon-magnifier"></i>
                             <h3>No se encontraron registros</h3>

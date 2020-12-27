@@ -64,7 +64,7 @@
                                     </td>
                                     <td v-if="item.payment_date != null">@{{ item.payment_date }}</td>
                                     <td v-if="item.status === 'Cancelado'">
-                                        <div class="col text-center"><button disabled style="color: white" class="btn btn-sm btn-warning"><i></i>&nbspCancelado</button></div>
+                                        <div class="col text-center"><button disabled style="color: white" class="btn btn-sm btn-status-cancel"><i></i>&nbspCancelado</button></div>
                                     </td>
                                     <td v-if="item.status === 'Rechazado'">
                                         <div class="col text-center"><button disabled style="color: white" class="btn btn-sm btn-danger"><i></i>&nbspRechazado</button></div>

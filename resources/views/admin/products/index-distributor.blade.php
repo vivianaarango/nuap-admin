@@ -9,7 +9,7 @@
     <admin-user-listing
             :data="{{ $data->toJson() }}"
             :activation="!!'{{ $activation }}'"
-            :url="'{{ url('admin/product-list') }}'"
+            :url="'{{ url('admin/product-distributor-list') }}'"
             inline-template>
 
         <div class="row">
@@ -17,8 +17,7 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fa fa-align-justify"></i>  Inventario
-                        <a style="color: white" class="btn btn-success btn-sm pull-right m-b-0 ml-2" href="{{ url('admin/product/export') }}" role="button"><i class="fa fa-file-excel-o"></i>&nbsp;Exportar</a>
-                        <a class="btn btn-primary btn-spinner btn-sm pull-right m-b-0" href="{{ url('admin/product-create') }}" role="button"><i class="fa fa-plus"></i>&nbsp; Nuevo producto</a>
+                        <a class="btn btn-primary btn-spinner btn-sm pull-right m-b-0" href="{{ url('admin/product-distributor-create') }}" role="button"><i class="fa fa-plus"></i>&nbsp; Nuevo producto</a>
                     </div>
                     <div class="card-body" v-cloak>
                         <form @submit.prevent="">
@@ -68,16 +67,11 @@
                                 <td >@{{ item.purchase_price }}</td>
                                 <td >@{{ item.sale_price }}</td>
                                 <td v-if="item.status === 1">
-                                    <label class="switch switch-3d switch-success">
-                                        <input type="checkbox" class="switch-input" v-model="collection[index].status" @change="toggleSwitch(item.resource_url+'/status', 'status', collection[index])">
-                                        <span class="switch-slider"></span>
-                                    </label>
+                                    <div class="col text-center"><button disabled style="color: white" class="btn btn-sm btn-success"><i></i>&nbspAprobado</button></div>
+
                                 </td>
                                 <td v-if="item.status === 0">
-                                    <label class="switch switch-3d switch-danger">
-                                        <input type="checkbox" class="switch-input" v-model="collection[index].status" @change="toggleSwitch(item.resource_url+'/status', 'status', collection[index])">
-                                        <span class="switch-slider"></span>
-                                    </label>
+                                    <div class="col text-center"><button disabled style="color: white" class="btn btn-sm btn-danger"><i></i>&nbspNo Aprobado</button></div>
                                 </td>
                                 <td>
                                     <div class="row no-gutters">
@@ -106,7 +100,29 @@
                             <i class="icon-magnifier"></i>
                             <h3>No se encontraron registros</h3>
                             <p>Intenta cambiando los filtros o agregando uno nuevo</p>
-                            <a class="btn btn-primary btn-spinner" href="{{ url('admin/product-create') }}" role="button"><i class="fa fa-plus"></i>&nbspNuevo producto</a>
+                            <a class="btn btn-primary btn-spinner" href="{{ url('admin/product-distributor-create') }}" role="button"><i class="fa fa-plus"></i>&nbspNuevo producto</a>
+                        </div>
+                        <div class="row pull-right">
+                            <form method="get" :action="this.url">
+                                <div style="padding: 10px" class="pull-right">
+                                    <div class="input-group">
+                                        <input type="hidden" value="No Disponible" name="status_stock" id="status_stock">
+                                        <span class="input-group-append">
+                                        <button style="color: white" type="submit" class="btn btn-sm btn-danger"><i class="fa fa"></i>No disponibles</button>
+                                    </span>
+                                    </div>
+                                </div>
+                            </form>
+                            <form method="get" :action="this.url">
+                                <div style="padding: 10px" class="pull-right">
+                                    <div class="input-group">
+                                        <input type="hidden" value="Disponible" name="status_stock" id="status_stock">
+                                        <span class="input-group-append">
+                                        <button style="color: white;" type="submit" class="btn btn-sm btn-info"><i class="fa fa"></i>Disponibles</button>
+                                    </span>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

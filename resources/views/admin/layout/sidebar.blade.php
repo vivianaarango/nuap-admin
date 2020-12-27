@@ -18,6 +18,8 @@
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/payment-admin-list') }}"><i class="nav-icon icon-wallet"></i>Solicitudes</a></li>
                 <li class="nav-title">Soporte</li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/ticket-admin-list') }}"><i class="nav-icon icon-envelope"></i>Tickets</a></li>
+                <li class="nav-title">Reportes</li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('admin/report/new-users') }}"><i class="nav-icon icon-people"></i>Usuarios Nuevos</a></li>
             </ul>
         </nav>
         <button class="sidebar-minimizer brand-minimizer" type="button"></button>
@@ -25,10 +27,9 @@
         <nav class="sidebar-nav">
             <ul class="nav">
                 <li class="nav-title">Productos</li>
-                <li class="nav-item"><a class="nav-link" href="{{ url('admin/product-list') }}"><i class="nav-icon icon-plus"></i>Inventario</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('admin/product-distributor-list') }}"><i class="nav-icon icon-plus"></i>Inventario</a></li>
                 <li class="nav-title">Pagos</li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/payment-list') }}"><i class="nav-icon icon-grid"></i>Consultar</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ url('admin/payment-create') }}"><i class="nav-icon icon-wallet"></i>Solicitar</a></li>
                 <li class="nav-title">Soporte</li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/ticket-list') }}"><i class="nav-icon icon-envelope"></i>Tickets</a></li>
             </ul>
