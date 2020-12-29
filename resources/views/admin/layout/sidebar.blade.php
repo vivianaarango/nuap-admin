@@ -30,6 +30,8 @@
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/product-distributor-list') }}"><i class="nav-icon icon-plus"></i>Inventario</a></li>
                 <li class="nav-title">Pagos</li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/payment-list') }}"><i class="nav-icon icon-grid"></i>Consultar</a></li>
+                <li class="nav-title">Ventas</li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('admin/order-list') }}"><i class="nav-icon icon-basket"></i>Consultar</a></li>
                 <li class="nav-title">Soporte</li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/ticket-list') }}"><i class="nav-icon icon-envelope"></i>Tickets</a></li>
             </ul>

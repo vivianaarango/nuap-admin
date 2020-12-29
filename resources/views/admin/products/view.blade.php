@@ -24,7 +24,13 @@
                         </div>
                     </div>
                     <div class="col-md-12 col-lg-12 col-xl-5 col-xxl-4">
-                        @include('admin.products.components.form-view-right-elements')
+                        <div class="card">
+                            <div class="card-block">
+                                <div class="form-group row align-items-center">
+                                    <img src="{{ URL::asset($product['image']) }}" alt="nuap" class="img-responsive" width="100%" style="padding: 20px">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </form>
