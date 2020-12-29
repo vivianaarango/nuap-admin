@@ -3,6 +3,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Application;
 
 /**
@@ -14,6 +15,7 @@ use Illuminate\Foundation\Application;
  * @property float price
  *
  * @package App\Models
+ * @method static select(string $string, string $string1)
  */
 class OrderProduct extends Model
 {
@@ -44,6 +46,22 @@ class OrderProduct extends Model
         'created_at',
         'updated_at',
     ];
+
+    /**
+     * @return BelongsTo
+     */
+    public function orders(): BelongsTo
+    {
+        return $this->belongsTo(Order::class);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function products(): BelongsTo
+    {
+        return $this->belongsTo(Product::class);
+    }
 
     /**
      * @var string[]

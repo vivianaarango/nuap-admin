@@ -168,9 +168,17 @@ Route::get('/admin/payment/{payment}/detail', 'Admin\PaymentController@detail')-
 Route::post('/admin/payment/cancel-payment', 'Admin\PaymentController@cancelPayment');
 /* Request Payment */
 Route::post('/admin/payment/request-payment', 'Admin\PaymentController@requestPayment');
-/* Rejected Payment */
+/* Change status */
 Route::post('/admin/payment/change-status-account', 'Admin\PaymentController@changeStatusAccount');
 
 ### Reports
 /* New Users */
 Route::get('/admin/report/new-users', 'Admin\ReportController@users');
+
+### Orders
+/* List */
+Route::get('/admin/order-list', 'Admin\OrderController@list');
+/* View */
+Route::get('/admin/order/{order}/view', 'Admin\OrderController@view')->name('admin/order/view');
+/* Change status */
+Route::post('/admin/order/change-status', 'Admin\OrderController@changeStatus');

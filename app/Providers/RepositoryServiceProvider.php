@@ -7,6 +7,7 @@ use App\Repositories\Contracts\DbBankAccountRepositoryInterface;
 use App\Repositories\Contracts\DbClientRepositoryInterface;
 use App\Repositories\Contracts\DbCommerceRepositoryInterface;
 use App\Repositories\Contracts\DbDistributorRepositoryInterface;
+use App\Repositories\Contracts\DbOrderRepositoryInterface;
 use App\Repositories\Contracts\DbPaymentRepositoryInterface;
 use App\Repositories\Contracts\DbProductRepositoryInterface;
 use App\Repositories\Contracts\DbTicketRepositoryInterface;
@@ -17,6 +18,7 @@ use App\Repositories\DbBankAccountRepository;
 use App\Repositories\DbClientRepository;
 use App\Repositories\DbCommerceRepository;
 use App\Repositories\DbDistributorRepository;
+use App\Repositories\DbOrderRepository;
 use App\Repositories\DbPaymentRepository;
 use App\Repositories\DbProductRepository;
 use App\Repositories\DbTicketRepository;
@@ -47,7 +49,8 @@ class RepositoryServiceProvider extends ServiceProvider
         DbTicketRepositoryInterface::class => DbTicketRepository::class,
         DbPaymentRepositoryInterface::class => DbPaymentRepository::class,
         DbBankAccountRepositoryInterface::class => DbBankAccountRepository::class,
-        DbBalanceRepositoryInterface::class => DbBalanceRepository::class
+        DbBalanceRepositoryInterface::class => DbBalanceRepository::class,
+        DbOrderRepositoryInterface::class => DbOrderRepository::class
     ];
 
     /**

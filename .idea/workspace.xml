@@ -6,9 +6,17 @@
   <component name="ChangeListManager">
     <list default="true" id="d6cb72cc-2713-41b0-95f6-aeada7aa8696" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/layout/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/layout/sidebar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/products/components/form-view-right-elements.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/products/view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/products/view.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/PaymentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/PaymentController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/Payment/IndexPayment.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Admin/Payment/IndexPayment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Distributor.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Distributor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Order.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/OrderProduct.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/OrderProduct.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Providers/RepositoryServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/RepositoryServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/cache/config.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/cache/packages.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/cache/services.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/payments/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/payments/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -189,7 +197,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../merqueo-producto-api" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -202,11 +210,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/resources/views/admin/products" />
-      <recent name="$PROJECT_DIR$/resources/views/admin/payments/components" />
-      <recent name="$PROJECT_DIR$/resources/views/admin/payments" />
-      <recent name="$PROJECT_DIR$/resources/views/admin/tickets/components" />
+      <recent name="$PROJECT_DIR$/app/Repositories/Contracts" />
+      <recent name="$PROJECT_DIR$/app/Repositories" />
+      <recent name="$PROJECT_DIR$/resources/views/admin/orders" />
+      <recent name="$PROJECT_DIR$/resources/views/admin/orders/components" />
+      <recent name="$PROJECT_DIR$/app/Http/Requests/Admin/Order" />
     </key>
   </component>
   <component name="RunManager">
@@ -279,7 +287,7 @@
       <workItem from="1608735903548" duration="29000" />
       <workItem from="1608770524244" duration="686000" />
       <workItem from="1609164113740" duration="1394000" />
-      <workItem from="1609204030033" duration="1194000" />
+      <workItem from="1609204030033" duration="15560000" />
     </task>
     <servers />
   </component>

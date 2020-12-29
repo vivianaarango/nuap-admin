@@ -21,6 +21,8 @@ use Illuminate\Foundation\Application;
  * @property float total
  *
  * @package App\Models
+ * @method static where(string $string, int $userID)
+ * @method static findOrFail(int $orderID)
  */
 class Order extends Model
 {
@@ -47,7 +49,7 @@ class Order extends Model
     /**
      * @var string
      */
-    public const STATUS_CIRCULATION = 'Circulacion';
+    public const STATUS_CIRCULATION = 'Circulación';
 
     /**
      * @var string

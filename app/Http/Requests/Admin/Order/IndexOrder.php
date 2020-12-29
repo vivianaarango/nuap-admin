@@ -1,13 +1,13 @@
 <?php
-namespace App\Http\Requests\Admin\Payment;
+namespace App\Http\Requests\Admin\Order;
 
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class IndexPayment
- * @package App\Http\Requests\Admin\Ticket
+ * Class IndexOrder
+ * @package App\Http\Requests\Admin\Payment
  */
-class IndexPayment extends FormRequest
+class IndexOrder extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -17,7 +17,7 @@ class IndexPayment extends FormRequest
     public function rules(): array
     {
         return [
-            'orderBy' => 'in:id,value,request_date,payment_date,status|nullable',
+            'orderBy' => 'in:id,total_products,total_amount,total,total_discount,delivery_amount,status|nullable',
             'orderDirection' => 'in:asc,desc|nullable',
             'search' => 'string|nullable',
             'page' => 'integer|nullable',
