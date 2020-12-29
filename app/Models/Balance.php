@@ -13,6 +13,7 @@ use Illuminate\Foundation\Application;
  * @property float balance
  * @property float paid_out
  * @property float total
+ * @property float requested_value
  *
  * @package App\Models
  * @method static where(string $string, int $userID)
@@ -34,6 +35,7 @@ class Balance extends Model
         'user_type',
         'balance',
         'paid_out',
+        'requested_value',
         'total'
     ];
 

@@ -12,9 +12,12 @@ use Illuminate\Foundation\Application;
  * @property string user_type
  * @property string owner_name
  * @property string owner_document
+ * @property string owner_document_type
  * @property string account
  * @property string account_type
  * @property string bank
+ * @property string certificate,
+ * @property boolean status
  *
  * @package App\Models
  * @method static where(string $string, int $userID)
@@ -23,6 +26,16 @@ use Illuminate\Foundation\Application;
  */
 class BankAccount extends Model
 {
+    /**
+     * @var boolean
+     */
+    public const ACCOUNT_INACTIVE = false;
+
+    /**
+     * @var boolean
+     */
+    public const ACCOUNT_ACTIVE = true;
+
     /**
      * @var string
      */
@@ -36,9 +49,12 @@ class BankAccount extends Model
         'user_type',
         'owner_name',
         'owner_document',
+        'owner_document_type',
         'account',
         'account_type',
-        'bank'
+        'bank',
+        'certificate',
+        'status'
     ];
 
     /**

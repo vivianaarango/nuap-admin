@@ -16,7 +16,7 @@
                     <div style="padding-top: 0px" class="card-footer pull-right">
                         <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
                         <input type="hidden" value="{{ $payment['id'] }}" name="payment_id" id="payment_id">
-                        <button type="submit" class="btn btn-danger">
+                        <button type="submit" class="btn btn-danger btn-sm">
                             <i class="fa fa-window-close"></i>
                             &nbsp; Cancelar solicitud
                         </button>

@@ -59,7 +59,7 @@
                 </form>
             </profile-edit-profile-form>
             <div class="card-footer">
-                <a class="btn btn-success btn-spinner btn-sm pull-right m-b-0" href="{{ url('admin/payment-create') }}" role="button"><i class="fa fa-money"></i>&nbsp; Cuenta Bancaria</a>
+                <a style="color: white" class="btn btn-success btn-spinner btn-sm pull-right m-b-0" href="{{ url('admin/payment-create') }}" role="button"><i class="fa fa-money"></i>&nbsp; Cuenta Bancaria</a>
             </div>
         </div>
     </div>

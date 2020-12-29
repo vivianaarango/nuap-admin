@@ -130,7 +130,7 @@
                 </div>
             </form>
         @else
-            <label for="note" class="col-form-label" :class="'col-md-3'">Debes tener una cuenta bancaria activa para poder realizar el retiro, por favor agregala desde tu perfil.</label>
+            <label for="note" class="col-form-label" :class="'col-md-10'">Debes tener una cuenta bancaria activa para poder realizar el retiro, por favor agregala desde tu perfil.</label>
         @endif
     </div>
 @endsection
