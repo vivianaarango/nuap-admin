@@ -172,7 +172,9 @@ class CommerceController extends Controller
             'type' => ['required', 'string'],
             'name_legal_representative' => ['required', 'string'],
             'cc_legal_representative' => ['required', 'string'],
-            'contact_legal_representative' => ['required', 'string']
+            'contact_legal_representative' => ['required', 'string'],
+            'shipping_cost' => ['nullable', 'numeric'],
+            'distance' => ['nullable', 'numeric']
         ]);
 
         $adminUser = Session::get('user');
@@ -199,7 +201,9 @@ class CommerceController extends Controller
                 $request['type'],
                 $request['name_legal_representative'],
                 $request['cc_legal_representative'],
-                $request['contact_legal_representative']
+                $request['contact_legal_representative'],
+                $request['shipping_cost'],
+                $request['distance']
             );
 
             if ($request->ajax()) {

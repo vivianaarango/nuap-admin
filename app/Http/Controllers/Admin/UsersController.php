@@ -162,6 +162,8 @@ class UsersController extends Controller
                 $data['name_legal_representative'] = $distributor->name_legal_representative;
                 $data['cc_legal_representative'] = $distributor->cc_legal_representative;
                 $data['contact_legal_representative'] = $distributor->contact_legal_representative;
+                $data['shipping_cost'] = $distributor->shipping_cost;
+                $data['distance'] = $distributor->distance;
 
                 return view('admin.distributors.edit', [
                     'user' => json_encode($data),
@@ -182,6 +184,8 @@ class UsersController extends Controller
                 $data['name_legal_representative'] = $commerce->name_legal_representative;
                 $data['cc_legal_representative'] = $commerce->cc_legal_representative;
                 $data['contact_legal_representative'] = $commerce->contact_legal_representative;
+                $data['shipping_cost'] = $commerce->shipping_cost;
+                $data['distance'] = $commerce->distance;
 
                 return view('admin.commerces.edit', [
                     'user' => json_encode($data),

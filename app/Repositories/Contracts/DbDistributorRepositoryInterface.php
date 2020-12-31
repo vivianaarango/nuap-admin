@@ -26,6 +26,8 @@ interface DbDistributorRepositoryInterface
      * @param string $nameLegalRepresentative
      * @param string $ccLegalRepresentative
      * @param string $contactLegalRepresentative
+     * @param float|null $shippingCost
+     * @param float|null $distance
      * @return Distributor
      */
     public function updateDistributor(
@@ -37,7 +39,9 @@ interface DbDistributorRepositoryInterface
         float $commission,
         string $nameLegalRepresentative,
         string $ccLegalRepresentative,
-        string $contactLegalRepresentative
+        string $contactLegalRepresentative,
+        float $shippingCost = null,
+        float $distance = null
     ): Distributor;
 
     /**

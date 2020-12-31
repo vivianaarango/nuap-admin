@@ -32,6 +32,8 @@ class DbDistributorRepository implements DbDistributorRepositoryInterface
      * @param string $nameLegalRepresentative
      * @param string $ccLegalRepresentative
      * @param string $contactLegalRepresentative
+     * @param float|null $shippingCost
+     * @param float|null $distance
      * @return Distributor
      */
     public function updateDistributor(
@@ -43,7 +45,9 @@ class DbDistributorRepository implements DbDistributorRepositoryInterface
         float $commission,
         string $nameLegalRepresentative,
         string $ccLegalRepresentative,
-        string $contactLegalRepresentative
+        string $contactLegalRepresentative,
+        float $shippingCost = null,
+        float $distance = null
     ): Distributor {
         $distributor = $this->findById($distributorID);
         $distributor->user_id = $userID;
@@ -54,6 +58,8 @@ class DbDistributorRepository implements DbDistributorRepositoryInterface
         $distributor->name_legal_representative = $nameLegalRepresentative;
         $distributor->cc_legal_representative = $ccLegalRepresentative;
         $distributor->contact_legal_representative = $contactLegalRepresentative;
+        $distributor->shipping_cost = $shippingCost;
+        $distributor->distance = $distance;
         $distributor->save();
 
         return $distributor;

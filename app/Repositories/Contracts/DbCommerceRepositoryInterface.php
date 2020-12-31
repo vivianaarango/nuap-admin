@@ -27,6 +27,8 @@ interface DbCommerceRepositoryInterface
      * @param string $nameLegalRepresentative
      * @param string $ccLegalRepresentative
      * @param string $contactLegalRepresentative
+     * @param float|null $shippingCost
+     * @param float|null $distance
      * @return Commerce
      */
     public function updateCommerce(
@@ -39,7 +41,9 @@ interface DbCommerceRepositoryInterface
         string $type,
         string $nameLegalRepresentative,
         string $ccLegalRepresentative,
-        string $contactLegalRepresentative
+        string $contactLegalRepresentative,
+        float $shippingCost = null,
+        float $distance = null
     ): Commerce;
 
     /**

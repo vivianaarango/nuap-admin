@@ -25,6 +25,8 @@ use Illuminate\Foundation\Application;
  * @property string url_interior_image
  * @property string url_contract
  * @property string resource_url
+ * @property float shipping_cost
+ * @property float distance
  *
  * @package App\Models
  * @method static create(array $data)
@@ -64,7 +66,9 @@ class Distributor extends Model
         'url_cc_legal_representative',
         'url_establishment_image',
         'url_interior_image',
-        'url_contract'
+        'url_contract',
+        'shipping_cost',
+        'distance'
     ];
 
     /**

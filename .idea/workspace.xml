@@ -5,14 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d6cb72cc-2713-41b0-95f6-aeada7aa8696" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Nuapp Admin.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Nuapp Admin.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Balance.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Balance.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/BankAccount.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/BankAccount.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/payments/detail.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/payments/detail.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/payments/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/payments/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/profile/edit-profile-dist.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/profile/edit-profile-dist.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/reports/new-users.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/reports/new-users.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/CommerceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/CommerceController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/DistributorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/DistributorController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/UsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/UsersController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/Commerce/CreateCommerce.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Admin/Commerce/CreateCommerce.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/Distributor/CreateDistributor.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Admin/Distributor/CreateDistributor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Commerce.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Commerce.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Distributor.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Distributor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/Contracts/DbCommerceRepositoryInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/Contracts/DbCommerceRepositoryInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/Contracts/DbDistributorRepositoryInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/Contracts/DbDistributorRepositoryInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/DbCommerceRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/DbCommerceRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/DbDistributorRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/DbDistributorRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/commerces/components/form-edit-elements.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/commerces/components/form-edit-elements.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/commerces/components/form-elements.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/commerces/components/form-elements.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/distributors/components/form-edit-elements.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/distributors/components/form-edit-elements.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/distributors/components/form-elements.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/distributors/components/form-elements.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/layout/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/layout/sidebar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/payments/components/form-view-account-elements.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/payments/components/form-view-account-elements.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +35,14 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="IlluminatedCloudWorkspaceSettings">
     <option name="projectWorkspaceSettings">
@@ -285,7 +303,10 @@
       <workItem from="1609164113740" duration="1394000" />
       <workItem from="1609204030033" duration="18052000" />
       <workItem from="1609249555491" duration="35000" />
-      <workItem from="1609283385988" duration="317000" />
+      <workItem from="1609283385988" duration="1597000" />
+      <workItem from="1609337330544" duration="44000" />
+      <workItem from="1609364250448" duration="1070000" />
+      <workItem from="1609382822118" duration="3680000" />
     </task>
     <servers />
   </component>

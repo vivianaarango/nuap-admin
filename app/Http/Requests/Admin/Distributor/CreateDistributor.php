@@ -27,7 +27,9 @@ class CreateDistributor extends FormRequest
             'commission' => ['numeric', 'min:0.0','max:100.00'],
             'name_legal_representative' => ['required', 'string'],
             'cc_legal_representative' => ['required', 'string'],
-            'contact_legal_representative' => ['required', 'string']
+            'contact_legal_representative' => ['required', 'string'],
+            'shipping_cost' => ['numeric'],
+            'distance' => ['numeric']
         ];
     }
 

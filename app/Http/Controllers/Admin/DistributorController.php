@@ -170,7 +170,9 @@ class DistributorController extends Controller
             'commission' => ['required', 'numeric', 'min:0.0','max:100.00'],
             'name_legal_representative' => ['required', 'string'],
             'cc_legal_representative' => ['required', 'string'],
-            'contact_legal_representative' => ['required', 'string']
+            'contact_legal_representative' => ['required', 'string'],
+            'shipping_cost' => ['nullable', 'numeric'],
+            'distance' => ['nullable', 'numeric']
         ]);
 
         $adminUser = Session::get('user');
@@ -196,7 +198,9 @@ class DistributorController extends Controller
                 $request['commission'],
                 $request['name_legal_representative'],
                 $request['cc_legal_representative'],
-                $request['contact_legal_representative']
+                $request['contact_legal_representative'],
+                $request['shipping_cost'],
+                $request['distance']
             );
 
             if ($request->ajax()) {
