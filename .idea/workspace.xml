@@ -6,23 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="d6cb72cc-2713-41b0-95f6-aeada7aa8696" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/CommerceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/CommerceController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/DistributorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/DistributorController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/UsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/UsersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/Commerce/CreateCommerce.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Admin/Commerce/CreateCommerce.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/Distributor/CreateDistributor.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Admin/Distributor/CreateDistributor.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Commerce.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Commerce.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Distributor.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Distributor.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/Contracts/DbCommerceRepositoryInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/Contracts/DbCommerceRepositoryInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/Contracts/DbDistributorRepositoryInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/Contracts/DbDistributorRepositoryInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/DbCommerceRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/DbCommerceRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/DbDistributorRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/DbDistributorRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/commerces/components/form-edit-elements.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/commerces/components/form-edit-elements.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/commerces/components/form-elements.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/commerces/components/form-elements.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/distributors/components/form-edit-elements.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/distributors/components/form-edit-elements.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/distributors/components/form-elements.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/distributors/components/form-elements.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/AdminUsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/AdminUsersController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/admin/layout/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/layout/sidebar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/payments/components/form-view-account-elements.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/payments/components/form-view-account-elements.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -211,7 +197,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin/admin-users/components" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -224,11 +210,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources/views/admin/admin-users/components" />
+      <recent name="$PROJECT_DIR$/resources/views/admin/admin-users" />
+      <recent name="$PROJECT_DIR$/database/migrations" />
       <recent name="$PROJECT_DIR$/app/Repositories/Contracts" />
       <recent name="$PROJECT_DIR$/app/Repositories" />
-      <recent name="$PROJECT_DIR$/resources/views/admin/orders" />
-      <recent name="$PROJECT_DIR$/resources/views/admin/orders/components" />
-      <recent name="$PROJECT_DIR$/app/Http/Requests/Admin/Order" />
     </key>
   </component>
   <component name="RunManager">
@@ -306,7 +292,7 @@
       <workItem from="1609283385988" duration="1597000" />
       <workItem from="1609337330544" duration="44000" />
       <workItem from="1609364250448" duration="1070000" />
-      <workItem from="1609382822118" duration="3680000" />
+      <workItem from="1609382822118" duration="6428000" />
     </task>
     <servers />
   </component>

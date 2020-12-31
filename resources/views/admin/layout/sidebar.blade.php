@@ -5,6 +5,7 @@
             <ul class="nav">
                 <li class="nav-title">Administradores</li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/admin-users-create') }}"><i class="nav-icon icon-plus"></i>Nuevo administrador</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('admin/config-create') }}"><i class="nav-icon icon-settings"></i>Configuración</a></li>
                 <li class="nav-title">Usuarios</li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/distributor-list') }}"><i class="nav-icon icon-grid"></i>Distribuidores</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/distributor-edit-commission') }}"><i class="nav-icon icon-pin"></i>Comisiones Distribuidores</a></li>
@@ -19,7 +20,7 @@
                 <li class="nav-title">Soporte</li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/ticket-admin-list') }}"><i class="nav-icon icon-envelope"></i>Tickets</a></li>
                <!-- <li class="nav-title">Reportes</li>-->
-               <!-- <li class="nav-item"><a class="nav-link" href="{{ url('admin/report/new-users') }}"><i class="nav-icon icon-people"></i>Usuarios Nuevos</a></li>-->
+               <!-- <li class="nav-item"><a class="nav-link" href="{{ url('admin/report/new-users') }}"><i class="nav-icon icon-chart"></i>Usuarios Nuevos</a></li>-->
             </ul>
         </nav>
         <button class="sidebar-minimizer brand-minimizer" type="button"></button>

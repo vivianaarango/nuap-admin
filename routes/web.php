@@ -50,6 +50,10 @@ Route::get('/admin/users/{user}/view-account', 'Admin\PaymentController@viewAcco
 Route::get('/admin/admin-users-create', 'Admin\AdminUsersController@create');
 /* Store */
 Route::post('/admin/admin-users-store', 'Admin\AdminUsersController@store');
+/* View create settings */
+Route::get('/admin/config-create', 'Admin\AdminUsersController@createConfig');
+/* Store settings */
+Route::post('/admin/config-store', 'Admin\AdminUsersController@storeConfig');
 
 ### Profile ###
 /* Edit */
