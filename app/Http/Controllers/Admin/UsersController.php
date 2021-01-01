@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Users\CreateUserLocation;
 use App\Http\Requests\Admin\Users\IndexUserLocation;
 use App\Http\Requests\Admin\Users\LoginUsers;
+use App\Models\SessionLog;
 use App\Models\User;
 use App\Models\UserLocation;
 use App\Repositories\Contracts\DbClientRepositoryInterface;
@@ -89,6 +90,12 @@ class UsersController extends Controller
         $user = $user[0];
         Session::put('user', $user);
         $this->dbUserRepository->updateLastLogin($user->id, now());
+
+        $logSession = new SessionLog();
+        $logSession->user_id = $user->id;
+        $logSession->user_type = $user->role;
+        $logSession->login_date = now();
+        $logSession->save();
 
         if ($user->role == User::ADMIN_ROLE) {
             return redirect('admin/distributor-list');

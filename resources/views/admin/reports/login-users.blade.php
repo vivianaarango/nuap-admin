@@ -14,6 +14,6 @@
             <canvas id="densityChart" width="600" height="400"></canvas>
         </div>
     </div>
-    <script src="../../../../js/bar-chart.js"></script>
+    <script src="../../../../js/bar-chart-login.js"></script>
 @endsection
 

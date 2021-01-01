@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Api;
 
+use App\Http\Transformers\ReportUserLoginTransformer;
 use App\Http\Transformers\ReportUserRoleTransformer;
 use App\Libraries\Responders\Contracts\ArrayResponseInterface;
 use App\Libraries\Responders\ErrorObject;
@@ -64,22 +65,22 @@ class ReportLoginUsersController
         $year = (string) date("Y");
         $data = DB::select(
             "SELECT
-                    users.role,
-                    SUM(CASE WHEN MONTH(users.last_logged_in) = 1 THEN 1 ELSE 0 END) as Ene,
-                    SUM(CASE WHEN MONTH(users.last_logged_in) = 2 THEN 1 ELSE 0 END) as Feb,
-                    SUM(CASE WHEN MONTH(users.last_logged_in) = 3 THEN 1 ELSE 0 END) as Mar,
-                    SUM(CASE WHEN MONTH(users.last_logged_in) = 4 THEN 1 ELSE 0 END) as Abr,
-                    SUM(CASE WHEN MONTH(users.last_logged_in) = 5 THEN 1 ELSE 0 END) as May,
-                    SUM(CASE WHEN MONTH(users.last_logged_in) = 6 THEN 1 ELSE 0 END) as Jun,
-                    SUM(CASE WHEN MONTH(users.last_logged_in) = 7 THEN 1 ELSE 0 END) as Jul,
-                    SUM(CASE WHEN MONTH(users.last_logged_in) = 8 THEN 1 ELSE 0 END) as Ago,
-                    SUM(CASE WHEN MONTH(users.last_logged_in) = 9 THEN 1 ELSE 0 END) as Sep,
-                    SUM(CASE WHEN MONTH(users.last_logged_in) = 10 THEN 1 ELSE 0 END) as Oct,
-                    SUM(CASE WHEN MONTH(users.last_logged_in) = 11 THEN 1 ELSE 0 END) as Nov,
-                    SUM(CASE WHEN MONTH(users.last_logged_in) = 12 THEN 1 ELSE 0 END) as Dic
-                    FROM users
-                    WHERE users.last_logged_in BETWEEN '" .$year. "-01-01' AND '" .$year. "-12-31 23:59'
-                    GROUP BY users.role"
+                    session_logs.user_type,
+                    SUM(CASE WHEN MONTH(session_logs.login_date) = 1 THEN 1 ELSE 0 END) as Ene,
+                    SUM(CASE WHEN MONTH(session_logs.login_date) = 2 THEN 1 ELSE 0 END) as Feb,
+                    SUM(CASE WHEN MONTH(session_logs.login_date) = 3 THEN 1 ELSE 0 END) as Mar,
+                    SUM(CASE WHEN MONTH(session_logs.login_date) = 4 THEN 1 ELSE 0 END) as Abr,
+                    SUM(CASE WHEN MONTH(session_logs.login_date) = 5 THEN 1 ELSE 0 END) as May,
+                    SUM(CASE WHEN MONTH(session_logs.login_date) = 6 THEN 1 ELSE 0 END) as Jun,
+                    SUM(CASE WHEN MONTH(session_logs.login_date) = 7 THEN 1 ELSE 0 END) as Jul,
+                    SUM(CASE WHEN MONTH(session_logs.login_date) = 8 THEN 1 ELSE 0 END) as Ago,
+                    SUM(CASE WHEN MONTH(session_logs.login_date) = 9 THEN 1 ELSE 0 END) as Sep,
+                    SUM(CASE WHEN MONTH(session_logs.login_date) = 10 THEN 1 ELSE 0 END) as Oct,
+                    SUM(CASE WHEN MONTH(session_logs.login_date) = 11 THEN 1 ELSE 0 END) as Nov,
+                    SUM(CASE WHEN MONTH(session_logs.login_date) = 12 THEN 1 ELSE 0 END) as Dic
+                    FROM session_logs
+                    WHERE session_logs.login_date BETWEEN '" .$year. "-01-01' AND '" .$year. "-12-31 23:59'
+                    GROUP BY session_logs.user_type"
 
         );
 
@@ -87,7 +88,7 @@ class ReportLoginUsersController
 
         return $this->arrayResponse->respondWithCollection(
             $this->httpObject,
-            new ReportUserRoleTransformer(),
+            new ReportUserLoginTransformer(),
             'data'
         );
     }
