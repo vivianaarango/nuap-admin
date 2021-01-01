@@ -64,4 +64,20 @@ class ReportController extends Controller
             return redirect('/admin/user-session');
         }
     }
+
+    /**
+     * @return Factory|Application|RedirectResponse|View
+     */
+    public function loginUsers()
+    {
+        $user = Session::get('user');
+
+        if (isset($user) && $user->role == User::ADMIN_ROLE) {
+            return view('admin.reports.login-users', [
+                'activation' => $user->role
+            ]);
+        } else {
+            return redirect('/admin/user-session');
+        }
+    }
 }

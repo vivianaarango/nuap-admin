@@ -178,6 +178,8 @@ Route::post('/admin/payment/change-status-account', 'Admin\PaymentController@cha
 ### Reports
 /* New Users */
 Route::get('/admin/report/new-users', 'Admin\ReportController@users');
+/* Login Users */
+Route::get('/admin/report/login-users', 'Admin\ReportController@loginUsers');
 
 ### Orders
 /* List */

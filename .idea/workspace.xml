@@ -5,9 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d6cb72cc-2713-41b0-95f6-aeada7aa8696" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/ReportNewUsersByRoleController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Transformers/ReportUserRoleTransformer.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Libraries/Responders/ArrayResponse.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Libraries/Responders/Contracts/ArrayResponseInterface.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Libraries/Responders/Contracts/JsonApiResponseInterface.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Libraries/Responders/ErrorObject.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Libraries/Responders/HttpObject.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Libraries/Responders/JsonApiErrorsFormatter.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Libraries/Responders/JsonApiResponse.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/reports/login-users.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Nuapp Admin.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Nuapp Admin.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/AdminUsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/AdminUsersController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/ReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/ReportController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/bar-chart.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/bar-chart.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/admin/layout/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/layout/sidebar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/reports/new-users.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/reports/new-users.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -17,7 +36,16 @@
   </component>
   <component name="ComposerSettings" doNotAsk="true">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
-    <execution />
+    <execution>
+      <executable path="composer" />
+    </execution>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -81,7 +109,6 @@
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php72" />
       <path value="$PROJECT_DIR$/vendor/intervention/image" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-idn" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php70" />
       <path value="$PROJECT_DIR$/vendor/symfony/process" />
       <path value="$PROJECT_DIR$/vendor/brackets/code-style-fixer" />
       <path value="$PROJECT_DIR$/vendor/psr/container" />
@@ -184,6 +211,18 @@
       <path value="$PROJECT_DIR$/vendor/laravel/tinker" />
       <path value="$PROJECT_DIR$/vendor/monolog/monolog" />
       <path value="$PROJECT_DIR$/vendor/doctrine/dbal" />
+      <path value="$PROJECT_DIR$/vendor/league/fractal" />
+      <path value="$PROJECT_DIR$/vendor/maennchen/zipstream-php" />
+      <path value="$PROJECT_DIR$/vendor/league/mime-type-detection" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-client" />
+      <path value="$PROJECT_DIR$/vendor/nexmo/client-core" />
+      <path value="$PROJECT_DIR$/vendor/myclabs/php-enum" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php80" />
+      <path value="$PROJECT_DIR$/vendor/symfony/error-handler" />
+      <path value="$PROJECT_DIR$/vendor/symfony/http-client-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-normalizer" />
+      <path value="$PROJECT_DIR$/vendor/prooph/php-cs-fixer-config" />
     </include_path>
   </component>
   <component name="ProjectId" id="1jkTZqkdZ2U0Pa3FGj2Y5EHuPJu" />
@@ -197,7 +236,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin/admin-users/components" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin/reports" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -205,16 +244,17 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources/views/admin/reports" />
+      <recent name="$PROJECT_DIR$/app/Libraries" />
       <recent name="$PROJECT_DIR$/resources/views/admin/admin-users/components" />
       <recent name="$PROJECT_DIR$/resources/views/admin/admin-users" />
       <recent name="$PROJECT_DIR$/database/migrations" />
-      <recent name="$PROJECT_DIR$/app/Repositories/Contracts" />
-      <recent name="$PROJECT_DIR$/app/Repositories" />
     </key>
   </component>
   <component name="RunManager">
@@ -293,6 +333,8 @@
       <workItem from="1609337330544" duration="44000" />
       <workItem from="1609364250448" duration="1070000" />
       <workItem from="1609382822118" duration="6428000" />
+      <workItem from="1609430627985" duration="13407000" />
+      <workItem from="1609522123231" duration="5011000" />
     </task>
     <servers />
   </component>
@@ -313,5 +355,9 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

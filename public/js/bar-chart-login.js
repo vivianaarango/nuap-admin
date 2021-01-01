@@ -1,5 +1,5 @@
 window.onload = function() {
-    axios.get('/api/reports/users/role')
+    axios.get('/api/reports/users/login')
         .then(function (response) {
             let densityCanvas = document.getElementById("densityChart");
 
