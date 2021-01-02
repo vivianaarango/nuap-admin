@@ -19,10 +19,12 @@ use Illuminate\Foundation\Application;
  * @property float delivery_amount
  * @property float total_discount
  * @property float total
+ * @property string created_at
  *
  * @package App\Models
  * @method static where(string $string, int $userID)
  * @method static findOrFail(int $orderID)
+ * @method static select(string $string, string $string1, string $string2)
  */
 class Order extends Model
 {

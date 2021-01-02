@@ -22,6 +22,8 @@
                 <li class="nav-title">Reportes</li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/report/new-users') }}"><i class="nav-icon icon-chart"></i>Usuarios Nuevos</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/report/login-users') }}"><i class="nav-icon icon-login"></i>Inicio de Sesión</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('admin/report/export-payments') }}"><i class="nav-icon icon-wallet"></i>Pagos Realizados</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('admin/report/sales') }}"><i class="nav-icon icon-handbag"></i>Ventas</a></li>
             </ul>
         </nav>
         <button class="sidebar-minimizer brand-minimizer" type="button"></button>

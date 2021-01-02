@@ -180,6 +180,12 @@ Route::post('/admin/payment/change-status-account', 'Admin\PaymentController@cha
 Route::get('/admin/report/new-users', 'Admin\ReportController@users');
 /* Login Users */
 Route::get('/admin/report/login-users', 'Admin\ReportController@loginUsers');
+/* Export payments */
+Route::get('/admin/report/export-payments', 'Admin\ReportController@exportPayments')->name('admin/report/export-payment');
+/* Export sales */
+Route::get('/admin/report/sales', 'Admin\ReportController@sales');
+/* Export payments */
+Route::post('/admin/report/export-sales', 'Admin\ReportController@exportSales')->name('admin/report/export-sales');
 
 ### Orders
 /* List */

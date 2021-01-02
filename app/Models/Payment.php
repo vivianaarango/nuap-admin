@@ -21,6 +21,7 @@ use Illuminate\Foundation\Application;
  * @method static where(string $string, int $userID)
  * @method static findOrFail(int $distributorID)
  * @method static create($message)
+ * @method static select(string $string, string $string1, string $string2)
  */
 class Payment extends Model
 {
