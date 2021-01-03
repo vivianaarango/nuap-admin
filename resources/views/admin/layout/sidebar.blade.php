@@ -25,6 +25,7 @@
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/report/export-payments') }}"><i class="nav-icon icon-wallet"></i>Pagos Realizados</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/report/export-pending-payments') }}"><i class="nav-icon icon-clock"></i>Pagos Pendientes</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/report/sales') }}"><i class="nav-icon icon-handbag"></i>Ventas</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('admin/report/tickets') }}"><i class="nav-icon icon-pie-chart"></i>Tickets</a></li>
             </ul>
         </nav>
         <button class="sidebar-minimizer brand-minimizer" type="button"></button>

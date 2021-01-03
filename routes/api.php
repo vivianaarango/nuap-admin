@@ -24,5 +24,10 @@ Route::group(['prefix' => 'reports'], function () {
         'as' => 'api-reports-users-login',
         'uses' => 'Api\ReportLoginUsersController'
     ]);
+
+    Route::get('/users/tickets', [
+        'as' => 'api-reports-tickets',
+        'uses' => 'Api\ReportTicketsController'
+    ]);
 });
 

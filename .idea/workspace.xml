@@ -6,22 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="d6cb72cc-2713-41b0-95f6-aeada7aa8696" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/AdminUsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/AdminUsersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/PaymentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/PaymentController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/ReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/ReportController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/TicketController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/TicketController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/Ticket/IndexTicket.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Admin/Ticket/IndexTicket.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Config.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Config.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Payment.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Payment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Ticket.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Ticket.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/Contracts/DbBankAccountRepositoryInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/Contracts/DbBankAccountRepositoryInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/DbBankAccountRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/DbBankAccountRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/admin-users/components/form-config-elements.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/admin-users/components/form-config-elements.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/admin-users/config.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/admin-users/config.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/admin/layout/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/layout/sidebar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/tickets/admin-index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/tickets/admin-index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/tickets/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/tickets/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/tickets/view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/tickets/view.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -331,7 +318,7 @@
       <workItem from="1609430627985" duration="13407000" />
       <workItem from="1609522123231" duration="5011000" />
       <workItem from="1609611433266" duration="1127000" />
-      <workItem from="1609618919866" duration="8664000" />
+      <workItem from="1609618919866" duration="10819000" />
     </task>
     <servers />
   </component>
