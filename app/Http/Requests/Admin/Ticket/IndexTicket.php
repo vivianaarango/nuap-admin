@@ -17,7 +17,7 @@ class IndexTicket extends FormRequest
     public function rules()
     {
         return [
-            'orderBy' => 'in:id,issues,description,is_closed,init_date|nullable',
+            'orderBy' => 'in:id,issues,description,status,init_date|nullable',
             'orderDirection' => 'in:asc,desc|nullable',
             'search' => 'string|nullable',
             'page' => 'integer|nullable',

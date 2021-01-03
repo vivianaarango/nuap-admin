@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Exports\DistributorSalesExport;
 use App\Exports\PaymentsExport;
+use App\Exports\PaymentsPendingExport;
 use App\Exports\SalesExport;
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -106,7 +107,7 @@ class ReportController extends Controller
     public function exportPayments(): BinaryFileResponse
     {
         $date = now();
-        return Excel::download(new PaymentsExport, 'pagos-'.$date.'.xlsx');
+        return Excel::download(new PaymentsExport, 'pagos-aprobados-'.$date.'.xlsx');
     }
 
     /**
@@ -117,5 +118,14 @@ class ReportController extends Controller
     {
         $date = now();
         return Excel::download(new SalesExport($request['month'], $request['user_type']), 'ventas-'.$date.'.xlsx');
+    }
+
+    /**
+     * @return BinaryFileResponse
+     */
+    public function exportPendingPayments(): BinaryFileResponse
+    {
+        $date = now();
+        return Excel::download(new PaymentsPendingExport, 'pagos-pendientes-'.$date.'.xlsx');
     }
 }

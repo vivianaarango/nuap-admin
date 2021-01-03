@@ -71,13 +71,13 @@ class TicketController extends Controller
             $data = AdminListing::create(Ticket::class)
                 ->modifyQuery(function($query) {
                     $query->where('user_id', Session::get('user')->id)
-                        ->orderBy('is_closed', 'asc')
+                        ->orderBy('status', 'asc')
                         ->orderBy('updated_at', 'desc')
                         ->orderBy('id', 'desc');
                 })->processRequestAndGet(
                     $request,
-                    ['id', 'issues', 'is_closed', 'description', 'init_date', 'updated_at'],
-                    ['id', 'issues', 'is_closed', 'description', 'init_date', 'updated_at']
+                    ['id', 'issues', 'status', 'description', 'init_date', 'updated_at'],
+                    ['id', 'issues', 'status', 'description', 'init_date', 'updated_at']
                 );
 
             if ($request->ajax()) {
@@ -122,7 +122,7 @@ class TicketController extends Controller
             $ticket['init_date'] = now();
             $ticket['finish_date'] = null;
             $ticket['description'] = $request['message'];
-            $ticket['is_closed'] = Ticket::NOT_CLOSED;
+            $ticket['status'] = Ticket::PENDING_ADMIN;
             $newTicket = Ticket::create($ticket);
 
             $message['ticket_id'] = $newTicket->id;
@@ -162,13 +162,13 @@ class TicketController extends Controller
                         'users.email',
                         'tickets.*'
                     )->join('users', 'users.id', '=', 'tickets.user_id')
-                        ->orderBy('is_closed', 'asc')
+                        ->orderBy('status', 'asc')
                         ->orderBy('updated_at', 'desc')
                         ->orderBy('id', 'desc');
                 })->processRequestAndGet(
                     $request,
-                    ['id', 'email', 'issues', 'is_closed', 'description', 'init_date', 'updated_at'],
-                    ['id', 'email', 'issues', 'is_closed', 'description', 'init_date', 'updated_at']
+                    ['id', 'email', 'issues', 'status', 'description', 'init_date', 'updated_at'],
+                    ['id', 'email', 'issues', 'status', 'description', 'init_date', 'updated_at']
                 );
 
             foreach ($data as $item){
@@ -235,6 +235,11 @@ class TicketController extends Controller
         if (isset($user) && ($user->role == User::ADMIN_ROLE || $user->role == User::DISTRIBUTOR_ROLE)) {
             $ticket = $this->dbTicketRepository->findByID($request['ticket_id']);
             $ticket->setUpdatedAt(now());
+            if ($user->role === User::DISTRIBUTOR_ROLE) {
+                $ticket['status'] = Ticket::PENDING_ADMIN;
+            } else {
+                $ticket['status'] = Ticket::PENDING_USER;
+            }
             $ticket->save();
 
             $message['ticket_id'] = $request['ticket_id'];
@@ -242,6 +247,7 @@ class TicketController extends Controller
             $message['sender_id'] = $user->id;
             $message['sender_type'] = $user->role;
             $message['sender_date'] = now();
+
             TicketMessage::create($message);
 
             if ($user->role === User::DISTRIBUTOR_ROLE) {
@@ -266,7 +272,7 @@ class TicketController extends Controller
 
         if (isset($adminUser) && $adminUser->role == User::ADMIN_ROLE) {
             $ticket = $this->dbTicketRepository->findByID($ticket->id);
-            $ticket->is_closed = Ticket::CLOSED;
+            $ticket->status = Ticket::CLOSED;
             $ticket->save();
         } else {
             return redirect('admin/user-session');

@@ -14,9 +14,9 @@ class DbBankAccountRepository implements DbBankAccountRepositoryInterface
 {
     /**
      * @param int $userID
-     * @return BankAccount
+     * @return mixed
      */
-    public function findByUserID(int $userID): BankAccount
+    public function findByUserID(int $userID)
     {
         return BankAccount::where('user_id', $userID)
             ->first();

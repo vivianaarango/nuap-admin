@@ -186,6 +186,8 @@ Route::get('/admin/report/export-payments', 'Admin\ReportController@exportPaymen
 Route::get('/admin/report/sales', 'Admin\ReportController@sales');
 /* Export payments */
 Route::post('/admin/report/export-sales', 'Admin\ReportController@exportSales')->name('admin/report/export-sales');
+/* Export pending payments */
+Route::get('/admin/report/export-pending-payments', 'Admin\ReportController@exportPendingPayments')->name('admin/report/export-pending-payments');
 
 ### Orders
 /* List */

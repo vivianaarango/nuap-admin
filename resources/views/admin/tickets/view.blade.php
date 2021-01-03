@@ -48,7 +48,7 @@
                         </div>
                     </div>
                     <div style="padding-top: 0" class="card-footer">
-                        @if($data[0]->is_closed === 0)
+                        @if($data[0]->status !== 'Cerrado')
                             <button style="color: white" type="submit" class="btn btn-success pull-right">
                                 <i class="fa fa-send"></i>
                                 &nbsp; Enviar

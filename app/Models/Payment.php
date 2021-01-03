@@ -11,6 +11,7 @@ use Illuminate\Foundation\Application;
  * @property int user_id
  * @property string user_type
  * @property integer account_id
+ * @property integer account_admin_id
  * @property float value
  * @property string status
  * @property string voucher
@@ -61,6 +62,7 @@ class Payment extends Model
         'user_id',
         'user_type',
         'account_id',
+        'account_admin_id',
         'value',
         'status',
         'voucher',

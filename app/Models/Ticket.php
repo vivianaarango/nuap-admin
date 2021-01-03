@@ -14,7 +14,7 @@ use Illuminate\Foundation\Application;
  * @property string issues
  * @property string init_date
  * @property string finish_date
- * @property boolean is_closed
+ * @property string status
  *
  * @package App\Models
  * @method static create(array $ticket)
@@ -23,14 +23,24 @@ use Illuminate\Foundation\Application;
 class Ticket extends Model
 {
     /**
-     * @var boolean
+     * @var string
      */
-    public const CLOSED= true;
+    public const CLOSED= 'Cerrado';
 
     /**
-     * @var boolean
+     * @var string
      */
-    public const NOT_CLOSED = false;
+    public const OPEN = 'Abierto';
+
+    /**
+     * @var string
+     */
+    public const PENDING_ADMIN = 'Pendiente Administrador';
+
+    /**
+     * @var string
+     */
+    public const PENDING_USER = 'Pendiente Usuario';
 
     /**
      * @var string
@@ -46,7 +56,7 @@ class Ticket extends Model
         'issues',
         'init_date',
         'finish_date',
-        'is_closed',
+        'status',
         'description'
     ];
 

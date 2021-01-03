@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AdminUser\CreateAdminUsers;
 use App\Models\AdminUser;
+use App\Models\BankAccount;
 use App\Models\Config;
 use App\Models\User;
 use App\Repositories\Contracts\DbAdminUsersRepositoryInterface;
+use App\Repositories\Contracts\DbBankAccountRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
@@ -34,16 +36,24 @@ class AdminUsersController extends Controller
     private $dbAdminUserRepository;
 
     /**
-     * UsersController constructor.
+     * @var DbBankAccountRepositoryInterface
+     */
+    private $dbBankAccountRepository;
+
+    /**
+     * AdminUsersController constructor.
      * @param DbUsersRepositoryInterface $dbUserRepository
      * @param DbAdminUsersRepositoryInterface $dbAdminUserRepository
+     * @param DbBankAccountRepositoryInterface $dbBankAccountRepository
      */
     public function __construct(
         DbUsersRepositoryInterface $dbUserRepository,
-        DbAdminUsersRepositoryInterface $dbAdminUserRepository
+        DbAdminUsersRepositoryInterface $dbAdminUserRepository,
+        DbBankAccountRepositoryInterface $dbBankAccountRepository
     ) {
         $this->dbUserRepository = $dbUserRepository;
         $this->dbAdminUserRepository = $dbAdminUserRepository;
+        $this->dbBankAccountRepository = $dbBankAccountRepository;
     }
 
     /**
@@ -95,17 +105,16 @@ class AdminUsersController extends Controller
 
         if (isset($user) && $user->role == User::ADMIN_ROLE) {
             $config = Config::first();
+            $account = null;
 
-            $data = [];
-            if (isset($config->id)) {
-                $data['config_id'] = $config->id;
-                $data['shipping_cost'] = $config->shipping_cost;
-                $data['distance'] = $config->distance;
+            if (!is_null($config->account_id)) {
+                $account = $this->dbBankAccountRepository->findByID($config->account_id);
             }
 
             return view('admin.admin-users.config', [
-                'config' => json_encode($data),
-                'activation' => $user->role,
+                'config' => $config,
+                'account' => $account,
+                'activation' => $user->role
             ]);
         } else {
             return redirect('/admin/user-session');
@@ -115,25 +124,79 @@ class AdminUsersController extends Controller
     /**
      * @param Request $request
      * @return array|Application|RedirectResponse|Redirector
-     * @throws ValidationException
      */
     public function storeConfig(Request $request)
     {
-        $this->validate($request, [
-            'config_id' => ['nullable', 'numeric'],
-            'shipping_cost' => ['nullable', 'numeric'],
-            'distance' => ['nullable', 'numeric']
-        ]);
-
         $user = Session::get('user');
-
         if (isset($user) && $user->role == User::ADMIN_ROLE) {
             if ($request['config_id']) {
                 $config = Config::where('id', $request['config_id'])->first();
+                $config->shipping_cost = $request['shipping_cost'];
+                $config->distance = $request['distance'];
+                $config->save();
             } else {
                 $data['shipping_cost'] = $request['shipping_cost'];
                 $data['distance'] = $request['distance'];
-                Config::create($data);
+                $config = Config::create($data);
+            }
+
+            $account = null;
+            if (!is_null($config->account_id)) {
+                $account = $this->dbBankAccountRepository->findByID($config->account_id);
+            }
+
+            if (is_null($account)) {
+                $account['user_id'] = $user->id;
+                $account['user_type'] = $user->role;
+                $account['owner_name'] = $request['owner_name'];
+                $account['owner_document'] = $request['owner_document'];
+                $account['owner_document_type'] = $request['owner_document_type'];
+                $account['account'] = $request['account'];
+                $account['account_type'] = $request['account_type'];
+                $account['bank'] = $request['bank'];
+                $account['status'] = BankAccount::ACCOUNT_ACTIVE;
+                $documents = 'documents/'.$user->phone;
+                if (!is_dir($documents)) {
+                    mkdir($documents, 0777, true);
+                }
+
+                $urlCertificate = null;
+                $certificate = $_FILES['certificate'];
+                if ($certificate['name'] != '') {
+                    $ext = pathinfo($certificate['name'], PATHINFO_EXTENSION);
+                    $urlCertificate = "{$documents}/7.Certificado Bancario.{$ext}";
+                    $destinationRoute = $urlCertificate;
+                    move_uploaded_file($certificate['tmp_name'], $destinationRoute);
+                }
+                $account['certificate'] = $urlCertificate;
+                $bankAccount = BankAccount::create($account);
+                $config->account_id = $bankAccount->id;
+                $config->save();
+            } else {
+                $account['owner_name'] = $request['owner_name'];
+                $account['owner_document'] = $request['owner_document'];
+                $account['owner_document_type'] = isset($request['owner_document_type']) ? $request['owner_document_type'] : $account->owner_document_type;
+                $account['account'] = $request['account'];
+                $account['account_type'] = isset($request['account_type']) ? $request['account_type'] : $account->account_type;
+                $account['bank'] = isset($request['bank']) ? $request['bank'] : $account->bank;
+                $account['status'] = BankAccount::ACCOUNT_INACTIVE;
+                $documents = 'documents/'.$user->phone;
+                if (!is_dir($documents)) {
+                    mkdir($documents, 0777, true);
+                }
+
+                $urlCertificate = null;
+                $certificate = $_FILES['certificate'];
+                if ($certificate['name'] != '') {
+                    $ext = pathinfo($certificate['name'], PATHINFO_EXTENSION);
+                    $urlCertificate = "{$documents}/7.Certificado Bancario.{$ext}";
+                    $destinationRoute = $urlCertificate;
+                    move_uploaded_file($certificate['tmp_name'], $destinationRoute);
+                }
+                $account['certificate'] = !is_null($urlCertificate) ? $urlCertificate : $account->certificate;
+                $account->save();
+                $config->account_id = $account->id;
+                $config->save();
             }
         }
 

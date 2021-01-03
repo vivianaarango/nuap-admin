@@ -47,7 +47,7 @@
                                 <th is='sortable' :column="'description'">Descripción</th>
                                 <th is='sortable' :column="'updated_at'">Última respuesta</th>
                                 <th is='sortable' :column="'init_date'">Fecha de creación</th>
-                                <th is='sortable' :column="'is_closed'">Estado</th>
+                                <th is='sortable' :column="'status'">Estado</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -59,21 +59,27 @@
                                 <td >@{{ item.description }}</td>
                                 <td >@{{ item.updated_at }}</td>
                                 <td >@{{ item.init_date }}</td>
-                                <td v-if="item.is_closed === 0">
+                                <td v-if="item.status === 'Abierto'">
                                     <button disabled style="color: white" class="btn btn-sm btn-success"><i class="fa fa-send"></i>&nbsp;&nbspAbierto</button>
                                 </td>
-                                <td v-if="item.is_closed === 1">
+                                <td v-if="item.status === 'Cerrado'">
                                     <button disabled style="color: white" class="btn btn-sm btn-danger"><i class="fa fa-lock"></i>&nbsp;&nbspCerrado</button>
+                                </td>
+                                <td v-if="item.status === 'Pendiente Administrador'">
+                                    <button disabled style="color: white" class="btn btn-sm btn-warning"><i class="fa fa"></i>&nbsp;&nbspPendiente Administrador</button>
+                                </td>
+                                <td v-if="item.status === 'Pendiente Usuario'">
+                                    <button disabled style="color: white" class="btn btn-sm btn-info"><i class="fa fa"></i>&nbsp;&nbspPendiente Usuario</button>
                                 </td>
                                 <td>
                                     <div class="row no-gutters">
                                         <div class="col-auto">
                                             <a class="btn btn-sm btn-spinner btn-info" :href="item.resource_url+'/view'" title="Ver ticket" role="button"><i class="fa fa-commenting"></i></a>
                                         </div>
-                                        <form v-if="item.is_closed === 0" class="col" @submit.prevent="closeTicket(item.resource_url)">
+                                        <form v-if="item.status !== 'Cerrado'" class="col" @submit.prevent="closeTicket(item.resource_url)">
                                             <button type="submit" class="btn btn-sm btn-danger" title="Cerrar Ticket"><i class="fa fa-lock"></i></button>
                                         </form>
-                                        <form v-if="item.is_closed === 1" class="col" @submit.prevent="closeTicket(item.resource_url)">
+                                        <form v-if="item.status === 'Cerrado'" class="col" @submit.prevent="closeTicket(item.resource_url)">
                                             <button disabled type="submit" class="btn btn-sm btn-danger" title="Cerrar Ticket"><i class="fa fa-lock"></i></button>
                                         </form>
 

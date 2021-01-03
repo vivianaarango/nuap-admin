@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Payment\IndexPayment;
 use App\Models\BankAccount;
+use App\Models\Config;
 use App\Models\Payment;
 use App\Models\User;
 use App\Repositories\Contracts\DbBalanceRepositoryInterface;
@@ -280,8 +281,9 @@ class PaymentController extends Controller
                 $payment->voucher = $urlVoucher;
                 $payment->payment_date = now();
                 $payment->status = Payment::STATUS_APPROVED;
+                $config = Config::first();
+                $payment->account_admin_id = $config->account_id;
                 $payment->save();
-
 
                 $balance->balance = $balance->balance - $request['value'];
                 $balance->paid_out = $balance->paid_out + $request['value'];

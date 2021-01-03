@@ -6,17 +6,12 @@
 </head>
 
 @section('body')
-
     <div class="container-xl">
         <div class="card">
-            <admin-user-form
-                    :action="'{{ url('admin/config-store') }}'"
-                    :activation="!!'{{ $activation }}'"
-                    :data="{{ $config }}"
-                    v-cloak
-                    inline-template>
-
-                <form class="form-horizontal form-create" method="post" @submit.prevent="onSubmit" :action="this.action">
+            <form id="form-basic" method="post" enctype="multipart/form-data" action="{{ url('admin/config-store') }}">
+                <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
+                <input type="hidden" name="config_id" id="config_id" value="{{ $config->id }}" />
+                <form class="form-horizontal form-create">
                     <div class="card-header">
                         <i class="fa fa-plus"></i>&nbsp; Configuración
                     </div>
@@ -32,7 +27,7 @@
                         </button>
                     </div>
                 </form>
-            </admin-user-form>
+            </form>
         </div>
     </div>
 

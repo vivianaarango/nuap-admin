@@ -10,6 +10,7 @@ use Illuminate\Foundation\Application;
  * @property int id
  * @property float distance
  * @property float shipping_cost
+ * @property int account_id
  *
  * @package App\Models
  * @method static first()
@@ -28,7 +29,8 @@ class Config extends Model
      */
     protected $fillable = [
         'shipping_cost',
-        'distance'
+        'distance',
+        'account_id'
     ];
 
     /**

@@ -47,7 +47,7 @@
                                 <th is='sortable' :column="'description'">Descripción</th>
                                 <th is='sortable' :column="'updated_at'">Última respuesta</th>
                                 <th is='sortable' :column="'init_date'">Fecha de creación</th>
-                                <th is='sortable' :column="'is_closed'">Estado</th>
+                                <th is='sortable' :column="'status'">Estado</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -58,11 +58,17 @@
                                 <td >@{{ item.description }}</td>
                                 <td >@{{ item.updated_at }}</td>
                                 <td >@{{ item.init_date }}</td>
-                                <td v-if="item.is_closed === 0">
+                                <td v-if="item.status === 'Abierto'">
                                     <button disabled style="color: white" class="btn btn-sm btn-success"><i class="fa fa-send"></i>&nbsp;&nbspAbierto</button>
                                 </td>
-                                <td v-if="item.is_closed === 1">
+                                <td v-if="item.status === 'Cerrado'">
                                     <button disabled style="color: white" class="btn btn-sm btn-danger"><i class="fa fa-lock"></i>&nbsp;&nbspCerrado</button>
+                                </td>
+                                <td v-if="item.status === 'Pendiente Administrador'">
+                                    <button disabled style="color: white" class="btn btn-sm btn-warning"><i class="fa fa"></i>&nbsp;&nbspPendiente Administrador</button>
+                                </td>
+                                <td v-if="item.status === 'Pendiente Usuario'">
+                                    <button disabled style="color: white" class="btn btn-sm btn-info"><i class="fa fa"></i>&nbsp;&nbspPendiente Usuario</button>
                                 </td>
                                 <td>
                                     <div class="row no-gutters">
