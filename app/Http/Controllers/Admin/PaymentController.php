@@ -479,6 +479,7 @@ class PaymentController extends Controller
     public function changeStatusAccount(Request $request)
     {
         $user = Session::get('user');
+
         if (isset($user) && $user->role == User::ADMIN_ROLE) {
 
             $account = $this->dbBankAccountRepository->findByID($request['account_id']);
