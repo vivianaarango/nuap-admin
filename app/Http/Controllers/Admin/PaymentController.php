@@ -277,7 +277,7 @@ class PaymentController extends Controller
 
             $payment = $this->dbPaymentRepository->findByID($request['payment_id']);
             $balance = $this->dbBalanceRepository->findByUserID($payment->user_id);
-            if ($balance->balance >= $request['value']) {
+            if ($balance->balance >= $payment->value) {
                 $payment->voucher = $urlVoucher;
                 $payment->payment_date = now();
                 $payment->status = Payment::STATUS_APPROVED;
@@ -285,8 +285,8 @@ class PaymentController extends Controller
                 $payment->account_admin_id = $config->account_id;
                 $payment->save();
 
-                $balance->balance = $balance->balance - $request['value'];
-                $balance->paid_out = $balance->paid_out + $request['value'];
+                $balance->balance = $balance->balance - $payment->value;
+                $balance->paid_out = $balance->paid_out + $payment->value;
                 $balance->save();
 
                 return redirect('/admin/payment-admin-list');
@@ -461,12 +461,9 @@ class PaymentController extends Controller
         $userAdmin = Session::get('user');
 
         if (isset($userAdmin) && $userAdmin->role == User::ADMIN_ROLE) {
-            $payment = $this->dbPaymentRepository->findByUserID($user->id);
-            $account = $this->dbBankAccountRepository->findByID($payment->account_id);
-            $payment->value = $this->formatCurrency($payment->value) . ' $';
+            $account = $this->dbBankAccountRepository->findByUserID($user->id);
 
             return view('admin.payments.view-account', [
-                'payment' => $payment,
                 'activation' => $userAdmin->role,
                 'account' => $account,
             ]);

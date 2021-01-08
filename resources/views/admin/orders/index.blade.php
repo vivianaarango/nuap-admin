@@ -63,19 +63,19 @@
                                     <div class="col text-center"><button disabled style="color: white" class="btn btn-sm btn-danger"><i></i>&nbspCancelado</button></div>
                                 </td>
                                 <td v-if="item.status === 'Iniciado'">
-                                    <div class="col text-center"><button disabled style="color: white" class="btn btn-sm btn-status-cancel"><i></i>&nbspIniciado</button></div>
+                                    <div class="col text-center"><button disabled style="color: white; background-color: #6d6b6b; border-color: #6d6b6b;" class="btn btn-sm btn-status-cancel"><i></i>&nbspIniciado</button></div>
                                 </td>
                                 <td v-if="item.status === 'Aceptado'">
-                                    <div class="col text-center"><button disabled style="color: white" class="btn btn-sm btn-success"><i></i>&nbspAceptado</button></div>
+                                    <div class="col text-center"><button disabled style="color: white; background-color: #ff6a00; border-color: #ff6a00" class="btn btn-sm btn-warning"><i></i>&nbspAceptado</button></div>
                                 </td>
                                 <td v-if="item.status === 'Alistamiento'">
-                                    <div class="col text-center"><button disabled style="color: white" class="btn btn-sm btn-status-cancel"><i></i>&nbspAlistamiento</button></div>
+                                    <div class="col text-center"><button disabled style="color: white; background-color: #001b9e; border-color: #001b9e;" class="btn btn-sm btn-info"><i></i>&nbspAlistamiento</button></div>
                                 </td>
                                 <td v-if="item.status === 'Circulación'">
-                                    <div class="col text-center"><button disabled style="color: white" class="btn btn-sm btn-status-cancel"><i></i>&nbspCirculación</button></div>
+                                    <div class="col text-center"><button disabled style="color: white; background-color: #0488a7; border-color: #0488a7;" class="btn btn-sm btn-primary"><i></i>&nbspCirculación</button></div>
                                 </td>
                                 <td v-if="item.status === 'Entregado'">
-                                    <div class="col text-center"><button disabled style="color: white" class="btn btn-sm btn-success"><i></i>&nbspEntregado</button></div>
+                                    <div class="col text-center"><button disabled style="color: white; background-color: #03b732; border-color: #03b732;" class="btn btn-sm btn-success"><i></i>&nbspEntregado</button></div>
                                 </td>
                                 <td>
                                     <div class="row no-gutters">

@@ -43,9 +43,6 @@
                                             <input type="password" v-model="form.password" class="form-control" :class="{'form-control-danger': errors.has('password'), 'form-control-success': this.fields.password && this.fields.password.valid}" id="password" name="password" placeholder="Contraseña">
                                         </div>
                                         <div v-if="errors.has('password')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('password') }}</div>
-                                        <small class="form-text text-muted">
-                                            La contraseña debe contener minimo 8 caracteres, una mayuscula, un número y un carácter especial.
-                                        </small>
                                     </div>
 
                                     <div class="form-group">

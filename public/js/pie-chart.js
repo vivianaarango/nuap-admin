@@ -7,7 +7,7 @@ window.onload = function() {
                     labels: ["Cerrado", "Pendiente Administrador", "Pendiente Usuario"],
                     datasets: [{
                         label: "Population (millions)",
-                        backgroundColor: ["#d42d3f", "#18a7ba","#c8c417"],
+                        backgroundColor: ["#d42d3f", "#18a7ba","#e7da0e"],
                         data: [
                             response.data.data.closed,
                             response.data.data.admin_pending,

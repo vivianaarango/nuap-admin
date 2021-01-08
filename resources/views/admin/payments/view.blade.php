@@ -35,7 +35,7 @@
                     @if($payment['status'] === 'Pendiente')
                         <div class="card-footer">
                             <button type="submit" class="btn btn-primary">
-                                <i class="fa fa-download"></i>
+                                <i class="fa fa-upload"></i>
                                 &nbsp; Subir Comprobante
                             </button>
                         </div>

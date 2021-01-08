@@ -17,22 +17,41 @@
 
                     <div class="card-body">
                         <div id="cont-message" style="width: auto; height: 300px; overflow-y: scroll;">
-                            @foreach ($data as $message)
-                                <input type="hidden" id="ticket_id" name="ticket_id" value="{{ $message->id }}">
-                                @if($message->sender_type === 'Distribuidor' || $message->sender_type === 'Comercio')
-                                    <div class="received_withd_msg">
-                                        <p>{{ $message->message }}</p>
-                                        <span class="time_date"> {{ $message->role }} | {{ $message->sender_date }}</span>
-                                    </div>
-                                @else
-                                    <div class="outgoing_msg">
-                                        <div class="sent_msg">
+                            @if($activation === 'Distribuidor' || $activation === 'Comercio')
+                                @foreach ($data as $message)
+                                    <input type="hidden" id="ticket_id" name="ticket_id" value="{{ $message->id }}">
+                                    @if($message->sender_type === 'Distribuidor' || $message->sender_type === 'Comercio')
+                                        <div class="outgoing_msg">
+                                            <div class="sent_msg">
+                                                <p>{{ $message->message }}</p>
+                                                <span class="time_date"> {{ $message->role }} | {{ $message->sender_date }}</span>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="received_withd_msg">
                                             <p>{{ $message->message }}</p>
                                             <span class="time_date"> {{ $message->role }} | {{ $message->sender_date }}</span>
                                         </div>
-                                    </div>
-                                @endif
-                            @endforeach
+                                    @endif
+                                @endforeach
+                            @else
+                                @foreach ($data as $message)
+                                    <input type="hidden" id="ticket_id" name="ticket_id" value="{{ $message->id }}">
+                                    @if($message->sender_type === 'Distribuidor' || $message->sender_type === 'Comercio')
+                                        <div class="received_withd_msg">
+                                            <p>{{ $message->message }}</p>
+                                            <span class="time_date"> {{ $message->role }} | {{ $message->sender_date }}</span>
+                                        </div>
+                                    @else
+                                        <div class="outgoing_msg">
+                                            <div class="sent_msg">
+                                                <p>{{ $message->message }}</p>
+                                                <span class="time_date"> {{ $message->role }} | {{ $message->sender_date }}</span>
+                                            </div>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            @endif
                         </div>
                     </div>
                     <div class="card-header">

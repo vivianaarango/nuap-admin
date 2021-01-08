@@ -6,10 +6,19 @@
   <component name="ChangeListManager">
     <list default="true" id="d6cb72cc-2713-41b0-95f6-aeada7aa8696" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/ReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/ReportController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/layout/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/layout/sidebar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/PaymentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/PaymentController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/Contracts/DbBankAccountRepositoryInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/Contracts/DbBankAccountRepositoryInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/DbBankAccountRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/DbBankAccountRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/pie-chart.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/pie-chart.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/admin-users/components/form-config-elements.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/admin-users/components/form-config-elements.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/distributors/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/distributors/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/home/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/home/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/orders/components/form-view-elements.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/orders/components/form-view-elements.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/orders/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/orders/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/payments/view-account.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/payments/view-account.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/payments/view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/payments/view.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/tickets/view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/tickets/view.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/vendor/brackets/admin-auth/admin/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/vendor/brackets/admin-auth/admin/auth/login.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -218,7 +227,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin/reports" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -318,7 +327,15 @@
       <workItem from="1609430627985" duration="13407000" />
       <workItem from="1609522123231" duration="5011000" />
       <workItem from="1609611433266" duration="1127000" />
-      <workItem from="1609618919866" duration="10819000" />
+      <workItem from="1609618919866" duration="12574000" />
+      <workItem from="1609781175687" duration="130000" />
+      <workItem from="1609881181418" duration="1412000" />
+      <workItem from="1609901446456" duration="3828000" />
+      <workItem from="1609947481408" duration="1130000" />
+      <workItem from="1609952094043" duration="1235000" />
+      <workItem from="1609973646579" duration="7057000" />
+      <workItem from="1610028157326" duration="536000" />
+      <workItem from="1610065436053" duration="6935000" />
     </task>
     <servers />
   </component>

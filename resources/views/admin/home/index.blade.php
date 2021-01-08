@@ -67,7 +67,7 @@
 						<h2>MUY PRONTO NUAP</h2>
 						<h3 class="text-white">Una nueva Herramienta que te permitirá acceder a miles de productos y tambien hacer crecer tu negocio.</h3>
 						<div class="about_btn mt-30">
-							<a class="app-button wow fadeInUp" href="#"><i class="fa fa-whatsapp"></i>Contactanos</a>
+							<a class="app-button wow fadeInUp" href="https://api.whatsapp.com/send?phone=573005556537&text=Quiero%20Recibir%20mas%20informacion%20de%20Nuap"><i class="fa fa-whatsapp"></i>Contactanos</a>
 						</div>
 					</div>
 				</div>

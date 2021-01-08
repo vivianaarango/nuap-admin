@@ -7,11 +7,11 @@
 
 @section('body')
     <admin-user-listing
-        :data="{{ $data->toJson() }}"
-        :activation="!!'{{ $activation }}'"
-        :url="'{{ url('admin/distributor-list') }}'"
-        :days="'{{ $days }}'"
-        inline-template>
+            :data="{{ $data->toJson() }}"
+            :activation="!!'{{ $activation }}'"
+            :url="'{{ url('admin/distributor-list') }}'"
+            :days="'{{ $days }}'"
+            inline-template>
 
         <div class="row">
             <div class="col">
@@ -43,59 +43,59 @@
                         </form>
                         <table class="table table-hover table-listing">
                             <thead>
-                                <tr>
-                                    <th is='sortable' :column="'id'">ID</th>
-                                    <th is='sortable' :column="'business_name'">Razón social</th>
-                                    <th is='sortable' :column="'email'">Correo electrónico</th>
-                                    <th is='sortable' :column="'phone'">Teléfono</th>
-                                    <th is='sortable' :column="'commission'">Comisión</th>
-                                    <th is='sortable' :column="'name_legal_representative'">Representante legal</th>
-                                    <th is='sortable' :column="'activated'">Activo</th>
-                                    <th is='sortable' :column="'last_logged_in'">Última sesión</th>
-                                    <th></th>
-                                </tr>
+                            <tr>
+                                <th is='sortable' :column="'id'">ID</th>
+                                <th is='sortable' :column="'business_name'">Razón social</th>
+                                <th is='sortable' :column="'email'">Correo electrónico</th>
+                                <th is='sortable' :column="'phone'">Teléfono</th>
+                                <th is='sortable' :column="'commission'">Comisión</th>
+                                <th is='sortable' :column="'name_legal_representative'">Representante legal</th>
+                                <th is='sortable' :column="'activated'">Activo</th>
+                                <th is='sortable' :column="'last_logged_in'">Última sesión</th>
+                                <th></th>
+                            </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(item, index) in collection">
-                                    <td >@{{ item.id }}</td>
-                                    <td >@{{ item.business_name }}</td>
-                                    <td >@{{ item.email }}</td>
-                                    <td >@{{ item.phone }}</td>
-                                    <td >@{{ item.commission }}%</td>
-                                    <td >@{{ item.name_legal_representative }}</td>
-                                    <td v-if="item.status === 1">
-                                        <label class="switch switch-3d switch-success">
-                                            <input type="checkbox" class="switch-input" v-model="collection[index].status" @change="toggleSwitch(item.resource_url+'/status', 'status', collection[index])">
-                                            <span class="switch-slider"></span>
-                                        </label>
-                                    </td>
-                                    <td v-if="item.status === 0">
-                                        <label class="switch switch-3d switch-danger">
-                                            <input type="checkbox" class="switch-input" v-model="collection[index].status" @change="toggleSwitch(item.resource_url+'/status', 'status', collection[index])">
-                                            <span class="switch-slider"></span>
-                                        </label>
-                                    </td>
-                                    <td >@{{ item.last_logged_in }}</td>
-                                    <td>
-                                        <div class="row no-gutters">
-                                            <div class="col-auto">
-                                                <a class="btn btn-sm btn-spinner btn-status-cancel" :href="item.resource_url+'/view-account'" title="Cuenta bancaria" role="button"><i class="fa fa-dollar"></i></a>
-                                            </div>
-                                            <div class="col-auto">
-                                                <a class="btn btn-sm btn-spinner btn-success" :href="item.resource_url+'/add-location'" title="Agregar ubicación" role="button"><i class="fa fa-map-marker"></i></a>
-                                            </div>
-                                            <div class="col-auto">
-                                                <a class="btn btn-sm btn-spinner btn-warning" :href="item.resource_url+'/add-document'" title="Agregar documentos" role="button"><i class="fa fa-file-archive-o"></i></a>
-                                            </div>
-                                            <div class="col-auto">
-                                                <a class="btn btn-sm btn-spinner btn-info" :href="item.resource_url+'/edit'" title="Editar" role="button"><i class="fa fa-edit"></i></a>
-                                            </div>
-                                            <form class="col" @submit.prevent="deleteItem(item.resource_url)">
-                                                <button type="submit" class="btn btn-sm btn-danger" title="Eliminar"><i class="fa fa-trash-o"></i></button>
-                                            </form>
+                            <tr v-for="(item, index) in collection">
+                                <td >@{{ item.id }}</td>
+                                <td >@{{ item.business_name }}</td>
+                                <td >@{{ item.email }}</td>
+                                <td >@{{ item.phone }}</td>
+                                <td >@{{ item.commission }}%</td>
+                                <td >@{{ item.name_legal_representative }}</td>
+                                <td v-if="item.status === 1">
+                                    <label class="switch switch-3d switch-success">
+                                        <input type="checkbox" class="switch-input" v-model="collection[index].status" @change="toggleSwitch(item.resource_url+'/status', 'status', collection[index])">
+                                        <span class="switch-slider"></span>
+                                    </label>
+                                </td>
+                                <td v-if="item.status === 0">
+                                    <label class="switch switch-3d switch-danger">
+                                        <input type="checkbox" class="switch-input" v-model="collection[index].status" @change="toggleSwitch(item.resource_url+'/status', 'status', collection[index])">
+                                        <span class="switch-slider"></span>
+                                    </label>
+                                </td>
+                                <td >@{{ item.last_logged_in }}</td>
+                                <td>
+                                    <div class="row no-gutters">
+                                        <div class="col-auto">
+                                            <a class="btn btn-sm btn-spinner btn-status-cancel" :href="item.resource_url+'/view-account'" title="Cuenta bancaria" role="button"><i class="fa fa-dollar"></i></a>
                                         </div>
-                                    </td>
-                                </tr>
+                                        <div class="col-auto">
+                                            <a class="btn btn-sm btn-spinner btn-success" :href="item.resource_url+'/add-location'" title="Agregar ubicación" role="button"><i class="fa fa-map-marker"></i></a>
+                                        </div>
+                                        <div class="col-auto">
+                                            <a class="btn btn-sm btn-spinner btn-warning" :href="item.resource_url+'/add-document'" title="Agregar documentos" role="button"><i class="fa fa-file-archive-o"></i></a>
+                                        </div>
+                                        <div class="col-auto">
+                                            <a class="btn btn-sm btn-spinner btn-info" :href="item.resource_url+'/edit'" title="Editar" role="button"><i class="fa fa-edit"></i></a>
+                                        </div>
+                                        <form class="col" @submit.prevent="deleteItem(item.resource_url)">
+                                            <button type="submit" class="btn btn-sm btn-danger" title="Eliminar"><i class="fa fa-trash-o"></i></button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                         <div class="row" v-if="pagination.state.total > 0">
@@ -105,12 +105,12 @@
                                 <pagination></pagination>
                             </div>
                         </div>
-	                   <div class="no-items-found" v-if="!collection.length > 0">
-		                    <i class="icon-magnifier"></i>
+                        <div class="no-items-found" v-if="!collection.length > 0">
+                            <i class="icon-magnifier"></i>
                             <h3>No se encontraron registros</h3>
                             <p>Intenta cambiando los filtros o agregando uno nuevo</p>
                             <a class="btn btn-primary btn-spinner" href="{{ url('admin/distributor-create') }}" role="button"><i class="fa fa-plus"></i>&nbspNuevo distribuidor</a>
-	                    </div>
+                        </div>
                         <form method="get" :action="this.url">
                             <div class="col col-lg-6 col-xl-4 form-group float-right">
                                 <div class="input-group">
