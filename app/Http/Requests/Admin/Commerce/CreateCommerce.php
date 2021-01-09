@@ -3,6 +3,7 @@ namespace App\Http\Requests\Admin\Commerce;
 
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
 /**
  * Class CreateCommerce
@@ -48,6 +49,7 @@ class CreateCommerce extends FormRequest
         $data['last_logged_in'] = now();
         $data['password'] = md5($data['password']);
         $data['phone_validated'] = User::PHONE_NOT_VALIDATED;
+        $data['api_token'] = Str::random(60);
 
         return $data;
     }

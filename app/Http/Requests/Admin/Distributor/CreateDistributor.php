@@ -3,6 +3,7 @@ namespace App\Http\Requests\Admin\Distributor;
 
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
 /**
  * Class CreateDistributor
@@ -47,6 +48,7 @@ class CreateDistributor extends FormRequest
         $data['last_logged_in'] = now();
         $data['password'] = md5($data['password']);
         $data['phone_validated'] = User::PHONE_NOT_VALIDATED;
+        $data['api_token'] = Str::random(60);
 
         return $data;
     }

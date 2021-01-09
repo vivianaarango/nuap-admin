@@ -82,6 +82,7 @@ class User extends Model
         'status',
         'role',
         'last_logged_in',
+        'api_token'
     ];
 
     /**

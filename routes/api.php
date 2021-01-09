@@ -31,3 +31,14 @@ Route::group(['prefix' => 'reports'], function () {
     ]);
 });
 
+Route::group(['prefix' => 'users'], function () {
+    Route::post('/login', [
+        'as' => 'api-users-login',
+        'uses' => 'Api\LoginController'
+    ]);
+
+    Route::middleware('auth:api')->post('/login', [
+        'as' => 'api-users-login',
+        'uses' => 'Api\LoginController'
+    ]);
+});
