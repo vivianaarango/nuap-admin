@@ -250,4 +250,19 @@ class DbUsersRepository implements DbUsersRepositoryInterface
     {
         return UserLocation::findOrFail($userLocationID);
     }
+
+    /**
+     * Login to users type client or commerce
+     *
+     * @param string $email
+     * @param string $password
+     * @return Collection
+     */
+    public function clientOrCommerceByEmailAndPassword(string $email, string $password): Collection
+    {
+        return User::where('email', $email)
+            ->where('password', $password)
+            ->whereIn('role', [User::COMMERCE_ROLE, User::USER_ROLE])
+            ->get();
+    }
 }

@@ -32,7 +32,7 @@ Route::group(['prefix' => 'reports'], function () {
 });
 
 Route::group(['prefix' => 'users'], function () {
-    Route::post('/login', [
+    Route::post('/init', [
         'as' => 'api-users-login',
         'uses' => 'Api\LoginController'
     ]);

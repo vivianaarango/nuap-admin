@@ -16,6 +16,7 @@ use Illuminate\Foundation\Application;
  * @property boolean status
  * @property string role
  * @property string last_logged_in
+ * @property string api_token
  *
  * @property mixed first
  * @package App\Models

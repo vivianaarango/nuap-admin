@@ -117,4 +117,13 @@ interface DbUsersRepositoryInterface
      * @return UserLocation
      */
     public function findByUserLocationID(int $userLocationID): UserLocation;
+
+    /**
+     * Login to users type client or commerce
+     *
+     * @param string $email
+     * @param string $password
+     * @return Collection
+     */
+    public function clientOrCommerceByEmailAndPassword(string $email, string $password): Collection;
 }
