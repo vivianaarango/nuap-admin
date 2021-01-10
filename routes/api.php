@@ -37,8 +37,13 @@ Route::group(['prefix' => 'users'], function () {
         'uses' => 'Api\LoginController'
     ]);
 
-    Route::middleware('auth:api')->post('/login', [
-        'as' => 'api-users-login',
-        'uses' => 'Api\LoginController'
+    Route::post('/register/client', [
+        'as' => 'api-users-register-client',
+        'uses' => 'Api\RegisterClientController'
+    ]);
+
+    Route::middleware('auth:api')->get('/location', [
+        'as' => 'api-users-location',
+        'uses' => 'Api\LocationController'
     ]);
 });

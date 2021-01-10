@@ -322,6 +322,9 @@ class UsersController extends Controller
             if ($request->role == User::DISTRIBUTOR_ROLE){
                 return redirect('admin/distributor-list');
             }
+            if ($request->role == User::USER_ROLE){
+                return redirect('admin/client-list');
+            }
         }
 
         return redirect('/admin/user-session');

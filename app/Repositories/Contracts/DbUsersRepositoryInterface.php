@@ -126,4 +126,16 @@ interface DbUsersRepositoryInterface
      * @return Collection
      */
     public function clientOrCommerceByEmailAndPassword(string $email, string $password): Collection;
+
+    /**
+     * @param int $userID
+     * @return Collection
+     */
+    public function getLocationsByUser(int $userID): Collection;
+
+    /**
+     * @param string $apiToken
+     * @return User
+     */
+    public function getUserByToken(string $apiToken): User;
 }

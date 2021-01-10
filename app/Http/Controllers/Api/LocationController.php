@@ -1,27 +1,24 @@
 <?php
 namespace App\Http\Controllers\Api;
 
-use App\Http\Transformers\LoginTransformer;
+use App\Http\Transformers\LocationTransformer;
 use App\Libraries\Responders\Contracts\ArrayResponseInterface;
 use App\Libraries\Responders\Contracts\JsonApiResponseInterface;
 use App\Libraries\Responders\ErrorObject;
 use App\Libraries\Responders\HttpObject;
 use App\Libraries\Responders\JsonApiErrorsFormatter;
-use App\Models\SessionLog;
-use App\Models\User;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Validator;
 use Psr\Log\LoggerInterface;
 use Illuminate\Http\Request;
 use Exception;
 
 /**
- * Class LoginController
+ * Class LocationController
  * @package App\Http\Controllers\Api
  */
-class LoginController
+class LocationController
 {
     /**
      * @type string
@@ -31,7 +28,7 @@ class LoginController
     /**
      * @type string
      */
-    protected const USER_NOT_ACTIVE = 'USER_NOT_ACTIVE';
+    protected const LOCATION_NOT_FOUND = 'LOCATION_NOT_FOUND';
 
     /**
      * @type string
@@ -79,7 +76,7 @@ class LoginController
     private $jsonErrorFormat;
 
     /**
-     * LoginController constructor.
+     * LocationController constructor.
      * @param LoggerInterface $logger
      * @param ArrayResponseInterface $arrayResponse
      * @param HttpObject $httpObject
@@ -113,56 +110,40 @@ class LoginController
     public function __invoke(Request $request): JsonResponse
     {
         try {
-            $validator = Validator::make($request->all(), [
-                'email' => 'required|email',
-                'password' => 'required|string'
-            ]);
+            $token = $request->header('Authorization');
+            $token = explode(' ',$token)[1];
 
-            if ($validator->fails()) {
-                return $this->jsonApiResponse->respondFormError($validator->errors(), Response::HTTP_UNPROCESSABLE_ENTITY);
-            }
-
-            $password = md5($request->input('password'));
-
-            $user = $this->dbUserRepository->clientOrCommerceByEmailAndPassword(
-                $request->input('email'),
-                $password
-            )->first();
+            $user = $this->dbUserRepository->getUserByToken($token);
 
             if (is_null($user)) {
                 $error = new ErrorObject();
                 $error->setCode(self::USER_NOT_FOUND)
                     ->setTitle(self::ERROR_TITLE)
-                    ->setDetail('Verifique su correo electrónico y contraseña.')
+                    ->setDetail('No se encontroó el usuario.')
                     ->setStatus((string) Response::HTTP_BAD_REQUEST);
                 $this->jsonErrorFormat->add($error);
 
                 return $this->jsonApiResponse->respondError($this->jsonErrorFormat, Response::HTTP_BAD_REQUEST);
             }
 
+            $locations = $this->dbUserRepository->getLocationsByUser($user->id);
 
-            if ($user->status == User::STATUS_INACTIVE) {
+            if (!count($locations)) {
                 $error = new ErrorObject();
-                $error->setCode(self::USER_NOT_ACTIVE)
+                $error->setCode(self::LOCATION_NOT_FOUND)
                     ->setTitle(self::ERROR_TITLE)
-                    ->setDetail('Su usuario no se encuentra activado.')
+                    ->setDetail('No se encontraron direcciones.')
                     ->setStatus((string) Response::HTTP_BAD_REQUEST);
                 $this->jsonErrorFormat->add($error);
 
                 return $this->jsonApiResponse->respondError($this->jsonErrorFormat, Response::HTTP_BAD_REQUEST);
             }
 
-            $logSession = new SessionLog();
-            $logSession->user_id = $user->id;
-            $logSession->user_type = $user->role;
-            $logSession->login_date = now();
-            $logSession->save();
+            $this->httpObject->setCollection($locations);
 
-            $this->httpObject->setItem($user);
-
-            return $this->arrayResponse->responseWithItem(
+            return $this->arrayResponse->respondWithCollection(
                 $this->httpObject,
-                new LoginTransformer(),
+                new LocationTransformer(),
                 'data'
             );
         } catch (Exception $exception) {
@@ -175,5 +156,6 @@ class LoginController
 
             return $this->jsonApiResponse->respondError($this->jsonErrorFormat, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+
     }
 }

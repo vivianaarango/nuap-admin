@@ -265,4 +265,25 @@ class DbUsersRepository implements DbUsersRepositoryInterface
             ->whereIn('role', [User::COMMERCE_ROLE, User::USER_ROLE])
             ->get();
     }
+
+    /**
+     * @param int $userID
+     * @return Collection
+     */
+    public function getLocationsByUser(int $userID): Collection
+    {
+        return UserLocation::where('user_id', $userID)
+            ->get();
+    }
+
+    /**
+     * @param string $apiToken
+     * @return User
+     */
+    public function getUserByToken(string $apiToken): User
+    {
+        return User::where('api_token', $apiToken)
+            ->whereIn('role', [User::COMMERCE_ROLE, User::USER_ROLE])
+            ->first();
+    }
 }

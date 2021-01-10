@@ -5,7 +5,7 @@ use App\Models\User;
 use League\Fractal\TransformerAbstract;
 
 /**
- * Class ReportUserLoginTransformer
+ * Class LoginTransformer
  * @package App\Http\Transformers
  */
 class LoginTransformer extends TransformerAbstract

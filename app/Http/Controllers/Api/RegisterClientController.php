@@ -13,25 +13,21 @@ use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Psr\Log\LoggerInterface;
 use Illuminate\Http\Request;
 use Exception;
 
 /**
- * Class LoginController
+ * Class RegisterClientController
  * @package App\Http\Controllers\Api
  */
-class LoginController
+class RegisterClientController
 {
     /**
      * @type string
      */
     protected const ERROR_TITLE = 'Error';
-
-    /**
-     * @type string
-     */
-    protected const USER_NOT_ACTIVE = 'USER_NOT_ACTIVE';
 
     /**
      * @type string
@@ -79,7 +75,7 @@ class LoginController
     private $jsonErrorFormat;
 
     /**
-     * LoginController constructor.
+     * RegisterClientController constructor.
      * @param LoggerInterface $logger
      * @param ArrayResponseInterface $arrayResponse
      * @param HttpObject $httpObject
@@ -114,8 +110,12 @@ class LoginController
     {
         try {
             $validator = Validator::make($request->all(), [
-                'email' => 'required|email',
-                'password' => 'required|string'
+                'email' => 'required|email|unique:users',
+                'phone' => 'required|string|unique:users',
+                'password' => 'required|string',
+                'name' => 'required|string',
+                'last_name' => 'required|string',
+                'identity_number' => 'required|string'
             ]);
 
             if ($validator->fails()) {
@@ -124,33 +124,19 @@ class LoginController
 
             $password = md5($request->input('password'));
 
-            $user = $this->dbUserRepository->clientOrCommerceByEmailAndPassword(
-                $request->input('email'),
-                $password
-            )->first();
+            $data['phone'] = $request->input('phone');
+            $data['email'] = $request->input('email');
+            $data['name'] = $request->input('name');
+            $data['last_name'] = $request->input('last_name');
+            $data['identity_number'] = $request->input('identity_number');
+            $data['role'] = User::USER_ROLE;
+            $data['status'] = User::STATUS_ACTIVE;
+            $data['last_logged_in'] = now();
+            $data['password'] = $password;
+            $data['phone_validated'] = User::PHONE_NOT_VALIDATED;
+            $data['api_token'] = Str::random(60);
 
-            if (is_null($user)) {
-                $error = new ErrorObject();
-                $error->setCode(self::USER_NOT_FOUND)
-                    ->setTitle(self::ERROR_TITLE)
-                    ->setDetail('Verifique su correo electrónico y contraseña.')
-                    ->setStatus((string) Response::HTTP_BAD_REQUEST);
-                $this->jsonErrorFormat->add($error);
-
-                return $this->jsonApiResponse->respondError($this->jsonErrorFormat, Response::HTTP_BAD_REQUEST);
-            }
-
-
-            if ($user->status == User::STATUS_INACTIVE) {
-                $error = new ErrorObject();
-                $error->setCode(self::USER_NOT_ACTIVE)
-                    ->setTitle(self::ERROR_TITLE)
-                    ->setDetail('Su usuario no se encuentra activado.')
-                    ->setStatus((string) Response::HTTP_BAD_REQUEST);
-                $this->jsonErrorFormat->add($error);
-
-                return $this->jsonApiResponse->respondError($this->jsonErrorFormat, Response::HTTP_BAD_REQUEST);
-            }
+            $user = User::create($data);
 
             $logSession = new SessionLog();
             $logSession->user_id = $user->id;

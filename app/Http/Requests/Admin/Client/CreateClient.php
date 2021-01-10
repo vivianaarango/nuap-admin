@@ -38,7 +38,7 @@ class CreateClient extends FormRequest
         $data = $this->only(collect($this->rules())->keys()->all());
 
         $data['role'] = User::USER_ROLE;
-        $data['status'] = User::STATUS_INACTIVE;
+        $data['status'] = User::STATUS_ACTIVE;
         $data['last_logged_in'] = now();
         $data['password'] = md5($data['password']);
         $data['phone_validated'] = User::PHONE_NOT_VALIDATED;
