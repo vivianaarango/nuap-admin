@@ -46,4 +46,24 @@ Route::group(['prefix' => 'users'], function () {
         'as' => 'api-users-location',
         'uses' => 'Api\LocationController'
     ]);
+
+    Route::middleware('auth:api')->post('/location/create', [
+        'as' => 'api-users-location-create',
+        'uses' => 'Api\CreateLocationController'
+    ]);
+
+    Route::middleware('auth:api')->post('/ticket/create', [
+        'as' => 'api-ticket-create',
+        'uses' => 'Api\CreateTicketController'
+    ]);
+
+    Route::middleware('auth:api')->post('/ticket/reply', [
+        'as' => 'api-ticket-reply',
+        'uses' => 'Api\ReplyTicketController'
+    ]);
+
+    Route::middleware('auth:api')->get('/ticket/{ticket}/messages', [
+        'as' => 'api-ticket-messages',
+        'uses' => 'Api\GetMessagesFromTicketController'
+    ]);
 });

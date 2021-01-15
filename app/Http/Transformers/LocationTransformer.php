@@ -6,7 +6,7 @@ use App\Models\UserLocation;
 use League\Fractal\TransformerAbstract;
 
 /**
- * Class ReportUserLoginTransformer
+ * Class LocationTransformer
  * @package App\Http\Transformers
  */
 class LocationTransformer extends TransformerAbstract

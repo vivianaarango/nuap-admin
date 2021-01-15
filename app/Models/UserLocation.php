@@ -19,7 +19,6 @@ use Illuminate\Http\Request;
  * @property string resource_url
  *
  * @package App\Models
- * @method static create(Request $request)
  * @method static findOrFail(int $userID)
  * @method static where(string $string, int $userLocationID)
  */
