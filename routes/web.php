@@ -184,10 +184,12 @@ Route::get('/admin/report/login-users', 'Admin\ReportController@loginUsers');
 Route::get('/admin/report/export-payments', 'Admin\ReportController@exportPayments')->name('admin/report/export-payment');
 /* Export sales */
 Route::get('/admin/report/sales', 'Admin\ReportController@sales');
-/* Export sales */
+/* Ticket Report */
 Route::get('/admin/report/tickets', 'Admin\ReportController@tickets');
-/* Export payments */
+/* Export sales */
 Route::post('/admin/report/export-sales', 'Admin\ReportController@exportSales')->name('admin/report/export-sales');
+/* Export all sales */
+Route::get('/admin/report/export-all-sales', 'Admin\ReportController@exportAllSales')->name('admin/report/export-all-sales');
 /* Export pending payments */
 Route::get('/admin/report/export-pending-payments', 'Admin\ReportController@exportPendingPayments')->name('admin/report/export-pending-payments');
 

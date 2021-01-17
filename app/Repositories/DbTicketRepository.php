@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Repositories\Contracts\DbTicketRepositoryInterface;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -38,5 +39,14 @@ class DbTicketRepository implements DbTicketRepositoryInterface
     public function findByID(int $ticket): Ticket
     {
         return Ticket::findOrFail($ticket);
+    }
+
+    /**
+     * @param int $userID
+     * @return Collection
+     */
+    public function findByUserID(int $userID): Collection
+    {
+        return Ticket::where('user_id', $userID)->get();
     }
 }

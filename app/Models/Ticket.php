@@ -19,6 +19,7 @@ use Illuminate\Foundation\Application;
  * @package App\Models
  * @method static create(array $ticket)
  * @method static findOrFail(int $ticket)
+ * @method static where(string $string, int $userID)
  */
 class Ticket extends Model
 {

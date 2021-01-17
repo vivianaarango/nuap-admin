@@ -58,12 +58,17 @@ Route::group(['prefix' => 'users'], function () {
     ]);
 
     Route::middleware('auth:api')->post('/ticket/reply', [
-        'as' => 'api-ticket-reply',
+        'as' => 'api-users-ticket-reply',
         'uses' => 'Api\ReplyTicketController'
     ]);
 
     Route::middleware('auth:api')->get('/ticket/{ticket}/messages', [
-        'as' => 'api-ticket-messages',
+        'as' => 'api-users-ticket-messages',
         'uses' => 'Api\GetMessagesFromTicketController'
+    ]);
+
+    Route::middleware('auth:api')->get('/ticket', [
+        'as' => 'api-users-ticket',
+        'uses' => 'Api\GetTicketByUserController'
     ]);
 });

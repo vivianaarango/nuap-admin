@@ -72,11 +72,29 @@ class ReportTicketsController
 
         );
 
-        $this->httpObject->setItem([
-            'closed' => $data[2]->closed,
-            'admin_pending' => $data[0]->admin_pending,
-            'user_pending' => $data[1]->user_pending
-        ]);
+        $response = [
+            'closed' => '0',
+            'admin_pending' => '0',
+            'user_pending' => '0',
+        ];
+
+        foreach ($data as $item) {
+            $status = $item->status;
+
+            if ($status === 'Pendiente Administrador') {
+                $response['admin_pending'] = $item->admin_pending;
+            }
+
+            if ($status === 'Pendiente Usuario') {
+                $response['user_pending'] = $item->user_pending;
+            }
+
+            if ($status === 'Cerrado') {
+                $response['closed'] = $item->closed;
+            }
+        }
+
+        $this->httpObject->setItem($response);
 
         return $this->arrayResponse->responseWithItem(
             $this->httpObject,

@@ -4,6 +4,7 @@ namespace App\Repositories\Contracts;
 
 use App\Models\Product;
 use App\Models\Ticket;
+use Illuminate\Support\Collection;
 
 /**
  * Interface DbTicketRepositoryInterface
@@ -22,4 +23,10 @@ interface DbTicketRepositoryInterface
      * @return Ticket
      */
     public function findByID(int $ticket): Ticket;
+
+    /**
+     * @param int $userID
+     * @return Collection
+     */
+    public function findByUserID(int $userID): Collection;
 }

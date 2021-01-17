@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 use App\Exports\DistributorSalesExport;
 use App\Exports\PaymentsExport;
 use App\Exports\PaymentsPendingExport;
-use App\Exports\SalesExport;
+use App\Exports\AllSalesExport;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Repositories\Contracts\DbAdminUsersRepositoryInterface;
@@ -132,8 +132,7 @@ class ReportController extends Controller
      */
     public function exportSales(Request $request): BinaryFileResponse
     {
-        $date = now();
-        return Excel::download(new SalesExport($request['month'], $request['user_type']), 'ventas-'.$date.'.xlsx');
+        return Excel::download(new AllSalesExport($request['month'], $request['user_type']), 'ventas-de-'.$request['month'].'.xlsx');
     }
 
     /**
@@ -143,5 +142,14 @@ class ReportController extends Controller
     {
         $date = now();
         return Excel::download(new PaymentsPendingExport, 'pagos-pendientes-'.$date.'.xlsx');
+    }
+
+    /**
+     * @return BinaryFileResponse
+     */
+    public function exportAllSales(): BinaryFileResponse
+    {
+        $date = now();
+        return Excel::download(new AllSalesExport, 'ventas-'.$date.'.xlsx');
     }
 }
