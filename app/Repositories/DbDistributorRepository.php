@@ -82,6 +82,8 @@ class DbDistributorRepository implements DbDistributorRepositoryInterface
      * @param string|null $establishmentImage
      * @param string|null $interiorImage
      * @param string|null $contract
+     * @param string|null $header
+     * @param string|null $logo
      * @return Distributor
      */
     public function saveDocuments(
@@ -91,7 +93,9 @@ class DbDistributorRepository implements DbDistributorRepositoryInterface
         string $ccLegalRepresentative = null,
         string $establishmentImage = null,
         string $interiorImage = null,
-        string $contract = null
+        string $contract = null,
+        string $header = null,
+        string $logo = null
     ): Distributor {
         $distributor = $this->findByUserID($userID);
 
@@ -112,6 +116,12 @@ class DbDistributorRepository implements DbDistributorRepositoryInterface
 
         if (!is_null($contract))
             $distributor->url_contract = $contract;
+
+        if (!is_null($header))
+            $distributor->url_header = $header;
+
+        if (!is_null($logo))
+            $distributor->url_logo = $logo;
 
         $distributor->save();
         return $distributor;

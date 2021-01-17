@@ -24,6 +24,8 @@ use Illuminate\Foundation\Application;
  * @property string url_establishment_image
  * @property string url_interior_image
  * @property string url_contract
+ * @property string url_header
+ * @property string url_logo
  * @property string resource_url
  * @property float shipping_cost
  * @property float distance
@@ -67,6 +69,8 @@ class Distributor extends Model
         'url_establishment_image',
         'url_interior_image',
         'url_contract',
+        'url_header',
+        'url_logo',
         'shipping_cost',
         'distance'
     ];

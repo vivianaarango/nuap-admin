@@ -75,3 +75,29 @@
         </a>
     @endif
 </div>
+
+<div class="form-group row align-items-center" :class="{'has-danger': errors.has('contract'), 'has-success': this.fields.header && this.fields.header.valid }">
+    <label for="header" class="col-form-label text-md-right" :class="'col-md-4 col-md-3'">Header</label>
+    <div :class="'col-md-3 col-md-7 col-xl-5'">
+        <input type="file" style="color: #b9c8de" class="" :class="{'form-control-danger': errors.has('header'), 'form-control-success': this.fields.header && this.fields.header.valid}" id="header" name="header" placeholder="Header">
+        <div v-if="errors.has('header')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('header') }}</div>
+    </div>
+    @if($urls->url_header != null)
+        <a style="background-color: #60abcf !important;border-color: #60b5cf !important;" target="_blank" class="btn btn-sm btn-link-documents" href="../../../{{ $urls->url_header }}" class="col-auto" href="item.resource_url+'/add-document'" title="Ver" role="button">
+            <i class="fa fa-mail-forward"></i>
+        </a>
+    @endif
+</div>
+
+<div class="form-group row align-items-center" :class="{'has-danger': errors.has('logo'), 'has-success': this.fields.logo && this.fields.logo.valid }">
+    <label for="logo" class="col-form-label text-md-right" :class="'col-md-4 col-md-3'">Logo</label>
+    <div :class="'col-md-3 col-md-7 col-xl-5'">
+        <input type="file" style="color: #b9c8de" class="" :class="{'form-control-danger': errors.has('logo'), 'form-control-success': this.fields.logo && this.fields.logo.valid}" id="logo" name="logo" placeholder="Logo">
+        <div v-if="errors.has('logo')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('logo') }}</div>
+    </div>
+    @if($urls->url_logo != null)
+        <a style="background-color: #60abcf !important;border-color: #60b5cf !important;" target="_blank" class="btn btn-sm btn-link-documents" href="../../../{{ $urls->url_logo }}" class="col-auto" href="item.resource_url+'/add-document'" title="Ver" role="button">
+            <i class="fa fa-mail-forward"></i>
+        </a>
+    @endif
+</div>

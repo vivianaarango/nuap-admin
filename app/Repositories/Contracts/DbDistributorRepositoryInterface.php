@@ -58,6 +58,8 @@ interface DbDistributorRepositoryInterface
      * @param string|null $establishmentImage
      * @param string|null $interiorImage
      * @param string|null $contract
+     * @param string|null $header
+     * @param string|null $logo
      * @return Distributor
      */
     public function saveDocuments(
@@ -67,7 +69,9 @@ interface DbDistributorRepositoryInterface
         string $ccLegalRepresentative = null,
         string $establishmentImage = null,
         string $interiorImage = null,
-        string $contract = null
+        string $contract = null,
+        string $header = null,
+        string $logo = null
     ): Distributor;
 
     /**

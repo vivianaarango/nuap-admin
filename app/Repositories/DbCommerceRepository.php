@@ -85,6 +85,8 @@ class DbCommerceRepository implements DbCommerceRepositoryInterface
      * @param string|null $establishmentImage
      * @param string|null $interiorImage
      * @param string|null $contract
+     * @param string|null $header
+     * @param string|null $logo
      * @return Commerce
      */
     public function saveDocuments(
@@ -94,7 +96,9 @@ class DbCommerceRepository implements DbCommerceRepositoryInterface
         string $ccLegalRepresentative = null,
         string $establishmentImage = null,
         string $interiorImage = null,
-        string $contract = null
+        string $contract = null,
+        string $header = null,
+        string $logo = null
     ): Commerce {
         $commerce = $this->findByUserID($userID);
 
@@ -115,6 +119,12 @@ class DbCommerceRepository implements DbCommerceRepositoryInterface
 
         if (!is_null($contract))
             $commerce->url_contract = $contract;
+
+        if (!is_null($header))
+            $commerce->url_header = $header;
+
+        if (!is_null($logo))
+            $commerce->url_logo = $logo;
 
         $commerce->save();
         return $commerce;

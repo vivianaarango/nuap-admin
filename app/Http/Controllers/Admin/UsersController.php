@@ -375,6 +375,8 @@ class UsersController extends Controller
             $establishmentImage = $_FILES['establishment_image'];
             $interiorImage = $_FILES['interior_image'];
             $contract = $_FILES['contract'];
+            $header = $_FILES['header'];
+            $logo= $_FILES['logo'];
 
             if ($rut['name'] != '') {
                 $ext = pathinfo($rut['name'], PATHINFO_EXTENSION);
@@ -418,6 +420,20 @@ class UsersController extends Controller
                 move_uploaded_file($contract['tmp_name'], $destinationRoute);
             }
 
+            if ($header['name'] != '') {
+                $ext = pathinfo($header['name'], PATHINFO_EXTENSION);
+                $urlHeader = "{$documents}/7.Header.{$ext}";
+                $destinationRoute = $urlHeader;
+                move_uploaded_file($header['tmp_name'], $destinationRoute);
+            }
+
+            if ($logo['name'] != '') {
+                $ext = pathinfo($logo['name'], PATHINFO_EXTENSION);
+                $urlLogo = "{$documents}/8.Logo.{$ext}";
+                $destinationRoute = $urlLogo;
+                move_uploaded_file($logo['tmp_name'], $destinationRoute);
+            }
+
             if ($request->role == User::COMMERCE_ROLE) {
                 $this->dbCommerceRepository->saveDocuments(
                     $request->user_id,
@@ -426,7 +442,9 @@ class UsersController extends Controller
                     isset($urlCCLegalRepresentative) ? $urlCCLegalRepresentative : null,
                     isset($urlEstablishmentImage) ? $urlEstablishmentImage : null,
                     isset($urlInteriorImage) ? $urlInteriorImage : null ,
-                    isset($urlContract) ? $urlContract : null
+                    isset($urlContract) ? $urlContract : null,
+                    isset($urlHeader) ? $urlHeader : null,
+                    isset($urlLogo) ? $urlLogo : null
                 );
                 return redirect('admin/commerce-list');
             }
@@ -438,7 +456,9 @@ class UsersController extends Controller
                     isset($urlCCLegalRepresentative) ? $urlCCLegalRepresentative : null,
                     isset($urlEstablishmentImage) ? $urlEstablishmentImage : null,
                     isset($urlInteriorImage) ? $urlInteriorImage : null ,
-                    isset($urlContract) ? $urlContract : null
+                    isset($urlContract) ? $urlContract : null,
+                    isset($urlHeader) ? $urlHeader : null,
+                    isset($urlLogo) ? $urlLogo : null
                 );
                 return redirect('admin/distributor-list');
             }
