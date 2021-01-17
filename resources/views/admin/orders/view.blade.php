@@ -65,10 +65,28 @@
                 <div style="padding-top: 0px" class="card-footer pull-right">
                     <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
                     <input type="hidden" value="{{ $order['id'] }}" name="order_id" id="order_id">
-                    <button style="color: white" type="submit" class="btn btn-sm btn-primary">
+                    <button style="color: white" type="submit" class="btn btn-primary">
                         <i class="fa fa-refresh"></i>
                         &nbsp; Cambiar a {{ $status }}
                     </button>
+                </div>
+            </form>
+        @endif
+        @if($status != null && $status != 'Entregado')
+            <form id="form-deliver" method="post" enctype="multipart/form-data" action="{{ url('admin/order/deliver-date') }}">
+                <div style="padding-top: 0px" class="card-footer pull-right">
+                    <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
+                    <input type="hidden" value="{{ $order['id'] }}" name="order_id" id="order_id">
+                    <div class="input-group">
+                        <input value='{{ $order['delivery_date'] }}' required min="date()" class="form-control" id="deliver_date" name="deliver_date" placeholder="Estimado de entrega" type="datetime-local" />
+                        <span class="input-group-append">
+                            @if($order['delivery_date'] != null && $status != 'Entregado')
+                                <button style="color: white" type="submit" class="btn btn-success"><i class="fa fa-calendar"></i>&nbsp; Actualizar</button>
+                            @else
+                                <button style="color: white" type="submit" class="btn btn-success"><i class="fa fa-calendar"></i>&nbsp; Agregar</button>
+                            @endif
+                        </span>
+                    </div>
                 </div>
             </form>
         @endif

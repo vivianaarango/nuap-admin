@@ -200,3 +200,5 @@ Route::get('/admin/order-list', 'Admin\OrderController@list');
 Route::get('/admin/order/{order}/view', 'Admin\OrderController@view')->name('admin/order/view');
 /* Change status */
 Route::post('/admin/order/change-status', 'Admin\OrderController@changeStatus');
+/* Set deliver date */
+Route::post('/admin/order/deliver-date', 'Admin\OrderController@deliverDate');

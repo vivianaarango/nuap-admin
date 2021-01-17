@@ -212,4 +212,23 @@ class OrderController extends Controller
         $currencies['COP'] = array(0,',','.');
         return number_format($floatcurr, $currencies[$curr][0], $currencies[$curr][1], $currencies[$curr][2]);
     }
+
+    /**
+     * @param Request $request
+     * @return Application|RedirectResponse|Redirector
+     */
+    public function deliverDate(Request $request)
+    {
+        $user = Session::get('user');
+
+        if (isset($user) && $user->role === User::DISTRIBUTOR_ROLE) {
+            $order = $this->dbOrderRepository->findByID((int) $request['order_id']);
+            $order->delivery_date = $request['deliver_date'];
+            $order->save();
+
+            return redirect('/admin/order-list');
+        }
+
+        return redirect('/admin/user-session');
+    }
 }

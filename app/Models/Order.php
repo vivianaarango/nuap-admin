@@ -19,6 +19,7 @@ use Illuminate\Foundation\Application;
  * @property float delivery_amount
  * @property float total_discount
  * @property float total
+ * @property string delivery_date
  * @property string created_at
  *
  * @package App\Models
@@ -78,7 +79,8 @@ class Order extends Model
         'total_amount',
         'delivery_amount',
         'total_discount'.
-        'total'
+        'total',
+        'delivery_date'
     ];
 
     /**
