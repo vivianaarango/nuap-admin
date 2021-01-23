@@ -14,7 +14,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use Psr\Log\LoggerInterface;
 use Illuminate\Http\Request;
 use Exception;
 
@@ -38,11 +37,6 @@ class RegisterClientController
      * @type string
      */
     protected const GENERAL_ERROR = 'GENERAL_ERROR';
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
 
     /**
      * @var HttpObject
@@ -76,7 +70,6 @@ class RegisterClientController
 
     /**
      * RegisterClientController constructor.
-     * @param LoggerInterface $logger
      * @param ArrayResponseInterface $arrayResponse
      * @param HttpObject $httpObject
      * @param ErrorObject $errorObject
@@ -85,7 +78,6 @@ class RegisterClientController
      * @param JsonApiErrorsFormatter $jsonApiErrorsFormatter
      */
     public function __construct(
-        LoggerInterface $logger,
         ArrayResponseInterface $arrayResponse,
         HttpObject $httpObject,
         ErrorObject $errorObject,
@@ -93,7 +85,6 @@ class RegisterClientController
         DbUsersRepositoryInterface $dbUserRepository,
         JsonApiErrorsFormatter $jsonApiErrorsFormatter
     ) {
-        $this->logger = $logger;
         $this->arrayResponse = $arrayResponse;
         $this->httpObject = $httpObject;
         $this->errorObject = $errorObject;

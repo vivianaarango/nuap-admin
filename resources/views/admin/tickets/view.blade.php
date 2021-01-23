@@ -20,7 +20,7 @@
                             @if($activation === 'Distribuidor' || $activation === 'Comercio')
                                 @foreach ($data as $message)
                                     <input type="hidden" id="ticket_id" name="ticket_id" value="{{ $message->id }}">
-                                    @if($message->sender_type === 'Distribuidor' || $message->sender_type === 'Comercio')
+                                    @if($message->sender_type === 'Usuario' || $message->sender_type === 'Distribuidor' || $message->sender_type === 'Comercio')
                                         <div class="outgoing_msg">
                                             <div class="sent_msg">
                                                 <p>{{ $message->message }}</p>
@@ -37,7 +37,7 @@
                             @else
                                 @foreach ($data as $message)
                                     <input type="hidden" id="ticket_id" name="ticket_id" value="{{ $message->id }}">
-                                    @if($message->sender_type === 'Distribuidor' || $message->sender_type === 'Comercio')
+                                    @if($message->sender_type === 'Usuario' || $message->sender_type === 'Distribuidor' || $message->sender_type === 'Comercio')
                                         <div class="received_withd_msg">
                                             <p>{{ $message->message }}</p>
                                             <span class="time_date"> {{ $message->role }} | {{ $message->sender_date }}</span>

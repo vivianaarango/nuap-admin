@@ -2,13 +2,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Transformers\ReportUserLoginTransformer;
-use App\Http\Transformers\ReportUserRoleTransformer;
 use App\Libraries\Responders\Contracts\ArrayResponseInterface;
 use App\Libraries\Responders\ErrorObject;
 use App\Libraries\Responders\HttpObject;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
-use Psr\Log\LoggerInterface;
 use Illuminate\Http\Request;
 
 /**
@@ -17,11 +15,6 @@ use Illuminate\Http\Request;
  */
 class ReportLoginUsersController
 {
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
     /**
      * @var HttpObject
      */
@@ -39,18 +32,15 @@ class ReportLoginUsersController
 
     /**
      * ReportNewUsersByRoleController constructor.
-     * @param LoggerInterface $logger
      * @param ArrayResponseInterface $arrayResponse
      * @param HttpObject $httpObject
      * @param ErrorObject $errorObject
      */
     public function __construct(
-        LoggerInterface $logger,
         ArrayResponseInterface $arrayResponse,
         HttpObject $httpObject,
         ErrorObject $errorObject
     ) {
-        $this->logger = $logger;
         $this->arrayResponse = $arrayResponse;
         $this->httpObject = $httpObject;
         $this->errorObject = $errorObject;

@@ -13,7 +13,6 @@ use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
-use Psr\Log\LoggerInterface;
 use Illuminate\Http\Request;
 use Exception;
 
@@ -42,11 +41,6 @@ class LoginController
      * @type string
      */
     protected const GENERAL_ERROR = 'GENERAL_ERROR';
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
 
     /**
      * @var HttpObject
@@ -80,7 +74,6 @@ class LoginController
 
     /**
      * LoginController constructor.
-     * @param LoggerInterface $logger
      * @param ArrayResponseInterface $arrayResponse
      * @param HttpObject $httpObject
      * @param ErrorObject $errorObject
@@ -89,7 +82,6 @@ class LoginController
      * @param JsonApiErrorsFormatter $jsonApiErrorsFormatter
      */
     public function __construct(
-        LoggerInterface $logger,
         ArrayResponseInterface $arrayResponse,
         HttpObject $httpObject,
         ErrorObject $errorObject,
@@ -97,7 +89,6 @@ class LoginController
         DbUsersRepositoryInterface $dbUserRepository,
         JsonApiErrorsFormatter $jsonApiErrorsFormatter
     ) {
-        $this->logger = $logger;
         $this->arrayResponse = $arrayResponse;
         $this->httpObject = $httpObject;
         $this->errorObject = $errorObject;

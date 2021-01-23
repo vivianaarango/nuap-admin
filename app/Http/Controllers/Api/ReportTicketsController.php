@@ -7,7 +7,6 @@ use App\Libraries\Responders\ErrorObject;
 use App\Libraries\Responders\HttpObject;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
-use Psr\Log\LoggerInterface;
 use Illuminate\Http\Request;
 
 /**
@@ -16,11 +15,6 @@ use Illuminate\Http\Request;
  */
 class ReportTicketsController
 {
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
     /**
      * @var HttpObject
      */
@@ -38,18 +32,15 @@ class ReportTicketsController
 
     /**
      * ReportNewUsersByRoleController constructor.
-     * @param LoggerInterface $logger
      * @param ArrayResponseInterface $arrayResponse
      * @param HttpObject $httpObject
      * @param ErrorObject $errorObject
      */
     public function __construct(
-        LoggerInterface $logger,
         ArrayResponseInterface $arrayResponse,
         HttpObject $httpObject,
         ErrorObject $errorObject
     ) {
-        $this->logger = $logger;
         $this->arrayResponse = $arrayResponse;
         $this->httpObject = $httpObject;
         $this->errorObject = $errorObject;

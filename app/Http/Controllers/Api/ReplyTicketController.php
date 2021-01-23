@@ -14,7 +14,6 @@ use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
-use Psr\Log\LoggerInterface;
 use Illuminate\Http\Request;
 use Exception;
 
@@ -37,12 +36,12 @@ class ReplyTicketController
     /**
      * @type string
      */
-    protected const GENERAL_ERROR = 'GENERAL_ERROR';
+    protected const TICKET_CLOSED = 'TICKET_CLOSED';
 
     /**
-     * @var LoggerInterface
+     * @type string
      */
-    private $logger;
+    protected const GENERAL_ERROR = 'GENERAL_ERROR';
 
     /**
      * @var HttpObject
@@ -81,7 +80,6 @@ class ReplyTicketController
 
     /**
      * ReplyTicketController constructor.
-     * @param LoggerInterface $logger
      * @param ArrayResponseInterface $arrayResponse
      * @param HttpObject $httpObject
      * @param ErrorObject $errorObject
@@ -91,7 +89,6 @@ class ReplyTicketController
      * @param DbTicketRepositoryInterface $dbTicketRepository
      */
     public function __construct(
-        LoggerInterface $logger,
         ArrayResponseInterface $arrayResponse,
         HttpObject $httpObject,
         ErrorObject $errorObject,
@@ -100,7 +97,6 @@ class ReplyTicketController
         JsonApiErrorsFormatter $jsonApiErrorsFormatter,
         DbTicketRepositoryInterface $dbTicketRepository
     ) {
-        $this->logger = $logger;
         $this->arrayResponse = $arrayResponse;
         $this->httpObject = $httpObject;
         $this->errorObject = $errorObject;
@@ -146,6 +142,18 @@ class ReplyTicketController
             }
 
             $ticket = $this->dbTicketRepository->findByID($request['ticket_id']);
+            if ($ticket === Ticket::CLOSED) {
+                $error = new ErrorObject();
+                $error->setCode(self::TICKET_CLOSED)
+                    ->setTitle(self::ERROR_TITLE)
+                    ->setDetail('Este ticket se encuentra cerrado.')
+                    ->setStatus((string) Response::HTTP_BAD_REQUEST);
+                $this->jsonErrorFormat->add($error);
+
+                return $this->jsonApiResponse->respondError($this->jsonErrorFormat, Response::HTTP_BAD_REQUEST);
+            }
+
+
             $ticket->setUpdatedAt(now());
             if ($user->role === User::COMMERCE_ROLE || $user->role === User::USER_ROLE) {
                 $ticket['status'] = Ticket::PENDING_ADMIN;

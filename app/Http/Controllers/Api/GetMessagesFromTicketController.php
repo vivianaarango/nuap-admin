@@ -1,7 +1,6 @@
 <?php
 namespace App\Http\Controllers\Api;
 
-use App\Http\Transformers\LocationTransformer;
 use App\Http\Transformers\TicketTransformer;
 use App\Libraries\Responders\Contracts\ArrayResponseInterface;
 use App\Libraries\Responders\Contracts\JsonApiResponseInterface;
@@ -12,7 +11,6 @@ use App\Repositories\Contracts\DbTicketRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
-use Psr\Log\LoggerInterface;
 use Illuminate\Http\Request;
 use Exception;
 
@@ -41,11 +39,6 @@ class GetMessagesFromTicketController
      * @type string
      */
     protected const GENERAL_ERROR = 'GENERAL_ERROR';
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
 
     /**
      * @var HttpObject
@@ -84,7 +77,6 @@ class GetMessagesFromTicketController
 
     /**
      * GetMessagesFromTicketController constructor.
-     * @param LoggerInterface $logger
      * @param ArrayResponseInterface $arrayResponse
      * @param HttpObject $httpObject
      * @param ErrorObject $errorObject
@@ -94,7 +86,6 @@ class GetMessagesFromTicketController
      * @param DbTicketRepositoryInterface $dbTicketRepository
      */
     public function __construct(
-        LoggerInterface $logger,
         ArrayResponseInterface $arrayResponse,
         HttpObject $httpObject,
         ErrorObject $errorObject,
@@ -103,7 +94,6 @@ class GetMessagesFromTicketController
         JsonApiErrorsFormatter $jsonApiErrorsFormatter,
         DbTicketRepositoryInterface $dbTicketRepository
     ) {
-        $this->logger = $logger;
         $this->arrayResponse = $arrayResponse;
         $this->httpObject = $httpObject;
         $this->errorObject = $errorObject;
@@ -130,7 +120,7 @@ class GetMessagesFromTicketController
                 $error = new ErrorObject();
                 $error->setCode(self::USER_NOT_FOUND)
                     ->setTitle(self::ERROR_TITLE)
-                    ->setDetail('No se encontroó el usuario.')
+                    ->setDetail('No se encontró el usuario.')
                     ->setStatus((string) Response::HTTP_BAD_REQUEST);
                 $this->jsonErrorFormat->add($error);
 
