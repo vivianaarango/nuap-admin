@@ -158,4 +158,16 @@ class DbCommerceRepository implements DbCommerceRepositoryInterface
 
         return $distributor;
     }
+
+    /**
+     * @param int $userID
+     * @return Collection
+     */
+    public function findUserAndCommerceByUserID(int $userID): Collection
+    {
+        return Commerce::select('users.*', 'commerces.*')
+            ->where('user_id', $userID)
+            ->join('users', 'users.id', 'commerces.user_id')
+            ->get();
+    }
 }

@@ -138,4 +138,16 @@ interface DbUsersRepositoryInterface
      * @return User
      */
     public function getUserByToken(string $apiToken): User;
+
+    /**
+     * @param string $email
+     * @return mixed
+     */
+    public function getUserByEmail(string $email);
+
+    /**
+     * @param string $phone
+     * @return mixed
+     */
+    public function getUserByPhone(string $phone);
 }

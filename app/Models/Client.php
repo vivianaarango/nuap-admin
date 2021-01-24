@@ -18,6 +18,7 @@ use Illuminate\Foundation\Application;
  * @method static where(string $string, int $userID)
  * @method static findOrFail(int $clientID)
  * @method static create(array $data)
+ * @method static select(string $string, string $string1)
  */
 class Client extends Model
 {

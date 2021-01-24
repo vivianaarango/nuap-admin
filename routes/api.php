@@ -71,4 +71,28 @@ Route::group(['prefix' => 'users'], function () {
         'as' => 'api-users-ticket',
         'uses' => 'Api\GetTicketByUserController'
     ]);
+
+    Route::get('/profile', [
+        'as' => 'api-users-profile',
+        'uses' => 'Api\ProfileUserController'
+    ]);
+
+    Route::post('/profile/edit', [
+        'as' => 'api-users-edit-profile',
+        'uses' => 'Api\EditUserProfileController'
+    ]);
+});
+
+Route::group(['prefix' => 'commerces'], function () {
+    Route::get('/profile', [
+        'as' => 'api-commerces-profile',
+        'uses' => 'Api\ProfileCommerceController'
+    ]);
+});
+
+Route::group(['prefix' => 'products'], function () {
+    Route::get('/categories', [
+        'as' => 'api-products-categories',
+        'uses' => 'Api\CategoriesController'
+    ]);
 });

@@ -2,7 +2,6 @@
 namespace App\Repositories;
 
 use App\Models\Client;
-use App\Models\Commerce;
 use App\Repositories\Contracts\DbClientRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -54,5 +53,17 @@ class DbClientRepository implements DbClientRepositoryInterface
     public function findByID(int $clientID): Client
     {
         return Client::findOrFail($clientID);
+    }
+
+    /**
+     * @param int $userID
+     * @return Collection
+     */
+    public function findUserAndClientByUserID(int $userID): Collection
+    {
+        return Client::select('users.*', 'clients.*')
+            ->where('user_id', $userID)
+            ->join('users', 'users.id', 'clients.user_id')
+            ->get();
     }
 }

@@ -286,4 +286,24 @@ class DbUsersRepository implements DbUsersRepositoryInterface
             ->whereIn('role', [User::COMMERCE_ROLE, User::USER_ROLE])
             ->first();
     }
+
+    /**
+     * @param string $email
+     * @return mixed
+     */
+    public function getUserByEmail(string $email)
+    {
+        return User::where('email', $email)
+            ->first();
+    }
+
+    /**
+     * @param string $phone
+     * @return mixed
+     */
+    public function getUserByPhone(string $phone)
+    {
+        return User::where('phone', $phone)
+            ->first();
+    }
 }

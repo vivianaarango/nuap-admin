@@ -87,4 +87,10 @@ interface DbCommerceRepositoryInterface
      * @return Commerce
      */
     public function updateCommission(int $commerceID, float $commission): Commerce;
+
+    /**
+     * @param int $userID
+     * @return Collection
+     */
+    public function findUserAndCommerceByUserID(int $userID): Collection;
 }

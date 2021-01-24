@@ -37,4 +37,10 @@ interface DbClientRepositoryInterface
      * @return Client
      */
     public function findByID(int $clientID): Client;
+
+    /**
+     * @param int $userID
+     * @return Collection
+     */
+    public function findUserAndClientByUserID(int $userID): Collection;
 }
