@@ -28,7 +28,7 @@ class CategoriesController
     /**
      * @type string
      */
-    protected const CATEGORIES_NOT_FOUND = 'LOCATION_NOT_FOUND';
+    protected const CATEGORIES_NOT_FOUND = 'CATEGORIES_NOT_FOUND';
 
     /**
      * @type string

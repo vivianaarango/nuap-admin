@@ -92,7 +92,12 @@ Route::group(['prefix' => 'commerces'], function () {
 
 Route::group(['prefix' => 'products'], function () {
     Route::get('/categories', [
-        'as' => 'api-products-categories',
+        'as' => 'api-categories',
         'uses' => 'Api\CategoriesController'
+    ]);
+
+    Route::get('/category/{category}', [
+        'as' => 'api-products-categories',
+        'uses' => 'Api\ProductsByCategoryAndCommerceController'
     ]);
 });

@@ -5,6 +5,8 @@ namespace App\Repositories;
 use App\Models\Product;
 use App\Repositories\Contracts\DbProductRepositoryInterface;
 use Exception;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Session;
 
 /**
  * Class DbUsersRepository
@@ -101,5 +103,18 @@ class DbProductRepository implements DbProductRepositoryInterface
         $product->save();
 
         return $product;
+    }
+
+    /**
+     * @param int $categoryID
+     * @param int $userID
+     * @return Collection
+     */
+    public function findByCategoryAndUserID(int $categoryID, int $userID): Collection
+    {
+        return Product::where('user_id', $userID)
+            ->where('category_id', $categoryID)
+            ->orderBy('id', 'desc')
+            ->get();
     }
 }

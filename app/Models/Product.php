@@ -32,6 +32,7 @@ use Illuminate\Foundation\Application;
  * @package App\Models
  * @method static create(array $data)
  * @method static findOrFail(int $productID)
+ * @method static where(string $string, int $userID)
  */
 class Product extends Model
 {

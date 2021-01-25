@@ -3,6 +3,7 @@
 namespace App\Repositories\Contracts;
 
 use App\Models\Product;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Interface DbProductRepositoryInterface
@@ -64,4 +65,11 @@ interface DbProductRepositoryInterface
         float $specialPrice,
         string $image = null
     ): Product;
+
+    /**
+     * @param int $categoryID
+     * @param int $userID
+     * @return Collection
+     */
+    public function findByCategoryAndUserID(int $categoryID, int $userID): Collection;
 }
