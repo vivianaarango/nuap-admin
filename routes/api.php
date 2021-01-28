@@ -100,4 +100,9 @@ Route::group(['prefix' => 'products'], function () {
         'as' => 'api-products-categories',
         'uses' => 'Api\ProductsByCategoryAndCommerceController'
     ]);
+
+    Route::post('/commerce/create', [
+        'as' => 'api-products-commerce-create',
+        'uses' => 'Api\CreateProductCommerceController'
+    ]);
 });

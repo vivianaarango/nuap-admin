@@ -45,6 +45,7 @@ interface DbProductRepositoryInterface
      * @param float $purchasePrice
      * @param float $salePrice
      * @param float $specialPrice
+     * @param bool $status
      * @param string|null $image
      * @return Product
      */
@@ -63,6 +64,7 @@ interface DbProductRepositoryInterface
         float $purchasePrice,
         float $salePrice,
         float $specialPrice,
+        bool $status,
         string $image = null
     ): Product;
 

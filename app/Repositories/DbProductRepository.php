@@ -62,6 +62,7 @@ class DbProductRepository implements DbProductRepositoryInterface
      * @param float $purchasePrice
      * @param float $salePrice
      * @param float $specialPrice
+     * @param bool $status
      * @param string|null $image
      * @return Product
      */
@@ -80,6 +81,7 @@ class DbProductRepository implements DbProductRepositoryInterface
         float $purchasePrice,
         float $salePrice,
         float $specialPrice,
+        bool $status,
         string $image = null
     ): Product {
         $product = $this->findByID($productID);
@@ -96,6 +98,7 @@ class DbProductRepository implements DbProductRepositoryInterface
         $product->purchase_price = $purchasePrice;
         $product->sale_price = $salePrice;
         $product->special_price = $specialPrice;
+        $product->status = $status;
 
         if (!is_null($image))
             $product->image = $image;

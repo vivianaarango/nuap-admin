@@ -342,7 +342,6 @@ class ProductController extends Controller
                 $status = $this->dbProductRepository->findByID($request['product_id'])->status;
             }
 
-
             $this->dbProductRepository->update(
                 $request['product_id'],
                 $request['category_id'],
@@ -366,7 +365,7 @@ class ProductController extends Controller
                 return redirect('admin/product-distributor-list');
             }
 
-            return redirect('admin/product-distributor-list');
+            return redirect('admin/product-list');
         }
         return redirect('admin/user-session');
     }

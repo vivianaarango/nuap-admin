@@ -16,7 +16,7 @@
         <select class="form-control" id="user_id" name="user_id" required>
             <option disabled selected>Comercios</option>
             @foreach ($commerces as $commerce)
-                <option value="{{ $commerce->id }}">{{ $commerce->business_name }}</option>
+                <option value="{{ $commerce->user_id }}">{{ $commerce->business_name }}</option>
             @endforeach
         </select>
         <div v-if="errors.has('user_id')" class="form-control-feedback form-text" v-cloak>@{{errors.first('user_id') }}</div>
@@ -29,7 +29,7 @@
         <select class="form-control" id="user_id" name="user_id" required>
             <option disabled selected>Distribuidores</option>
             @foreach ($distributors as $distributor)
-                <option value="{{ $distributor->id }}">{{ $distributor->business_name }}</option>
+                <option value="{{ $distributor->user_id }}">{{ $distributor->business_name }}</option>
             @endforeach
         </select>
         <div v-if="errors.has('user_id')" class="form-control-feedback form-text" v-cloak>@{{errors.first('user_id') }}</div>
