@@ -27,4 +27,10 @@ interface DbOrderRepositoryInterface
      * @return iterable
      */
     public function findProductsByOrderID(int $orderID): iterable;
+
+    /**
+     * @param int $clientID
+     * @return Collection
+     */
+    public function findAllByClientID(int $clientID): Collection;
 }

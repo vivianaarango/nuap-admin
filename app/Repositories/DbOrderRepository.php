@@ -43,4 +43,14 @@ class DbOrderRepository implements DbOrderRepositoryInterface
             ->orderBy('order_products.id', 'desc')
             ->get();
     }
+
+    /**
+     * @param int $clientID
+     * @return Collection
+     */
+    public function findAllByClientID(int $clientID): Collection
+    {
+        return Order::where('client_id', $clientID)
+            ->get();
+    }
 }

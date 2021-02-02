@@ -72,36 +72,41 @@ Route::group(['prefix' => 'users'], function () {
         'uses' => 'Api\GetTicketByUserController'
     ]);
 
-    Route::get('/profile', [
+    Route::middleware('auth:api')->get('/profile', [
         'as' => 'api-users-profile',
         'uses' => 'Api\ProfileUserController'
     ]);
 
-    Route::post('/profile/edit', [
+    Route::middleware('auth:api')->post('/profile/edit', [
         'as' => 'api-users-edit-profile',
         'uses' => 'Api\EditUserProfileController'
+    ]);
+
+    Route::middleware('auth:api')->get('/orders', [
+        'as' => 'api-users-orders',
+        'uses' => 'Api\GetOrdersByUserController'
     ]);
 });
 
 Route::group(['prefix' => 'commerces'], function () {
-    Route::get('/profile', [
+    Route::middleware('auth:api')->get('/profile', [
         'as' => 'api-commerces-profile',
         'uses' => 'Api\ProfileCommerceController'
     ]);
 });
 
 Route::group(['prefix' => 'products'], function () {
-    Route::get('/categories', [
+    Route::middleware('auth:api')->get('/categories', [
         'as' => 'api-categories',
         'uses' => 'Api\CategoriesController'
     ]);
 
-    Route::get('/category/{category}', [
+    Route::middleware('auth:api')->get('/category/{category}', [
         'as' => 'api-products-categories',
         'uses' => 'Api\ProductsByCategoryAndCommerceController'
     ]);
 
-    Route::post('/commerce/create', [
+    Route::middleware('auth:api')->post('/commerce/create', [
         'as' => 'api-products-commerce-create',
         'uses' => 'Api\CreateProductCommerceController'
     ]);
