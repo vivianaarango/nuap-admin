@@ -123,7 +123,7 @@ class CreateProductCommerceController
                 'purchase_price' => 'required|string',
                 'sale_price' => 'required|string',
                 'special_price' => 'required|string',
-                'has_special_price' => 'required|string'
+                'has_special_price' => 'required|bool'
             ]);
 
             if ($validator->fails()) {
@@ -169,24 +169,7 @@ class CreateProductCommerceController
                 $data['special_price'] = $request->input('special_price');
                 $data['is_featured'] = $request->input('is_featured');
                 $data['has_special_price'] = $request->input('has_special_price');
-
-                $productImages = 'product-images/user/'.$user->id;
-
-                if (!is_dir($productImages)) {
-                    mkdir($productImages, 0777, true);
-                }
-                $images = $_FILES['image'];
-
-                if ($images['name'] != '') {
-                    $ext = pathinfo($images['name'], PATHINFO_EXTENSION);
-                    $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-                    $urlImage = "{$productImages}/".substr(str_shuffle($permitted_chars), 0, 16).".{$ext}";
-                    $destinationRoute = $urlImage;
-                    move_uploaded_file($images['tmp_name'], $destinationRoute);
-                    $data['image'] = $urlImage;
-                }
-
-                $product = Product::create($data);
+                Product::create($data);
             } else {
                 $product = $this->dbProductRepository->findByID($request->input('product_id'));
                 $product->status = Product::STATUS_INACTIVE;
@@ -207,24 +190,6 @@ class CreateProductCommerceController
                 $product->special_price = $request->input('special_price');
                 $product->is_featured = $request->input('is_featured');
                 $product->has_special_price = $request->input('has_special_price');
-
-                $productImages = 'product-images/user/'.$user->id;
-
-                if (!is_dir($productImages)) {
-                    mkdir($productImages, 0777, true);
-                }
-
-                $images = $_FILES['image'];
-
-                if ($images['name'] != '') {
-                    $ext = pathinfo($images['name'], PATHINFO_EXTENSION);
-                    $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-                    $urlImage = "{$productImages}/".substr(str_shuffle($permitted_chars), 0, 16).".{$ext}";
-                    $destinationRoute = $urlImage;
-                    move_uploaded_file($images['tmp_name'], $destinationRoute);
-                    $product['image'] = $urlImage;
-                }
-
                 $product->save();
             }
 
