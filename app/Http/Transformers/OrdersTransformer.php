@@ -42,6 +42,6 @@ class OrdersTransformer extends TransformerAbstract
     public function formatCurrency($floatcurr, $curr = "COP"): string
     {
         $currencies['COP'] = array(0,',','.');
-        return number_format($floatcurr, $currencies[$curr][0], $currencies[$curr][1], $currencies[$curr][2]).'$';
+        return number_format($floatcurr, $currencies[$curr][0], $currencies[$curr][1], $currencies[$curr][2]).' $';
     }
 }
