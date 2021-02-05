@@ -25,11 +25,23 @@ class OrdersTransformer extends TransformerAbstract
             'client_id' => $order->client_id,
             'client_type' => $order->client_type,
             'total_products' => $order->total_products,
-            'total_amount' => $order->total_amount,
-            'delivery_amount' => $order->delivery_amount,
-            'total_discount' => $order->total_discount,
-            'total' => $order->total,
-            'delivery_date' => $order->delivery_date
+            'total_amount' => $this->formatCurrency($order->total_amount),
+            'delivery_amount' => $this->formatCurrency($order->delivery_amount),
+            'total_discount' => $this->formatCurrency($order->total_discount),
+            'total' => $this->formatCurrency($order->total),
+            'delivery_date' => $order->delivery_date,
+            'rating' => $order->rating
         ];
+    }
+
+    /**
+     * @param $floatcurr
+     * @param string $curr
+     * @return string
+     */
+    public function formatCurrency($floatcurr, $curr = "COP"): string
+    {
+        $currencies['COP'] = array(0,',','.');
+        return number_format($floatcurr, $currencies[$curr][0], $currencies[$curr][1], $currencies[$curr][2]).'$';
     }
 }
