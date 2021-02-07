@@ -1,25 +1,25 @@
 <?php
 namespace App\Http\Controllers\Api;
 
+use App\Http\Transformers\SellerTransformer;
 use App\Libraries\Responders\Contracts\ArrayResponseInterface;
 use App\Libraries\Responders\Contracts\JsonApiResponseInterface;
 use App\Libraries\Responders\ErrorObject;
 use App\Libraries\Responders\HttpObject;
 use App\Libraries\Responders\JsonApiErrorsFormatter;
-use App\Models\Ticket;
-use App\Models\TicketMessage;
+use App\Repositories\Contracts\DbCommerceRepositoryInterface;
+use App\Repositories\Contracts\DbDistributorRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Exception;
 
 /**
- * Class CreateTicketController
+ * Class SellerInfoController
  * @package App\Http\Controllers\Api
  */
-class CreateTicketController
+class SellerInfoController
 {
     /**
      * @type string
@@ -30,6 +30,11 @@ class CreateTicketController
      * @type string
      */
     protected const USER_NOT_FOUND = 'USER_NOT_FOUND';
+
+    /**
+     * @type string
+     */
+    protected const SELLER_NOT_FOUND = 'SELLER_NOT_FOUND';
 
     /**
      * @type string
@@ -62,17 +67,29 @@ class CreateTicketController
     private $dbUserRepository;
 
     /**
+     * @var DbCommerceRepositoryInterface
+     */
+    private $dbCommerceRepository;
+
+    /**
+     * @var DbDistributorRepositoryInterface
+     */
+    private $dbDistributorRepository;
+
+    /**
      * @var JsonApiErrorsFormatter
      */
     private $jsonErrorFormat;
 
     /**
-     * CreateTicketController constructor.
+     * SellerInfoController constructor.
      * @param ArrayResponseInterface $arrayResponse
      * @param HttpObject $httpObject
      * @param ErrorObject $errorObject
      * @param JsonApiResponseInterface $jsonApiResponse
      * @param DbUsersRepositoryInterface $dbUserRepository
+     * @param DbCommerceRepositoryInterface $dbCommerceRepository
+     * @param DbDistributorRepositoryInterface $dbDistributorRepository
      * @param JsonApiErrorsFormatter $jsonApiErrorsFormatter
      */
     public function __construct(
@@ -81,6 +98,8 @@ class CreateTicketController
         ErrorObject $errorObject,
         JsonApiResponseInterface $jsonApiResponse,
         DbUsersRepositoryInterface $dbUserRepository,
+        DbCommerceRepositoryInterface $dbCommerceRepository,
+        DbDistributorRepositoryInterface $dbDistributorRepository,
         JsonApiErrorsFormatter $jsonApiErrorsFormatter
     ) {
         $this->arrayResponse = $arrayResponse;
@@ -88,28 +107,19 @@ class CreateTicketController
         $this->errorObject = $errorObject;
         $this->jsonApiResponse = $jsonApiResponse;
         $this->dbUserRepository = $dbUserRepository;
+        $this->dbCommerceRepository = $dbCommerceRepository;
+        $this->dbDistributorRepository = $dbDistributorRepository;
         $this->jsonErrorFormat = $jsonApiErrorsFormatter;
     }
 
     /**
      * @param Request $request
+     * @param $seller_id
      * @return JsonResponse
      */
-    public function __invoke(Request $request): JsonResponse
+    public function __invoke(Request $request, int $seller_id): JsonResponse
     {
         try {
-            $validator = Validator::make($request->all(), [
-                'issues' => 'required|string',
-                'message' => 'required|string'
-            ]);
-
-            if ($validator->fails()) {
-                return $this->jsonApiResponse->respondFormError(
-                    $validator->errors(),
-                    Response::HTTP_UNPROCESSABLE_ENTITY
-                );
-            }
-
             $token = $request->header('Authorization');
             $token = explode(' ',$token)[1];
 
@@ -126,28 +136,29 @@ class CreateTicketController
                 return $this->jsonApiResponse->respondError($this->jsonErrorFormat, Response::HTTP_BAD_REQUEST);
             }
 
-            $ticket['user_id'] = $user->id;
-            $ticket['user_type'] = $user->role;
-            $ticket['issues'] = $request['issues'];
-            $ticket['init_date'] = now();
-            $ticket['finish_date'] = null;
-            $ticket['description'] = $request['message'];
-            $ticket['status'] = Ticket::PENDING_ADMIN;
-            $ticket = Ticket::create($ticket);
+            $data = $this->dbCommerceRepository->findUserAndCommerceByUserID($seller_id);
+            if (!count($data)) {
+                $data = $this->dbDistributorRepository->findUserAndDistributorByUserID($seller_id);
+            }
 
-            $message['ticket_id'] = $ticket->id;
-            $message['message'] = $request['message'];
-            $message['sender_id'] = $user->id;
-            $message['sender_type'] = $user->role;
-            $message['sender_date'] = now();
-            TicketMessage::create($message);
+            if (!count($data)) {
+                $error = new ErrorObject();
+                $error->setCode(self::SELLER_NOT_FOUND)
+                    ->setTitle(self::ERROR_TITLE)
+                    ->setDetail('No se encontró la información del vendedor.')
+                    ->setStatus((string) Response::HTTP_BAD_REQUEST);
+                $this->jsonErrorFormat->add($error);
 
-            $this->httpObject->setBody([
-                'data' => null
-            ]);
+                return $this->jsonApiResponse->respondError($this->jsonErrorFormat, Response::HTTP_BAD_REQUEST);
+            }
 
-            return $this->arrayResponse->respond($this->httpObject);
+            $this->httpObject->setItem($data->first()->toArray());
 
+            return $this->arrayResponse->responseWithItem(
+                $this->httpObject,
+                new SellerTransformer(),
+                'data'
+            );
         } catch (Exception $exception) {
             $error = new ErrorObject();
             $error->setCode(self::GENERAL_ERROR)

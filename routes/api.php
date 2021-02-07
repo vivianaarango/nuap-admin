@@ -86,6 +86,21 @@ Route::group(['prefix' => 'users'], function () {
         'as' => 'api-users-orders',
         'uses' => 'Api\GetOrdersByUserController'
     ]);
+
+    Route::middleware('auth:api')->get('/orders/{order}/products', [
+        'as' => 'api-users-orders-products',
+        'uses' => 'Api\GerProductsByOrderController'
+    ]);
+
+    Route::middleware('auth:api')->get('/seller/{seller}/info', [
+        'as' => 'api-users-seller',
+        'uses' => 'Api\SellerInfoController'
+    ]);
+
+    Route::middleware('auth:api')->post('/rating', [
+        'as' => 'api-rating',
+        'uses' => 'Api\RatingOrderController'
+    ]);
 });
 
 Route::group(['prefix' => 'commerces'], function () {

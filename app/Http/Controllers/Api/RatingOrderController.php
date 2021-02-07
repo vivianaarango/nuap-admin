@@ -8,6 +8,7 @@ use App\Libraries\Responders\HttpObject;
 use App\Libraries\Responders\JsonApiErrorsFormatter;
 use App\Models\Ticket;
 use App\Models\TicketMessage;
+use App\Repositories\Contracts\DbOrderRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -16,10 +17,10 @@ use Illuminate\Http\Request;
 use Exception;
 
 /**
- * Class CreateTicketController
+ * Class RatingOrderController
  * @package App\Http\Controllers\Api
  */
-class CreateTicketController
+class RatingOrderController
 {
     /**
      * @type string
@@ -62,17 +63,23 @@ class CreateTicketController
     private $dbUserRepository;
 
     /**
+     * @var DbOrderRepositoryInterface
+     */
+    private $dbOrderRepository;
+
+    /**
      * @var JsonApiErrorsFormatter
      */
     private $jsonErrorFormat;
 
     /**
-     * CreateTicketController constructor.
+     * RatingOrderController constructor.
      * @param ArrayResponseInterface $arrayResponse
      * @param HttpObject $httpObject
      * @param ErrorObject $errorObject
      * @param JsonApiResponseInterface $jsonApiResponse
      * @param DbUsersRepositoryInterface $dbUserRepository
+     * @param DbOrderRepositoryInterface $dbOrderRepository
      * @param JsonApiErrorsFormatter $jsonApiErrorsFormatter
      */
     public function __construct(
@@ -81,6 +88,7 @@ class CreateTicketController
         ErrorObject $errorObject,
         JsonApiResponseInterface $jsonApiResponse,
         DbUsersRepositoryInterface $dbUserRepository,
+        DbOrderRepositoryInterface $dbOrderRepository,
         JsonApiErrorsFormatter $jsonApiErrorsFormatter
     ) {
         $this->arrayResponse = $arrayResponse;
@@ -88,6 +96,7 @@ class CreateTicketController
         $this->errorObject = $errorObject;
         $this->jsonApiResponse = $jsonApiResponse;
         $this->dbUserRepository = $dbUserRepository;
+        $this->dbOrderRepository = $dbOrderRepository;
         $this->jsonErrorFormat = $jsonApiErrorsFormatter;
     }
 
@@ -99,8 +108,9 @@ class CreateTicketController
     {
         try {
             $validator = Validator::make($request->all(), [
-                'issues' => 'required|string',
-                'message' => 'required|string'
+                'order_id' => 'required|numeric',
+                'rating' => 'required|numeric',
+                'comment' => 'required|string'
             ]);
 
             if ($validator->fails()) {
@@ -126,21 +136,10 @@ class CreateTicketController
                 return $this->jsonApiResponse->respondError($this->jsonErrorFormat, Response::HTTP_BAD_REQUEST);
             }
 
-            $ticket['user_id'] = $user->id;
-            $ticket['user_type'] = $user->role;
-            $ticket['issues'] = $request['issues'];
-            $ticket['init_date'] = now();
-            $ticket['finish_date'] = null;
-            $ticket['description'] = $request['message'];
-            $ticket['status'] = Ticket::PENDING_ADMIN;
-            $ticket = Ticket::create($ticket);
-
-            $message['ticket_id'] = $ticket->id;
-            $message['message'] = $request['message'];
-            $message['sender_id'] = $user->id;
-            $message['sender_type'] = $user->role;
-            $message['sender_date'] = now();
-            TicketMessage::create($message);
+            $order = $this->dbOrderRepository->findByID($request['order_id']);
+            $order->rating = $request['rating'];
+            $order->comment = $request['comment'];
+            $order->save();
 
             $this->httpObject->setBody([
                 'data' => null

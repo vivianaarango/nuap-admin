@@ -2,7 +2,6 @@
 namespace App\Http\Transformers;
 
 use App\Models\Order;
-use App\Models\Ticket;
 use League\Fractal\TransformerAbstract;
 
 /**
@@ -22,6 +21,7 @@ class OrdersTransformer extends TransformerAbstract
             'user_id' => $order->user_id,
             'user_type' => $order->user_type,
             'cancel_reason' => $order->cancel_reason,
+            'status' => $order->status,
             'client_id' => $order->client_id,
             'client_type' => $order->client_type,
             'total_products' => $order->total_products,
@@ -42,6 +42,6 @@ class OrdersTransformer extends TransformerAbstract
     public function formatCurrency($floatcurr, $curr = "COP"): string
     {
         $currencies['COP'] = array(0,',','.');
-        return number_format($floatcurr, $currencies[$curr][0], $currencies[$curr][1], $currencies[$curr][2]).' $';
+        return number_format($floatcurr, $currencies[$curr][0], $currencies[$curr][1], $currencies[$curr][2]).'$';
     }
 }

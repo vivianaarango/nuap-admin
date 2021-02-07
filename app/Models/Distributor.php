@@ -34,6 +34,7 @@ use Illuminate\Foundation\Application;
  * @method static create(array $data)
  * @method static where(string $string, int $userID)
  * @method static findOrFail(int $distributorID)
+ * @method static select(string $string, string $string1)
  */
 class Distributor extends Model
 {

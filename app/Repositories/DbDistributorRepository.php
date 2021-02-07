@@ -155,4 +155,16 @@ class DbDistributorRepository implements DbDistributorRepositoryInterface
 
         return $distributor;
     }
+
+    /**
+     * @param int $userID
+     * @return Collection
+     */
+    public function findUserAndDistributorByUserID(int $userID): Collection
+    {
+        return Distributor::select('users.*', 'distributors.*')
+            ->where('user_id', $userID)
+            ->join('users', 'users.id', 'distributors.user_id')
+            ->get();
+    }
 }

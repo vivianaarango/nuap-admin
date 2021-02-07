@@ -26,7 +26,7 @@ class CommerceTransformer extends TransformerAbstract
             'commission' => $item->commission.'%',
             'url_logo' => $item->url_logo,
             'shipping_cost' => $this->formatCurrency($item->shipping_cost),
-            'distance' => $item->distance.' km'
+            'distance' => $item->distance.'km'
         ];
     }
 

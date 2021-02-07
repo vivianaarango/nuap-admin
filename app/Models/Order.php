@@ -20,6 +20,7 @@ use Illuminate\Foundation\Application;
  * @property float total_discount
  * @property float total
  * @property int rating
+ * @property string comment
  * @property string delivery_date
  * @property string created_at
  *
@@ -82,7 +83,8 @@ class Order extends Model
         'total_discount'.
         'total',
         'delivery_date',
-        'rating'
+        'rating',
+        'comment'
     ];
 
     /**

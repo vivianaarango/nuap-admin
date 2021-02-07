@@ -85,4 +85,10 @@ interface DbDistributorRepositoryInterface
      * @return Distributor
      */
     public function updateCommission(int $distributorID, float $commission): Distributor;
+
+    /**
+     * @param int $userID
+     * @return Collection
+     */
+    public function findUserAndDistributorByUserID(int $userID): Collection;
 }
