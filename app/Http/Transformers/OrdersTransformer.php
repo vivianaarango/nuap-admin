@@ -30,7 +30,9 @@ class OrdersTransformer extends TransformerAbstract
             'total_discount' => $this->formatCurrency($order->total_discount),
             'total' => $this->formatCurrency($order->total),
             'delivery_date' => $order->delivery_date,
-            'rating' => $order->rating
+            'rating' => $order->rating,
+            'address' => $order->address,
+            'distributor_name' => $order-> distributor_name
         ];
     }
 

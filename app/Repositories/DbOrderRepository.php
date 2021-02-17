@@ -50,7 +50,9 @@ class DbOrderRepository implements DbOrderRepositoryInterface
      */
     public function findAllByClientID(int $clientID): Collection
     {
-        return Order::where('client_id', $clientID)
+        return Order::select('orders.*', 'user_locations.address')
+            ->where('client_id', $clientID)
+            ->join('user_locations', 'user_locations.id', '=', 'orders.address_id')
             ->get();
     }
 }

@@ -19,6 +19,11 @@ Route::get('/', function (){
     return view('admin.home.index');
 });
 
+/* Privacy policy */
+Route::get('/privacy-policy', function (){
+    return view('admin.home.privacy-policy');
+});
+
 ### Users ###
 /* Validate session */
 Route::get('/admin/user-session', 'Admin\UsersController@validateSession');

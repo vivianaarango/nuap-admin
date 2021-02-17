@@ -7,6 +7,8 @@ use App\Libraries\Responders\Contracts\JsonApiResponseInterface;
 use App\Libraries\Responders\ErrorObject;
 use App\Libraries\Responders\HttpObject;
 use App\Libraries\Responders\JsonApiErrorsFormatter;
+use App\Repositories\Contracts\DbCommerceRepositoryInterface;
+use App\Repositories\Contracts\DbDistributorRepositoryInterface;
 use App\Repositories\Contracts\DbOrderRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use Illuminate\Http\JsonResponse;
@@ -61,6 +63,16 @@ class GetOrdersByUserController
     private $jsonApiResponse;
 
     /**
+     * @var DbCommerceRepositoryInterface
+     */
+    private $dbCommerceRepository;
+
+    /**
+     * @var DbDistributorRepositoryInterface
+     */
+    private $dbDistributorRepository;
+
+    /**
      * @var DbUsersRepositoryInterface
      */
     private $dbUserRepository;
@@ -83,6 +95,8 @@ class GetOrdersByUserController
      * @param JsonApiResponseInterface $jsonApiResponse
      * @param DbUsersRepositoryInterface $dbUserRepository
      * @param DbOrderRepositoryInterface $dbOrderRepository
+     * @param DbCommerceRepositoryInterface $dbCommerceRepository
+     * @param DbDistributorRepositoryInterface $dbDistributorRepository
      * @param JsonApiErrorsFormatter $jsonApiErrorsFormatter
      */
     public function __construct(
@@ -92,6 +106,8 @@ class GetOrdersByUserController
         JsonApiResponseInterface $jsonApiResponse,
         DbUsersRepositoryInterface $dbUserRepository,
         DbOrderRepositoryInterface $dbOrderRepository,
+        DbCommerceRepositoryInterface $dbCommerceRepository,
+        DbDistributorRepositoryInterface $dbDistributorRepository,
         JsonApiErrorsFormatter $jsonApiErrorsFormatter
     ) {
         $this->arrayResponse = $arrayResponse;
@@ -100,6 +116,8 @@ class GetOrdersByUserController
         $this->jsonApiResponse = $jsonApiResponse;
         $this->dbUserRepository = $dbUserRepository;
         $this->dbOrderRepository = $dbOrderRepository;
+        $this->dbCommerceRepository = $dbCommerceRepository;
+        $this->dbDistributorRepository = $dbDistributorRepository;
         $this->jsonErrorFormat = $jsonApiErrorsFormatter;
     }
 
@@ -127,6 +145,13 @@ class GetOrdersByUserController
             }
 
             $orders = $this->dbOrderRepository->findAllByClientID($user->id);
+            foreach ($orders as $item) {
+                $data = $this->dbCommerceRepository->findUserAndCommerceByUserID($item->user_id);
+                if (!count($data)) {
+                    $data = $this->dbDistributorRepository->findUserAndDistributorByUserID($item->user_id);
+                }
+                $item->distributor_name = $data->first()->business_name;
+            }
 
             if (!count($orders)) {
                 $error = new ErrorObject();
@@ -156,6 +181,5 @@ class GetOrdersByUserController
 
             return $this->jsonApiResponse->respondError($this->jsonErrorFormat, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-
     }
 }

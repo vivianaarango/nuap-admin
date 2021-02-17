@@ -6,14 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="d6cb72cc-2713-41b0-95f6-aeada7aa8696" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/CreateTicketController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/CreateTicketController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Transformers/CommerceTransformer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Transformers/CommerceTransformer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/GetOrdersByUserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/GetOrdersByUserController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Transformers/OrdersTransformer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Transformers/OrdersTransformer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Distributor.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Distributor.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Order.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/Contracts/DbDistributorRepositoryInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/Contracts/DbDistributorRepositoryInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/DbDistributorRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/DbDistributorRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/DbOrderRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/DbOrderRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -350,7 +346,10 @@
       <workItem from="1612359493524" duration="111000" />
       <workItem from="1612364987468" duration="19000" />
       <workItem from="1612538449732" duration="869000" />
-      <workItem from="1612647141335" duration="6720000" />
+      <workItem from="1612647141335" duration="7010000" />
+      <workItem from="1612798069230" duration="57000" />
+      <workItem from="1613532623038" duration="254000" />
+      <workItem from="1613532920453" duration="2396000" />
     </task>
     <servers />
   </component>
