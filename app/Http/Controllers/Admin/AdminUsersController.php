@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AdminUser\CreateAdminUsers;
+use App\Http\Requests\Admin\AdminUser\IndexAdmin;
 use App\Models\AdminUser;
 use App\Models\BankAccount;
 use App\Models\Config;
@@ -16,6 +17,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
+use Brackets\AdminListing\Facades\AdminListing;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
@@ -41,6 +43,11 @@ class AdminUsersController extends Controller
     private $dbBankAccountRepository;
 
     /**
+     * @var string
+     */
+    private $dateToSearch;
+
+    /**
      * AdminUsersController constructor.
      * @param DbUsersRepositoryInterface $dbUserRepository
      * @param DbAdminUsersRepositoryInterface $dbAdminUserRepository
@@ -54,6 +61,117 @@ class AdminUsersController extends Controller
         $this->dbUserRepository = $dbUserRepository;
         $this->dbAdminUserRepository = $dbAdminUserRepository;
         $this->dbBankAccountRepository = $dbBankAccountRepository;
+    }
+
+    /**
+     * @param IndexAdmin $request
+     * @return array|Factory|Application|RedirectResponse|Redirector|View
+     */
+    public function list(IndexAdmin $request)
+    {
+        $user = Session::get('user');
+
+        if (isset($user) && $user->role == User::ADMIN_ROLE) {
+            $this->dateToSearch = date("Y-m-d");
+            $days = $request['days'];
+            if ($request->ajax()) {
+                $url = url()->previous();
+                $parts = parse_url($url);
+                if (isset($parts['query'])){
+                    parse_str($parts['query'], $query);
+                    $days = $query['days'] ?? null;
+                }
+            }
+
+            if (!is_null($days) && $days != 0) {
+                $this->dateToSearch = date("Y-m-d",strtotime($this->dateToSearch." - ".$days." days"));
+            } else {
+                $this->dateToSearch = date("Y-m-d",strtotime($this->dateToSearch." + 1 days"));
+            }
+
+            $data = AdminListing::create(User::class)
+                ->modifyQuery(function($query) {
+                    $query->select(
+                        'users.*',
+                        'admin_users.name',
+                        'admin_users.last_name',
+                        'admin_users.identity_number',
+                        'admin_users.position'
+                    )->where('role', User::ADMIN_ROLE)
+                        ->where('last_logged_in', '<=', $this->dateToSearch)
+                        ->join('admin_users', 'users.id', '=', 'admin_users.user_id')
+                        ->orderBy('id', 'desc');;
+                })->processRequestAndGet(
+                    $request,
+                    ['id', 'email', 'phone', 'status', 'last_logged_in'],
+                    ['id', 'email', 'phone', 'status', 'last_logged_in']
+                );
+
+            if ($request->ajax()) {
+                return ['data' => $data, 'activation' => $user->role, 'days' => $days];
+            }
+
+            return view('admin.admin-users.index', [
+                'data' => $data,
+                'activation' => $user->role,
+                'days' => $days
+            ]);
+        } else {
+            return redirect('/admin/user-session');
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return array|Application|RedirectResponse|Redirector
+     * @throws ValidationException
+     */
+    public function update(Request $request)
+    {
+        $this->validate($request, [
+            'email' => ['nullable', 'string', 'email', 'unique:users,email,'.$request['user_id']],
+            'country_code' => ['nullable', 'string'],
+            'position' => ['nullable', 'string'],
+            'phone' => ['nullable', 'string', 'unique:users,phone,'.$request['user_id']],
+            'password' => ['nullable', 'confirmed', 'min:8', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9]).*$/', 'string'],
+            'name' => ['required', 'string'],
+            'last_name' => ['required', 'string'],
+            'identity_number' => ['required', 'string'],
+        ]);
+
+        $adminUser = Session::get('user');
+
+        if (isset($adminUser) && $adminUser->role == User::ADMIN_ROLE) {
+            $user = $this->dbUserRepository->findByID($request['user_id']);
+            if ($request['phone'] != $user->phone) {
+                $phoneValidated = false;
+            }
+            $this->dbUserRepository->updateUser(
+                $request['user_id'],
+                $request['email'],
+                $request['country_code'],
+                $request['phone'],
+                isset($phoneValidated) ? $phoneValidated : true,
+                is_null($request['password']) ? null : md5($request['password'])
+            );
+            $this->dbAdminUserRepository->updateAdmin(
+                $request['client_id'],
+                $request['user_id'],
+                $request['position'],
+                $request['name'],
+                $request['last_name'],
+                $request['identity_number']
+            );
+
+            if ($request->ajax()) {
+                return [
+                    'redirect' => url('admin/list'),
+                    'message' => trans('brackets/admin-ui::admin.operation.succeeded')
+                ];
+            }
+        }
+
+        return redirect('admin/validate-session');
     }
 
     /**
@@ -93,7 +211,7 @@ class AdminUsersController extends Controller
             ];
         }
 
-        return redirect('admin/admin-users-create');
+        return redirect('admin/list');
     }
 
     /**

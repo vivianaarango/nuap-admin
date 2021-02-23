@@ -59,6 +59,10 @@ Route::post('/admin/admin-users-store', 'Admin\AdminUsersController@store');
 Route::get('/admin/config-create', 'Admin\AdminUsersController@createConfig');
 /* Store settings */
 Route::post('/admin/config-store', 'Admin\AdminUsersController@storeConfig');
+/* List */
+Route::get('/admin/list', 'Admin\AdminUsersController@list');
+/* Update */
+Route::post('/admin/admin-users/{admin}', 'Admin\AdminUsersController@update')->name('admin/admin-users/update');
 
 ### Profile ###
 /* Edit */

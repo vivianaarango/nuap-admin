@@ -5,40 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d6cb72cc-2713-41b0-95f6-aeada7aa8696" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Exports/AllSalesExport.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Exports/AllSalesExport.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Exports/SalesExport.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Exports/SalesExport.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/AdminUsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/AdminUsersController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/ClientController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/ClientController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/CommerceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/CommerceController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/DistributorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/DistributorController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/PaymentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/PaymentController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/ReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/ReportController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/UsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/UsersController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/GetOrdersByUserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/GetOrdersByUserController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/AdminUser/CreateAdminUsers.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Admin/AdminUser/CreateAdminUsers.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/Client/CreateClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Admin/Client/CreateClient.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/Commerce/CreateCommerce.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Admin/Commerce/CreateCommerce.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/Distributor/CreateDistributor.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Admin/Distributor/CreateDistributor.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Commerce.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Commerce.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Distributor.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Distributor.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/Contracts/DbCommerceRepositoryInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/Contracts/DbCommerceRepositoryInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/Contracts/DbDistributorRepositoryInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/Contracts/DbDistributorRepositoryInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/Contracts/DbUsersRepositoryInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/Contracts/DbUsersRepositoryInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/DbCommerceRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/DbCommerceRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/DbDistributorRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/DbDistributorRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/DbUsersRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/DbUsersRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/Users/CreateUserLocation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Admin/Users/CreateUserLocation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/Users/IndexUserLocation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Admin/Users/IndexUserLocation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/AdminUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/AdminUser.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/UserLocation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/UserLocation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/Contracts/DbAdminUsersRepositoryInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/Contracts/DbAdminUsersRepositoryInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/DbAdminUsersRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/DbAdminUsersRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/admin/admin-users/components/form-elements.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/admin-users/components/form-elements.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/clients/components/form-edit-elements.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/clients/components/form-edit-elements.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/clients/components/form-elements.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/clients/components/form-elements.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/clients/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/clients/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/commerces/components/form-edit-elements.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/commerces/components/form-edit-elements.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/commerces/components/form-elements.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/commerces/components/form-elements.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/commerces/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/commerces/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/distributors/components/form-edit-elements.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/distributors/components/form-edit-elements.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/distributors/components/form-elements.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/distributors/components/form-elements.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/distributors/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/distributors/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/products/components/form-create-distributor-elements.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/products/components/form-create-distributor-elements.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/products/components/form-create-elements.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/products/components/form-create-elements.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/products/index-distributor.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/products/index-distributor.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/products/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/products/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/layout/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/layout/sidebar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/users/add-location.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/users/add-location.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/users/components/form-add-location-elements.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/users/components/form-add-location-elements.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -250,7 +235,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin/admin-users/components" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -264,11 +249,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources/views/admin/admin-users/components" />
+      <recent name="$PROJECT_DIR$/resources/views/admin/admin-users" />
+      <recent name="$PROJECT_DIR$/app/Http/Requests/Admin/AdminUser" />
       <recent name="$PROJECT_DIR$/app/Http/Transformers" />
       <recent name="$PROJECT_DIR$/app/Http/Controllers/Api" />
-      <recent name="$PROJECT_DIR$/resources/views/admin/reports" />
-      <recent name="$PROJECT_DIR$/app/Libraries" />
-      <recent name="$PROJECT_DIR$/resources/views/admin/admin-users/components" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/Http/Controllers/Api" />
@@ -381,7 +366,7 @@
       <workItem from="1613532623038" duration="254000" />
       <workItem from="1613532920453" duration="2396000" />
       <workItem from="1614052995999" duration="6576000" />
-      <workItem from="1614091247144" duration="8679000" />
+      <workItem from="1614091247144" duration="17885000" />
     </task>
     <servers />
   </component>

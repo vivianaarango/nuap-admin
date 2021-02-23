@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\Users\LoginUsers;
 use App\Models\SessionLog;
 use App\Models\User;
 use App\Models\UserLocation;
+use App\Repositories\Contracts\DbAdminUsersRepositoryInterface;
 use App\Repositories\Contracts\DbClientRepositoryInterface;
 use App\Repositories\Contracts\DbCommerceRepositoryInterface;
 use App\Repositories\Contracts\DbDistributorRepositoryInterface;
@@ -55,22 +56,30 @@ class UsersController extends Controller
     private $dbClientRepository;
 
     /**
+     * @var DbAdminUsersRepositoryInterface
+     */
+    private $dbAdminUserRepository;
+
+    /**
      * UsersController constructor.
      * @param DbUsersRepositoryInterface $dbUserRepository
      * @param DbDistributorRepositoryInterface $dbDistributorRepository
      * @param DbCommerceRepositoryInterface $dbCommerceRepository
      * @param DbClientRepositoryInterface $dbClientRepository
+     * @param DbAdminUsersRepositoryInterface $dbAdminUserRepository
      */
     public function __construct(
         DbUsersRepositoryInterface $dbUserRepository,
         DbDistributorRepositoryInterface $dbDistributorRepository,
         DbCommerceRepositoryInterface $dbCommerceRepository,
-        DbClientRepositoryInterface $dbClientRepository
+        DbClientRepositoryInterface $dbClientRepository,
+        DbAdminUsersRepositoryInterface $dbAdminUserRepository
     ) {
         $this->dbUserRepository = $dbUserRepository;
         $this->dbDistributorRepository = $dbDistributorRepository;
         $this->dbCommerceRepository = $dbCommerceRepository;
         $this->dbClientRepository = $dbClientRepository;
+        $this->dbAdminUserRepository = $dbAdminUserRepository;
     }
 
     /**
@@ -224,6 +233,22 @@ class UsersController extends Controller
                 ]);
             }
 
+            if ($user->role == User::ADMIN_ROLE) {
+                $admin = $this->dbAdminUserRepository->findByUserID($user->id);
+                $data['client_id'] = $admin->id;
+                $data['name'] = $admin->name;
+                $data['last_name'] = $admin->last_name;
+                $data['position'] = $admin->position;
+                $data['identity_number'] = $admin->identity_number;
+
+                return view('admin.admin-users.edit', [
+                    'user' => json_encode($data),
+                    'activation' => $userAdmin->role,
+                    'url' => $admin->resource_url,
+                    'business_name' => $admin->name
+                ]);
+            }
+
         } else {
             return redirect('/admin/user-session');
         }
@@ -297,8 +322,8 @@ class UsersController extends Controller
                         ->orderBy('id', 'desc');
                 })->processRequestAndGet(
                     $request,
-                    ['id', 'city', 'location', 'neighborhood', 'address'],
-                    ['id', 'city', 'location', 'neighborhood', 'address']
+                    ['id', 'country', 'city', 'location', 'neighborhood', 'address'],
+                    ['id', 'country', 'city', 'location', 'neighborhood', 'address']
                 );
 
             return view('admin.users.add-location', [

@@ -46,6 +46,7 @@
                             <thead>
                             <tr>
                                 <th is='sortable' :column="'id'">ID</th>
+                                <th is='sortable' :column="'country'">País</th>
                                 <th is='sortable' :column="'city'">Ciudad</th>
                                 <th is='sortable' :column="'location'">Localidad</th>
                                 <th is='sortable' :column="'neighborhood'">Barrio</th>
@@ -56,6 +57,7 @@
                             <tbody>
                             <tr v-for="(item, index) in collection">
                                 <td >@{{ item.id }}</td>
+                                <td >@{{ item.country }}</td>
                                 <td >@{{ item.city }}</td>
                                 <td >@{{ item.location }}</td>
                                 <td >@{{ item.neighborhood }}</td>

@@ -61,14 +61,13 @@ class ProfileController extends Controller
     {
         $user = Session::get('user');
         if (isset($user) && $user->role == User::ADMIN_ROLE) {
-            /* @var $userInfo AdminUser */
             $userInfo = $this->dbAdminUserRepository->findByUserID($user->id);
             $data = [
                 "user_id" => $user->id,
                 "email" => $user->email,
                 "phone" => $user->phone,
-                "name" => $userInfo[0]->name,
-                "last_name" => $userInfo[0]->last_name
+                "name" => $userInfo->name,
+                "last_name" => $userInfo->last_name
             ];
             return view('admin.profile.edit-profile', [
                 'user' => json_encode($data),

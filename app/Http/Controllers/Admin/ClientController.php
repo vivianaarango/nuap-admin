@@ -2,11 +2,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Exports\ClientsExport;
-use App\Exports\ProductsExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Client\CreateClient;
 use App\Http\Requests\Admin\Client\IndexClient;
-use App\Http\Requests\Admin\Commerce\CreateCommerce;
 use App\Models\Client;
 use App\Models\User;
 use App\Repositories\Contracts\DbClientRepositoryInterface;

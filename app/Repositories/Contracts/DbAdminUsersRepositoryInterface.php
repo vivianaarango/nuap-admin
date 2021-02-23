@@ -28,9 +28,9 @@ interface DbAdminUsersRepositoryInterface
 
     /**
      * @param int $userID
-     * @return Collection
+     * @return AdminUser
      */
-    public function findByUserID(int $userID): Collection;
+    public function findByUserID(int $userID): AdminUser;
 
     /**
      * @param int $userID
@@ -42,5 +42,29 @@ interface DbAdminUsersRepositoryInterface
         int $userID,
         string $name,
         string $lastName
+    ): AdminUser;
+
+    /**
+     * @param int $adminID
+     * @return AdminUser
+     */
+    public function findByID(int $adminID): AdminUser;
+
+    /**
+     * @param int $adminID
+     * @param int $userID
+     * @param string $position
+     * @param string $name
+     * @param string $lastName
+     * @param string $identityNumber
+     * @return AdminUser
+     */
+    public function updateAdmin(
+        int $adminID,
+        int $userID,
+        string $position,
+        string $name,
+        string $lastName,
+        string $identityNumber
     ): AdminUser;
 }

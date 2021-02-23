@@ -19,6 +19,7 @@ class CreateUserLocation extends FormRequest
         return [
             'role' => ['required', 'string'],
             'user_id' => ['required', 'string'],
+            'country' => ['required', 'string'],
             'city' => ['required', 'string'],
             'location' => ['required', 'string'],
             'neighborhood' => ['required', 'string'],

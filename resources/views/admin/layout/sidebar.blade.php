@@ -4,7 +4,8 @@
         <nav class="sidebar-nav">
             <ul class="nav">
                 <li class="nav-title">Administradores</li>
-                <li class="nav-item"><a class="nav-link" href="{{ url('admin/admin-users-create') }}"><i class="nav-icon icon-plus"></i>Nuevo administrador</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('admin/list') }}"><i class="nav-icon icon-list"></i>Lista Administradores</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('admin/admin-users-create') }}"><i class="nav-icon icon-pencil"></i>Nuevo Administrador</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/config-create') }}"><i class="nav-icon icon-settings"></i>Configuración</a></li>
                 <li class="nav-title">Usuarios</li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/distributor-list') }}"><i class="nav-icon icon-grid"></i>Distribuidores</a></li>

@@ -9,7 +9,7 @@
 <div class="form-group row align-items-center" :class="{'has-danger': errors.has('phone'), 'has-success': this.fields.phone && this.fields.phone.valid }">
     <label for="phone" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">Teléfono</label>
     <div :class="isFormLocalized ? 'col-md-2' : 'col-md-3 col-xl-3'">
-        <select required class="form-control" v-model="form.country_code" name="country_code" id="country_code">
+        <select v-model="form.country_code" class="form-control" name="country_code" id="">
             <option data-countryCode="CO" value="57">Colombia (+57)</option>
             <option data-countryCode="GB" value="44">UK (+44)</option>
             <option data-countryCode="US" value="1">USA (+1)</option>
@@ -228,7 +228,7 @@
             <option data-countryCode="ZW" value="263">Zimbabwe (+263)</option>
         </select></div>
     <div :class="isFormLocalized ? 'col-md-4' : 'col-md-6 col-xl-4'">
-        <input type="text" v-model="form.phone" v-validate="'required'" @input="validate($event)" class="form-control" :class="{'form-control-danger': errors.has('phone'), 'form-control-success': this.fields.phone && this.fields.phone.valid}" id="phone" name="phone" placeholder="Teléfono">
+        <input onkeypress="return isNumberKey(event)" type="text" v-model="form.phone" v-validate="'required'" @input="validate($event)" class="form-control" :class="{'form-control-danger': errors.has('phone'), 'form-control-success': this.fields.phone && this.fields.phone.valid}" id="phone" name="phone" placeholder="Teléfono">
         <div v-if="errors.has('phone')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('phone') }}</div>
     </div>
 </div>
@@ -236,7 +236,7 @@
 <div class="form-group row align-items-center" :class="{'has-danger': errors.has('password'), 'has-success': this.fields.password && this.fields.password.valid }">
     <label for="password" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">Contraseña</label>
     <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-7'">
-        <input type="password" v-model="form.password" v-validate="'min:8|required'" @input="validate($event)" class="form-control" :class="{'form-control-danger': errors.has('password'), 'form-control-success': this.fields.password && this.fields.password.valid}" id="password" name="password" placeholder="Contraseña" ref="password">
+        <input type="password" v-model="form.password" v-validate="'min:8'" @input="validate($event)" class="form-control" :class="{'form-control-danger': errors.has('password'), 'form-control-success': this.fields.password && this.fields.password.valid}" id="password" name="password" placeholder="Contraseña" ref="password">
         <div v-if="errors.has('password')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('password') }}</div>
         <small class="form-text text-muted">
             La contraseña debe contener minimo 8 caracteres, una mayuscula, un número y un carácter especial.
@@ -247,39 +247,40 @@
 <div class="form-group row align-items-center" :class="{'has-danger': errors.has('password_confirmation'), 'has-success': this.fields.password_confirmation && this.fields.password_confirmation.valid }">
     <label for="password_confirmation" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">Confirma tu contraseña</label>
     <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-7'">
-        <input type="password" v-model="form.password_confirmation" v-validate="'confirmed:password|min:8|required'" @input="validate($event)" class="form-control" :class="{'form-control-danger': errors.has('password_confirmation'), 'form-control-success': this.fields.password_confirmation && this.fields.password_confirmation.valid}" id="password_confirmation" name="password_confirmation" placeholder="Confirma tu contraseña" data-vv-as="password">
+        <input type="password" v-model="form.password_confirmation" v-validate="'confirmed:password|min:8'" @input="validate($event)" class="form-control" :class="{'form-control-danger': errors.has('password_confirmation'), 'form-control-success': this.fields.password_confirmation && this.fields.password_confirmation.valid}" id="password_confirmation" name="password_confirmation" placeholder="Confirma tu contraseña" data-vv-as="password">
         <div v-if="errors.has('password_confirmation')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('password_confirmation') }}</div>
     </div>
 </div>
 
 <div class="form-group row align-items-center" :class="{'has-danger': errors.has('position'), 'has-success': this.fields.position && this.fields.position.valid }">
-    <label for="name" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">Cargo</label>
+    <label for="position" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">Cargo</label>
     <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-7'">
-        <input type="text" v-model="form.position" v-validate="'required'" @input="validate($event)" class="form-control" :class="{'form-control-danger': errors.has('position'), 'form-control-success': this.fields.position && this.fields.position.valid}" id="position" name="position" placeholder="Cargo">
+        <input type="text" v-model="form.position" v-validate="''" @input="validate($event)" class="form-control" :class="{'form-control-danger': errors.has('position'), 'form-control-success': this.fields.position && this.fields.position.valid}" id="position" name="position" placeholder="Cargo">
         <div v-if="errors.has('position')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('position') }}</div>
     </div>
 </div>
 
 <div class="form-group row align-items-center" :class="{'has-danger': errors.has('name'), 'has-success': this.fields.name && this.fields.name.valid }">
-    <label for="name" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">Nombres</label>
+    <label for="name" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">Nombre</label>
     <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-7'">
-        <input type="text" v-model="form.name" v-validate="'required'" @input="validate($event)" class="form-control" :class="{'form-control-danger': errors.has('first_name'), 'form-control-success': this.fields.name && this.fields.name.valid}" id="name" name="name" placeholder="Nombres">
+        <input type="text" v-model="form.name" v-validate="''" @input="validate($event)" class="form-control" :class="{'form-control-danger': errors.has('name'), 'form-control-success': this.fields.name && this.fields.name.valid}" id="name" name="name" placeholder="Nombre">
         <div v-if="errors.has('name')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('name') }}</div>
     </div>
 </div>
 
-<div class="form-group row align-items-center" :class="{'has-danger': errors.has('last_name'), 'has-success': this.fields.last_name && this.fields.last_name.valid }">
-    <label for="last_name" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">Apellidos</label>
+<div class="form-group row align-items-center" :class="{'has-danger': errors.has('nit'), 'has-success': this.fields.last_name && this.fields.last_name.valid }">
+    <label for="last_name" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">Apellido</label>
     <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-7'">
-        <input type="text" v-model="form.last_name" v-validate="'required'" @input="validate($event)" class="form-control" :class="{'form-control-danger': errors.has('last_name'), 'form-control-success': this.fields.last_name && this.fields.last_name.valid}" id="last_name" name="last_name" placeholder="Apellidos">
+        <input type="text" v-model="form.last_name" v-validate="''" @input="validate($event)" class="form-control" :class="{'form-control-danger': errors.has('last_name'), 'form-control-success': this.fields.last_name && this.fields.last_name.valid}" id="last_name" name="last_name" placeholder="Apellido">
         <div v-if="errors.has('last_name')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('last_name') }}</div>
     </div>
 </div>
 
 <div class="form-group row align-items-center" :class="{'has-danger': errors.has('identity_number'), 'has-success': this.fields.identity_number && this.fields.identity_number.valid }">
-    <label for="identity_number" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">Número de identificación</label>
+    <label for="identity_number" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">Número de Identificación</label>
     <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-7'">
-        <input onkeypress="return isNumberKey(event)" type="text" v-model="form.identity_number" v-validate="'required'" @input="validate($event)" class="form-control" :class="{'form-control-danger': errors.has('identity_number'), 'form-control-success': this.fields.identity_number && this.fields.identity_number.valid}" id="identity_number" name="identity_number" placeholder="Número de identificación">
+        <input onkeypress="return isNumberKey(event)" type="text" v-model="form.identity_number" v-validate="''" @input="validate($event)" class="form-control" :class="{'form-control-danger': errors.has('identity_number'), 'form-control-success': this.fields.identity_number && this.fields.identity_number.valid}" id="identity_number" name="identity_number" placeholder="Número de Identificación">
         <div v-if="errors.has('identity_number')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('identity_number') }}</div>
     </div>
 </div>
+

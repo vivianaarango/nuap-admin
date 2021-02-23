@@ -12,11 +12,13 @@ use Illuminate\Foundation\Application;
  * @property string name
  * @property string last_name
  * @property string identity_number
+ * @property string position
  * @property string image_url
  *
  * @package App\Models
  * @method static create(array $data)
  * @method static where(string $string, int $userID)
+ * @method static findOrFail(int $clientID)
  */
 class AdminUser extends Model
 {
@@ -32,6 +34,7 @@ class AdminUser extends Model
         'user_id',
         'name',
         'last_name',
+        'position',
         'identity_number',
         'image_url'
     ];

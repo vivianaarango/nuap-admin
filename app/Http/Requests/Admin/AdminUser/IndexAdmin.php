@@ -1,13 +1,13 @@
 <?php
-namespace App\Http\Requests\Admin\Users;
+namespace App\Http\Requests\Admin\AdminUser;
 
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class IndexUserLocation
+ * Class IndexAdmin
  * @package App\Http\Requests\Admin\Client
  */
-class IndexUserLocation extends FormRequest
+class IndexAdmin extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -17,7 +17,7 @@ class IndexUserLocation extends FormRequest
     public function rules()
     {
         return [
-            'orderBy' => 'in:id,country,city,location,neighborhood,address|nullable',
+            'orderBy' => 'in:id,email,position,phone,name,last_name,identity_number|nullable',
             'orderDirection' => 'in:asc,desc|nullable',
             'search' => 'string|nullable',
             'page' => 'integer|nullable',

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
  * Class UserLocation
  * @property int id
  * @property int user_id
+ * @property string country
  * @property string city
  * @property string location
  * @property string neighborhood
@@ -34,6 +35,7 @@ class UserLocation extends Model
      */
     protected $fillable = [
         'user_id',
+        'country',
         'city',
         'location',
         'neighborhood',
