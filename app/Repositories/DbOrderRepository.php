@@ -55,4 +55,16 @@ class DbOrderRepository implements DbOrderRepositoryInterface
             ->join('user_locations', 'user_locations.id', '=', 'orders.address_id')
             ->get();
     }
+
+    /**
+     * @param int $userID
+     * @return Collection
+     */
+    public function findAllByUserID(int $userID): Collection
+    {
+        return Order::select('orders.*', 'user_locations.address')
+            ->where('orders.user_id', $userID)
+            ->join('user_locations', 'user_locations.id', '=', 'orders.address_id')
+            ->get();
+    }
 }

@@ -33,4 +33,10 @@ interface DbOrderRepositoryInterface
      * @return Collection
      */
     public function findAllByClientID(int $clientID): Collection;
+
+    /**
+     * @param int $userID
+     * @return Collection
+     */
+    public function findAllByUserID(int $userID): Collection;
 }

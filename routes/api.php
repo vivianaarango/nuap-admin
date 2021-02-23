@@ -108,6 +108,16 @@ Route::group(['prefix' => 'commerces'], function () {
         'as' => 'api-commerces-profile',
         'uses' => 'Api\ProfileCommerceController'
     ]);
+
+    Route::middleware('auth:api')->get('/sales', [
+        'as' => 'api-get-sales',
+        'uses' => 'Api\GetSalesByCommerceController'
+    ]);
+
+    Route::middleware('auth:api')->get('/order/{order}/update', [
+        'as' => 'api-update-order',
+        'uses' => 'Api\UpdateStatusController'
+    ]);
 });
 
 Route::group(['prefix' => 'products'], function () {
