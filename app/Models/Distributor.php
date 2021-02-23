@@ -12,11 +12,13 @@ use Illuminate\Foundation\Application;
  * @property int user_id
  * @property string business_name
  * @property string nit
+ * @property string country_code
  * @property string second_phone
  * @property string commission
  * @property string type
  * @property string name_legal_representative
  * @property string cc_legal_representative
+ * @property string country_code_legal_representative
  * @property string contact_legal_representative
  * @property string url_rut
  * @property string url_commerce_room
@@ -58,11 +60,13 @@ class Distributor extends Model
         'user_id',
         'business_name',
         'nit',
+        'country_code',
         'second_phone',
         'commission',
         'type',
         'name_legal_representative',
         'cc_legal_representative',
+        'country_code_legal_representative',
         'contact_legal_representative',
         'url_rut',
         'url_commerce_room',

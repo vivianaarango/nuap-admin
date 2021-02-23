@@ -18,6 +18,7 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fa fa-align-justify"></i>  Clientes
+                        <a style="color: white" class="btn btn-success btn-sm pull-right m-b-0 ml-2" href="{{ url('admin/client/export') }}" role="button"><i class="fa fa-file-excel-o"></i>&nbsp;Exportar</a>
                         <a class="btn btn-primary btn-spinner btn-sm pull-right m-b-0" href="{{ url('admin/client-create') }}" role="button"><i class="fa fa-plus"></i>&nbsp; Nuevo cliente</a>
                     </div>
                     <div class="card-body" v-cloak>
@@ -79,14 +80,14 @@
                                     <td>
                                         <div class="row no-gutters">
                                             <div class="col-auto">
-                                                <a class="btn btn-sm btn-spinner btn-success" :href="item.resource_url+'/add-location'" title="Agregar ubicación" role="button"><i class="fa fa-map-marker"></i></a>
+                                                <a style="background-color: #d90909"  class="btn btn-sm btn-spinner btn-success" :href="item.resource_url+'/add-location'" title="Agregar ubicación" role="button"><i class="fa fa-map-marker"></i></a>
                                             </div>
                                             <div class="col-auto">
                                                 <a class="btn btn-sm btn-spinner btn-info" :href="item.resource_url+'/edit'" title="Editar" role="button"><i class="fa fa-edit"></i></a>
                                             </div>
-                                            <form class="col" @submit.prevent="deleteItem(item.resource_url)">
+                                            <!--<form class="col" @submit.prevent="deleteItem(item.resource_url)">
                                                 <button type="submit" class="btn btn-sm btn-danger" title="Eliminar"><i class="fa fa-trash-o"></i></button>
-                                            </form>
+                                            </form>-->
                                         </div>
                                     </td>
                                 </tr>

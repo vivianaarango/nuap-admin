@@ -20,6 +20,8 @@ class CreateCommerce extends FormRequest
     {
         return [
             'email' => ['required', 'email', 'string', 'unique:users'],
+            'country_code' => ['required', 'string'],
+            'country_code_user' => ['required', 'string'],
             'phone' => ['required', 'string', 'unique:users'],
             'password' => ['required', 'confirmed', 'min:8', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9]).*$/', 'string'],
             'business_name' => ['required', 'string'],
@@ -29,6 +31,7 @@ class CreateCommerce extends FormRequest
             'type' => ['required', 'string'],
             'name_legal_representative' => ['required', 'string'],
             'cc_legal_representative' => ['required', 'string'],
+            'country_code_legal_representative' => ['required', 'string'],
             'contact_legal_representative' => ['required', 'string'],
             'shipping_cost' => ['numeric'],
             'distance' => ['numeric']
@@ -50,6 +53,7 @@ class CreateCommerce extends FormRequest
         $data['password'] = md5($data['password']);
         $data['phone_validated'] = User::PHONE_NOT_VALIDATED;
         $data['api_token'] = Str::random(60);
+        $data['country_code'] = $data['country_code_user'];
 
         return $data;
     }

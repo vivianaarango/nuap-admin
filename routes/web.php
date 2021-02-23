@@ -109,6 +109,8 @@ Route::get('/admin/client-create', 'Admin\ClientController@create');
 Route::post('/admin/client-store', 'Admin\ClientController@store');
 /* Update */
 Route::post('/admin/client/{client}', 'Admin\ClientController@update')->name('admin/client/update');
+/* Export */
+Route::get('/admin/client/export', 'Admin\ClientController@export')->name('admin/client/export');
 
 ### Products ###
 /* List distributor */

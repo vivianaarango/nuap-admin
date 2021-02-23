@@ -135,11 +135,13 @@ class DistributorController extends Controller
      */
     public function store(CreateDistributor $request)
     {
+        $countryCode = $request['country_code'];
         $user = Session::get('user');
         if (isset($user) && $user->role == User::ADMIN_ROLE) {
             $data = $request->getModifiedData();
             $user = User::create($data);
             $data['user_id'] = $user->id;
+            $data['country_code'] = $countryCode;
             Distributor::create($data);
         }
 
@@ -163,6 +165,8 @@ class DistributorController extends Controller
         $this->validate($request, [
             'email' => ['required', 'string', 'email', 'unique:users,email,'.$request['user_id']],
             'phone' => ['required', 'string', 'unique:users,phone,'.$request['user_id']],
+            'country_code' => ['required', 'string'],
+            'country_code_user' => ['required', 'string'],
             'password' => ['nullable', 'confirmed', 'min:8', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9]).*$/', 'string'],
             'business_name' => ['required', 'string'],
             'nit' => ['required', 'string'],
@@ -171,6 +175,7 @@ class DistributorController extends Controller
             'name_legal_representative' => ['required', 'string'],
             'cc_legal_representative' => ['required', 'string'],
             'contact_legal_representative' => ['required', 'string'],
+            'country_code_legal_representative' => ['required', 'string'],
             'shipping_cost' => ['nullable', 'numeric'],
             'distance' => ['nullable', 'numeric']
         ]);
@@ -185,19 +190,23 @@ class DistributorController extends Controller
             $this->dbUserRepository->updateUser(
                 $request['user_id'],
                 $request['email'],
+                $request['country_code_user'],
                 $request['phone'],
                 isset($phoneValidated) ? $phoneValidated : true,
                 is_null($request['password']) ? null : md5($request['password'])
             );
+
             $this->dbDistributorRepository->updateDistributor(
                 $request['distributor_id'],
                 $request['user_id'],
                 $request['business_name'],
                 $request['nit'],
+                $request['country_code'],
                 $request['second_phone'],
                 $request['commission'],
                 $request['name_legal_representative'],
                 $request['cc_legal_representative'],
+                $request['country_code_legal_representative'],
                 $request['contact_legal_representative'],
                 $request['shipping_cost'],
                 $request['distance']

@@ -9,6 +9,7 @@ use Illuminate\Foundation\Application;
  * Class User
  * @property int id
  * @property string email
+ * @property string country_code
  * @property string phone
  * @property boolean phone_validated
  * @property string phone_validated_date
@@ -76,6 +77,7 @@ class User extends Model
      */
     protected $fillable = [
         'email',
+        'country_code',
         'phone',
         'phone_validated',
         'phone_validated_date',

@@ -82,14 +82,14 @@
                                 <td>
                                     <div class="row no-gutters">
                                         <div class="col-auto">
-                                            <a class="btn btn-sm btn-spinner btn-warning" :href="item.resource_url+'/view'" title="Ver producto" role="button"><i class="fa fa-eye"></i></a>
+                                            <a style="background-color: #3ba92e" class="btn btn-sm btn-spinner btn-warning" :href="item.resource_url+'/view'" title="Ver producto" role="button"><i class="fa fa-eye"></i></a>
                                         </div>
                                         <div class="col-auto">
                                             <a class="btn btn-sm btn-spinner btn-info" :href="item.resource_url+'/edit'" title="Editar" role="button"><i class="fa fa-edit"></i></a>
                                         </div>
-                                        <form class="col" @submit.prevent="deleteItem(item.resource_url)">
+                                        <!--<form class="col" @submit.prevent="deleteItem(item.resource_url)">
                                             <button type="submit" class="btn btn-sm btn-danger" title="Eliminar"><i class="fa fa-trash-o"></i></button>
-                                        </form>
+                                        </form>-->
                                     </div>
                                 </td>
                             </tr>

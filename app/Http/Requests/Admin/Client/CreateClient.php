@@ -20,6 +20,7 @@ class CreateClient extends FormRequest
     {
         return [
             'email' => ['required', 'email', 'string', 'unique:users'],
+            'country_code' => ['required', 'string'],
             'phone' => ['required', 'string', 'unique:users'],
             'password' => ['required', 'confirmed', 'min:8', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9]).*$/', 'string'],
             'name' => ['required', 'string'],

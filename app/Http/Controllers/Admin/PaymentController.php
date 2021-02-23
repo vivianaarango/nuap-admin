@@ -434,18 +434,20 @@ class PaymentController extends Controller
     {
         $user = Session::get('user');
         if (isset($user) && $user->role == User::DISTRIBUTOR_ROLE) {
-            $account = $this->dbBankAccountRepository->findByUserID($user->id);
-            $payment['user_id'] = $user->id;
-            $payment['user_type'] = $user->role;
-            $payment['account_id'] = $account->id;
-            $payment['value'] = $request['value'];
-            $payment['status'] = Payment::STATUS_PENDING;
-            $payment['request_date'] = now();
-            Payment::create($payment);
-
             $balance = $this->dbBalanceRepository->findByUserID($user->id);
-            $balance->requested_value = $balance->requested_value - $payment['value'];
-            $balance->save();
+            if ($request['value'] <= $balance->requested_value) {
+                $account = $this->dbBankAccountRepository->findByUserID($user->id);
+                $payment['user_id'] = $user->id;
+                $payment['user_type'] = $user->role;
+                $payment['account_id'] = $account->id;
+                $payment['value'] = $request['value'];
+                $payment['status'] = Payment::STATUS_PENDING;
+                $payment['request_date'] = now();
+                Payment::create($payment);
+
+                $balance->requested_value = $balance->requested_value - $payment['value'];
+                $balance->save();
+            }
 
             return redirect('/admin/payment-list');
         }

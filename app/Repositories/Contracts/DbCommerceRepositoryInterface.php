@@ -21,12 +21,14 @@ interface DbCommerceRepositoryInterface
      * @param int $userID
      * @param string $businessName
      * @param string $nit
+     * @param string $countryCode
      * @param string $secondPhone
      * @param float $commission
      * @param string $type
      * @param string $nameLegalRepresentative
      * @param string $ccLegalRepresentative
      * @param string $contactLegalRepresentative
+     * @param string $countryCodeLegalRepresentative
      * @param float|null $shippingCost
      * @param float|null $distance
      * @return Commerce
@@ -36,11 +38,13 @@ interface DbCommerceRepositoryInterface
         int $userID,
         string $businessName,
         string $nit,
+        string $countryCode,
         string $secondPhone,
         float $commission,
         string $type,
         string $nameLegalRepresentative,
         string $ccLegalRepresentative,
+        string $countryCodeLegalRepresentative,
         string $contactLegalRepresentative,
         float $shippingCost = null,
         float $distance = null

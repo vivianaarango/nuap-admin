@@ -21,10 +21,12 @@ interface DbDistributorRepositoryInterface
      * @param int $userID
      * @param string $businessName
      * @param string $nit
+     * @param string $countryCode
      * @param string $secondPhone
      * @param float $commission
      * @param string $nameLegalRepresentative
      * @param string $ccLegalRepresentative
+     * @param string $countryCodeLegalRepresentative
      * @param string $contactLegalRepresentative
      * @param float|null $shippingCost
      * @param float|null $distance
@@ -35,10 +37,12 @@ interface DbDistributorRepositoryInterface
         int $userID,
         string $businessName,
         string $nit,
+        string $countryCode,
         string $secondPhone,
         float $commission,
         string $nameLegalRepresentative,
         string $ccLegalRepresentative,
+        string $countryCodeLegalRepresentative,
         string $contactLegalRepresentative,
         float $shippingCost = null,
         float $distance = null

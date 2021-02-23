@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\ClientsExport;
+use App\Exports\ProductsExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Client\CreateClient;
 use App\Http\Requests\Admin\Client\IndexClient;
@@ -18,6 +20,8 @@ use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
+use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
  * Class ClientController
@@ -160,6 +164,7 @@ class ClientController extends Controller
     {
         $this->validate($request, [
             'email' => ['nullable', 'string', 'email', 'unique:users,email,'.$request['user_id']],
+            'country_code' => ['nullable', 'string'],
             'phone' => ['nullable', 'string', 'unique:users,phone,'.$request['user_id']],
             'password' => ['nullable', 'confirmed', 'min:8', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9]).*$/', 'string'],
             'name' => ['required', 'string'],
@@ -177,6 +182,7 @@ class ClientController extends Controller
             $this->dbUserRepository->updateUser(
                 $request['user_id'],
                 $request['email'],
+                $request['country_code'],
                 $request['phone'],
                 isset($phoneValidated) ? $phoneValidated : true,
                 is_null($request['password']) ? null : md5($request['password'])
@@ -198,5 +204,13 @@ class ClientController extends Controller
         }
 
         return redirect('admin/validate-session');
+    }
+
+    /**
+     * @return BinaryFileResponse
+     */
+    public function export(): BinaryFileResponse
+    {
+        return Excel::download(new ClientsExport, 'clients.xlsx');
     }
 }

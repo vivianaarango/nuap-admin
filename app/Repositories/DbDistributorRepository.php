@@ -27,10 +27,12 @@ class DbDistributorRepository implements DbDistributorRepositoryInterface
      * @param int $userID
      * @param string $businessName
      * @param string $nit
+     * @param string $countryCode
      * @param string $secondPhone
      * @param float $commission
      * @param string $nameLegalRepresentative
      * @param string $ccLegalRepresentative
+     * @param string $countryCodeLegalRepresentative
      * @param string $contactLegalRepresentative
      * @param float|null $shippingCost
      * @param float|null $distance
@@ -41,10 +43,12 @@ class DbDistributorRepository implements DbDistributorRepositoryInterface
         int $userID,
         string $businessName,
         string $nit,
+        string $countryCode,
         string $secondPhone,
         float $commission,
         string $nameLegalRepresentative,
         string $ccLegalRepresentative,
+        string $countryCodeLegalRepresentative,
         string $contactLegalRepresentative,
         float $shippingCost = null,
         float $distance = null
@@ -53,10 +57,12 @@ class DbDistributorRepository implements DbDistributorRepositoryInterface
         $distributor->user_id = $userID;
         $distributor->business_name = $businessName;
         $distributor->nit = $nit;
+        $distributor->country_code = $countryCode;
         $distributor->second_phone = $secondPhone;
         $distributor->commission = $commission;
         $distributor->name_legal_representative = $nameLegalRepresentative;
         $distributor->cc_legal_representative = $ccLegalRepresentative;
+        $distributor->country_code_legal_representative = $countryCodeLegalRepresentative;
         $distributor->contact_legal_representative = $contactLegalRepresentative;
         $distributor->shipping_cost = $shippingCost;
         $distributor->distance = $distance;

@@ -51,6 +51,7 @@ interface DbUsersRepositoryInterface
     /**
      * @param int $userID
      * @param string $email
+     * @param string $codeCountry
      * @param string $phone
      * @param bool $phoneValidated
      * @param string|null $password
@@ -59,6 +60,7 @@ interface DbUsersRepositoryInterface
     public function updateUser(
         int $userID,
         string $email,
+        string $codeCountry,
         string $phone,
         bool $phoneValidated,
         string $password = null

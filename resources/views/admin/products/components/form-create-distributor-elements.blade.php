@@ -22,7 +22,7 @@
 <div class="form-group row align-items-center" :class="{'has-danger': errors.has('sku'), 'has-success': this.fields.sku && this.fields.sku.valid }">
     <label for="sku" class="col-form-label text-md-right" :class="'col-md-3'">Sku</label>
     <div :class="'col-md-4 col-md-9 col-xl-7'">
-        <input type="text" required class="form-control" :class="{'form-control-danger': errors.has('sku'), 'form-control-success': this.fields.sku && this.fields.sku.valid}" id="sku" name="sku" placeholder="Sku">
+        <input onkeypress="return isNumberKey(event)" type="text" required class="form-control" :class="{'form-control-danger': errors.has('sku'), 'form-control-success': this.fields.sku && this.fields.sku.valid}" id="sku" name="sku" placeholder="Sku">
         <div v-if="errors.has('sku')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('sku') }}</div>
     </div>
 </div>
@@ -54,7 +54,7 @@
 <div class="form-group row align-items-center" :class="{'has-danger': errors.has('weight'), 'has-success': this.fields.weight && this.fields.weight.valid }">
     <label for="weight" class="col-form-label text-md-right" :class="'col-md-3'">Peso</label>
     <div :class="'col-md-4 col-md-9 col-xl-7'">
-        <input type="number" required class="form-control" :class="{'form-control-danger': errors.has('weight'), 'form-control-success': this.fields.weight && this.fields.weight.valid}" id="weight" name="weight" placeholder="Peso">
+        <input type="number" required class="form-control" :class="{'form-control-danger': errors.has('weight'), 'form-control-success': this.fields.weight && this.fields.weight.valid}" id="weight" name="weight" placeholder="Peso (kg)">
         <div v-if="errors.has('weight')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('weight') }}</div>
     </div>
 </div>
@@ -62,7 +62,7 @@
 <div class="form-group row align-items-center" :class="{'has-danger': errors.has('length'), 'has-success': this.fields.length && this.fields.length.valid }">
     <label for="length" class="col-form-label text-md-right" :class="'col-md-3'">Largo</label>
     <div :class="'col-md-4 col-md-9 col-xl-7'">
-        <input type="number" required class="form-control" :class="{'form-control-danger': errors.has('length'), 'form-control-success': this.fields.length && this.fields.length.valid}" id="length" name="length" placeholder="Largo">
+        <input type="number" required class="form-control" :class="{'form-control-danger': errors.has('length'), 'form-control-success': this.fields.length && this.fields.length.valid}" id="length" name="length" placeholder="Largo (cm)">
         <div v-if="errors.has('length')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('length') }}</div>
     </div>
 </div>
@@ -70,7 +70,7 @@
 <div class="form-group row align-items-center" :class="{'has-danger': errors.has('width'), 'has-success': this.fields.width && this.fields.width.valid }">
     <label for="width" class="col-form-label text-md-right" :class="'col-md-3'">Ancho</label>
     <div :class="'col-md-4 col-md-9 col-xl-7'">
-        <input type="number" required class="form-control" :class="{'form-control-danger': errors.has('width'), 'form-control-success': this.fields.width && this.fields.width.valid}" id="width" name="width" placeholder="Ancho">
+        <input type="number" required class="form-control" :class="{'form-control-danger': errors.has('width'), 'form-control-success': this.fields.width && this.fields.width.valid}" id="width" name="width" placeholder="Ancho (cm)">
         <div v-if="errors.has('width')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('width') }}</div>
     </div>
 </div>
@@ -78,7 +78,7 @@
 <div class="form-group row align-items-center" :class="{'has-danger': errors.has('height'), 'has-success': this.fields.height && this.fields.height.valid }">
     <label for="height" class="col-form-label text-md-right" :class="'col-md-3'">Alto</label>
     <div :class="'col-md-4 col-md-9 col-xl-7'">
-        <input type="number" required class="form-control" :class="{'form-control-danger': errors.has('height'), 'form-control-success': this.fields.height && this.fields.height.valid}" id="height" name="height" placeholder="Alto">
+        <input type="number" required class="form-control" :class="{'form-control-danger': errors.has('height'), 'form-control-success': this.fields.height && this.fields.height.valid}" id="height" name="height" placeholder="Alto (cm)">
         <div v-if="errors.has('height')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('height') }}</div>
     </div>
 </div>
@@ -86,7 +86,7 @@
 <div class="form-group row align-items-center" :class="{'has-danger': errors.has('purchase_price'), 'has-success': this.fields.purchase_price && this.fields.purchase_price.valid }">
     <label for="purchase_price" class="col-form-label text-md-right" :class="'col-md-3'">Precio de Compra</label>
     <div :class="'col-md-4 col-md-9 col-xl-7'">
-        <input type="number" required class="form-control" :class="{'form-control-danger': errors.has('purchase_price'), 'form-control-success': this.fields.purchase_price && this.fields.purchase_price.valid}" id="purchase_price" name="purchase_price" placeholder="Precio de Compra">
+        <input type="number" required class="form-control" :class="{'form-control-danger': errors.has('purchase_price'), 'form-control-success': this.fields.purchase_price && this.fields.purchase_price.valid}" id="purchase_price" name="purchase_price" placeholder="Precio de Compra ($)">
         <div v-if="errors.has('purchase_price')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('purchase_price') }}</div>
     </div>
 </div>
@@ -94,7 +94,7 @@
 <div class="form-group row align-items-center" :class="{'has-danger': errors.has('sale_price'), 'has-success': this.fields.sale_price && this.fields.sale_price.valid }">
     <label for="sale_price" class="col-form-label text-md-right" :class="'col-md-3'">Precio de Venta</label>
     <div :class="'col-md-4 col-md-9 col-xl-7'">
-        <input type="number" required class="form-control" :class="{'form-control-danger': errors.has('sale_price'), 'form-control-success': this.fields.sale_price && this.fields.sale_price.valid}" id="sale_price" name="sale_price" placeholder="Precio de Venta">
+        <input type="number" required class="form-control" :class="{'form-control-danger': errors.has('sale_price'), 'form-control-success': this.fields.sale_price && this.fields.sale_price.valid}" id="sale_price" name="sale_price" placeholder="Precio de Venta ($)">
         <div v-if="errors.has('sale_price')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('sale_price') }}</div>
     </div>
 </div>
@@ -102,7 +102,7 @@
 <div class="form-group row align-items-center" :class="{'has-danger': errors.has('special_price'), 'has-success': this.fields.special_price && this.fields.special_price.valid }">
     <label for="special_price" class="col-form-label text-md-right" :class="'col-md-3'">Descuento</label>
     <div :class="'col-md-4 col-md-9 col-xl-7'">
-        <input min="0" max="100" type="number" step="0.1" required class="form-control" :class="{'form-control-danger': errors.has('special_price'), 'form-control-success': this.fields.special_price && this.fields.special_price.valid}" id="special_price" name="special_price" placeholder="Descuento">
+        <input min="0" max="100" type="number" step="0.1" required class="form-control" :class="{'form-control-danger': errors.has('special_price'), 'form-control-success': this.fields.special_price && this.fields.special_price.valid}" id="special_price" name="special_price" placeholder="Descuento (%)">
         <div v-if="errors.has('special_price')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('special_price') }}</div>
     </div>
 </div>

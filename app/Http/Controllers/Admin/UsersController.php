@@ -155,6 +155,7 @@ class UsersController extends Controller
             $data = [
                 'user_id' => $user->id,
                 'email' => $user->email,
+                'country_code' => $user->country_code,
                 'phone' => $user->phone,
                 'password' => null
             ];
@@ -168,9 +169,12 @@ class UsersController extends Controller
                 $data['commission'] = $distributor->commission;
                 $data['name_legal_representative'] = $distributor->name_legal_representative;
                 $data['cc_legal_representative'] = $distributor->cc_legal_representative;
+                $data['country_code_legal_representative'] = $distributor->country_code_legal_representative;
                 $data['contact_legal_representative'] = $distributor->contact_legal_representative;
                 $data['shipping_cost'] = $distributor->shipping_cost;
                 $data['distance'] = $distributor->distance;
+                $data['country_code_user'] = $user->country_code;
+                $data['country_code'] = $distributor->country_code;
 
                 return view('admin.distributors.edit', [
                     'user' => json_encode($data),
@@ -190,9 +194,12 @@ class UsersController extends Controller
                 $data['type'] = $commerce->type;
                 $data['name_legal_representative'] = $commerce->name_legal_representative;
                 $data['cc_legal_representative'] = $commerce->cc_legal_representative;
+                $data['country_code_legal_representative'] = $commerce->country_code_legal_representative;
                 $data['contact_legal_representative'] = $commerce->contact_legal_representative;
                 $data['shipping_cost'] = $commerce->shipping_cost;
                 $data['distance'] = $commerce->distance;
+                $data['country_code_user'] = $user->country_code;
+                $data['country_code'] = $commerce->country_code;
 
                 return view('admin.commerces.edit', [
                     'user' => json_encode($data),

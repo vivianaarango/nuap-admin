@@ -27,11 +27,13 @@ class DbCommerceRepository implements DbCommerceRepositoryInterface
      * @param int $userID
      * @param string $businessName
      * @param string $nit
+     * @param string $countryCode
      * @param string $secondPhone
      * @param float $commission
      * @param string $type
      * @param string $nameLegalRepresentative
      * @param string $ccLegalRepresentative
+     * @param string $countryCodeLegalRepresentative
      * @param string $contactLegalRepresentative
      * @param float|null $shippingCost
      * @param float|null $distance
@@ -42,11 +44,13 @@ class DbCommerceRepository implements DbCommerceRepositoryInterface
         int $userID,
         string $businessName,
         string $nit,
+        string $countryCode,
         string $secondPhone,
         float $commission,
         string $type,
         string $nameLegalRepresentative,
         string $ccLegalRepresentative,
+        string $countryCodeLegalRepresentative,
         string $contactLegalRepresentative,
         float $shippingCost = null,
         float $distance = null
@@ -55,11 +59,13 @@ class DbCommerceRepository implements DbCommerceRepositoryInterface
         $commerce->user_id = $userID;
         $commerce->business_name = $businessName;
         $commerce->nit = $nit;
+        $commerce->country_code = $countryCode;
         $commerce->second_phone = $secondPhone;
         $commerce->commission = $commission;
         $commerce->type = $type;
         $commerce->name_legal_representative = $nameLegalRepresentative;
         $commerce->cc_legal_representative = $ccLegalRepresentative;
+        $commerce->country_code_legal_representative = $countryCodeLegalRepresentative;
         $commerce->contact_legal_representative = $contactLegalRepresentative;
         $commerce->shipping_cost = $shippingCost;
         $commerce->distance = $distance;

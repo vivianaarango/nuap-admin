@@ -46,7 +46,6 @@
                             <tr>
                                 <th is='sortable' :column="'id'">ID</th>
                                 <th is='sortable' :column="'business_name'">Razón social</th>
-                                <th is='sortable' :column="'email'">Correo electrónico</th>
                                 <th is='sortable' :column="'phone'">Teléfono</th>
                                 <th is='sortable' :column="'commission'">Comisión</th>
                                 <th is='sortable' :column="'name_legal_representative'">Representante legal</th>
@@ -59,7 +58,6 @@
                             <tr v-for="(item, index) in collection">
                                 <td >@{{ item.id }}</td>
                                 <td >@{{ item.business_name }}</td>
-                                <td >@{{ item.email }}</td>
                                 <td >@{{ item.phone }}</td>
                                 <td >@{{ item.commission }}%</td>
                                 <td >@{{ item.name_legal_representative }}</td>
@@ -79,20 +77,20 @@
                                 <td>
                                     <div class="row no-gutters">
                                         <div class="col-auto">
-                                            <a class="btn btn-sm btn-spinner btn-status-cancel" :href="item.resource_url+'/view-account'" title="Cuenta bancaria" role="button"><i class="fa fa-dollar"></i></a>
+                                            <a style="background-color: #3ba92e" class="btn btn-sm btn-spinner btn-status-cancel" :href="item.resource_url+'/view-account'" title="Cuenta bancaria" role="button"><i class="fa fa-dollar"></i></a>
                                         </div>
                                         <div class="col-auto">
-                                            <a class="btn btn-sm btn-spinner btn-success" :href="item.resource_url+'/add-location'" title="Agregar ubicación" role="button"><i class="fa fa-map-marker"></i></a>
-                                        </div>
-                                        <div class="col-auto">
-                                            <a class="btn btn-sm btn-spinner btn-warning" :href="item.resource_url+'/add-document'" title="Agregar documentos" role="button"><i class="fa fa-file-archive-o"></i></a>
+                                            <a style="background-color: #d90909" class="btn btn-sm btn-spinner btn-success" :href="item.resource_url+'/add-location'" title="Agregar ubicación" role="button"><i class="fa fa-map-marker"></i></a>
                                         </div>
                                         <div class="col-auto">
                                             <a class="btn btn-sm btn-spinner btn-info" :href="item.resource_url+'/edit'" title="Editar" role="button"><i class="fa fa-edit"></i></a>
                                         </div>
-                                        <form class="col" @submit.prevent="deleteItem(item.resource_url)">
+                                        <div class="col-auto">
+                                            <a class="btn btn-sm btn-spinner btn-warning" :href="item.resource_url+'/add-document'" title="Agregar documentos" role="button"><i class="fa fa-file-archive-o"></i></a>
+                                        </div>
+                                        <!--<form class="col" @submit.prevent="deleteItem(item.resource_url)">
                                             <button type="submit" class="btn btn-sm btn-danger" title="Eliminar"><i class="fa fa-trash-o"></i></button>
-                                        </form>
+                                        </form>-->
                                     </div>
                                 </td>
                             </tr>

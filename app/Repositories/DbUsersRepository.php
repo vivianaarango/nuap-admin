@@ -116,6 +116,7 @@ class DbUsersRepository implements DbUsersRepositoryInterface
     /**
      * @param int $userID
      * @param string $email
+     * @param string $codeCountry
      * @param string $phone
      * @param bool $phoneValidated
      * @param string|null $password
@@ -124,11 +125,13 @@ class DbUsersRepository implements DbUsersRepositoryInterface
     public function updateUser(
         int $userID,
         string $email,
+        string $codeCountry,
         string $phone,
         bool $phoneValidated,
         string $password = null
     ): User {
         $user = $this->findById($userID);
+        $user->country_code = $codeCountry;
         $user->phone = $phone;
         $user->email = $email;
         if (!is_null($password)){
