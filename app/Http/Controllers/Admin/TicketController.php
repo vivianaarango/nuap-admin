@@ -86,7 +86,8 @@ class TicketController extends Controller
 
             return view('admin.tickets.index', [
                 'data' => $data,
-                'activation' => $user->role
+                'activation' => $user->name,
+                'role' => $user->role,
             ]);
         } else {
             return redirect('/admin/user-session');
@@ -101,7 +102,8 @@ class TicketController extends Controller
         $user = Session::get('user');
         if (isset($user) && $user->role == User::DISTRIBUTOR_ROLE) {
             return view('admin.tickets.create', [
-                'activation' => $user->role
+                'activation' => $user->name,
+                'role' => $user->role,
             ]);
         } else {
             return redirect('/admin/user-session');
@@ -189,7 +191,8 @@ class TicketController extends Controller
 
             return view('admin.tickets.admin-index', [
                 'data' => $data,
-                'activation' => $user->role
+                'activation' => $user->name,
+                'role' => $user->role,
             ]);
         } else {
             return redirect('/admin/user-session');
@@ -217,7 +220,8 @@ class TicketController extends Controller
                 'tittle' => $ticket->issues,
                 'ticket_id' => $ticket->id,
                 'data' => $data,
-                'activation' => $userAdmin->role
+                'activation' => $userAdmin->name,
+                'role' => $userAdmin->role,
             ]);
         }
 

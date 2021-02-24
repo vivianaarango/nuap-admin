@@ -106,7 +106,8 @@ class ProductController extends Controller
 
             return view('admin.products.index', [
                 'data' => $data,
-                'activation' => $user->role
+                'activation' => $user->name,
+                'role' => $user->role,
             ]);
         } else {
             return redirect('/admin/user-session');
@@ -124,7 +125,8 @@ class ProductController extends Controller
 
         if (isset($user) && $user->role == User::ADMIN_ROLE) {
             return view('admin.products.create', [
-                'activation' => $user->role,
+                'activation' => $user->name,
+                'role' => $user->role,
                 'categories' => Category::all(),
                 'commerces' => $commerces,
                 'distributors' => $distributors
@@ -143,7 +145,8 @@ class ProductController extends Controller
 
         if (isset($user) && $user->role == User::DISTRIBUTOR_ROLE) {
             return view('admin.products.create-distributor', [
-                'activation' => $user->role,
+                'activation' => $user->name,
+                'role' => $user->role,
                 'categories' => Category::all(),
                 'user_id' => $user->id
             ]);
@@ -300,7 +303,8 @@ class ProductController extends Controller
 
             return view('admin.products.edit', [
                 'product' => $data,
-                'activation' => $userAdmin->role,
+                'role' => $userAdmin->role,
+                'activation' => $userAdmin->name,
                 'url' => $product->resource_url,
                 'name' => $product->name,
                 'categories' => Category::all()
@@ -385,7 +389,8 @@ class ProductController extends Controller
 
             return view('admin.products.view', [
                 'product' => $product,
-                'activation' => $userAdmin->role,
+                'activation' => $userAdmin->name,
+                'role' => $user->role,
                 'categories' => Category::all(),
             ]);
         }
@@ -436,7 +441,8 @@ class ProductController extends Controller
 
             return view('admin.products.discount', [
                 'data' => $data,
-                'activation' => $user->role,
+                'activation' => $user->name,
+                'role' => $user->role,
             ]);
         } else {
             return redirect('/admin/user-session');
@@ -513,7 +519,8 @@ class ProductController extends Controller
 
             return view('admin.products.index-distributor', [
                 'data' => $data,
-                'activation' => $user->role
+                'activation' => $user->name,
+                'role' => $user->role,
             ]);
         } else {
             return redirect('/admin/user-session');

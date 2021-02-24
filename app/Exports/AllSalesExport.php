@@ -19,6 +19,16 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 class AllSalesExport implements FromCollection, WithMapping, WithHeadings
 {
     /**
+     * @var string
+     */
+    protected $initDate;
+
+    /**
+     * @var string
+     */
+    protected $finishDate;
+
+    /**
      * @var DbCommerceRepositoryInterface
      */
     private $dbCommerceRepository;
@@ -35,15 +45,21 @@ class AllSalesExport implements FromCollection, WithMapping, WithHeadings
 
     /**
      * AllSalesExport constructor.
+     * @param string $initDate
+     * @param string $finishDate
      * @param DbCommerceRepositoryInterface $dbCommerceRepository
      * @param DbDistributorRepositoryInterface $dbDistributorRepository
      * @param DbClientRepositoryInterface $dbClientRepository
      */
     function __construct(
+        string $initDate,
+        string $finishDate,
         DbCommerceRepositoryInterface $dbCommerceRepository,
         DbDistributorRepositoryInterface $dbDistributorRepository,
         DbClientRepositoryInterface $dbClientRepository
     ) {
+        $this->initDate = $initDate;
+        $this->finishDate = $finishDate;
         $this->dbCommerceRepository = $dbCommerceRepository;
         $this->dbDistributorRepository = $dbDistributorRepository;
         $this->dbClientRepository = $dbClientRepository;
@@ -59,6 +75,7 @@ class AllSalesExport implements FromCollection, WithMapping, WithHeadings
             'users.phone',
             'orders.*'
         )->join('users', 'users.id', '=', 'orders.user_id')
+            ->whereBetween('orders.created_at', [$this->initDate, $this->finishDate])
             ->orderBy('orders.id', 'desc')
             ->get();
 

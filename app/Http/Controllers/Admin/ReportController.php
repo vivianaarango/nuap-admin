@@ -84,7 +84,8 @@ class ReportController extends Controller
 
         if (isset($user) && $user->role == User::ADMIN_ROLE) {
             return view('admin.reports.new-users', [
-                'activation' => $user->role
+                'activation' => $user->name,
+                'role' => $user->role,
             ]);
         } else {
             return redirect('/admin/user-session');
@@ -100,7 +101,8 @@ class ReportController extends Controller
 
         if (isset($user) && $user->role == User::ADMIN_ROLE) {
             return view('admin.reports.tickets', [
-                'activation' => $user->role
+                'activation' => $user->name,
+                'role' => $user->role,
             ]);
         } else {
             return redirect('/admin/user-session');
@@ -116,7 +118,8 @@ class ReportController extends Controller
 
         if (isset($user) && $user->role == User::ADMIN_ROLE) {
             return view('admin.reports.login-users', [
-                'activation' => $user->role
+                'activation' => $user->name,
+                'role' => $user->role,
             ]);
         } else {
             return redirect('/admin/user-session');
@@ -129,7 +132,8 @@ class ReportController extends Controller
 
         if (isset($user) && $user->role == User::ADMIN_ROLE) {
             return view('admin.reports.sales', [
-                'activation' => $user->role
+                'activation' => $user->name,
+                'role' => $user->role,
             ]);
         } else {
             return redirect('/admin/user-session');
@@ -170,15 +174,31 @@ class ReportController extends Controller
     }
 
     /**
+     * @param Request $request
      * @return BinaryFileResponse
      */
-    public function exportAllSales(): BinaryFileResponse
+    public function exportAllSales(Request $request): BinaryFileResponse
     {
-        $date = now();
         return Excel::download(new AllSalesExport(
+            $request['init_date'],
+            $request['finish_date'],
             $this->dbCommerceRepository,
             $this->dbDistributorRepository,
             $this->dbClientRepository
-        ), 'ventas-'.$date.'.xlsx');
+        ), 'ventas-de-'.$request['init_date'].'-a-'.$request['finish_date'].'.xlsx');
+    }
+
+    public function allSales()
+    {
+        $user = Session::get('user');
+
+        if (isset($user) && $user->role == User::ADMIN_ROLE) {
+            return view('admin.reports.all-sales', [
+                'activation' => $user->name,
+                'role' => $user->role,
+            ]);
+        } else {
+            return redirect('/admin/user-session');
+        }
     }
 }

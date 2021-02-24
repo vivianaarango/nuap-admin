@@ -75,6 +75,8 @@ Route::get('/admin/edit-profile-distributor', 'Admin\ProfileController@editDistr
 Route::get('/admin/edit-password', 'Admin\ProfileController@editPassword');
 /* Update password */
 Route::post('/admin/update-password', 'Admin\ProfileController@updatePassword');
+/* Update status */
+Route::post('/admin/update-image', 'Admin\ProfileController@updateImage');
 
 ### Distributor
 /* List */
@@ -202,7 +204,9 @@ Route::get('/admin/report/tickets', 'Admin\ReportController@tickets');
 /* Export sales */
 Route::post('/admin/report/export-sales', 'Admin\ReportController@exportSales')->name('admin/report/export-sales');
 /* Export all sales */
-Route::get('/admin/report/export-all-sales', 'Admin\ReportController@exportAllSales')->name('admin/report/export-all-sales');
+Route::get('/admin/report/all-sales', 'Admin\ReportController@allSales');
+/* Export all sales */
+Route::post('/admin/report/export-all-sales', 'Admin\ReportController@exportAllSales')->name('admin/report/export-all-sales');
 /* Export pending payments */
 Route::get('/admin/report/export-pending-payments', 'Admin\ReportController@exportPendingPayments')->name('admin/report/export-pending-payments');
 

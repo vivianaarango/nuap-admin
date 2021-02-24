@@ -97,7 +97,6 @@ class UsersController extends Controller
 
         /* @var User $user */
         $user = $user[0];
-        Session::put('user', $user);
         $this->dbUserRepository->updateLastLogin($user->id, now());
 
         $logSession = new SessionLog();
@@ -107,10 +106,16 @@ class UsersController extends Controller
         $logSession->save();
 
         if ($user->role == User::ADMIN_ROLE) {
+            $admin = $this->dbAdminUserRepository->findByUserID($user->id);
+            $user->name = $admin->name.' '.$admin->last_name;
+            Session::put('user', $user);
             return redirect('admin/distributor-list');
         }
 
         if ($user->role == User::DISTRIBUTOR_ROLE) {
+            $distributor = $this->dbDistributorRepository->findByUserID($user->id);
+            $user->name = $distributor->business_name;
+            Session::put('user', $user);
             return redirect('/admin/distributor');
         }
 
@@ -187,7 +192,8 @@ class UsersController extends Controller
 
                 return view('admin.distributors.edit', [
                     'user' => json_encode($data),
-                    'activation' => $userAdmin->role,
+                    'activation' => $userAdmin->name,
+                    'role' => $userAdmin->role,
                     'url' => $distributor->resource_url,
                     'business_name' => $distributor->business_name
                 ]);
@@ -212,7 +218,8 @@ class UsersController extends Controller
 
                 return view('admin.commerces.edit', [
                     'user' => json_encode($data),
-                    'activation' => $userAdmin->role,
+                    'activation' => $userAdmin->name,
+                    'role' => $userAdmin->role,
                     'url' => $commerce->resource_url,
                     'business_name' => $commerce->business_name
                 ]);
@@ -227,7 +234,8 @@ class UsersController extends Controller
 
                 return view('admin.clients.edit', [
                     'user' => json_encode($data),
-                    'activation' => $userAdmin->role,
+                    'activation' => $userAdmin->name,
+                    'role' => $userAdmin->role,
                     'url' => $client->resource_url,
                     'business_name' => $client->name
                 ]);
@@ -243,7 +251,8 @@ class UsersController extends Controller
 
                 return view('admin.admin-users.edit', [
                     'user' => json_encode($data),
-                    'activation' => $userAdmin->role,
+                    'activation' => $userAdmin->name,
+                    'role' => $userAdmin->role,
                     'url' => $admin->resource_url,
                     'business_name' => $admin->name
                 ]);
@@ -329,7 +338,8 @@ class UsersController extends Controller
             return view('admin.users.add-location', [
                 'data' => $data,
                 'user' => $user,
-                'activation' => $userAdmin->role,
+                'activation' => $userAdmin->name,
+                'role' => $user->role,
                 'url' => url()->current()
             ]);
         }
@@ -381,7 +391,8 @@ class UsersController extends Controller
             return view('admin.users.add-documents', [
                 'urls' => $urls,
                 'user' => $user,
-                'activation' => $userAdmin->role
+                'activation' => $userAdmin->name,
+                'role' => $user->role,
             ]);
         }
 

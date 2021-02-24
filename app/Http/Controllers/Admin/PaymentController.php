@@ -93,7 +93,8 @@ class PaymentController extends Controller
         if (isset($user) && $user->role == User::DISTRIBUTOR_ROLE) {
             $account = $this->dbBankAccountRepository->findByUserID($user->id);
             return view('admin.payments.create', [
-                'activation' => $user->role,
+                'activation' => $user->name,
+                'role' => $user->role,
                 'account' => $account
             ]);
         } else {
@@ -212,7 +213,8 @@ class PaymentController extends Controller
 
             return view('admin.payments.admin-index', [
                 'data' => $data,
-                'activation' => $user->role
+                'activation' => $user->name,
+                'role' => $user->role,
             ]);
         } else {
             return redirect('/admin/user-session');
@@ -241,7 +243,8 @@ class PaymentController extends Controller
             $phone = $this->dbUserRepository->findByID($payment->user_id)->phone;
             return view('admin.payments.view', [
                 'payment' => $payment,
-                'activation' => $userAdmin->role,
+                'activation' => $userAdmin->name,
+                'role' => $userAdmin->role,
                 'account' => $account,
                 'user' => $user,
                 'phone' => $phone
@@ -358,7 +361,8 @@ class PaymentController extends Controller
             if ($request->ajax()) {
                 return [
                     'data' => $data,
-                    'activation' => $user->role,
+                    'activation' => $user->name,
+                    'role' => $user->role,
                     'balance' => $balance,
                     'account' => $account
                 ];
@@ -366,7 +370,8 @@ class PaymentController extends Controller
 
             return view('admin.payments.index', [
                 'data' => $data,
-                'activation' => $user->role,
+                'activation' => $user->name,
+                'role' => $user->role,
                 'balance' => $balance,
                 'account' => $account
             ]);
@@ -396,7 +401,8 @@ class PaymentController extends Controller
 
             return view('admin.payments.detail', [
                 'payment' => $payment,
-                'activation' => $userAdmin->role,
+                'activation' => $userAdmin->name,
+                'role' => $userAdmin->role,
                 'account' => $account,
                 'user' => $user
             ]);
@@ -466,7 +472,8 @@ class PaymentController extends Controller
             $account = $this->dbBankAccountRepository->findByUserID($user->id);
 
             return view('admin.payments.view-account', [
-                'activation' => $userAdmin->role,
+                'activation' => $userAdmin->name,
+                'role' => $userAdmin->role,
                 'account' => $account,
             ]);
         }

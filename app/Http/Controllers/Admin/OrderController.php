@@ -97,13 +97,15 @@ class OrderController extends Controller
             if ($request->ajax()) {
                 return [
                     'data' => $data,
-                    'activation' => $user->role
+                    'activation' => $user->name,
+                    'role' => $user->role,
                 ];
             }
 
             return view('admin.orders.index', [
                 'data' => $data,
-                'activation' => $user->role,
+                'activation' => $user->name,
+                'role' => $user->role,
             ]);
         } else {
             return redirect('/admin/user-session');
@@ -159,7 +161,8 @@ class OrderController extends Controller
                 'client' => $client,
                 'user' => $user,
                 'products' => $products,
-                'activation' => $userAdmin->role,
+                'activation' => $userAdmin->name,
+                'role' => $user->role,
                 'status' => $status
             ]);
         }

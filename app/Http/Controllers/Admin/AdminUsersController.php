@@ -113,8 +113,9 @@ class AdminUsersController extends Controller
 
             return view('admin.admin-users.index', [
                 'data' => $data,
-                'activation' => $user->role,
-                'days' => $days
+                'activation' => $user->name,
+                'days' => $days,
+                'role' => $user->role,
             ]);
         } else {
             return redirect('/admin/user-session');
@@ -183,7 +184,8 @@ class AdminUsersController extends Controller
 
         if (isset($user) && $user->role == User::ADMIN_ROLE) {
             return view('admin.admin-users.create', [
-                'activation' => $user->role
+                'activation' => $user->name,
+                'role' => $user->role,
             ]);
         } else {
             return redirect('/admin/user-session');
@@ -232,7 +234,8 @@ class AdminUsersController extends Controller
             return view('admin.admin-users.config', [
                 'config' => $config,
                 'account' => $account,
-                'activation' => $user->role
+                'activation' => $user->name,
+                'role' => $user->role,
             ]);
         } else {
             return redirect('/admin/user-session');

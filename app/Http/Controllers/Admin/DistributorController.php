@@ -101,7 +101,8 @@ class DistributorController extends Controller
 
         if (isset($user) && $user->role == User::DISTRIBUTOR_ROLE) {
             return view('admin.distributors.init', [
-                'activation' => $user->role,
+                'activation' => $user->name,
+                'role' => $user->role,
                 'pending_payments' => count($this->dbPaymentRepository->findPendingByUserID($user->id)),
                 'order_process' => count($this->dbOrderRepository->findInProgressByUserID($user->id)),
                 'open_tickets' => count($this->dbTicketRepository->findOpenByUserID($user->id)),
@@ -160,7 +161,8 @@ class DistributorController extends Controller
 
             return view('admin.distributors.index', [
                 'data' => $data,
-                'activation' => $user->role,
+                'activation' => $user->name,
+                'role' => $user->role,
                 'days' => $days
             ]);
         } else {
@@ -177,7 +179,8 @@ class DistributorController extends Controller
 
         if (isset($user) && $user->role == User::ADMIN_ROLE) {
             return view('admin.distributors.create', [
-                'activation' => $user->role
+                'activation' => $user->name,
+                'role' => $user->role,
             ]);
         } else {
             return redirect('/admin/user-session');
@@ -316,7 +319,8 @@ class DistributorController extends Controller
 
             return view('admin.distributors.commission', [
                 'data' => $data,
-                'activation' => $user->role,
+                'activation' => $user->name,
+                'role' => $user->role,
             ]);
         } else {
             return redirect('/admin/user-session');

@@ -1,6 +1,6 @@
 <div class="sidebar">
     <div id="role" style="visibility: hidden">{{ $activation }}</div>
-    @if($activation == 'Administrador')
+    @if($role == 'Administrador')
         <nav class="sidebar-nav">
             <ul class="nav">
                 <li class="nav-title">Administradores</li>
@@ -26,7 +26,7 @@
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/report/export-payments') }}"><i class="nav-icon icon-wallet"></i>Pagos Realizados</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/report/export-pending-payments') }}"><i class="nav-icon icon-clock"></i>Pagos Pendientes</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/report/sales') }}"><i class="nav-icon icon-handbag"></i>Ventas Mensuales</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ url('admin/report/export-all-sales') }}"><i class="nav-icon icon-basket-loaded"></i>Ventas Generales</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('admin/report/all-sales') }}"><i class="nav-icon icon-basket-loaded"></i>Ventas Generales</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/report/tickets') }}"><i class="nav-icon icon-pie-chart"></i>Tickets</a></li>
             </ul>
         </nav>

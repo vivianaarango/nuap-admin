@@ -105,7 +105,8 @@ class ClientController extends Controller
 
             return view('admin.clients.index', [
                 'data' => $data,
-                'activation' => $user->role,
+                'activation' => $user->name,
+                'role' => $user->role,
                 'days' => $days
             ]);
         } else {
@@ -122,7 +123,8 @@ class ClientController extends Controller
 
         if (isset($user) && $user->role == User::ADMIN_ROLE) {
             return view('admin.clients.create', [
-                'activation' => $user->role
+                'activation' => $user->name,
+                'role' => $user->role,
             ]);
         } else {
             return redirect('/admin/user-session');

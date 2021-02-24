@@ -58,7 +58,7 @@ class DbAdminUsersRepository implements DbAdminUsersRepositoryInterface
         string $name,
         string $lastName
     ): AdminUser {
-        $adminUser = $this->findByUserID($userID)[0];
+        $adminUser = $this->findByUserID($userID);
         $adminUser->name = $name;
         $adminUser->last_name = $lastName;
         $adminUser->save();

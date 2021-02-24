@@ -70,8 +70,11 @@ class ProfileController extends Controller
                 "last_name" => $userInfo->last_name
             ];
             return view('admin.profile.edit-profile', [
+                'image_url' => $userInfo->image_url,
+                'user_id' => $data['user_id'],
                 'user' => json_encode($data),
-                'activation' => $user->role
+                'activation' => $user->name,
+                'role' => $user->role,
             ]);
         } else {
             return redirect('admin/login');
@@ -103,6 +106,7 @@ class ProfileController extends Controller
                 $request['email'],
                 isset($phoneValidated) ? $phoneValidated : true
             );
+
             $this->dbAdminUserRepository->updateProfileAdminUser(
                 $request['user_id'],
                 $request['name'],
@@ -138,7 +142,8 @@ class ProfileController extends Controller
             $user->password = null;
             return view('admin.profile.edit-password', [
                 'user' => $user,
-                'activation' => $user->role
+                'activation' => $user->name,
+                'role' => $user->role,
             ]);
         } else {
             return redirect('/admin/user-session');
@@ -197,10 +202,42 @@ class ProfileController extends Controller
             ];
             return view('admin.profile.edit-profile-dist', [
                 'user' => json_encode($data),
-                'activation' => $user->role
+                'activation' => $user->name,
+                'role' => $user->role,
             ]);
         } else {
             return redirect('/admin/user-session');
         }
+    }
+
+    /**
+     * @param Request $request
+     * @return Application|RedirectResponse|Redirector
+     */
+    public function updateImage(Request $request)
+    {
+        $user = Session::get('user');
+        if (isset($user) && $user->role == User::ADMIN_ROLE) {
+            $imgProfile = 'admin/'.$user->id;
+            if (!is_dir($imgProfile)) {
+                mkdir($imgProfile, 0777, true);
+            }
+
+            $image = $_FILES['image'];
+            $urlImage = null;
+            if ($image['name'] != '') {
+                $ext = pathinfo($image['name'], PATHINFO_EXTENSION);
+                $urlImage = "{$imgProfile}/profile.{$ext}";
+                $destinationRoute = $urlImage;
+                move_uploaded_file($image['tmp_name'], $destinationRoute);
+            }
+            $admin = $this->dbAdminUserRepository->findByUserID($user->id);
+            $admin->image_url = $urlImage;
+            $admin->save();
+
+            return redirect('admin/edit-profile');
+        }
+
+        return redirect('/admin/user-session');
     }
 }

@@ -106,7 +106,8 @@ class CommerceController extends Controller
 
             return view('admin.commerces.index', [
                 'data' => $data,
-                'activation' => $user->role,
+                'activation' => $user->name,
+                'role' => $user->role,
                 'days' => $days
             ]);
         } else {
@@ -123,7 +124,8 @@ class CommerceController extends Controller
 
         if (isset($user) && $user->role == User::ADMIN_ROLE) {
             return view('admin.commerces.create', [
-                'activation' => $user->role
+                'activation' => $user->name,
+                'role' => $user->role,
             ]);
         } else {
             return redirect('/admin/user-session');
@@ -264,7 +266,8 @@ class CommerceController extends Controller
 
             return view('admin.commerces.commission', [
                 'data' => $data,
-                'activation' => $user->role,
+                'activation' => $user->name,
+                'role' => $user->role,
             ]);
         } else {
             return redirect('/admin/user-session');
