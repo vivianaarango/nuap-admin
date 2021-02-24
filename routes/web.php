@@ -78,6 +78,8 @@ Route::post('/admin/update-password', 'Admin\ProfileController@updatePassword');
 
 ### Distributor
 /* List */
+Route::get('/admin/distributor', 'Admin\DistributorController@index');
+/* List */
 Route::get('/admin/distributor-list', 'Admin\DistributorController@list');
 /* View create */
 Route::get('/admin/distributor-create', 'Admin\DistributorController@create');

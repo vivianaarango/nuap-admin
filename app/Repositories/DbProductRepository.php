@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Payment;
 use App\Models\Product;
 use App\Repositories\Contracts\DbProductRepositoryInterface;
 use Exception;
@@ -21,6 +22,17 @@ class DbProductRepository implements DbProductRepositoryInterface
     public function findByID(int $productID): Product
     {
         return Product::findOrFail($productID);
+    }
+
+    /**
+     * @param int $userID
+     * @return Collection
+     */
+    public function findApprovedProducts(int $userID): Collection
+    {
+        return Product::where('user_id', $userID)
+            ->where('status', Payment::STATUS_APPROVED)
+            ->get();
     }
 
     /**

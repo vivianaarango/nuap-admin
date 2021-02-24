@@ -25,6 +25,12 @@ interface DbProductRepositoryInterface
     public function findByID(int $productID): Product;
 
     /**
+     * @param int $userID
+     * @return Collection
+     */
+    public function findApprovedProducts(int $userID): Collection;
+
+    /**
      * @param int $productID
      * @return bool
      */

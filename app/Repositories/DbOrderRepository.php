@@ -67,4 +67,16 @@ class DbOrderRepository implements DbOrderRepositoryInterface
             ->join('user_locations', 'user_locations.id', '=', 'orders.address_id')
             ->get();
     }
+
+    /**
+     * @param int $userID
+     * @return Collection
+     */
+    public function findInProgressByUserID(int $userID): Collection
+    {
+        return Order::where('user_id', $userID)
+            ->where('orders.status', '<>', Order::STATUS_DELIVERED)
+            ->where('orders.status', '<>', Order::STATUS_CANCEL)
+            ->get();
+    }
 }

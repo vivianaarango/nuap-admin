@@ -39,4 +39,10 @@ interface DbOrderRepositoryInterface
      * @return Collection
      */
     public function findAllByUserID(int $userID): Collection;
+
+    /**
+     * @param int $userID
+     * @return Collection
+     */
+    public function findInProgressByUserID(int $userID): Collection;
 }

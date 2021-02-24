@@ -111,7 +111,7 @@ class UsersController extends Controller
         }
 
         if ($user->role == User::DISTRIBUTOR_ROLE) {
-            return redirect('/admin/product-distributor-list');
+            return redirect('/admin/distributor');
         }
 
         return redirect()->back();
@@ -130,7 +130,7 @@ class UsersController extends Controller
         }
 
         if (isset($user) && $user->role == User::DISTRIBUTOR_ROLE) {
-            return redirect('/admin/product-distributor-list');
+            return redirect('/admin/distributor');
         }
 
         if ($request->ajax()) {

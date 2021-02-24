@@ -29,4 +29,15 @@ class DbPaymentRepository implements DbPaymentRepositoryInterface
     {
         return Payment::findOrFail($paymentID);
     }
+
+    /**
+     * @param int $userID
+     * @return Collection
+     */
+    public function findPendingByUserID(int $userID): Collection
+    {
+        return Payment::where('payments.user_id', $userID)
+            ->where('payments.status', Payment::STATUS_PENDING)
+            ->get();
+    }
 }

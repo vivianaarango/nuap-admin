@@ -34,6 +34,7 @@
     @else
         <nav class="sidebar-nav">
             <ul class="nav">
+                <li class="nav-item"><a class="nav-link" href="{{ url('admin/distributor') }}"><i class="nav-icon icon-layers"></i>Dashboard</a></li>
                 <li class="nav-title">Productos</li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/product-distributor-list') }}"><i class="nav-icon icon-plus"></i>Inventario</a></li>
                 <li class="nav-title">Pagos</li>

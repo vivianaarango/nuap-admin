@@ -29,4 +29,10 @@ interface DbTicketRepositoryInterface
      * @return Collection
      */
     public function findByUserID(int $userID): Collection;
+
+    /**
+     * @param int $userID
+     * @return Collection
+     */
+    public function findOpenByUserID(int $userID): Collection;
 }

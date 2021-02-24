@@ -8,6 +8,10 @@ use App\Http\Requests\Admin\Distributor\IndexDistributor;
 use App\Models\Distributor;
 use App\Models\User;
 use App\Repositories\Contracts\DbDistributorRepositoryInterface;
+use App\Repositories\Contracts\DbOrderRepositoryInterface;
+use App\Repositories\Contracts\DbPaymentRepositoryInterface;
+use App\Repositories\Contracts\DbProductRepositoryInterface;
+use App\Repositories\Contracts\DbTicketRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use Brackets\AdminListing\Facades\AdminListing;
 use Illuminate\Contracts\View\Factory;
@@ -43,16 +47,67 @@ class DistributorController extends Controller
     private $dbDistributorRepository;
 
     /**
+     * @var DbPaymentRepositoryInterface
+     */
+    private $dbPaymentRepository;
+
+    /**
+     * @var DbOrderRepositoryInterface
+     */
+    private $dbOrderRepository;
+
+    /**
+     * @var DbTicketRepositoryInterface
+     */
+    private $dbTicketRepository;
+
+    /**
+     * @var DbProductRepositoryInterface
+     */
+    private $dbProductRepository;
+
+    /**
      * DistributorController constructor.
      * @param DbUsersRepositoryInterface $dbUserRepository
      * @param DbDistributorRepositoryInterface $dbDistributorRepository
+     * @param DbPaymentRepositoryInterface $dbPaymentRepository
+     * @param DbOrderRepositoryInterface $dbOrderRepository
+     * @param DbTicketRepositoryInterface $dbTicketRepository
+     * @param DbProductRepositoryInterface $dbProductRepository
      */
     public function __construct(
         DbUsersRepositoryInterface $dbUserRepository,
-        DbDistributorRepositoryInterface $dbDistributorRepository
+        DbDistributorRepositoryInterface $dbDistributorRepository,
+        DbPaymentRepositoryInterface $dbPaymentRepository,
+        DbOrderRepositoryInterface $dbOrderRepository,
+        DbTicketRepositoryInterface $dbTicketRepository,
+        DbProductRepositoryInterface $dbProductRepository
     ) {
         $this->dbUserRepository = $dbUserRepository;
         $this->dbDistributorRepository = $dbDistributorRepository;
+        $this->dbPaymentRepository = $dbPaymentRepository;
+        $this->dbOrderRepository = $dbOrderRepository;
+        $this->dbTicketRepository = $dbTicketRepository;
+        $this->dbProductRepository = $dbProductRepository;
+    }
+
+    /**
+     * @param Request $request
+     * @return array|Factory|Application|RedirectResponse|Redirector|View
+     */
+    public function index(Request $request)
+    {
+        $user = Session::get('user');
+
+        if (isset($user) && $user->role == User::DISTRIBUTOR_ROLE) {
+            return view('admin.distributors.init', [
+                'activation' => $user->role,
+                'pending_payments' => count($this->dbPaymentRepository->findPendingByUserID($user->id)),
+                'order_process' => count($this->dbOrderRepository->findInProgressByUserID($user->id)),
+                'open_tickets' => count($this->dbTicketRepository->findOpenByUserID($user->id)),
+                'approved_products' => count($this->dbProductRepository->findApprovedProducts($user->id))
+            ]);
+        }
     }
 
     /**

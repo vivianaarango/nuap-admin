@@ -21,4 +21,10 @@ interface DbPaymentRepositoryInterface
      * @return Payment
      */
     public function findByID(int $paymentID): Payment;
+
+    /**
+     * @param int $userID
+     * @return Collection
+     */
+    public function findPendingByUserID(int $userID): Collection;
 }

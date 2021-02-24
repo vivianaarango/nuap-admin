@@ -49,4 +49,15 @@ class DbTicketRepository implements DbTicketRepositoryInterface
     {
         return Ticket::where('user_id', $userID)->get();
     }
+
+    /**
+     * @param int $userID
+     * @return Collection
+     */
+    public function findOpenByUserID(int $userID): Collection
+    {
+        return Ticket::where('user_id', $userID)
+            ->where('tickets.status', '<>', Ticket::CLOSED)
+            ->get();
+    }
 }
