@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Category;
 use App\Models\Payment;
 use App\Models\Product;
 use App\Repositories\Contracts\DbProductRepositoryInterface;
@@ -22,6 +23,15 @@ class DbProductRepository implements DbProductRepositoryInterface
     public function findByID(int $productID): Product
     {
         return Product::findOrFail($productID);
+    }
+
+    /**
+     * @param int $categoryID
+     * @return Category
+     */
+    public function findCategoryByID(int $categoryID): Category
+    {
+        return Category::findOrFail($categoryID);
     }
 
     /**

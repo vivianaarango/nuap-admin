@@ -106,7 +106,8 @@ class LoginController
         try {
             $validator = Validator::make($request->all(), [
                 'email' => 'required|email',
-                'password' => 'required|string'
+                'password' => 'required|string',
+                'type' => 'required|string'
             ]);
 
             if ($validator->fails()) {
@@ -115,9 +116,16 @@ class LoginController
 
             $password = md5($request->input('password'));
 
+            if (strtolower($request->input('type')) === "comercio") {
+                $type = User::COMMERCE_ROLE;
+            } else {
+                $type = User::USER_ROLE;
+            }
+
             $user = $this->dbUserRepository->clientOrCommerceByEmailAndPassword(
                 $request->input('email'),
-                $password
+                $password,
+                $type
             )->first();
 
             if (is_null($user)) {

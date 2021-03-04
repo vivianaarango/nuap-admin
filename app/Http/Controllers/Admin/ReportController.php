@@ -7,6 +7,12 @@ use App\Exports\PaymentsPendingExport;
 use App\Exports\AllSalesExport;
 use App\Exports\SalesExport;
 use App\Http\Controllers\Controller;
+use App\Models\AdminUser;
+use App\Models\Client;
+use App\Models\Commerce;
+use App\Models\Distributor;
+use App\Models\SessionLog;
+use App\Models\Ticket;
 use App\Models\User;
 use App\Repositories\Contracts\DbAdminUsersRepositoryInterface;
 use App\Repositories\Contracts\DbClientRepositoryInterface;
@@ -86,6 +92,10 @@ class ReportController extends Controller
             return view('admin.reports.new-users', [
                 'activation' => $user->name,
                 'role' => $user->role,
+                'admin' => count(AdminUser::all()),
+                'distributor' => count(Distributor::all()),
+                'commerce' => count(Commerce::all()),
+                'client' => count(Client::all())
             ]);
         } else {
             return redirect('/admin/user-session');
@@ -103,6 +113,9 @@ class ReportController extends Controller
             return view('admin.reports.tickets', [
                 'activation' => $user->name,
                 'role' => $user->role,
+                'closed' => count(Ticket::where('status', Ticket::CLOSED)->get()),
+                'pending_admin' => count(Ticket::where('status', Ticket::PENDING_ADMIN)->get()),
+                'pending_user' => count(Ticket::where('status', Ticket::PENDING_USER)->get()),
             ]);
         } else {
             return redirect('/admin/user-session');
@@ -120,6 +133,10 @@ class ReportController extends Controller
             return view('admin.reports.login-users', [
                 'activation' => $user->name,
                 'role' => $user->role,
+                'admin' => count(SessionLog::where('user_type', User::ADMIN_ROLE)->get()),
+                'distributor' => count(SessionLog::where('user_type', User::DISTRIBUTOR_ROLE)->get()),
+                'commerce' => count(SessionLog::where('user_type', User::COMMERCE_ROLE)->get()),
+                'client' => count(SessionLog::where('user_type', User::USER_ROLE)->get()),
             ]);
         } else {
             return redirect('/admin/user-session');

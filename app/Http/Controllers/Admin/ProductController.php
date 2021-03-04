@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Exports\ProductsExport;
+use App\Http\Requests\Admin\Product\IndexCategory;
 use App\Http\Requests\Admin\Product\IndexDiscount;
+use Exception;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Product\IndexProduct;
@@ -262,7 +264,7 @@ class ProductController extends Controller
      * @param Product $product
      * @return ResponseFactory|Application|RedirectResponse|Response
      */
-    public function delete(Product $product)
+    /*public function delete(Product $product)
     {
         $adminUser = Session::get('user');
 
@@ -271,7 +273,23 @@ class ProductController extends Controller
         } else {
             return redirect('admin/user-session');
         }
-    }
+    }*/
+
+    /**
+     * @param Category $category
+     * @return Application|RedirectResponse|Redirector
+     * @throws Exception
+     */
+    /*public function delete(Category $category)
+    {
+        $adminUser = Session::get('user');
+
+        if (isset($adminUser) && ($adminUser->role == User::ADMIN_ROLE || $adminUser->role == User::DISTRIBUTOR_ROLE)) {
+            $category->delete();
+        } else {
+            return redirect('admin/user-session');
+        }
+    }*/
 
     /**
      * @param Product $product
@@ -390,7 +408,7 @@ class ProductController extends Controller
             return view('admin.products.view', [
                 'product' => $product,
                 'activation' => $userAdmin->name,
-                'role' => $user->role,
+                'role' => $userAdmin->role,
                 'categories' => Category::all(),
             ]);
         }
@@ -525,6 +543,197 @@ class ProductController extends Controller
         } else {
             return redirect('/admin/user-session');
         }
+    }
+
+    /**
+     * @param IndexCategory $request
+     * @return array|Factory|Application|RedirectResponse|Redirector|View
+     */
+    public function categories(IndexCategory $request)
+    {
+        $user = Session::get('user');
+
+        if (isset($user) && $user->role == User::ADMIN_ROLE) {
+            /* @noinspection PhpUndefinedMethodInspection  */
+            $data = AdminListing::create(Category::class)
+                ->modifyQuery(function($query) {
+                    $query->orderBy('id', 'desc');
+                })->processRequestAndGet(
+                    $request,
+                    ['id', 'name', 'description'],
+                    ['id', 'name', 'description']
+                );
+
+            if ($request->ajax()) {
+                return ['data' => $data, 'activation' => $user->role];
+            }
+
+            return view('admin.products.categories', [
+                'data' => $data,
+                'activation' => $user->name,
+                'role' => $user->role,
+            ]);
+        } else {
+            return redirect('/admin/user-session');
+        }
+    }
+
+    /**
+     * @return Factory|Application|RedirectResponse|View
+     */
+    public function createCategory()
+    {
+        $user = Session::get('user');
+
+        if (isset($user) && $user->role == User::ADMIN_ROLE) {
+            return view('admin.products.create-category', [
+                'activation' => $user->name,
+                'role' => $user->role,
+                'categories' => Category::all(),
+                'user_id' => $user->id
+            ]);
+        } else {
+            return redirect('/admin/user-session');
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return array|Application|RedirectResponse|Redirector
+     */
+    public function storeCategory(Request $request)
+    {
+        $data = [];
+        $data['name'] = $request['name'];
+        $data['description'] = $request['description'];
+
+        if (! is_null($request['parent_id'])) {
+            $data['parent_id'] = $request['parent_id'];
+        } else {
+            $data['parent_id'] = 0;
+        }
+
+        $user = Session::get('user');
+        if (isset($user) && ($user->role == User::ADMIN_ROLE || $user->role == User::DISTRIBUTOR_ROLE)) {
+            $categories = 'categories';
+
+            if (!is_dir($categories)) {
+                mkdir($categories, 0777, true);
+            }
+            $images = $_FILES['image'];
+            if ($images['name'] != '') {
+                $ext = pathinfo($images['name'], PATHINFO_EXTENSION);
+                $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                $urlImage = "{$categories}/".substr(str_shuffle($permitted_chars), 0, 16).".{$ext}";
+                $destinationRoute = $urlImage;
+                move_uploaded_file($images['tmp_name'], $destinationRoute);
+                $data['image'] = $urlImage;
+            }
+
+            Category::create($data);
+
+            if ($user->role === User::DISTRIBUTOR_ROLE){
+                if ($request->ajax()) {
+                    return [
+                        'redirect' => url('admin/categories'),
+                        'message' => trans('brackets/admin-ui::admin.operation.succeeded')
+                    ];
+                }
+
+                return redirect('admin/categories');
+            }
+            if ($request->ajax()) {
+                return [
+                    'redirect' => url('admin/categories'),
+                    'message' => trans('brackets/admin-ui::admin.operation.succeeded')
+                ];
+            }
+
+            return redirect('admin/categories');
+
+        } else {
+            return redirect('/admin/user-session');
+        }
+    }
+
+
+    /**
+     * @param Category $category
+     * @return Factory|Application|RedirectResponse|Redirector|View
+     */
+    public function editCategory(Category $category)
+    {
+        $userAdmin = Session::get('user');
+
+        if (isset($userAdmin) && ($userAdmin->role == User::ADMIN_ROLE || $userAdmin->role == User::DISTRIBUTOR_ROLE)) {
+            $category = $this->dbProductRepository->findCategoryByID($category->id);
+            $data['category_id'] = $category->id;
+            $data['name'] = $category->name;
+            $data['description'] = $category->description;
+            $data['parent_id'] = $category->parent_id;
+            $data['image'] = $category->image;
+
+            return view('admin.products.edit-category', [
+                'product' => $data,
+                'role' => $userAdmin->role,
+                'activation' => $userAdmin->name,
+                'categories' => Category::all(),
+                'url' => $category->resource_url,
+                'name' => $category->name,
+            ]);
+        } else {
+            return redirect('/admin/user-session');
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return array|Application|RedirectResponse|Redirector
+     */
+    public function updateCategory(Request $request)
+    {
+        $adminUser = Session::get('user');
+
+        if (isset($adminUser) && ($adminUser->role == User::ADMIN_ROLE || $adminUser->role == User::DISTRIBUTOR_ROLE)) {
+            $categoriesImages = 'categories';
+
+            if (!is_dir($categoriesImages)) {
+                mkdir($categoriesImages, 0777, true);
+            }
+            $image = null;
+            $images = $_FILES['image'];
+            if ($images['name'] != '') {
+                $ext = pathinfo($images['name'], PATHINFO_EXTENSION);
+                $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                $urlImage = "{$categoriesImages}/".substr(str_shuffle($permitted_chars), 0, 16).".{$ext}";
+                $destinationRoute = $urlImage;
+                move_uploaded_file($images['tmp_name'], $destinationRoute);
+                $image = $urlImage;
+            }
+
+            $category = $this->dbProductRepository->findCategoryByID($request['category_id']);
+            $category->name = $request['name'];
+            $category->description = $request['description'];
+
+            if (! is_null($request['parent_id'])) {
+                $category->parent_id = $request['parent_id'];
+            } else {
+                $category->parent_id = 0;
+            }
+
+            if (! is_null($image)) {
+                $category->image = $image;
+            }
+
+            $category->save();
+
+            if ($adminUser->role === User::DISTRIBUTOR_ROLE){
+                return redirect('admin/categories');
+            }
+
+            return redirect('admin/categories');
+        }
+        return redirect('admin/user-session');
     }
 
     /**

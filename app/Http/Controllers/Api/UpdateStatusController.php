@@ -171,13 +171,9 @@ class UpdateStatusController
 
             if ($order->status === Order::STATUS_ACCEPTED) {
                 $order->status = Order::STATUS_ENLISTMENT;
-            }
-
-            if ($order->status === Order::STATUS_ENLISTMENT) {
+            } else if ($order->status === Order::STATUS_ENLISTMENT) {
                 $order->status = Order::STATUS_CIRCULATION;
-            }
-
-            if ($order->status === Order::STATUS_CIRCULATION) {
+            } else if ($order->status === Order::STATUS_CIRCULATION) {
                 $order->status = Order::STATUS_DELIVERED;
             }
 

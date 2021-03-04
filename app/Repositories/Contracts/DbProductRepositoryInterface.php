@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Contracts;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -23,6 +24,12 @@ interface DbProductRepositoryInterface
      * @return Product
      */
     public function findByID(int $productID): Product;
+
+    /**
+     * @param int $categoryID
+     * @return Category
+     */
+    public function findCategoryByID(int $categoryID): Category;
 
     /**
      * @param int $userID

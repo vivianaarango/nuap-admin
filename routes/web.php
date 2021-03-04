@@ -148,6 +148,18 @@ Route::get('/admin/product-edit-discount', 'Admin\ProductController@editDiscount
 /* Update Discount */
 Route::post('/admin/product-update-discount', 'Admin\ProductController@updateDiscount');
 
+### Categories ###
+/* List */
+Route::get('/admin/categories', 'Admin\ProductController@categories');
+/* View create category */
+Route::get('/admin/category-create', 'Admin\ProductController@createCategory');
+/* Store category */
+Route::post('/admin/category-store', 'Admin\ProductController@storeCategory');
+/* View edit category */
+Route::get('/admin/category/{category}/edit','Admin\ProductController@editCategory')->name('admin/category/edit');
+/* Update category */
+Route::post('/admin/category/{category}', 'Admin\ProductController@updateCategory')->name('admin/category/update');
+
 ### Ticket ###
 /* View create */
 Route::get('/admin/ticket-create', 'Admin\TicketController@create');

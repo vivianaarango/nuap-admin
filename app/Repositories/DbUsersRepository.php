@@ -259,13 +259,14 @@ class DbUsersRepository implements DbUsersRepositoryInterface
      *
      * @param string $email
      * @param string $password
+     * @param string $type
      * @return Collection
      */
-    public function clientOrCommerceByEmailAndPassword(string $email, string $password): Collection
+    public function clientOrCommerceByEmailAndPassword(string $email, string $password, string $type): Collection
     {
         return User::where('email', $email)
             ->where('password', $password)
-            ->whereIn('role', [User::COMMERCE_ROLE, User::USER_ROLE])
+            ->where('role', $type)
             ->get();
     }
 

@@ -125,9 +125,10 @@ interface DbUsersRepositoryInterface
      *
      * @param string $email
      * @param string $password
+     * @param string $type
      * @return Collection
      */
-    public function clientOrCommerceByEmailAndPassword(string $email, string $password): Collection;
+    public function clientOrCommerceByEmailAndPassword(string $email, string $password, string $type): Collection;
 
     /**
      * @param int $userID

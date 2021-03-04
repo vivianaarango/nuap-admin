@@ -15,6 +15,8 @@ use Illuminate\Foundation\Application;
  * @property string resource_url
  *
  * @package App\Models
+ * @method static create(array $data)
+ * @method static findOrFail(int $categoryID)
  */
 class Category extends Model
 {

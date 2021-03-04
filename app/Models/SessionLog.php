@@ -13,6 +13,7 @@ use Illuminate\Foundation\Application;
  * @property string login_date
  *
  * @package App\Models
+ * @method static where(string $string, string $ADMIN_ROLE)
  */
 class SessionLog extends Model
 {
