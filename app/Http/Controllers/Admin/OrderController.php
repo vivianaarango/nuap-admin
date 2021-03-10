@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Order\IndexOrder;
+use App\Mail\SendEmail;
 use App\Models\Order;
 use App\Models\User;
 use App\Repositories\Contracts\DbClientRepositoryInterface;
@@ -16,6 +17,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
@@ -181,20 +183,37 @@ class OrderController extends Controller
         if (isset($user) && $user->role == User::DISTRIBUTOR_ROLE) {
             $order = $this->dbOrderRepository->findByID($request['order_id']);
             $status = $order->status;
+            $client = $this->dbUserRepository->findByID($order->client_id);
+            $commerce = $this->dbCommerceRepository->findByUserID($order->client_id);
+
             if ($status === Order::STATUS_ACCEPTED) {
                 $order->status = Order::STATUS_ENLISTMENT;
+                Mail::to($client->email)->send(new SendEmail(
+                        $commerce->business_name,
+                    '¡Hola! tu pedido esta en alistamiento, ¡Atento! nos pondremos en contacto para acordar tu entrega.',
+                        'Hemos alistado tu pedido !'
+                    )
+                );
             }
 
             if ($status === Order::STATUS_ENLISTMENT) {
                 $order->status = Order::STATUS_CIRCULATION;
+                Mail::to($client->email)->send(new SendEmail(
+                        $commerce->business_name,
+                        'Tu pedido esta en camino, ¡Atento! el repartidor no tardara en hacer la entrega.',
+                        'Tu pedido esta en camino !'
+                    )
+                );
             }
 
             if ($status === Order::STATUS_CIRCULATION) {
                 $order->status = Order::STATUS_DELIVERED;
-            }
-
-            if ($status === Order::STATUS_INITIATED) {
-                $order->status = Order::STATUS_CANCEL;
+                Mail::to($client->email)->send(new SendEmail(
+                        $commerce->business_name,
+                        'Gracias por comprar en NuAp,tu pedido ha sido entregado, por favor califica nuestro servicio.',
+                        'Hemos entregado tu pedido !'
+                    )
+                );
             }
 
             $order->save();

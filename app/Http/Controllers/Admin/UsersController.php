@@ -339,7 +339,7 @@ class UsersController extends Controller
                 'data' => $data,
                 'user' => $user,
                 'activation' => $userAdmin->name,
-                'role' => $user->role,
+                'role' => $userAdmin->role,
                 'url' => url()->current()
             ]);
         }

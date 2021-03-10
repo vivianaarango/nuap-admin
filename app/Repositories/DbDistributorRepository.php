@@ -141,7 +141,7 @@ class DbDistributorRepository implements DbDistributorRepositoryInterface
         return Distributor::with([
             'users' => function ($query) {
                 $query->where('status', User::STATUS_ACTIVE)
-                    ->where('role', User::COMMERCE_ROLE);
+                    ->where('role', User::DISTRIBUTOR_ROLE);
             },
         ])
         ->orderBy('id', 'desc')

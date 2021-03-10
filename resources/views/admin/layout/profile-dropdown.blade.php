@@ -1,6 +1,6 @@
 <div class="dropdown-menu dropdown-menu-right">
     <div class="dropdown-header text-center"><strong> Cuenta </strong></div>
-    @if($activation =='Administrador')
+    @if($role =='Administrador')
         <a href="{{ url('admin/edit-profile') }}" class="dropdown-item"><i class="fa fa-user"></i> Perfil</a>
     @else
         <a href="{{ url('admin/edit-profile-distributor') }}" class="dropdown-item"><i class="fa fa-user"></i> Perfil</a>

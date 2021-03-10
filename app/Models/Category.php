@@ -17,6 +17,8 @@ use Illuminate\Foundation\Application;
  * @package App\Models
  * @method static create(array $data)
  * @method static findOrFail(int $categoryID)
+ * @method static where(string $string, $userID)
+ * @method static select(string $string)
  */
 class Category extends Model
 {

@@ -87,4 +87,32 @@ interface DbProductRepositoryInterface
      * @return Collection
      */
     public function findByCategoryAndUserID(int $categoryID, int $userID): Collection;
+
+    /**
+     * @param string $userType
+     * @return Collection
+     */
+    public function getEnabledCategories(string $userType): Collection;
+
+    /**
+     * @return Collection
+     */
+    public function getEnabledStoresByDistributor(): Collection;
+
+    /**
+     * @return Collection
+     */
+    public function getEnabledStoresByCommerce(): Collection;
+
+    /**
+     * @param array $usersID
+     * @return Collection
+     */
+    public function getSalesByUserID(array $usersID): Collection;
+
+    /**
+     * @param array $usersID
+     * @return Collection
+     */
+    public function getFeaturedByUserID(array $usersID): Collection;
 }

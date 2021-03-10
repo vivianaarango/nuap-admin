@@ -126,6 +126,26 @@ Route::group(['prefix' => 'products'], function () {
         'uses' => 'Api\CategoriesController'
     ]);
 
+    Route::middleware('auth:api')->get('/sales', [
+        'as' => 'api-sales',
+        'uses' => 'Api\SalesController'
+    ]);
+
+    Route::middleware('auth:api')->get('/featured', [
+        'as' => 'api-featured',
+        'uses' => 'Api\FeaturedController'
+    ]);
+
+    Route::middleware('auth:api')->get('/valid/categories', [
+        'as' => 'api-valid-categories',
+        'uses' => 'Api\CategoryController'
+    ]);
+
+    Route::middleware('auth:api')->get('/stores', [
+        'as' => 'api-stores',
+        'uses' => 'Api\StoreController'
+    ]);
+
     Route::middleware('auth:api')->get('/category/{category}', [
         'as' => 'api-products-categories',
         'uses' => 'Api\ProductsByCategoryAndCommerceController'

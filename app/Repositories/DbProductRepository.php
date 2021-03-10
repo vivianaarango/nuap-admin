@@ -3,8 +3,11 @@
 namespace App\Repositories;
 
 use App\Models\Category;
+use App\Models\Commerce;
+use App\Models\Distributor;
 use App\Models\Payment;
 use App\Models\Product;
+use App\Models\User;
 use App\Repositories\Contracts\DbProductRepositoryInterface;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
@@ -140,6 +143,95 @@ class DbProductRepository implements DbProductRepositoryInterface
         return Product::where('user_id', $userID)
             ->where('category_id', $categoryID)
             ->orderBy('id', 'desc')
+            ->get();
+    }
+
+    /**
+     * @param string $userType
+     * @return Collection
+     */
+    public function getEnabledCategories(string $userType): Collection
+    {
+        return Category::select('categories.*')
+            ->join('products', 'products.category_id', '=', 'categories.id')
+            ->join('users', 'products.user_id', '=', 'users.id')
+            ->where('users.role', $userType)
+            ->where('users.status', User::STATUS_ACTIVE)
+            ->where('products.status', Product::STATUS_ACTIVE)
+            ->where('products.stock', '>', 0)
+            ->where('categories.parent_id', 0)
+            ->groupBy('categories.id')
+            ->inRandomOrder()
+            ->get();
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getEnabledStoresByDistributor(): Collection
+    {
+        return Distributor::select('distributors.*', 'users.*')
+            ->join('users', 'distributors.user_id', '=', 'users.id')
+            ->join('products', 'products.user_id', '=', 'users.id')
+            ->where('users.role', User::DISTRIBUTOR_ROLE)
+            ->where('users.status', User::STATUS_ACTIVE)
+            ->where('products.status', Product::STATUS_ACTIVE)
+            ->where('products.stock', '>', 0)
+            ->groupBy('distributors.id')
+            ->inRandomOrder()
+            ->get();
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getEnabledStoresByCommerce(): Collection
+    {
+        return Commerce::select('commerces.*', 'users.*')
+            ->join('users', 'distributors.user_id', '=', 'users.id')
+            ->join('products', 'products.user_id', '=', 'users.id')
+            ->where('users.role', User::COMMERCE_ROLE)
+            ->where('users.status', User::STATUS_ACTIVE)
+            ->where('products.status', Product::STATUS_ACTIVE)
+            ->where('products.stock', '>', 0)
+            ->groupBy('commerces.id')
+            ->inRandomOrder()
+            ->get();
+    }
+
+    /**
+     * @param array $usersID
+     * @return Collection
+     */
+    public function getSalesByUserID(array $usersID): Collection
+    {
+        return Product::select('products.*')
+            ->join('users', 'products.user_id', '=', 'users.id')
+            ->where('users.status', User::STATUS_ACTIVE)
+            ->where('products.status', Product::STATUS_ACTIVE)
+            ->where('products.stock', '>', 0)
+            ->where('products.has_special_price', 1)
+            ->whereIn('products.user_id', $usersID)
+            ->groupBy('products.id')
+            ->inRandomOrder()
+            ->get();
+    }
+
+    /**
+     * @param array $usersID
+     * @return Collection
+     */
+    public function getFeaturedByUserID(array $usersID): Collection
+    {
+        return Product::select('products.*')
+            ->join('users', 'products.user_id', '=', 'users.id')
+            ->where('users.status', User::STATUS_ACTIVE)
+            ->where('products.status', Product::STATUS_ACTIVE)
+            ->where('products.stock', '>', 0)
+            ->where('products.is_featured', 1)
+            ->whereIn('products.user_id', $usersID)
+            ->groupBy('products.id')
+            ->inRandomOrder()
             ->get();
     }
 }
