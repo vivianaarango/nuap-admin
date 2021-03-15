@@ -111,6 +111,7 @@ class StoreController
 
     /**
      * @param Request $request
+     * @param int $address
      * @return JsonResponse
      */
     public function __invoke(Request $request, int $address): JsonResponse
