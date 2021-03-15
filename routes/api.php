@@ -126,12 +126,12 @@ Route::group(['prefix' => 'products'], function () {
         'uses' => 'Api\CategoriesController'
     ]);
 
-    Route::middleware('auth:api')->get('/sales', [
+    Route::middleware('auth:api')->get('/sales/address/{address}', [
         'as' => 'api-sales',
         'uses' => 'Api\SalesController'
     ]);
 
-    Route::middleware('auth:api')->get('/featured', [
+    Route::middleware('auth:api')->get('/featured/address/{address}', [
         'as' => 'api-featured',
         'uses' => 'Api\FeaturedController'
     ]);
@@ -141,7 +141,7 @@ Route::group(['prefix' => 'products'], function () {
         'uses' => 'Api\CategoryController'
     ]);
 
-    Route::middleware('auth:api')->get('/stores', [
+    Route::middleware('auth:api')->get('/stores/address/{address}', [
         'as' => 'api-stores',
         'uses' => 'Api\StoreController'
     ]);

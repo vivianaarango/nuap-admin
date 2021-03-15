@@ -2,13 +2,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Transformers\ProductsTransformer;
-use App\Http\Transformers\SellerTransformer;
 use App\Libraries\Responders\Contracts\ArrayResponseInterface;
 use App\Libraries\Responders\Contracts\JsonApiResponseInterface;
 use App\Libraries\Responders\ErrorObject;
 use App\Libraries\Responders\HttpObject;
 use App\Libraries\Responders\JsonApiErrorsFormatter;
-use App\Models\Distributor;
 use App\Models\User;
 use App\Repositories\Contracts\DbCommerceRepositoryInterface;
 use App\Repositories\Contracts\DbDistributorRepositoryInterface;
@@ -133,7 +131,7 @@ class FeaturedController
      * @param Request $request
      * @return JsonResponse
      */
-    public function __invoke(Request $request): JsonResponse
+    public function __invoke(Request $request, int $address): JsonResponse
     {
         try {
             $token = $request->header('Authorization');
@@ -145,21 +143,20 @@ class FeaturedController
                 $error = new ErrorObject();
                 $error->setCode(self::USER_NOT_FOUND)
                     ->setTitle(self::ERROR_TITLE)
-                    ->setDetail('No se encontró el usuario.')
+                    ->setDetail('No se encontr贸 el usuario.')
                     ->setStatus((string) Response::HTTP_BAD_REQUEST);
                 $this->jsonErrorFormat->add($error);
 
                 return $this->jsonApiResponse->respondError($this->jsonErrorFormat, Response::HTTP_BAD_REQUEST);
             }
 
-            $address = $request->input('address');
             $address = $this->dbUserRepository->findByUserLocationID($address);
 
             if (is_null($address)) {
                 $error = new ErrorObject();
                 $error->setCode(self::ADDRESS_NOT_FOUND)
                     ->setTitle(self::ERROR_TITLE)
-                    ->setDetail('No se encontró la dirección enviada.')
+                    ->setDetail('No se encontr贸 la direcci贸n enviada.')
                     ->setStatus((string) Response::HTTP_BAD_REQUEST);
                 $this->jsonErrorFormat->add($error);
 

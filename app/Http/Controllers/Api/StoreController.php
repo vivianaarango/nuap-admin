@@ -113,7 +113,7 @@ class StoreController
      * @param Request $request
      * @return JsonResponse
      */
-    public function __invoke(Request $request): JsonResponse
+    public function __invoke(Request $request, int $address): JsonResponse
     {
         try {
             $token = $request->header('Authorization');
@@ -125,21 +125,21 @@ class StoreController
                 $error = new ErrorObject();
                 $error->setCode(self::USER_NOT_FOUND)
                     ->setTitle(self::ERROR_TITLE)
-                    ->setDetail('No se encontró el usuario.')
+                    ->setDetail('No se encontr贸 el usuario.')
                     ->setStatus((string) Response::HTTP_BAD_REQUEST);
                 $this->jsonErrorFormat->add($error);
 
                 return $this->jsonApiResponse->respondError($this->jsonErrorFormat, Response::HTTP_BAD_REQUEST);
             }
 
-            $address = $request->input('address');
+            //$address = $request->input('address');
             $address = $this->dbUserRepository->findByUserLocationID($address);
 
             if (is_null($address)) {
                 $error = new ErrorObject();
                 $error->setCode(self::ADDRESS_NOT_FOUND)
                     ->setTitle(self::ERROR_TITLE)
-                    ->setDetail('No se encontró la dirección enviada.')
+                    ->setDetail('No se encontr贸 la direcci贸n enviada.')
                     ->setStatus((string) Response::HTTP_BAD_REQUEST);
                 $this->jsonErrorFormat->add($error);
 
