@@ -219,6 +219,42 @@ class DbProductRepository implements DbProductRepositoryInterface
 
     /**
      * @param array $usersID
+     * @param array $categoriesID
+     * @return Collection
+     */
+    public function getSalesByUserIDAndCategoryID(array $usersID, array $categoriesID): Collection
+    {
+        return Product::select('products.*')
+            ->join('users', 'products.user_id', '=', 'users.id')
+            ->where('users.status', User::STATUS_ACTIVE)
+            ->where('products.status', Product::STATUS_ACTIVE)
+            ->where('products.stock', '>', 0)
+            ->whereIn('products.category_id', $categoriesID)
+            ->whereIn('products.user_id', $usersID)
+            ->groupBy('products.id')
+            ->inRandomOrder()
+            ->get();
+    }
+
+    /**
+     * @param int $storeID
+     * @return Collection
+     */
+    public function getProductsByStore(int $storeID): Collection
+    {
+        return Product::select('products.*')
+            ->join('users', 'products.user_id', '=', 'users.id')
+            ->where('users.status', User::STATUS_ACTIVE)
+            ->where('products.status', Product::STATUS_ACTIVE)
+            ->where('products.stock', '>', 0)
+            ->where('products.user_id', $storeID)
+            ->groupBy('products.id')
+            ->inRandomOrder()
+            ->get();
+    }
+
+    /**
+     * @param array $usersID
      * @return Collection
      */
     public function getFeaturedByUserID(array $usersID): Collection

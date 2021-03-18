@@ -7,6 +7,7 @@ use App\Libraries\Responders\Contracts\JsonApiResponseInterface;
 use App\Libraries\Responders\ErrorObject;
 use App\Libraries\Responders\HttpObject;
 use App\Libraries\Responders\JsonApiErrorsFormatter;
+use App\Models\Category;
 use App\Models\User;
 use App\Repositories\Contracts\DbCommerceRepositoryInterface;
 use App\Repositories\Contracts\DbDistributorRepositoryInterface;
@@ -18,10 +19,10 @@ use Illuminate\Http\Request;
 use Exception;
 
 /**
- * Class SalesController
+ * Class ProductStoreController
  * @package App\Http\Controllers\Api
  */
-class SalesController
+class ProductStoreController
 {
     /**
      * @type string
@@ -129,10 +130,11 @@ class SalesController
 
     /**
      * @param Request $request
+     * @param int $storeID
      * @param int $address
      * @return JsonResponse
      */
-    public function __invoke(Request $request, int $address): JsonResponse
+    public function __invoke(Request $request, int $storeID, int $address): JsonResponse
     {
         try {
             $token = $request->header('Authorization');
@@ -144,7 +146,7 @@ class SalesController
                 $error = new ErrorObject();
                 $error->setCode(self::USER_NOT_FOUND)
                     ->setTitle(self::ERROR_TITLE)
-                    ->setDetail('No se encontr贸 el usuario.')
+                    ->setDetail('No se encontró el usuario.')
                     ->setStatus((string) Response::HTTP_BAD_REQUEST);
                 $this->jsonErrorFormat->add($error);
 
@@ -165,40 +167,35 @@ class SalesController
             }
 
             if ($user->role === User::COMMERCE_ROLE) {
-                $stores = $this->dbDistributorRepository->findValidDistributorsToAddProducts();
+                $store = $this->dbDistributorRepository->findByUserID($storeID);
             } else {
-                $stores = $this->dbCommerceRepository->findValidCommercesToAddProducts();
+                $store = $this->dbCommerceRepository->findByUserID($storeID);
             }
 
-            $storeIDS = [];
-            foreach ($stores as $store) {
-                $locations = $this->dbUserRepository->getLocationsByUser($store->user_id);
-                $addStore = true;
+            $locations = $this->dbUserRepository->getLocationsByUser($storeID);
+            $addStore = true;
+            if (count($locations) === 0) {
+                $addStore = false;
+            }
 
-                if (count($locations) === 0) {
+            foreach ($locations as $location) {
+                $validate = $this->validateDistance(
+                    $store->distance,
+                    $location->latitude,
+                    $location->longitude,
+                    $address->latitude,
+                    $address->longitude
+                );
+
+                if (! $validate){
                     $addStore = false;
                 }
-
-                foreach ($locations as $location) {
-                    $validate = $this->validateDistance(
-                        $store->distance,
-                        $location->latitude,
-                        $location->longitude,
-                        $address->latitude,
-                        $address->longitude
-                    );
-
-                    if (! $validate){
-                        $addStore = false;
-                    }
-                }
-                if ($addStore) {
-                    array_push($storeIDS, $store->user_id);
-                }
+            }
+            if ($addStore) {
+                $products = $this->dbProductRepository->getProductsByStore($storeID);
             }
 
-            $products = $this->dbProductRepository->getSalesByUserID($storeIDS);
-            if (!count($products)) {
+            if (! count($products)) {
                 $error = new ErrorObject();
                 $error->setCode(self::PRODUCTS_NOT_FOUND)
                     ->setTitle(self::ERROR_TITLE)

@@ -112,6 +112,19 @@ interface DbProductRepositoryInterface
 
     /**
      * @param array $usersID
+     * @param array $categoriesID
+     * @return Collection
+     */
+    public function getSalesByUserIDAndCategoryID(array $usersID, array $categoriesID): Collection;
+
+    /**
+     * @param int $storeID
+     * @return Collection
+     */
+    public function getProductsByStore(int $storeID): Collection;
+
+    /**
+     * @param array $usersID
      * @return Collection
      */
     public function getFeaturedByUserID(array $usersID): Collection;

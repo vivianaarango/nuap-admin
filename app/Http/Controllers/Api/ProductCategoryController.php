@@ -7,6 +7,7 @@ use App\Libraries\Responders\Contracts\JsonApiResponseInterface;
 use App\Libraries\Responders\ErrorObject;
 use App\Libraries\Responders\HttpObject;
 use App\Libraries\Responders\JsonApiErrorsFormatter;
+use App\Models\Category;
 use App\Models\User;
 use App\Repositories\Contracts\DbCommerceRepositoryInterface;
 use App\Repositories\Contracts\DbDistributorRepositoryInterface;
@@ -18,10 +19,10 @@ use Illuminate\Http\Request;
 use Exception;
 
 /**
- * Class SalesController
+ * Class ProductCategoryController
  * @package App\Http\Controllers\Api
  */
-class SalesController
+class ProductCategoryController
 {
     /**
      * @type string
@@ -129,10 +130,11 @@ class SalesController
 
     /**
      * @param Request $request
+     * @param int $category
      * @param int $address
      * @return JsonResponse
      */
-    public function __invoke(Request $request, int $address): JsonResponse
+    public function __invoke(Request $request, int $category, int $address): JsonResponse
     {
         try {
             $token = $request->header('Authorization');
@@ -197,8 +199,16 @@ class SalesController
                 }
             }
 
-            $products = $this->dbProductRepository->getSalesByUserID($storeIDS);
-            if (!count($products)) {
+            $categoryList = [];
+            $categories = Category::where('parent_id', $category)->get();
+            array_push($categoryList, $category);
+            foreach ($categories as $category) {
+                array_push($categoryList, $category->id);
+            }
+
+            $products = $this->dbProductRepository->getSalesByUserIDAndCategoryID($storeIDS, $categoryList);
+
+            if (! count($products)) {
                 $error = new ErrorObject();
                 $error->setCode(self::PRODUCTS_NOT_FOUND)
                     ->setTitle(self::ERROR_TITLE)
