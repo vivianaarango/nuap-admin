@@ -189,6 +189,8 @@ class ProductStoreController
 
                 if (! $validate){
                     $addStore = false;
+                } else {
+                    break;
                 }
             }
             if ($addStore) {

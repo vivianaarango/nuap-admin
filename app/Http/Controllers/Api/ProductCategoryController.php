@@ -192,6 +192,8 @@ class ProductCategoryController
 
                     if (! $validate){
                         $addStore = false;
+                    } else {
+                        break;
                     }
                 }
                 if ($addStore) {
@@ -227,6 +229,7 @@ class ProductCategoryController
                 'data'
             );
         } catch (Exception $exception) {
+            dd($exception);
             $error = new ErrorObject();
             $error->setCode(self::GENERAL_ERROR)
                 ->setTitle(self::ERROR_TITLE)

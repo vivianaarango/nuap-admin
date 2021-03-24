@@ -1,6 +1,9 @@
 <?php
 namespace App\Http\Transformers;
 
+use App\Models\Category;
+use App\Models\Commerce;
+use App\Models\Distributor;
 use App\Models\Product;
 use League\Fractal\TransformerAbstract;
 
@@ -16,10 +19,17 @@ class ProductsTransformer extends TransformerAbstract
      */
     public function transform(Product $product): array
     {
+        $store = Distributor::where('user_id', $product->user_id)->first();
+        if (is_null($store)) {
+            $store = Commerce::where('user_id', $product->user_id)->first();
+        }
+
         return [
             'id' => $product->id,
-            'user_id' => $product->name,
+            'user_id' => $product->user_id,
+            'store_name' => $store->business_name,
             'category_id' => $product->category_id,
+            'category_name' => Category::findOrFail($product->category_id)->name,
             'name' => $product->name,
             'sku' => $product->sku,
             'brand' => $product->brand,

@@ -190,6 +190,8 @@ class SalesController
 
                     if (! $validate){
                         $addStore = false;
+                    } else {
+                        break;
                     }
                 }
                 if ($addStore) {

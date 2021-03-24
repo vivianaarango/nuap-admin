@@ -190,6 +190,8 @@ class FeaturedController
 
                     if (! $validate){
                         $addStore = false;
+                    } else {
+                        break;
                     }
                 }
                 if ($addStore) {

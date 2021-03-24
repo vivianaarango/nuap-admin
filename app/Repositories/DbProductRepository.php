@@ -188,7 +188,7 @@ class DbProductRepository implements DbProductRepositoryInterface
     public function getEnabledStoresByCommerce(): Collection
     {
         return Commerce::select('commerces.*', 'users.*')
-            ->join('users', 'distributors.user_id', '=', 'users.id')
+            ->join('users', 'commerces.user_id', '=', 'users.id')
             ->join('products', 'products.user_id', '=', 'users.id')
             ->where('users.role', User::COMMERCE_ROLE)
             ->where('users.status', User::STATUS_ACTIVE)
