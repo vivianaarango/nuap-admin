@@ -1,0 +1,149 @@
+@media screen and (min-width: 1200px) {
+  .container {
+    max-width: 1200px;
+  }
+}
+
+@media only screen and (max-width:1199px) {
+	.single_features {
+		margin-top: 25px;
+		padding: 15px 5px 15px 0px;
+		font-size: 14px;
+	}
+	.welcome_area_text h1 {
+		font-size: 50px;
+		line-height: 50px;
+	}
+	.address-area p {
+		margin: 0 0 1px;
+	}
+	.particles-section .content-heading h2 {
+		font-size: 50px;
+		line-height: 50px;
+	}
+	.particles-section .content-heading p {
+		margin-bottom: 20px;
+		margin-top: 20px;
+	}
+	.home_img_area2 {
+		margin: 40px 0 0px;
+		display: inline-block;
+	}
+	.testimonial {
+		padding: 0 5px; 
+	}
+}
+
+@media only screen and (max-width:991px) { 
+	.navbar-default .navbar-nav > li > a {
+		font-size: 12px;
+		padding: 13px 6px;
+	}
+	.home_img_area,
+	.home_img_area1,
+	.home_img_area2 {
+		display: none;
+	}
+	.welcome_area_text {
+		margin-bottom: 100px;
+	}
+	.single-about{
+		margin-bottom:20px;
+	}
+	.single_about p {
+		font-size: 14px;
+	}
+	.single_features p{
+		font-size: 15px;
+	}
+	.review_slider .owl-prev,
+	.review_slider .owl-next,
+	.app_screens_slider .slick-prev,
+	.app_screens_slider .slick-next {
+		display: none!important;
+	}
+	.video{
+		margin-top:40px;
+	}
+	.pricingTable{
+		margin-bottom:25px;
+	}
+	.single_counter{
+		margin-bottom:20px;
+	}
+	.contact_form{
+		margin-bottom:20px;
+	}
+	#footer {
+		padding-bottom: 30px;
+	}
+	
+}
+
+@media only screen and (max-width:768px) { 
+	.single_footer img {
+		padding-top: 80px;
+	}
+	.single_footer1 img {
+		padding-top: 0px;
+	}
+
+}
+
+@media only screen and (max-width:767px) { 
+	.single_footer1 img {
+		padding-top: 0px;
+	}
+
+}
+
+@media only screen and (max-width:480px) { 
+
+	.single_footer img {
+		padding-top: 85px;
+	}
+	#footer {
+		margin-top: -275px;
+	}
+	.welcome_area_text h1 {
+		font-size: 40px;
+		line-height: 40px;
+	}
+	.single_about{
+		text-align:center;
+	} 
+	.particles-section .content-heading h2 {
+		font-size: 40px;
+		line-height: 40px;
+	}
+	.about_btn a {margin-top: 20px;}
+
+
+}
+@media only screen and (max-width:320px) { 
+	.welcome_area_text h1 {
+		font-size: 30px;
+		line-height: 30px;
+	}
+	.sec_icon span::after {
+		right: 220px;
+	}
+	.sec_icon span::before {
+		left: 95px;
+	}
+	.particles-section .content-heading h2 {
+		font-size: 28px;
+		line-height: 30px;
+	}
+	.particles-section .content-heading p {
+		margin-bottom: 0px;
+		margin-top: 0px; 
+	}
+	.about_btn a {
+		margin-bottom: 10px;
+	}
+	.single_footer img {
+		padding-top: 100px;
+	}
+	.about_btn a {margin-top: 20px;}
+}

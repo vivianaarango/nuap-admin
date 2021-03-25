@@ -2,6 +2,10 @@
 node_modules/
 npm-debug.log
 yarn-error.log
+<<<<<<< HEAD
+=======
+.php_cs.cache
+>>>>>>> d58d79330b302f6014050b9e5918fbd395bd67a7
 
 # Laravel 4 specific
 bootstrap/compiled.php
@@ -10,6 +14,11 @@ app/storage/
 # Laravel 5 & Lumen specific
 public/storage
 public/hot
+<<<<<<< HEAD
+=======
+public/documents
+public/voucher
+>>>>>>> d58d79330b302f6014050b9e5918fbd395bd67a7
 
 # Laravel 5 & Lumen specific with changed public path
 public_html/storage
@@ -20,4 +29,8 @@ storage/*.key
 Homestead.yaml
 Homestead.json
 /.vagrant
+<<<<<<< HEAD
 .phpunit.result.cache
+=======
+.phpunit.result.cache
+>>>>>>> d58d79330b302f6014050b9e5918fbd395bd67a7

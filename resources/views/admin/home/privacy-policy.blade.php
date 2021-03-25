@@ -1,0 +1,1 @@
+<h1>Política de privacidad</h1>
