@@ -61,25 +61,6 @@
 </div>
 
 <div class="form-group row align-items-center">
-    <label style="color: #2d3093" for="total" class="col-form-label text-md-right" :class="'col-md-3'"><b>Total:</b></label>
-    <div :class="'col-md-3 col-md-3'">
-        <label style="color: #2d3093" for="total" class="col-form-label text-md-right"><b>{{ $order['total'] }}</b></label>
-    </div>
-    <label for="total_discount" class="col-form-label text-md-right" :class="'col-md-3'"><b>Dirección:</b></label>
-    <div :class="'col-md-3 col-md-3'">
-        <label for="total" class="col-form-label text-md-right">{{ $order['address_id'] }}</label>
-    </div>
-</div>
-
-<div class="form-group row align-items-center">
-    <label style="color: #c11e1e" for="status" class="col-form-label text-md-right" :class="'col-md-3'"><b>Fecha de Entrega:</b></label>
-    <div :class="'col-md-3 col-md-3'">
-        @if($order['delivery_date'] != null && $status != 'Entregado')
-            <label style="color: #C11E1E" for="total" class="col-form-label text-md-right"><b>{{ $order['delivery_date'] }}</b></label>
-        @else
-            <label style="color: #c11e1e" for="total" class="col-form-label text-md-right"><b>N/A</b></label>
-        @endif
-    </div>
     <label for="status" class="col-form-label text-md-right" :class="'col-md-3'"><b>Estado:</b></label>
     <div :class="'col-md-3 col-md-3'">
         @if($order['status'] === 'Cancelado')
@@ -99,6 +80,25 @@
         @endif
         @if($order['status'] === 'Entregado')
             <div class="col text-center"><button disabled style="color: white; background-color: #03b732; border-color: #03b732;" class="btn btn-sm btn-success"><i></i>&nbspEntregado</button></div>
+        @endif
+    </div>
+    <label for="total_discount" class="col-form-label text-md-right" :class="'col-md-3'"><b>Dirección:</b></label>
+    <div :class="'col-md-3 col-md-3'">
+        <label for="total" class="col-form-label text-md-right">{{ $order['address_id'] }}</label>
+    </div>
+</div>
+
+<div class="form-group row align-items-center">
+    <label style="color: #2d3093" for="total" class="col-form-label text-md-right" :class="'col-md-3'"><b>Total:</b></label>
+    <div :class="'col-md-3 col-md-3'">
+        <label style="color: #2d3093" for="total" class="col-form-label text-md-right"><b>{{ $order['total'] }}</b></label>
+    </div>
+    <label style="color: #c11e1e" for="status" class="col-form-label text-md-right" :class="'col-md-3'"><b>Fecha de Entrega:</b></label>
+    <div :class="'col-md-3 col-md-3'">
+        @if($order['delivery_date'] != null && $status != 'Entregado')
+            <label style="color: #C11E1E" for="total" class="col-form-label text-md-right"><b>{{ $order['delivery_date'] }}</b></label>
+        @else
+            <label style="color: #c11e1e" for="total" class="col-form-label text-md-right"><b>N/A</b></label>
         @endif
     </div>
 </div>
