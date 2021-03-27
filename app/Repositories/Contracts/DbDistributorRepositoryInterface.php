@@ -12,7 +12,7 @@ interface DbDistributorRepositoryInterface
 {
     /**
      * @param int $userID
-     * @return Distributor|null|Collection
+     * @return null|Distributor
      */
     public function findByUserID(int $userID): Distributor;
 

@@ -20,6 +20,7 @@ use Illuminate\Foundation\Application;
  * @property float total_discount
  * @property float total
  * @property int rating
+ * @property int address_id
  * @property string comment
  * @property string delivery_date
  * @property string created_at
@@ -28,6 +29,7 @@ use Illuminate\Foundation\Application;
  * @method static where(string $string, int $userID)
  * @method static findOrFail(int $orderID)
  * @method static select(string $string, string $string1, string $string2)
+ * @method static create($order)
  */
 class Order extends Model
 {
@@ -84,7 +86,8 @@ class Order extends Model
         'total',
         'delivery_date',
         'rating',
-        'comment'
+        'comment',
+        'address_id'
     ];
 
     /**

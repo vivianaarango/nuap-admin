@@ -13,6 +13,8 @@
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/commerce-list') }}"><i class="nav-icon icon-handbag"></i>Comercios</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/commerce-edit-commission') }}"><i class="nav-icon icon-pin"></i>Comisiones Comercios</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/client-list') }}"><i class="nav-icon icon-user"></i>Clientes</a></li>
+                <li class="nav-title">Pedidos</li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('admin/orders') }}"><i class="nav-icon icon-basket"></i>Consultar</a></li>
                 <li class="nav-title">Productos</li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/product-list') }}"><i class="nav-icon icon-basket"></i>Inventario</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/categories') }}"><i class="nav-icon icon-tag"></i>Categorías</a></li>

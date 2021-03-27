@@ -225,6 +225,8 @@ Route::get('/admin/report/export-pending-payments', 'Admin\ReportController@expo
 ### Orders
 /* List */
 Route::get('/admin/order-list', 'Admin\OrderController@list');
+/* List orders */
+Route::get('/admin/orders', 'Admin\OrderController@adminList');
 /* View */
 Route::get('/admin/order/{order}/view', 'Admin\OrderController@view')->name('admin/order/view');
 /* Change status */

@@ -37,6 +37,7 @@ use Illuminate\Foundation\Application;
  * @method static where(string $string, int $userID)
  * @method static findOrFail(int $distributorID)
  * @method static select(string $string, string $string1)
+ * @method static find(mixed $id)
  */
 class Distributor extends Model
 {

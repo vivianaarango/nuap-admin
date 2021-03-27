@@ -47,12 +47,11 @@
     43 => 'Spatie\\MediaLibrary\\MediaLibraryServiceProvider',
     44 => 'Spatie\\Permission\\PermissionServiceProvider',
     45 => 'Spatie\\Translatable\\TranslatableServiceProvider',
-    46 => 'Tymon\\JWTAuth\\Providers\\LaravelServiceProvider',
-    47 => 'App\\Providers\\AppServiceProvider',
-    48 => 'App\\Providers\\AuthServiceProvider',
-    49 => 'App\\Providers\\EventServiceProvider',
-    50 => 'App\\Providers\\RouteServiceProvider',
-    51 => 'App\\Providers\\RepositoryServiceProvider',
+    46 => 'App\\Providers\\AppServiceProvider',
+    47 => 'App\\Providers\\AuthServiceProvider',
+    48 => 'App\\Providers\\EventServiceProvider',
+    49 => 'App\\Providers\\RouteServiceProvider',
+    50 => 'App\\Providers\\RepositoryServiceProvider',
   ),
   'eager' => 
   array (
@@ -87,11 +86,10 @@
     28 => 'Spatie\\MediaLibrary\\MediaLibraryServiceProvider',
     29 => 'Spatie\\Permission\\PermissionServiceProvider',
     30 => 'Spatie\\Translatable\\TranslatableServiceProvider',
-    31 => 'Tymon\\JWTAuth\\Providers\\LaravelServiceProvider',
-    32 => 'App\\Providers\\AppServiceProvider',
-    33 => 'App\\Providers\\AuthServiceProvider',
-    34 => 'App\\Providers\\EventServiceProvider',
-    35 => 'App\\Providers\\RouteServiceProvider',
+    31 => 'App\\Providers\\AppServiceProvider',
+    32 => 'App\\Providers\\AuthServiceProvider',
+    33 => 'App\\Providers\\EventServiceProvider',
+    34 => 'App\\Providers\\RouteServiceProvider',
   ),
   'deferred' => 
   array (

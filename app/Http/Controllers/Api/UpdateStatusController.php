@@ -1,14 +1,12 @@
 <?php
 namespace App\Http\Controllers\Api;
 
-use App\Http\Transformers\OrdersTransformer;
 use App\Libraries\Responders\Contracts\ArrayResponseInterface;
 use App\Libraries\Responders\Contracts\JsonApiResponseInterface;
 use App\Libraries\Responders\ErrorObject;
 use App\Libraries\Responders\HttpObject;
 use App\Libraries\Responders\JsonApiErrorsFormatter;
 use App\Models\Order;
-use App\Repositories\Contracts\DbClientRepositoryInterface;
 use App\Repositories\Contracts\DbOrderRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use Illuminate\Http\JsonResponse;

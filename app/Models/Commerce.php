@@ -37,6 +37,7 @@ use Illuminate\Foundation\Application;
  * @method static where(string $string, int $userID)
  * @method static findOrFail(int $commerceID)
  * @method static select(string $string, string $string1)
+ * @method static find($id)
  */
 class Commerce extends Model
 {

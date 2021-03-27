@@ -122,12 +122,13 @@ class OrderController extends Controller
     {
         $userAdmin = Session::get('user');
 
-        if (isset($userAdmin) && $userAdmin->role == User::DISTRIBUTOR_ROLE) {
+        if (isset($userAdmin) && $userAdmin->role == User::DISTRIBUTOR_ROLE || $userAdmin->role == User::ADMIN_ROLE) {
             $order = $this->dbOrderRepository->findByID($order->id);
             $order->total_amount = $this->formatCurrency($order->total_amount) . ' $';
             $order->delivery_amount = $this->formatCurrency($order->delivery_amount) . ' $';
             $order->total_discount = $this->formatCurrency($order->total_discount) . ' $';
             $order->total = $this->formatCurrency($order->total) . ' $';
+            $order->address_id = $this->dbUserRepository->findByUserLocationID($order->address_id)->address;
 
             $client = null;
             if ($order->client_type === User::USER_ROLE) {
@@ -252,5 +253,52 @@ class OrderController extends Controller
         }
 
         return redirect('/admin/user-session');
+    }
+
+    /**
+     * @param IndexOrder $request
+     * @return array|Factory|Application|RedirectResponse|Redirector|View
+     */
+    public function adminList(IndexOrder $request)
+    {
+        $user = Session::get('user');
+
+        if (isset($user) && $user->role == User::ADMIN_ROLE) {
+            /* @noinspection PhpUndefinedMethodInspection  */
+            $data = AdminListing::create(Order::class)
+                ->modifyQuery(function($query) {
+                    $query->select(
+                        'orders.*'
+                    )->orderBy('orders.status', 'asc')
+                        ->orderBy('id', 'desc');
+                })->processRequestAndGet(
+                    $request,
+                    ['id', 'total_products', 'total_amount', 'delivery_amount', 'total_discount', 'total', 'status'],
+                    ['id', 'total_products', 'total_amount','delivery_amount', 'total_discount', 'total', 'status']
+                );
+
+            foreach ($data as $item) {
+                $item->total_amount = $this->formatCurrency($item->total_amount) . ' $';
+                $item->delivery_amount = $this->formatCurrency($item->delivery_amount) . ' $';
+                $item->total_discount = $this->formatCurrency($item->total_discount) . ' $';
+                $item->total = $this->formatCurrency($item->total) . ' $';
+            }
+
+            if ($request->ajax()) {
+                return [
+                    'data' => $data,
+                    'activation' => $user->name,
+                    'role' => $user->role,
+                ];
+            }
+
+            return view('admin.orders.list', [
+                'data' => $data,
+                'activation' => $user->name,
+                'role' => $user->role,
+            ]);
+        } else {
+            return redirect('/admin/user-session');
+        }
     }
 }
