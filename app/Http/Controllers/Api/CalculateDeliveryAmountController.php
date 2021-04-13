@@ -150,7 +150,9 @@ class CalculateDeliveryAmountController
             }
 
             $this->httpObject->setBody([
-                'discount' => $total
+                'data' => [
+                    'discount' => $total
+                ]
             ]);
 
             return $this->arrayResponse->respond($this->httpObject);

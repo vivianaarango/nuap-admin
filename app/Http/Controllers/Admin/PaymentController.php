@@ -495,7 +495,6 @@ class PaymentController extends Controller
             $account->status = $account->status == BankAccount::ACCOUNT_INACTIVE ? BankAccount::ACCOUNT_ACTIVE : BankAccount::ACCOUNT_INACTIVE;
             $account->save();
 
-
             return redirect('/admin/distributor-list');
         }
 

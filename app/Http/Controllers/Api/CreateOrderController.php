@@ -6,9 +6,11 @@ use App\Libraries\Responders\Contracts\JsonApiResponseInterface;
 use App\Libraries\Responders\ErrorObject;
 use App\Libraries\Responders\HttpObject;
 use App\Libraries\Responders\JsonApiErrorsFormatter;
+use App\Models\Balance;
 use App\Models\Commerce;
 use App\Models\Distributor;
 use App\Models\Order;
+use App\Models\OrderProduct;
 use App\Models\Product;
 use App\Models\Ticket;
 use App\Models\TicketMessage;
@@ -162,7 +164,7 @@ class CreateOrderController
 
             $stores = array_unique($stores);
 
-            $totalShipping = 0;
+            $orders = [];
             foreach ($stores as $store) {
                 $userType = 'Distribuidor';
                 $dataStore = Distributor::where('user_id', $store)
@@ -181,13 +183,16 @@ class CreateOrderController
                     $data = Product::findOrFail($product['id']);
                     if ($data->user_id == $store) {
                         if ($product['quantity'] <= $data->stock) {
-                            $countProducts ++;
-                            if ($data->has_special_price) {
-                                $total = $total + ($product['quantity'] * ($data->special_price *  $data->sale_price / 100));
-                                $totalDiscount = $totalDiscount + $data->special_price *  $data->sale_price / 100;
+                            $countProducts += $product['quantity'];
+                            if ($data->has_special_price) {;
+                                $discount = ($data->special_price *  $data->sale_price) / 100;
+                                $total = $total + ($product['quantity'] * ($data->sale_price - $discount));
+                                $totalDiscount = $totalDiscount + ($product['quantity'] * $discount);
                             } else {
                                 $total = $total + ($product['quantity'] * $data->sale_price);
                             }
+                            $data->stock = $data->stock - $product['quantity'];
+                            $data->save();
                         } else {
                             $error = new ErrorObject();
                             $error->setCode(self::PRODUCT_NOT_AVAILABLE)
@@ -214,10 +219,48 @@ class CreateOrderController
                 $order->total = $total + $dataStore->first()->shipping_cost;
                 $order->address_id = $address->id;
                 $order->save();
+
+                foreach ($request['products'] as $product) {
+                    $data = Product::findOrFail($product['id']);
+                    if ($data->user_id == $store) {
+                        $orderProduct = new OrderProduct();
+                        $orderProduct->product_id = $data->id;
+                        $orderProduct->order_id = $order->id;
+                        $orderProduct->quantity = $product['quantity'];
+
+                        if ($data->has_special_price) {
+                            $discount = ($data->special_price *  $data->sale_price) / 100;
+                            $orderProduct->price = $data->sale_price - $discount;
+                        } else {
+                            $orderProduct->price = $data->sale_price;
+                        }
+                        $orderProduct->save();
+                    }
+                }
+                array_push($orders, $order->id);
+
+                $balance = Balance::where('user_id', $dataStore->first()->id)->get();
+                $totalWithoutCommission = $total - (($total * $dataStore->first()->commission) / 100);
+                if (! count($balance)) {
+                    $balance = new Balance();
+                    $balance->user_id = $dataStore->first()->id;
+                    $balance->user_type = $userType;
+                    $balance->balance = $totalWithoutCommission;
+                    $balance->paid_out = 0;
+                    $balance->total = $totalWithoutCommission;
+                    $balance->requested_value = 0;
+                } else {
+                    $balance = Balance::findOrFail($balance->first()->id);
+                    $balance->balance += $totalWithoutCommission;
+                    $balance->total += $totalWithoutCommission;
+                }
+                $balance->save();
             }
 
             $this->httpObject->setBody([
-                'data' => null
+                'data' => [
+                    'orders' => $orders
+                ]
             ]);
 
             return $this->arrayResponse->respond($this->httpObject);

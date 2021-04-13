@@ -168,6 +168,8 @@ class StoreController
 
                     if (! $validate){
                         $addStore = false;
+                    } else {
+                        break;
                     }
                 }
                 if ($addStore) {

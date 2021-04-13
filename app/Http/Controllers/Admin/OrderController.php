@@ -165,7 +165,7 @@ class OrderController extends Controller
                 'user' => $user,
                 'products' => $products,
                 'activation' => $userAdmin->name,
-                'role' => $user->role,
+                'role' => $userAdmin->role,
                 'status' => $status
             ]);
         }
