@@ -17,7 +17,7 @@ class IndexDistributor extends FormRequest
     public function rules()
     {
         return [
-            'orderBy' => 'in:id,email,phone,business_name,commission,name_legal_representative,last_logged_in|nullable',
+            'orderBy' => 'in:id,nit,business_name,user_id,commission,name_legal_representative,last_logged_in|nullable',
             'orderDirection' => 'in:asc,desc|nullable',
             'search' => 'string|nullable',
             'page' => 'integer|nullable',

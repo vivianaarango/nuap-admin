@@ -4,12 +4,16 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Ticket\IndexTicket;
+use App\Mail\SendEmail;
+use App\Models\AdminUser;
 use App\Models\Ticket;
 use App\Models\TicketMessage;
 use App\Models\User;
 use App\Repositories\Contracts\DbCommerceRepositoryInterface;
 use App\Repositories\Contracts\DbDistributorRepositoryInterface;
 use App\Repositories\Contracts\DbTicketRepositoryInterface;
+use App\Repositories\Contracts\DbUsersRepositoryInterface;
+use App\Repositories\DbUsersRepository;
 use Brackets\AdminListing\Facades\AdminListing;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\View\Factory;
@@ -18,6 +22,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
@@ -43,19 +48,27 @@ class TicketController extends Controller
     private $dbCommerceRepository;
 
     /**
+     * @var DbUsersRepositoryInterface
+     */
+    private $dbUserRepository;
+
+    /**
      * TicketController constructor.
      * @param DbTicketRepositoryInterface $dbTicketRepository
      * @param DbDistributorRepositoryInterface $dbDistributorRepository
      * @param DbCommerceRepositoryInterface $dbCommerceRepository
+     * @param DbUsersRepository $dbUserRepository
      */
     public function __construct(
         DbTicketRepositoryInterface $dbTicketRepository,
         DbDistributorRepositoryInterface $dbDistributorRepository,
-        DbCommerceRepositoryInterface $dbCommerceRepository
+        DbCommerceRepositoryInterface $dbCommerceRepository,
+        DbUsersRepository $dbUserRepository
     ) {
         $this->dbTicketRepository = $dbTicketRepository;
         $this->dbDistributorRepository = $dbDistributorRepository;
         $this->dbCommerceRepository = $dbCommerceRepository;
+        $this->dbUserRepository = $dbUserRepository;
     }
 
     /**
@@ -133,6 +146,17 @@ class TicketController extends Controller
             $message['sender_type'] = $user->role;
             $message['sender_date'] = now();
             TicketMessage::create($message);
+
+            $admin = AdminUser::all();
+            foreach ($admin as $item) {
+                $sender = $this->dbUserRepository->findByID($item->user_id);
+                Mail::to($sender->email)->send(new SendEmail(
+                        '',
+                        '¡Han creado un nuevo ticket!.',
+                        'Tienes un nuevo mensaje de soporte, responde lo antes posible'
+                    )
+                );
+            }
 
             if ($request->ajax()) {
                 return [
@@ -251,6 +275,36 @@ class TicketController extends Controller
             $message['sender_id'] = $user->id;
             $message['sender_type'] = $user->role;
             $message['sender_date'] = now();
+
+            $adminResponse = true;
+            $messages = $this->dbTicketRepository->findMessagesByTicket($request['ticket_id']);
+
+            foreach ($messages as $item) {
+                if ($item->sender_type === User::ADMIN_ROLE) {
+                    $sender = $this->dbUserRepository->findByID($item->user_id);
+                    Mail::to($sender->email)->send(new SendEmail(
+                            '',
+                            '¡Han respondido tu mensaje!.',
+                            'Tienes un nuevo mensaje de soporte, responde lo antes posible'
+                        )
+                    );
+                } else {
+                    $adminResponse = false;
+                }
+            }
+
+            if (! $adminResponse) {
+                $admin = AdminUser::all();
+                foreach ($admin as $item) {
+                    $sender = $this->dbUserRepository->findByID($item->user_id);
+                    Mail::to($sender->email)->send(new SendEmail(
+                            '',
+                            '¡Han creado un nuevo ticket!.',
+                            'Tienes un nuevo mensaje de soporte, responde lo antes posible'
+                        )
+                    );
+                }
+            }
 
             TicketMessage::create($message);
 

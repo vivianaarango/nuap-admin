@@ -11,6 +11,13 @@ use Illuminate\Database\Eloquent\Collection;
 interface DbOrderRepositoryInterface
 {
     /**
+     * @param int $orderID
+     * @param int $userID
+     * @return Order|null|Collection
+     */
+    public function findByUserIDAndOrderUD(int $orderID, int $userID): Collection;
+
+    /**
      * @param int $userID
      * @return Order|null|Collection
      */
@@ -45,4 +52,22 @@ interface DbOrderRepositoryInterface
      * @return Collection
      */
     public function findInProgressByUserID(int $userID): Collection;
+
+    /**
+     * @param int $userID
+     * @return float
+     */
+    public function findTodayOrdersDeliveredByUserID(int $userID): float;
+
+    /**
+     * @param int $userID
+     * @return float
+     */
+    public function findLastWeekOrdersDeliveredByUserID(int $userID): float;
+
+    /**
+     * @param int $userID
+     * @return float
+     */
+    public function findMonthDeliveredByUserID(int $userID): float;
 }

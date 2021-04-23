@@ -44,9 +44,9 @@
                         <table class="table table-hover table-listing">
                             <thead>
                             <tr>
-                                <th is='sortable' :column="'id'">ID</th>
+                                <th is='sortable' :column="'user_id'">ID</th>
                                 <th is='sortable' :column="'business_name'">Razón social</th>
-                                <th is='sortable' :column="'phone'">Teléfono</th>
+                                <th is='sortable' :column="'nit'">Nit</th>
                                 <th is='sortable' :column="'commission'">Comisión</th>
                                 <th is='sortable' :column="'name_legal_representative'">Representante legal</th>
                                 <th is='sortable' :column="'activated'">Activo</th>
@@ -56,9 +56,9 @@
                             </thead>
                             <tbody>
                             <tr v-for="(item, index) in collection">
-                                <td >@{{ item.id }}</td>
+                                <td >@{{ item.user_id }}</td>
                                 <td >@{{ item.business_name }}</td>
-                                <td >@{{ item.phone }}</td>
+                                <td >@{{ item.nit }}</td>
                                 <td >@{{ item.commission }}%</td>
                                 <td >@{{ item.name_legal_representative }}</td>
                                 <td v-if="item.status === 1">

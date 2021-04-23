@@ -104,6 +104,6 @@ class Commerce extends Model
      */
     public function getResourceUrlAttribute()
     {
-        return url('/admin/commerce/'.$this->getKey());
+        return url('/admin/users/'.$this->getAttributeValue('user_id'));
     }
 }

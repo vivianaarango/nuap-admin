@@ -24,6 +24,14 @@ Route::get('/privacy-policy', function (){
     return view('admin.home.privacy-policy');
 });
 
+/* Privacy policy */
+Route::get('/payment-response', function (){
+    return view('admin.payments.payment-response');
+});
+
+/* Payment gateway */
+Route::get('/payment-gateway', 'Admin\PaymentGatewayController@index');
+
 ### Users ###
 /* Validate session */
 Route::get('/admin/user-session', 'Admin\UsersController@validateSession');

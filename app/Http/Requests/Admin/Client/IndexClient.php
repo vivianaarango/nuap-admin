@@ -17,7 +17,7 @@ class IndexClient extends FormRequest
     public function rules()
     {
         return [
-            'orderBy' => 'in:id,email,phone,name,last_name,identity_number|nullable',
+            'orderBy' => 'in:id,name,last_name,identity_number|nullable',
             'orderDirection' => 'in:asc,desc|nullable',
             'search' => 'string|nullable',
             'page' => 'integer|nullable',

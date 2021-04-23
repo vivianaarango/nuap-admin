@@ -5,6 +5,7 @@ use App\Exports\ClientsExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Client\CreateClient;
 use App\Http\Requests\Admin\Client\IndexClient;
+use App\Mail\SendEmail;
 use App\Models\Client;
 use App\Models\User;
 use App\Repositories\Contracts\DbClientRepositoryInterface;
@@ -15,6 +16,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
@@ -82,21 +84,20 @@ class ClientController extends Controller
             }
 
             /* @noinspection PhpUndefinedMethodInspection  */
-            $data = AdminListing::create(User::class)
+            $data = AdminListing::create(Client::class)
                 ->modifyQuery(function($query) {
                     $query->select(
-                        'users.*',
-                        'clients.name',
-                        'clients.last_name',
-                        'clients.identity_number'
-                    )->where('role', User::USER_ROLE)
+                        'users.status',
+                        'users.last_logged_in',
+                        'clients.*'
+                    )->where('users.role', User::USER_ROLE)
                         ->where('last_logged_in', '<=', $this->dateToSearch)
-                        ->join('clients', 'users.id', '=', 'clients.user_id')
-                        ->orderBy('id', 'desc');;
+                        ->join('users', 'users.id', '=', 'clients.user_id')
+                        ->orderBy('user_id', 'desc');;
                 })->processRequestAndGet(
                     $request,
-                    ['id', 'email', 'phone', 'status', 'last_logged_in'],
-                    ['id', 'email', 'phone', 'status', 'last_logged_in']
+                    ['id', 'user_id', 'last_name', 'name', 'identity_number'],
+                    ['id', 'user_id', 'last_name', 'name', 'identity_number']
                 );
 
             if ($request->ajax()) {
@@ -143,6 +144,13 @@ class ClientController extends Controller
             $user = User::create($data);
             $data['user_id'] = $user->id;
             Client::create($data);
+
+            Mail::to($user->email)->send(new SendEmail(
+                    $data['name'],
+                    '¡Bienvenido!.',
+                    'Ya eres parte de Nuap, gracias por unirtenos '
+                )
+            );
         }
 
         if ($request->ajax()) {

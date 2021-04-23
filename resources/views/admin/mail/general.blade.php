@@ -287,7 +287,7 @@
                                     <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 30px; padding-left: 30px; padding-top: 10px; padding-bottom: 0px; font-family: 'Trebuchet MS', Tahoma, sans-serif"><![endif]-->
                                     <div style="color:#555555;font-family:'Montserrat', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif;line-height:1.2;padding-top:10px;padding-right:30px;padding-bottom:0px;padding-left:30px;">
                                         <div class="txtTinyMce-wrapper" style="font-size: 12px; line-height: 1.2; font-family: 'Montserrat', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; color: #555555; mso-line-height-alt: 14px;">
-                                            <p style="font-size: 14px; line-height: 1.2; word-break: break-word; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif; mso-line-height-alt: 17px; margin: 0;"><strong><span style="font-size: 46px;">Hola, <span style="color: #2a4d9c; font-size: 46px;">{{ $name }}</span>!</span></strong></p>
+                                            <p style="font-size: 14px; line-height: 1.2; word-break: break-word; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif; mso-line-height-alt: 17px; margin: 0;"><strong><span style="font-size: 46px;">Hola <span style="color: #2a4d9c; font-size: 46px;">{{ $name }}</span>!</span></strong></p>
                                         </div>
                                     </div>
                                     <!--[if mso]></td></tr></table><![endif]-->

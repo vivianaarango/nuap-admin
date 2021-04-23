@@ -45,12 +45,10 @@
                         <table class="table table-hover table-listing">
                             <thead>
                                 <tr>
-                                    <th is='sortable' :column="'id'">ID</th>
+                                    <th is='sortable' :column="'user_id'">ID</th>
                                     <th is='sortable' :column="'name'">Nombre</th>
                                     <th is='sortable' :column="'last_name'">Apellido</th>
                                     <th is='sortable' :column="'identity_number'">Número de identificación</th>
-                                    <th is='sortable' :column="'email'">Correo electrónico</th>
-                                    <th is='sortable' :column="'phone'">Teléfono</th>
                                     <th is='sortable' :column="'activated'">Activo</th>
                                     <th is='sortable' :column="'last_logged_in'">Última sesión</th>
                                     <th></th>
@@ -58,12 +56,10 @@
                             </thead>
                             <tbody>
                                 <tr v-for="(item, index) in collection">
-                                    <td >@{{ item.id }}</td>
+                                    <td >@{{ item.user_id }}</td>
                                     <td >@{{ item.name }}</td>
                                     <td >@{{ item.last_name }}</td>
                                     <td >@{{ item.identity_number }}</td>
-                                    <td >@{{ item.email }}</td>
-                                    <td >@{{ item.phone }}</td>
                                     <td v-if="item.status === 1">
                                         <label class="switch switch-3d switch-success">
                                             <input type="checkbox" class="switch-input" v-model="collection[index].status" @change="toggleSwitch(item.resource_url+'/status', 'status', collection[index])">

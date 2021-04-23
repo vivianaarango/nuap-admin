@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Commerce\CreateCommerce;
 use App\Http\Requests\Admin\Commerce\IndexCommerce;
 use App\Http\Requests\Admin\Distributor\IndexCommission;
+use App\Mail\SendEmail;
 use App\Models\Commerce;
 use App\Models\User;
 use App\Repositories\Contracts\DbCommerceRepositoryInterface;
@@ -17,6 +18,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
@@ -82,22 +84,20 @@ class CommerceController extends Controller
             }
 
             /* @noinspection PhpUndefinedMethodInspection  */
-            $data = AdminListing::create(User::class)
+            $data = AdminListing::create(Commerce::class)
                 ->modifyQuery(function($query) {
                     $query->select(
-                        'users.*',
-                        'commerces.business_name',
-                        'commerces.type',
-                        'commerces.commission',
-                        'commerces.name_legal_representative'
-                    )->where('role', User::COMMERCE_ROLE)
+                        'users.status',
+                        'users.last_logged_in',
+                        'commerces.*'
+                    )->where('users.role', User::COMMERCE_ROLE)
                         ->where('last_logged_in', '<=', $this->dateToSearch)
-                        ->join('commerces', 'users.id', '=', 'commerces.user_id')
-                        ->orderBy('id', 'desc');
+                        ->join('users', 'users.id', '=', 'commerces.user_id')
+                        ->orderBy('user_id', 'desc');
                 })->processRequestAndGet(
                     $request,
-                    ['id', 'email', 'phone', 'status', 'last_logged_in'],
-                    ['id', 'email', 'phone', 'status', 'last_logged_in']
+                    ['user_id', 'commission', 'name_legal_representative', 'business_name', 'nit'],
+                    ['user_id', 'commission', 'name_legal_representative', 'business_name', 'nit']
                 );
 
             if ($request->ajax()) {
@@ -146,6 +146,13 @@ class CommerceController extends Controller
             $data['user_id'] = $user->id;
             $data['country_code'] = $countryCode;
             Commerce::create($data);
+
+            Mail::to($user->email)->send(new SendEmail(
+                    $data['business_name'],
+                    '¡Bienvenido!.',
+                    'Ya eres parte de Nuap, gracias por unirtenos '
+                )
+            );
         }
 
         if ($request->ajax()) {

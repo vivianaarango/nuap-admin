@@ -60,6 +60,6 @@ class Client extends Model
      */
     public function getResourceUrlAttribute()
     {
-        return url('/admin/client/'.$this->getKey());
+        return url('/admin/users/'.$this->getAttribute('user_id'));
     }
 }

@@ -1,13 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="cfe844a3-0449-46b6-ada4-b8bd6f26ec78" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/public/images/Nuapcircle.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/OrderController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/PaymentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/PaymentController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/CalculateDeliveryAmountController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/CalculateDeliveryAmountController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/CreateOrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/CreateOrderController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/StoreController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/StoreController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/ClientController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/ClientController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/CommerceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/CommerceController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/DistributorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/DistributorController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/TicketController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/TicketController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/Client/IndexClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Admin/Client/IndexClient.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/Commerce/IndexCommerce.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Admin/Commerce/IndexCommerce.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/Distributor/IndexDistributor.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Admin/Distributor/IndexDistributor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Client.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Client.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Commerce.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Commerce.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Distributor.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Distributor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/Contracts/DbOrderRepositoryInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/Contracts/DbOrderRepositoryInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/DbOrderRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/DbOrderRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/clients/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/clients/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/commerces/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/commerces/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/distributors/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/distributors/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/distributors/init.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/distributors/init.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/mail/general.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/mail/general.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -195,6 +212,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public/images" />
+      <recent name="$PROJECT_DIR$/resources/views/admin/payments" />
       <recent name="$PROJECT_DIR$/resources/views/admin/orders/components" />
       <recent name="$PROJECT_DIR$/app/Http/Controllers/Api" />
     </key>
@@ -226,7 +245,13 @@
       <workItem from="1617026870507" duration="649000" />
       <workItem from="1617834123848" duration="391000" />
       <workItem from="1617887193879" duration="47000" />
-      <workItem from="1618284541002" duration="6029000" />
+      <workItem from="1618284541002" duration="6465000" />
+      <workItem from="1618321307151" duration="55000" />
+      <workItem from="1618364659586" duration="10375000" />
+      <workItem from="1618408314812" duration="36000" />
+      <workItem from="1618968084256" duration="10773000" />
+      <workItem from="1619012038931" duration="693000" />
+      <workItem from="1619141606831" duration="8998000" />
     </task>
     <servers />
   </component>

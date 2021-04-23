@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Distributor\CreateDistributor;
 use App\Http\Requests\Admin\Distributor\IndexCommission;
 use App\Http\Requests\Admin\Distributor\IndexDistributor;
+use App\Mail\SendEmail;
 use App\Models\Distributor;
 use App\Models\User;
 use App\Repositories\Contracts\DbDistributorRepositoryInterface;
@@ -21,6 +22,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Routing\ResponseFactory;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
@@ -98,7 +100,6 @@ class DistributorController extends Controller
     public function index(Request $request)
     {
         $user = Session::get('user');
-
         if (isset($user) && $user->role == User::DISTRIBUTOR_ROLE) {
             return view('admin.distributors.init', [
                 'activation' => $user->name,
@@ -106,9 +107,23 @@ class DistributorController extends Controller
                 'pending_payments' => count($this->dbPaymentRepository->findPendingByUserID($user->id)),
                 'order_process' => count($this->dbOrderRepository->findInProgressByUserID($user->id)),
                 'open_tickets' => count($this->dbTicketRepository->findOpenByUserID($user->id)),
-                'approved_products' => count($this->dbProductRepository->findApprovedProducts($user->id))
+                'approved_products' => count($this->dbProductRepository->findApprovedProducts($user->id)),
+                'today_total' => '$ ' . $this->formatCurrency($this->dbOrderRepository->findTodayOrdersDeliveredByUserID($user->id)),
+                'month_total' => '$ ' . $this->formatCurrency($this->dbOrderRepository->findMonthDeliveredByUserID($user->id)),
+                'week_total' => '$ ' . $this->formatCurrency($this->dbOrderRepository->findLastWeekOrdersDeliveredByUserID($user->id))
             ]);
         }
+    }
+
+    /**
+     * @param $floatcurr
+     * @param string $curr
+     * @return string
+     */
+    public function formatCurrency($floatcurr, $curr = 'COP'): string
+    {
+        $currencies['COP'] = array(0, ',', '.');
+        return number_format($floatcurr, $currencies[$curr][0], $currencies[$curr][1], $currencies[$curr][2]);
     }
 
     /**
@@ -138,21 +153,20 @@ class DistributorController extends Controller
             }
 
             /* @noinspection PhpUndefinedMethodInspection  */
-            $data = AdminListing::create(User::class)
+            $data = AdminListing::create(Distributor::class)
                 ->modifyQuery(function($query) {
                     $query->select(
-                            'users.*',
-                            'distributors.business_name',
-                            'distributors.commission',
-                            'distributors.name_legal_representative'
-                        )->where('role', User::DISTRIBUTOR_ROLE)
+                            'users.status',
+                            'users.last_logged_in',
+                            'distributors.*'
+                        )->where('users.role', User::DISTRIBUTOR_ROLE)
                         ->where('last_logged_in', '<=', $this->dateToSearch)
-                        ->join('distributors', 'users.id', '=', 'distributors.user_id')
-                        ->orderBy('id', 'desc');
+                        ->join('users', 'users.id', '=', 'distributors.user_id')
+                        ->orderBy('user_id', 'desc');
                 })->processRequestAndGet(
                     $request,
-                    ['id', 'email', 'phone', 'status', 'last_logged_in'],
-                    ['id', 'email', 'phone', 'status', 'last_logged_in']
+                    ['user_id', 'commission', 'name_legal_representative', 'business_name', 'nit'],
+                    ['user_id', 'commission', 'name_legal_representative', 'business_name', 'nit']
                 );
 
             if ($request->ajax()) {
@@ -201,6 +215,13 @@ class DistributorController extends Controller
             $data['user_id'] = $user->id;
             $data['country_code'] = $countryCode;
             Distributor::create($data);
+
+            Mail::to($user->email)->send(new SendEmail(
+                    $data['business_name'],
+                    '¡Bienvenido!.',
+                    'Ya eres parte de Nuap, gracias por unirtenos '
+                )
+            );
         }
 
         if ($request->ajax()) {

@@ -104,6 +104,6 @@ class Distributor extends Model
      */
     public function getResourceUrlAttribute()
     {
-        return url('/admin/distributor/'.$this->getKey());
+        return url('/admin/users/'.$this->getAttributeValue('user_id'));
     }
 }
