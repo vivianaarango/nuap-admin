@@ -23,6 +23,7 @@ class DbOrderRepository implements DbOrderRepositoryInterface
     {
         return Order::where('client_id', $userID)
             ->where('id', $orderID)
+            ->where('status', Order::STATUS_INITIATED)
             ->get();
     }
 

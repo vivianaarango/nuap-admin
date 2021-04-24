@@ -18,6 +18,11 @@ use Illuminate\View\View;
 class PaymentGatewayController extends Controller
 {
     /**
+     * @type string
+     */
+    private const EPAYCO_PUBLIC_KEY = '25acf336d3d5bd50167eb5e21cb363e1';
+
+    /**
      * @var DbOrderRepositoryInterface
      */
     private $dbOrderRepository;
@@ -51,6 +56,9 @@ class PaymentGatewayController extends Controller
             $order = $this->dbOrderRepository->findByUserIDAndOrderUD($item, $userID);
             if (! count($order)) {
                 $error = true;
+                return view('admin.payments.payment-gateway', [
+                    'error' => $error,
+                ]);
             }
 
             $products = $this->dbOrderRepository->findProductsByOrderID($item);
@@ -62,13 +70,13 @@ class PaymentGatewayController extends Controller
 
             $name .= sprintf('%d - ', $order->first()->id);
             $total += $order->first()->total;
-            $description = substr($description, 0, -3);
         }
 
+        $description = substr($description, 0, -3);
         $name = substr($name, 0, -3). ')';
 
         return view('admin.payments.payment-gateway', [
-            'key' => env('PAYMENT_KEY'),
+            'key' => self::EPAYCO_PUBLIC_KEY,
             'amount' => $total,
             'name' => $name,
             'description' => $description,

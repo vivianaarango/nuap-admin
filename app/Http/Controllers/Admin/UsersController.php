@@ -89,10 +89,29 @@ class UsersController extends Controller
     public function __invoke(LoginUsers $request)
     {
         $password = md5($request['password']);
+
         $user = $this->dbUserRepository->findUserByEmailAndPassword($request['email'], $password);
 
-        if (!count($user)) {
-            return redirect('admin/login');
+        if (! count($user)) {
+            $user = $this->dbUserRepository->findUserByPhoneAndPassword($request['email'], $password);
+            if (!count($user)) {
+                return view('vendor.brackets.admin-auth.admin.auth.login', [
+                    'error' => 'Credenciales inválidas, intenta de nuevo.',
+                ]);
+            }
+        }
+
+        if (! $user->first()->status) {
+            return view('vendor.brackets.admin-auth.admin.auth.login', [
+                'error' => 'Usuario inactivo, comunicate con un administrador.'
+            ]);
+        }
+
+        if (! $user->first()->phone_validated) {
+            return view('vendor.brackets.admin-auth.admin.auth.login', [
+                'error' => 'Debes validar tu número de celular para poder ingresar',
+                'validPhone' => true
+            ]);
         }
 
         /* @var User $user */

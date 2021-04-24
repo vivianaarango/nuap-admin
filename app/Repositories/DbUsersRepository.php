@@ -58,7 +58,21 @@ class DbUsersRepository implements DbUsersRepositoryInterface
     {
         return User::where('email', $email)
             ->where('password', $password)
-            ->where('status', User::STATUS_ACTIVE)
+            ->whereIn('role', [User::ADMIN_ROLE, User::DISTRIBUTOR_ROLE])
+            ->get();
+    }
+
+    /**
+     * Login to users type admin or wholesaler
+     *
+     * @param string $phone
+     * @param string $password
+     * @return Collection
+     */
+    public function findUserByPhoneAndPassword(string $phone, string $password): Collection
+    {
+        return User::where('phone', $phone)
+            ->where('password', $password)
             ->whereIn('role', [User::ADMIN_ROLE, User::DISTRIBUTOR_ROLE])
             ->get();
     }

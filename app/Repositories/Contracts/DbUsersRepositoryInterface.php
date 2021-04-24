@@ -19,6 +19,15 @@ interface DbUsersRepositoryInterface
     public function findUserByEmailAndPassword(string $email, string $password): Collection;
 
     /**
+     * Login to users type admin or wholesaler
+     *
+     * @param string $phone
+     * @param string $password
+     * @return Collection
+     */
+    public function findUserByPhoneAndPassword(string $phone, string $password): Collection;
+
+    /**
      * @param int $userID
      * @param string $phone
      * @param string $email

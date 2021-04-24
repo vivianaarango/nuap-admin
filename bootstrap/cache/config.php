@@ -583,16 +583,16 @@
   'mail' => 
   array (
     'driver' => 'smtp',
-    'host' => 'smtp.gmail.com',
-    'port' => '587',
+    'host' => 'mail.thenuap.com',
+    'port' => '2525',
     'from' => 
     array (
-      'address' => 'hello@example.com',
+      'address' => 'no-reply@thenuap.com',
       'name' => 'Example',
     ),
     'encryption' => 'tls',
-    'username' => 'viviana.arango1505@gmail.com',
-    'password' => 'sdosoxmhcwjdvrgc',
+    'username' => 'no-reply@thenuap.com',
+    'password' => '%wHFc1So?Dru',
     'sendmail' => '/usr/sbin/sendmail -bs',
     'markdown' => 
     array (
