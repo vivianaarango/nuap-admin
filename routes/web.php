@@ -24,6 +24,9 @@ Route::get('/privacy-policy', function (){
     return view('admin.home.privacy-policy');
 });
 
+/* Pre register */
+Route::post('/admin/pre-register', 'Admin\AdminUsersController@preRegister');
+
 /* Privacy policy */
 Route::get('/payment-response', function (){
     return view('admin.payments.payment-response');

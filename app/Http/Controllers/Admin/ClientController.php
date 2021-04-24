@@ -147,8 +147,8 @@ class ClientController extends Controller
 
             Mail::to($user->email)->send(new SendEmail(
                     $data['name'],
-                    '¡Bienvenido!.',
-                    'Ya eres parte de Nuap, gracias por unirtenos '
+                    'Ya eres parte de Nuap, gracias por unirtenos ',
+                    '¡Bienvenido!.'
                 )
             );
         }

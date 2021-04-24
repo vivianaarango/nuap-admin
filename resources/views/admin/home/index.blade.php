@@ -67,7 +67,7 @@
 						<h2>MUY PRONTO NUAP</h2>
 						<h3 class="text-white">Una nueva Herramienta que te permitirá acceder a miles de productos y tambien hacer crecer tu negocio.</h3>
 						<div class="about_btn mt-30">
-							<a class="app-button wow fadeInUp" href="https://api.whatsapp.com/send?phone=573005556537&text=Quiero%20Recibir%20mas%20informacion%20de%20Nuap"><i class="fa fa-whatsapp"></i>Contactanos</a>
+							<a target="_blank" class="app-button wow fadeInUp" href="https://api.whatsapp.com/send?phone=573005556537&text=Quiero%20Recibir%20mas%20informacion%20de%20Nuap"><i class="fa fa-whatsapp"></i>Contactanos</a>
 						</div>
 					</div>
 				</div>
@@ -129,6 +129,99 @@
 	</div>
 </section>
 <!-- END ABOUT AREA  -->
+
+<!-- START CONTACT -->
+<section id="contact" class="section-padding">
+	<div class="container">
+		<div class="section-title text-center wow fadeInDown">
+			<h2>Haz parte de NUAP</h2>
+			<p>Queremos hacer parte del crecimiento de tu negocio.</p>
+		</div> <!-- END SECTION HEADING -->
+
+		<div class="row">
+			<div class="col-md-8 col-sm-12">
+				<div class="contact_form wow fadeInUp">
+					<h3 class="contact_title">Realiza tu Pre-registro</h3>
+					<form id="contact-form" method="POST" action="{{ url('admin/pre-register') }}" enctype="multipart/form-data">
+						<input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
+						<div class="row">
+							<div class="form-group col-md-6">
+								<input name="name" class="form-control" id="name" placeholder="Nombre" required="required" type="text">
+							</div>
+
+							<div class="form-group col-md-6">
+								<input name="phone" class="form-control" id="phone" placeholder="Teléfono" required="required" type="text">
+							</div>
+
+							<div class="form-group col-md-6">
+								<input name="email" class="form-control" id="email" placeholder="Correo" required="required" type="email">
+							</div>
+
+							<div class="form-group col-md-6">
+								<input name="business_type" class="form-control" id="business_type" placeholder="Tipo de Negocio" required="required" type="text">
+							</div>
+
+							<div class="form-group col-md-6">
+								<input name="business_company" class="form-control" id="business_company" placeholder="Nombre Establecimiento" required="required" type="text">
+							</div>
+
+							<div class="form-group col-md-6">
+								<input name="city" class="form-control" id="city" placeholder="Ciudad" required="required" type="text">
+							</div>
+
+							<!-- <div class="form-group col-md-12">
+                              <textarea rows="6" name="message" class="form-control" id="description" placeholder="Your Message" required="required"></textarea>
+                            </div> -->
+
+							<div class="col-md-12 text-center">
+								<input value="Enviar" name="submit" id="submit" class="app-button" type="submit">
+							</div>
+						</div>
+					</form>
+				</div>
+			</div><!-- End Col-->
+
+			<div class="col-md-4 col-sm-12">
+				<div class="address-area wow fadeInUp">
+					<h3 class="address-heading">Contáctanos</h3>
+					<p>Nuestro equipo te ayudara  resolver todas tu inquitudes.</p>
+					<div class="single-address">
+
+						<div class="media">
+							<div class="media-left">
+								<i class="fa fa-whatsapp"></i>
+							</div>
+							<div class="media-body text-left">
+								<p>(+57) 317 7064104</p>
+							</div>
+						</div>
+						<div class="media">
+							<div class="media-left">
+								<i class="fa fa-envelope"></i>
+							</div>
+							<div class="media-body text-left">
+								<p>Info@thenuap.com</p>
+							</div>
+						</div>
+						<div class="media">
+							<div class="media-left">
+								<i class="fa fa-rocket"></i>
+							</div>
+							<div class="media-body text-left">
+								<p>www.thenuap.com</p>
+							</div>
+						</div>
+					</div>
+					<div class="social_icon">
+						<a href=""><i class="fa fa-facebook"></i></a>
+						<a href=""><i class="fa fa-instagram"></i></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- END CONTACT -->
 
 <!-- START FOOTER -->
 <div id="footer" class="footer_area mt-5">

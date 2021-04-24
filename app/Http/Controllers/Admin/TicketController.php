@@ -152,8 +152,8 @@ class TicketController extends Controller
                 $sender = $this->dbUserRepository->findByID($item->user_id);
                 Mail::to($sender->email)->send(new SendEmail(
                         '',
-                        '¡Han creado un nuevo ticket!.',
-                        'Tienes un nuevo mensaje de soporte, responde lo antes posible'
+                        'Tienes un nuevo mensaje de soporte, responde lo antes posible',
+                        '¡Han creado un nuevo ticket!.'
                     )
                 );
             }
@@ -284,8 +284,8 @@ class TicketController extends Controller
                     $sender = $this->dbUserRepository->findByID($item->user_id);
                     Mail::to($sender->email)->send(new SendEmail(
                             '',
-                            '¡Han respondido tu mensaje!.',
-                            'Tienes un nuevo mensaje de soporte, responde lo antes posible'
+                            'Tienes un nuevo mensaje de soporte, responde lo antes posible',
+                            '¡Han respondido tu mensaje!.'
                         )
                     );
                 } else {

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AdminUser\CreateAdminUsers;
 use App\Http\Requests\Admin\AdminUser\IndexAdmin;
+use App\Mail\SendEmail;
+use App\Mail\SendEmailPreRegister;
 use App\Models\AdminUser;
 use App\Models\BankAccount;
 use App\Models\Config;
@@ -16,6 +18,8 @@ use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Brackets\AdminListing\Facades\AdminListing;
 use Illuminate\Validation\ValidationException;
@@ -204,6 +208,13 @@ class AdminUsersController extends Controller
             $user = User::create($data);
             $data['user_id'] = $user->id;
             AdminUser::create($data);
+
+            Mail::to($user->email)->send(new SendEmail(
+                    $data['name'],
+                    'Ya eres parte de Nuap, gracias por unirtenos ',
+                    '¡Bienvenido!.'
+                )
+            );
         }
 
         if ($request->ajax()) {
@@ -329,5 +340,33 @@ class AdminUsersController extends Controller
         }
 
         return redirect('admin/config-create');
+    }
+
+    /**
+     * @param Request $request
+     * @throws ValidationException
+     */
+    public function preRegister(Request $request)
+    {
+        $this->validate($request, [
+            'name' => ['required', 'string'],
+            'phone' => ['required', 'string'],
+            'email' => ['required', 'string', 'email'],
+            'business_type' => ['required', 'string'],
+            'business_company' => ['required', 'string'],
+            'city' => ['required', 'string'],
+        ]);
+
+        Mail::to(env('RECEIVER_EMAIL_PRE_REGISTER'))->send(new SendEmailPreRegister(
+                $request['name'],
+                $request['email'],
+                $request['phone'],
+                $request['business_type'],
+                $request['business_company'],
+                $request['city']
+            )
+        );
+
+        Redirect::back();
     }
 }

@@ -48,6 +48,17 @@
                                         <input type="hidden" name="remember" value="1">
                                         <button type="submit" class="btn btn-primary btn-block btn-spinner"><i class="fa"></i>Login</button>
                                     </div>
+                                    @if (isset($error))
+                                        <div style="padding-top: 1px" class="">
+                                            <p style="font-weight: bold;
+                                                    text-align: center;
+                                                    color: #e00032;
+                                                    font-size: 12px;
+                                                    letter-spacing: 0;
+                                                    margin-bottom: 0;">
+                                                <br>{{ $error }}<br></p>
+                                        </div>
+                                    @endif
                                     @if (isset($validPhone))
                                         <div class="form-group text-center">
                                             <a href="{{ url('/admin/password-reset') }}" class="auth-ghost-link">Validar número de celular</a>
@@ -56,17 +67,7 @@
                                 </div>
                             </form>
                         </auth-form>
-                        @if (isset($error))
-                            <div style="padding-top: 1px" class="">
-                                <p style="font-weight: bold;
-                                    text-align: center;
-                                    color: #e00032;
-                                    font-size: 12px;
-                                    letter-spacing: 0;
-                                    margin-bottom: 0;">
-                                <br>{{ $error }}<br></p>
-                            </div>
-                        @endif
+
                     </div>
                 </div>
             </div>

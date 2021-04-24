@@ -18,11 +18,6 @@ use Illuminate\View\View;
 class PaymentGatewayController extends Controller
 {
     /**
-     * @type string
-     */
-    private const EPAYCO_PUBLIC_KEY = '25acf336d3d5bd50167eb5e21cb363e1';
-
-    /**
      * @var DbOrderRepositoryInterface
      */
     private $dbOrderRepository;
@@ -76,7 +71,7 @@ class PaymentGatewayController extends Controller
         $name = substr($name, 0, -3). ')';
 
         return view('admin.payments.payment-gateway', [
-            'key' => self::EPAYCO_PUBLIC_KEY,
+            'key' => env('EPAYCO_PUBLIC_KEY'),
             'amount' => $total,
             'name' => $name,
             'description' => $description,
