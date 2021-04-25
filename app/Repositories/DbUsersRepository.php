@@ -52,29 +52,51 @@ class DbUsersRepository implements DbUsersRepositoryInterface
      *
      * @param string $email
      * @param string $password
-     * @return Collection
+     * @return User|null
      */
-    public function findUserByEmailAndPassword(string $email, string $password): Collection
+    public function findUserByEmailAndPassword(string $email, string $password): ? User
     {
         return User::where('email', $email)
             ->where('password', $password)
             ->whereIn('role', [User::ADMIN_ROLE, User::DISTRIBUTOR_ROLE])
-            ->get();
+            ->first();
     }
 
     /**
-     * Login to users type admin or wholesaler
-     *
+     * @param string $phone
+     * @return User|null
+     */
+    public function findUserByPhone(string $phone): ? User
+    {
+        return User::where('phone', $phone)
+            ->whereIn('role', [User::ADMIN_ROLE, User::DISTRIBUTOR_ROLE])
+            ->first();
+    }
+
+    /**
+     * @param string $otp
+     * @param string $phone
+     * @return User|null
+     */
+    public function findByOTPCodeAndPhone(string $otp, string $phone): ? User
+    {
+        return User::where('otp', $otp)
+            ->where('phone', $phone)
+            ->whereIn('role', [User::ADMIN_ROLE, User::DISTRIBUTOR_ROLE])
+            ->first();
+    }
+
+    /**
      * @param string $phone
      * @param string $password
-     * @return Collection
+     * @return User|null
      */
-    public function findUserByPhoneAndPassword(string $phone, string $password): Collection
+    public function findUserByPhoneAndPassword(string $phone, string $password): ? User
     {
         return User::where('phone', $phone)
             ->where('password', $password)
             ->whereIn('role', [User::ADMIN_ROLE, User::DISTRIBUTOR_ROLE])
-            ->get();
+            ->first();
     }
 
     /**

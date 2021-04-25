@@ -21748,6 +21748,11 @@ label {
   background-image: url(/images/vendor/craftable/lock.png?fe6addde15c66bcb4954d49a8954f1a9);
 }
 
+.input-icon--phone {
+  margin: 0 3px;
+  background-image: url(/images/vendor/craftable/cell-phone.png?fe6addde15c66bcb4954d49a8954f1a9);
+}
+
 .form-control::-webkit-input-placeholder {
   color: #b9c8de;
 }

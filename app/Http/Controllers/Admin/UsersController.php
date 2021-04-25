@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -13,6 +14,7 @@ use App\Repositories\Contracts\DbClientRepositoryInterface;
 use App\Repositories\Contracts\DbCommerceRepositoryInterface;
 use App\Repositories\Contracts\DbDistributorRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
+use App\Repositories\Contracts\SendSMSServiceRepositoryInterface;
 use Brackets\AdminListing\Facades\AdminListing;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\View\Factory;
@@ -30,6 +32,11 @@ use Illuminate\View\View;
  */
 class UsersController extends Controller
 {
+    /**
+     * @var SendSMSServiceRepositoryInterface
+     */
+    private $sendSMSService;
+
     /**
      * @var User
      */
@@ -62,6 +69,7 @@ class UsersController extends Controller
 
     /**
      * UsersController constructor.
+     * @param SendSMSServiceRepositoryInterface $sendSMSService
      * @param DbUsersRepositoryInterface $dbUserRepository
      * @param DbDistributorRepositoryInterface $dbDistributorRepository
      * @param DbCommerceRepositoryInterface $dbCommerceRepository
@@ -69,12 +77,14 @@ class UsersController extends Controller
      * @param DbAdminUsersRepositoryInterface $dbAdminUserRepository
      */
     public function __construct(
+        SendSMSServiceRepositoryInterface $sendSMSService,
         DbUsersRepositoryInterface $dbUserRepository,
         DbDistributorRepositoryInterface $dbDistributorRepository,
         DbCommerceRepositoryInterface $dbCommerceRepository,
         DbClientRepositoryInterface $dbClientRepository,
         DbAdminUsersRepositoryInterface $dbAdminUserRepository
     ) {
+        $this->sendSMSService = $sendSMSService;
         $this->dbUserRepository = $dbUserRepository;
         $this->dbDistributorRepository = $dbDistributorRepository;
         $this->dbCommerceRepository = $dbCommerceRepository;
@@ -83,39 +93,116 @@ class UsersController extends Controller
     }
 
     /**
+     * @param Request $request
+     * @return false[]
+     */
+    public function validateSMS(Request $request): array
+    {
+        if (! env('SMS_ENABLED')) {
+            if ($request->ajax()) {
+                return [
+                    'validate' => false,
+                    'redirect' => url('admin/login-user'),
+                ];
+            }
+        }
+
+        return [];
+    }
+
+    /**
+     * @param Request $request
+     * @return Factory|Application|RedirectResponse|Redirector|View
+     */
+    public function validateOTP(Request $request)
+    {
+        if (is_null($request['phone']) && is_null($request['code']) ) {
+            return view('vendor.brackets.admin-auth.admin.auth.login', [
+                'error' => 'Por favor ingresa el dato requerido.',
+            ]);
+        }
+
+        if (! is_null($request['phone'])) {
+            $user = $this->dbUserRepository->findUserByPhone($request['phone']);
+            if (is_null($user)) {
+                return view('vendor.brackets.admin-auth.admin.auth.login', [
+                    'error' => 'No encontramos ningún usuario asociado a este nuḿero, por favor comunicate con un administrador.',
+                ]);
+            }
+
+            $otp = $this->generateOTP($user);
+            $message = sprintf('%s %d', 'Tu código de verificación de nuap es', $otp);
+            $this->sendSMSService->sendMessage(
+                $message,
+                $user->phone,
+                ! is_null($user->country_code) ? $user->country_code : 57
+            );
+
+            return view('vendor.brackets.admin-auth.admin.auth.login', [
+                'success' => 'Te hemos enviado un mensaje de texto con el código de verificación.',
+                'phone_validated' => $request['phone'],
+                'send_message' => true
+            ]);
+        }
+
+        if (! is_null($request['code'])) {
+            $user = $this->dbUserRepository->findByOTPCodeAndPhone($request['code'], $request['phone_validated']);
+            if (is_null($user)) {
+                return view('vendor.brackets.admin-auth.admin.auth.login', [
+                    'error' => 'El código es incorrecto por favor vuelve a intentarlo.',
+                    'valid_phone' => true
+                ]);
+            }
+
+            $user->otp = null;
+            $user->phone_validated = true;
+            $user->phone_validated_date = now();
+            $user->save();
+
+            return view('vendor.brackets.admin-auth.admin.auth.login-user', []);
+        }
+
+        return view('vendor.brackets.admin-auth.admin.auth.login', []);
+    }
+
+    /**
      * @param LoginUsers $request
      * @return array|Application|RedirectResponse|Redirector
      */
-    public function __invoke(LoginUsers $request)
+    public function loginUser(LoginUsers $request)
     {
         $password = md5($request['password']);
 
         $user = $this->dbUserRepository->findUserByEmailAndPassword($request['email'], $password);
 
-        if (! count($user)) {
+        if (is_null($user)) {
             $user = $this->dbUserRepository->findUserByPhoneAndPassword($request['email'], $password);
-            if (!count($user)) {
-                return view('vendor.brackets.admin-auth.admin.auth.login', [
+            if (is_null($user)) {
+                return view('vendor.brackets.admin-auth.admin.auth.login-user', [
                     'error' => 'Credenciales inválidas, intenta de nuevo.',
                 ]);
             }
         }
 
-        if (! $user->first()->status) {
-            return view('vendor.brackets.admin-auth.admin.auth.login', [
+        if (! $user->status) {
+            return view('vendor.brackets.admin-auth.admin.auth.login-user', [
                 'error' => 'Usuario inactivo, comunicate con un administrador.'
             ]);
         }
 
-        /*if (! $user->first()->phone_validated) {
-            return view('vendor.brackets.admin-auth.admin.auth.login', [
-                'error' => 'Debes validar tu número de celular para poder ingresar',
-                'validPhone' => true
-            ]);
-        }*/
+        if (env('SMS_ENABLED')) {
+            if (! $user->phone_validated) {
+                return view('vendor.brackets.admin-auth.admin.auth.login-user', [
+                    'error' => 'Debes validar tu número de celular para poder ingresar',
+                    'valid_phone' => true
+                ]);
+            } else {
+                $user->phone_validated = false;
+                $user->save();
+            }
+        }
 
         /* @var User $user */
-        $user = $user[0];
         $this->dbUserRepository->updateLastLogin($user->id, now());
 
         $logSession = new SessionLog();

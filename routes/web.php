@@ -24,6 +24,10 @@ Route::get('/privacy-policy', function (){
     return view('admin.home.privacy-policy');
 });
 
+Route::get('/admin/login-user', function (){
+    return view('vendor.brackets.admin-auth.admin.auth.login-user');
+});
+
 /* Pre register */
 Route::post('/admin/pre-register', 'Admin\AdminUsersController@preRegister');
 
@@ -39,7 +43,11 @@ Route::get('/payment-gateway', 'Admin\PaymentGatewayController@index');
 /* Validate session */
 Route::get('/admin/user-session', 'Admin\UsersController@validateSession');
 /* Login */
-Route::post('/admin/user-login', 'Admin\UsersController');
+Route::post('/admin/user-login', 'Admin\UsersController@loginUser');
+/* Validate otp */
+Route::post('/admin/validate', 'Admin\UsersController@validateOTP');
+/* Validate SMS status */
+Route::get('/admin/validate-sms-status', 'Admin\UsersController@validateSMS');
 /* Logout */
 Route::get('/admin/user-logout', 'Admin\UsersController@logout');
 /* Change status */

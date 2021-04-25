@@ -14,18 +14,29 @@ interface DbUsersRepositoryInterface
     /**
      * @param string $email
      * @param string $password
-     * @return Collection
+     * @return User|null
      */
-    public function findUserByEmailAndPassword(string $email, string $password): Collection;
+    public function findUserByEmailAndPassword(string $email, string $password): ? User;
 
     /**
-     * Login to users type admin or wholesaler
-     *
+     * @param string $phone
+     * @return User|null
+     */
+    public function findUserByPhone(string $phone): ? User;
+
+    /**
      * @param string $phone
      * @param string $password
-     * @return Collection
+     * @return User|null
      */
-    public function findUserByPhoneAndPassword(string $phone, string $password): Collection;
+    public function findUserByPhoneAndPassword(string $phone, string $password): ? User;
+
+    /**
+     * @param string $otp
+     * @param string $phone
+     * @return User|null
+     */
+    public function findByOTPCodeAndPhone(string $otp, string $phone): ? User;
 
     /**
      * @param int $userID
