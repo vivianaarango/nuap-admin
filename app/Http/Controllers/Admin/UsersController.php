@@ -107,12 +107,12 @@ class UsersController extends Controller
             ]);
         }
 
-        if (! $user->first()->phone_validated) {
+        /*if (! $user->first()->phone_validated) {
             return view('vendor.brackets.admin-auth.admin.auth.login', [
                 'error' => 'Debes validar tu número de celular para poder ingresar',
                 'validPhone' => true
             ]);
-        }
+        }*/
 
         /* @var User $user */
         $user = $user[0];
@@ -555,5 +555,18 @@ class UsersController extends Controller
         } else {
             return redirect('admin/user-session');
         }
+    }
+
+    /**
+     * @param User $user
+     * @return int
+     */
+    public function generateOTP(User $user): int
+    {
+        $otp = rand(100000, 999999);
+        $user->otp = $otp;
+        $user->save();
+
+        return $otp;
     }
 }

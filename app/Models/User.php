@@ -18,6 +18,7 @@ use Illuminate\Foundation\Application;
  * @property string role
  * @property string last_logged_in
  * @property string api_token
+ * @property string otp
  *
  * @property mixed first
  * @package App\Models

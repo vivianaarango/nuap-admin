@@ -13,6 +13,7 @@ use App\Repositories\Contracts\DbCommerceRepositoryInterface;
 use App\Repositories\Contracts\DbDistributorRepositoryInterface;
 use App\Repositories\Contracts\DbTicketRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
+use App\Repositories\Contracts\SendSMSServiceRepositoryInterface;
 use App\Repositories\DbUsersRepository;
 use Brackets\AdminListing\Facades\AdminListing;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -32,6 +33,11 @@ use Illuminate\View\View;
  */
 class TicketController extends Controller
 {
+    /**
+     * @var SendSMSServiceRepositoryInterface
+     */
+    private $sendSMSService;
+
     /**
      * @var DbTicketRepositoryInterface
      */
@@ -54,17 +60,20 @@ class TicketController extends Controller
 
     /**
      * TicketController constructor.
+     * @param SendSMSServiceRepositoryInterface $sendSMSService
      * @param DbTicketRepositoryInterface $dbTicketRepository
      * @param DbDistributorRepositoryInterface $dbDistributorRepository
      * @param DbCommerceRepositoryInterface $dbCommerceRepository
      * @param DbUsersRepository $dbUserRepository
      */
     public function __construct(
+        SendSMSServiceRepositoryInterface $sendSMSService,
         DbTicketRepositoryInterface $dbTicketRepository,
         DbDistributorRepositoryInterface $dbDistributorRepository,
         DbCommerceRepositoryInterface $dbCommerceRepository,
         DbUsersRepository $dbUserRepository
     ) {
+        $this->sendSMSService = $sendSMSService;
         $this->dbTicketRepository = $dbTicketRepository;
         $this->dbDistributorRepository = $dbDistributorRepository;
         $this->dbCommerceRepository = $dbCommerceRepository;
@@ -156,6 +165,14 @@ class TicketController extends Controller
                         '¡Han creado un nuevo ticket!.'
                     )
                 );
+
+                if (env('SMS_ENABLED')) {
+                    $this->sendSMSService->sendMessage(
+                        'Han creado un nuevo ticket, responde lo antes posible',
+                        $sender->phone,
+                        ! is_null($sender->country_code) ? $sender->country_code : 57
+                    );
+                }
             }
 
             if ($request->ajax()) {
@@ -288,6 +305,14 @@ class TicketController extends Controller
                             '¡Han respondido tu mensaje!.'
                         )
                     );
+
+                    if (env('SMS_ENABLED')) {
+                        $this->sendSMSService->sendMessage(
+                            'Han creado un nuevo ticket, responde lo antes posible',
+                            $sender->phone,
+                            ! is_null($sender->country_code) ? $sender->country_code : 57
+                        );
+                    }
                 } else {
                     $adminResponse = false;
                 }
@@ -303,6 +328,14 @@ class TicketController extends Controller
                             'Tienes un nuevo mensaje de soporte, responde lo antes posible'
                         )
                     );
+
+                    if (env('SMS_ENABLED')) {
+                        $this->sendSMSService->sendMessage(
+                            'Han creado un nuevo ticket, responde lo antes posible',
+                            $sender->phone,
+                            ! is_null($sender->country_code) ? $sender->country_code : 57
+                        );
+                    }
                 }
             }
 

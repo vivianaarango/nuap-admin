@@ -11,6 +11,7 @@ use App\Repositories\Contracts\DbClientRepositoryInterface;
 use App\Repositories\Contracts\DbCommerceRepositoryInterface;
 use App\Repositories\Contracts\DbOrderRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
+use App\Repositories\Contracts\SendSMSServiceRepositoryInterface;
 use Brackets\AdminListing\Facades\AdminListing;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
@@ -27,6 +28,11 @@ use Illuminate\View\View;
  */
 class OrderController extends Controller
 {
+    /**
+     * @var SendSMSServiceRepositoryInterface
+     */
+    private $sendSMSService;
+
     /**
      * @var DbOrderRepositoryInterface
      */
@@ -49,17 +55,20 @@ class OrderController extends Controller
 
     /**
      * OrderController constructor.
+     * @param SendSMSServiceRepositoryInterface $sendSMSService
      * @param DbOrderRepositoryInterface $dbOrderRepository
      * @param DbUsersRepositoryInterface $dbUserRepository
      * @param DbClientRepositoryInterface $dbClientRepository
      * @param DbCommerceRepositoryInterface $dbCommerceRepository
      */
     public function __construct(
+        SendSMSServiceRepositoryInterface $sendSMSService,
         DbOrderRepositoryInterface $dbOrderRepository,
         DbUsersRepositoryInterface $dbUserRepository,
         DbClientRepositoryInterface $dbClientRepository,
         DbCommerceRepositoryInterface $dbCommerceRepository
     ) {
+        $this->sendSMSService = $sendSMSService;
         $this->dbOrderRepository = $dbOrderRepository;
         $this->dbUserRepository = $dbUserRepository;
         $this->dbClientRepository = $dbClientRepository;
@@ -195,6 +204,14 @@ class OrderController extends Controller
                         'Hemos alistado tu pedido !'
                     )
                 );
+
+                if (env('SMS_ENABLED')) {
+                    $this->sendSMSService->sendMessage(
+                        '¡Hola! tu pedido esta en alistamiento, ¡Atento! nos pondremos en contacto para acordar tu entrega.',
+                        $client->phone,
+                        ! is_null($client->country_code) ? $client->country_code : 57
+                    );
+                }
             }
 
             if ($status === Order::STATUS_ENLISTMENT) {
@@ -205,6 +222,14 @@ class OrderController extends Controller
                         'Tu pedido esta en camino !'
                     )
                 );
+
+                if (env('SMS_ENABLED')) {
+                    $this->sendSMSService->sendMessage(
+                        'Tu pedido esta en camino, ¡Atento! el repartidor no tardara en hacer la entrega.',
+                        $client->phone,
+                        ! is_null($client->country_code) ? $client->country_code : 57
+                    );
+                }
             }
 
             if ($status === Order::STATUS_CIRCULATION) {
@@ -215,6 +240,14 @@ class OrderController extends Controller
                         'Hemos entregado tu pedido !'
                     )
                 );
+
+                if (env('SMS_ENABLED')) {
+                    $this->sendSMSService->sendMessage(
+                        'Gracias por comprar en NuAp,tu pedido ha sido entregado, por favor califica nuestro servicio.',
+                        $client->phone,
+                        ! is_null($client->country_code) ? $client->country_code : 57
+                    );
+                }
             }
 
             $order->save();

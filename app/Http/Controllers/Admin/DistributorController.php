@@ -14,6 +14,7 @@ use App\Repositories\Contracts\DbPaymentRepositoryInterface;
 use App\Repositories\Contracts\DbProductRepositoryInterface;
 use App\Repositories\Contracts\DbTicketRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
+use App\Repositories\Contracts\SendSMSServiceRepositoryInterface;
 use Brackets\AdminListing\Facades\AdminListing;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
@@ -33,6 +34,11 @@ use Illuminate\View\View;
  */
 class DistributorController extends Controller
 {
+    /**
+     * @var SendSMSServiceRepositoryInterface
+     */
+    private $sendSMSService;
+
     /**
      * @var string
      */
@@ -70,6 +76,7 @@ class DistributorController extends Controller
 
     /**
      * DistributorController constructor.
+     * @param SendSMSServiceRepositoryInterface $sendSMSService
      * @param DbUsersRepositoryInterface $dbUserRepository
      * @param DbDistributorRepositoryInterface $dbDistributorRepository
      * @param DbPaymentRepositoryInterface $dbPaymentRepository
@@ -78,6 +85,7 @@ class DistributorController extends Controller
      * @param DbProductRepositoryInterface $dbProductRepository
      */
     public function __construct(
+        SendSMSServiceRepositoryInterface $sendSMSService,
         DbUsersRepositoryInterface $dbUserRepository,
         DbDistributorRepositoryInterface $dbDistributorRepository,
         DbPaymentRepositoryInterface $dbPaymentRepository,
@@ -85,6 +93,7 @@ class DistributorController extends Controller
         DbTicketRepositoryInterface $dbTicketRepository,
         DbProductRepositoryInterface $dbProductRepository
     ) {
+        $this->sendSMSService = $sendSMSService;
         $this->dbUserRepository = $dbUserRepository;
         $this->dbDistributorRepository = $dbDistributorRepository;
         $this->dbPaymentRepository = $dbPaymentRepository;
@@ -222,6 +231,14 @@ class DistributorController extends Controller
                     '¡Bienvenido!.'
                 )
             );
+
+            if (env('SMS_ENABLED')) {
+                $this->sendSMSService->sendMessage(
+                    'Bienvenido a nuap, se ha creado tu usuario exitosamente',
+                    $user->phone,
+                    ! is_null($user->country_code) ? $user->country_code : 57
+                );
+            }
         }
 
         if ($request->ajax()) {

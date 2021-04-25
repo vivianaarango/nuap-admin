@@ -12,6 +12,7 @@ use App\Repositories\Contracts\DbPaymentRepositoryInterface;
 use App\Repositories\Contracts\DbProductRepositoryInterface;
 use App\Repositories\Contracts\DbTicketRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
+use App\Repositories\Contracts\SendSMSServiceRepositoryInterface;
 use App\Repositories\DbAdminUsersRepository;
 use App\Repositories\DbBalanceRepository;
 use App\Repositories\DbBankAccountRepository;
@@ -23,6 +24,7 @@ use App\Repositories\DbPaymentRepository;
 use App\Repositories\DbProductRepository;
 use App\Repositories\DbTicketRepository;
 use App\Repositories\DbUsersRepository;
+use App\Repositories\SendSMSServiceRepository;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -50,7 +52,9 @@ class RepositoryServiceProvider extends ServiceProvider
         DbPaymentRepositoryInterface::class => DbPaymentRepository::class,
         DbBankAccountRepositoryInterface::class => DbBankAccountRepository::class,
         DbBalanceRepositoryInterface::class => DbBalanceRepository::class,
-        DbOrderRepositoryInterface::class => DbOrderRepository::class
+        DbOrderRepositoryInterface::class => DbOrderRepository::class,
+        # SMS service
+        SendSMSServiceRepositoryInterface::class => SendSMSServiceRepository::class
     ];
 
     /**

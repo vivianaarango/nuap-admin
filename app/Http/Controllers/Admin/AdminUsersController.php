@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -13,6 +14,7 @@ use App\Models\User;
 use App\Repositories\Contracts\DbAdminUsersRepositoryInterface;
 use App\Repositories\Contracts\DbBankAccountRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
+use App\Repositories\Contracts\SendSMSServiceRepositoryInterface;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
@@ -31,6 +33,11 @@ use Illuminate\View\View;
  */
 class AdminUsersController extends Controller
 {
+    /**
+     * @var SendSMSServiceRepositoryInterface
+     */
+    private $sendSMSService;
+
     /**
      * @var DbUsersRepositoryInterface
      */
@@ -53,15 +60,18 @@ class AdminUsersController extends Controller
 
     /**
      * AdminUsersController constructor.
+     * @param SendSMSServiceRepositoryInterface $sendSMSService
      * @param DbUsersRepositoryInterface $dbUserRepository
      * @param DbAdminUsersRepositoryInterface $dbAdminUserRepository
      * @param DbBankAccountRepositoryInterface $dbBankAccountRepository
      */
     public function __construct(
+        SendSMSServiceRepositoryInterface $sendSMSService,
         DbUsersRepositoryInterface $dbUserRepository,
         DbAdminUsersRepositoryInterface $dbAdminUserRepository,
         DbBankAccountRepositoryInterface $dbBankAccountRepository
     ) {
+        $this->sendSMSService = $sendSMSService;
         $this->dbUserRepository = $dbUserRepository;
         $this->dbAdminUserRepository = $dbAdminUserRepository;
         $this->dbBankAccountRepository = $dbBankAccountRepository;
@@ -215,6 +225,14 @@ class AdminUsersController extends Controller
                     '¡Bienvenido!.'
                 )
             );
+
+            if (env('SMS_ENABLED')) {
+                $this->sendSMSService->sendMessage(
+                    'Bienvenido a nuap, se ha creado tu usuario exitosamente',
+                    $user->phone,
+                    ! is_null($user->country_code) ? $user->country_code : 57
+                );
+            }
         }
 
         if ($request->ajax()) {

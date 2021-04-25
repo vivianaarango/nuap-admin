@@ -10,6 +10,7 @@ use App\Models\Client;
 use App\Models\User;
 use App\Repositories\Contracts\DbClientRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
+use App\Repositories\Contracts\SendSMSServiceRepositoryInterface;
 use Brackets\AdminListing\Facades\AdminListing;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
@@ -30,6 +31,11 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 class ClientController extends Controller
 {
     /**
+     * @var SendSMSServiceRepositoryInterface
+     */
+    private $sendSMSService;
+
+    /**
      * @var string
      */
     private $dateToSearch;
@@ -46,13 +52,16 @@ class ClientController extends Controller
 
     /**
      * ClientController constructor.
+     * @param SendSMSServiceRepositoryInterface $sendSMSService
      * @param DbUsersRepositoryInterface $dbUserRepository
      * @param DbClientRepositoryInterface $dbClientRepository
      */
     public function __construct(
+        SendSMSServiceRepositoryInterface $sendSMSService,
         DbUsersRepositoryInterface $dbUserRepository,
         DbClientRepositoryInterface $dbClientRepository
     ) {
+        $this->sendSMSService = $sendSMSService;
         $this->dbUserRepository = $dbUserRepository;
         $this->dbClientRepository = $dbClientRepository;
     }
@@ -151,6 +160,14 @@ class ClientController extends Controller
                     '¡Bienvenido!.'
                 )
             );
+
+            if (env('SMS_ENABLED')) {
+                $this->sendSMSService->sendMessage(
+                    'Bienvenido a nuap, se ha creado tu usuario exitosamente',
+                    $user->phone,
+                    ! is_null($user->country_code) ? $user->country_code : 57
+                );
+            }
         }
 
         if ($request->ajax()) {

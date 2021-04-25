@@ -10,6 +10,7 @@ use App\Models\Commerce;
 use App\Models\User;
 use App\Repositories\Contracts\DbCommerceRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
+use App\Repositories\Contracts\SendSMSServiceRepositoryInterface;
 use Brackets\AdminListing\Facades\AdminListing;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\View\Factory;
@@ -30,6 +31,11 @@ use Illuminate\View\View;
 class CommerceController extends Controller
 {
     /**
+     * @var SendSMSServiceRepositoryInterface
+     */
+    private $sendSMSService;
+
+    /**
      * @var string
      */
     private $dateToSearch;
@@ -46,13 +52,16 @@ class CommerceController extends Controller
 
     /**
      * CommerceController constructor.
+     * @param SendSMSServiceRepositoryInterface $sendSMSService
      * @param DbUsersRepositoryInterface $dbUserRepository
      * @param DbCommerceRepositoryInterface $dbCommerceRepository
      */
     public function __construct(
+        SendSMSServiceRepositoryInterface $sendSMSService,
         DbUsersRepositoryInterface $dbUserRepository,
         DbCommerceRepositoryInterface $dbCommerceRepository
     ) {
+        $this->sendSMSService = $sendSMSService;
         $this->dbUserRepository = $dbUserRepository;
         $this->dbCommerceRepository = $dbCommerceRepository;
     }
@@ -153,6 +162,14 @@ class CommerceController extends Controller
                     '¡Bienvenido!.'
                 )
             );
+
+            if (env('SMS_ENABLED')) {
+                $this->sendSMSService->sendMessage(
+                    'Bienvenido a nuap, se ha creado tu usuario exitosamente',
+                    $user->phone,
+                    ! is_null($user->country_code) ? $user->country_code : 57
+                );
+            }
         }
 
         if ($request->ajax()) {

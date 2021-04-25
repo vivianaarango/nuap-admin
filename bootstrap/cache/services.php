@@ -208,6 +208,7 @@
     'App\\Repositories\\Contracts\\DbBankAccountRepositoryInterface' => 'App\\Providers\\RepositoryServiceProvider',
     'App\\Repositories\\Contracts\\DbBalanceRepositoryInterface' => 'App\\Providers\\RepositoryServiceProvider',
     'App\\Repositories\\Contracts\\DbOrderRepositoryInterface' => 'App\\Providers\\RepositoryServiceProvider',
+    'App\\Repositories\\Contracts\\SendSMSServiceRepositoryInterface' => 'App\\Providers\\RepositoryServiceProvider',
   ),
   'when' => 
   array (
