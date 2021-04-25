@@ -150,7 +150,8 @@ class UsersController extends Controller
             if (is_null($user)) {
                 return view('vendor.brackets.admin-auth.admin.auth.login', [
                     'error' => 'El código es incorrecto por favor vuelve a intentarlo.',
-                    'valid_phone' => true
+                    'valid_phone' => true,
+                    'send_message' => true
                 ]);
             }
 
