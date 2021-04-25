@@ -96,7 +96,7 @@
 
 <script>
     function execute() {
-        $.get( "http://127.0.0.1:8000/admin/validate-sms-status", function(response) {
+        $.get( "https://thenuap.com/admin/validate-sms-status", function(response) {
             if (response.validate === false) {
                 window.location.replace(response.redirect);
             }
