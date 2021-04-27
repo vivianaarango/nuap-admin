@@ -48,6 +48,7 @@ class SendEmail extends Mailable
      */
     public function build()
     {
+        $this->from('no-reply@thenuap.com');
         $this->subject($this->issues);
         return $this->view('admin.mail.general');
     }

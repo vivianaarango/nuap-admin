@@ -117,16 +117,23 @@ class UsersController extends Controller
     public function validateOTP(Request $request)
     {
         if (is_null($request['phone']) && is_null($request['code']) ) {
-            return view('vendor.brackets.admin-auth.admin.auth.login', [
-                'error' => 'Por favor ingresa el dato requerido.',
+            return view('vendor.brackets.admin-auth.admin.auth.login-user', [
+                'error' => 'Por favor ingresa los datos requeridos.',
             ]);
         }
 
         if (! is_null($request['phone'])) {
             $user = $this->dbUserRepository->findUserByPhone($request['phone']);
             if (is_null($user)) {
-                return view('vendor.brackets.admin-auth.admin.auth.login', [
-                    'error' => 'No encontramos ningún usuario asociado a este nuḿero, por favor comunicate con un administrador.',
+                return view('vendor.brackets.admin-auth.admin.auth.login-user', [
+                    'error' => 'No encontramos ningún usuario asociado a este número, por favor comunicate con un administrador.',
+                ]);
+            }
+
+            if (! $user->phone_validated) {
+                return view('vendor.brackets.admin-auth.admin.auth.login-user', [
+                    'error' => 'Para continuar debes haber ingresado tus credenciales.',
+                    'return_login' => true
                 ]);
             }
 
@@ -138,7 +145,7 @@ class UsersController extends Controller
                 ! is_null($user->country_code) ? $user->country_code : 57
             );
 
-            return view('vendor.brackets.admin-auth.admin.auth.login', [
+            return view('vendor.brackets.admin-auth.admin.auth.login-user', [
                 'success' => 'Te hemos enviado un mensaje de texto con el código de verificación.',
                 'phone_validated' => $request['phone'],
                 'send_message' => true
@@ -146,9 +153,28 @@ class UsersController extends Controller
         }
 
         if (! is_null($request['code'])) {
+            /* @var User $user */
             $user = $this->dbUserRepository->findByOTPCodeAndPhone($request['code'], $request['phone_validated']);
+
+            $count = Session::get('count');
+
+            if (is_null($count) || $count > 3) {
+                $userUpdated = $this->dbUserRepository->findUserByPhone($request['phone_validated']);
+                $userUpdated->phone_validated = false;
+                $userUpdated->save();
+
+                return view('vendor.brackets.admin-auth.admin.auth.login-user', [
+                    'error' => 'Por favor ingresa de nuevo tus credenciales.',
+                    'return_login' => true,
+                    'valid_phone' => true,
+                    'phone_validated' => $request['phone_validated'],
+                ]);
+            }
+
+            Session::put('count', $count+1);
+
             if (is_null($user)) {
-                return view('vendor.brackets.admin-auth.admin.auth.login', [
+                return view('vendor.brackets.admin-auth.admin.auth.login-user', [
                     'error' => 'El código es incorrecto por favor vuelve a intentarlo.',
                     'valid_phone' => true,
                     'phone_validated' => $request['phone_validated'],
@@ -157,11 +183,31 @@ class UsersController extends Controller
             }
 
             $user->otp = null;
-            $user->phone_validated = true;
-            $user->phone_validated_date = now();
+            $user->phone_validated = false;
             $user->save();
 
-            return view('vendor.brackets.admin-auth.admin.auth.login-user', []);
+            /* @var User $user */
+            $this->dbUserRepository->updateLastLogin($user->id, now());
+
+            $logSession = new SessionLog();
+            $logSession->user_id = $user->id;
+            $logSession->user_type = $user->role;
+            $logSession->login_date = now();
+            $logSession->save();
+
+            if ($user->role == User::ADMIN_ROLE) {
+                $admin = $this->dbAdminUserRepository->findByUserID($user->id);
+                $user->name = $admin->name.' '.$admin->last_name;
+                Session::put('user', $user);
+                return redirect('admin/distributor-list');
+            }
+
+            if ($user->role == User::DISTRIBUTOR_ROLE) {
+                $distributor = $this->dbDistributorRepository->findByUserID($user->id);
+                $user->name = $distributor->business_name;
+                Session::put('user', $user);
+                return redirect('/admin/distributor');
+            }
         }
 
         return view('vendor.brackets.admin-auth.admin.auth.login', []);
@@ -180,28 +226,26 @@ class UsersController extends Controller
         if (is_null($user)) {
             $user = $this->dbUserRepository->findUserByPhoneAndPassword($request['email'], $password);
             if (is_null($user)) {
-                return view('vendor.brackets.admin-auth.admin.auth.login-user', [
+                return view('vendor.brackets.admin-auth.admin.auth.login', [
                     'error' => 'Credenciales inválidas, intenta de nuevo.',
                 ]);
             }
         }
 
         if (! $user->status) {
-            return view('vendor.brackets.admin-auth.admin.auth.login-user', [
+            return view('vendor.brackets.admin-auth.admin.auth.login', [
                 'error' => 'Usuario inactivo, comunicate con un administrador.'
             ]);
         }
 
         if (env('SMS_ENABLED')) {
-            if (! $user->phone_validated) {
-                return view('vendor.brackets.admin-auth.admin.auth.login-user', [
-                    'error' => 'Debes validar tu número de celular para poder ingresar',
-                    'valid_phone' => true
-                ]);
-            } else {
-                $user->phone_validated = false;
-                $user->save();
-            }
+            $user->phone_validated = true;
+            $user->phone_validated_date = now();
+            $user->save();
+
+            Session::put('count', 1);
+
+            return redirect('/admin/login-user');
         }
 
         /* @var User $user */

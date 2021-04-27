@@ -72,6 +72,7 @@ class SendEmailPreRegister extends Mailable
      */
     public function build()
     {
+        $this->from('no-reply@thenuap.com');
         $this->subject('Nuevo pre registro');
         return $this->view('admin.mail.pre-register');
     }
