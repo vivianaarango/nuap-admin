@@ -31,10 +31,8 @@ Route::get('/admin/login-user', function (){
 /* Pre register */
 Route::post('/admin/pre-register', 'Admin\AdminUsersController@preRegister');
 
-/* Privacy policy */
-Route::get('/payment-response', function (){
-    return view('admin.payments.payment-response');
-});
+/* Payment Response */
+Route::post('/payment-response', 'Admin\PaymentGatewayController@response');
 
 /* Payment gateway */
 Route::get('/payment-gateway', 'Admin\PaymentGatewayController@index');

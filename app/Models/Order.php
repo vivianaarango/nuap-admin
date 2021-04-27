@@ -9,6 +9,7 @@ use Illuminate\Foundation\Application;
  * Class Order
  * @property int id
  * @property int user_id
+ * @property string reference
  * @property string user_type
  * @property string status
  * @property string cancel_reason
@@ -87,7 +88,8 @@ class Order extends Model
         'delivery_date',
         'rating',
         'comment',
-        'address_id'
+        'address_id',
+        'reference'
     ];
 
     /**

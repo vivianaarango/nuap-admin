@@ -221,14 +221,14 @@ class AdminUsersController extends Controller
 
             Mail::to($user->email)->send(new SendEmail(
                     $data['name'],
-                    'Ya eres parte de Nuap, gracias por unirtenos ',
+                    'Ya eres parte de NuAp, gracias por unirtenos ',
                     '¡Bienvenido!.'
                 )
             );
 
             if (env('SMS_ENABLED')) {
                 $this->sendSMSService->sendMessage(
-                    'Bienvenido a nuap, se ha creado tu usuario exitosamente',
+                    'Bienvenido a NuAp, se ha creado tu usuario exitosamente',
                     $user->phone,
                     ! is_null($user->country_code) ? $user->country_code : 57
                 );

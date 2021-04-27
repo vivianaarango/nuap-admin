@@ -46,8 +46,10 @@ class PaymentGatewayController extends Controller
         $orders = $request->orders;
         $userID = $request->user;
 
+        $ordersIDs = '';
         $orders = array_unique($orders);
         foreach ($orders as $item) {
+            $ordersIDs = sprintf('%s-', $item);
             $order = $this->dbOrderRepository->findByUserIDAndOrderUD($item, $userID);
             if (! count($order)) {
                 $error = true;
@@ -69,9 +71,8 @@ class PaymentGatewayController extends Controller
 
         $description = substr($description, 0, -3);
         $name = substr($name, 0, -3). ')';
-
         return view('admin.payments.payment-gateway', [
-            'key' => env('EPAYCO_PUBLIC_KEY'),
+            'key' => '25acf336d3d5bd50167eb5e21cb363e1',
             'amount' => $total,
             'name' => $name,
             'description' => $description,
@@ -79,9 +80,29 @@ class PaymentGatewayController extends Controller
             'country' => 'co',
             'test' => 'true',
             'external' => 'true',
-            'response' => 'http://127.0.0.1:8000/payment-response',
+            'response' => 'http://127.0.0.1:8000/payment-response?orders='.$ordersIDs,
             'confirmation' => '',
             'error' => $error
         ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return Factory|Application|View
+     */
+    public function response(Request $request): View
+    {
+        $reference = $request->input('ref_payco');
+        $orders = explode('-', $request->input('orders'));
+
+        foreach ($orders as $item) {
+            if ($item != null){
+                $order = $this->dbOrderRepository->findByID($item);
+                $order->reference = $reference;
+                $order->save();
+            }
+        }
+
+        return view('admin.payments.payment-response', []);
     }
 }

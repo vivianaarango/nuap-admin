@@ -157,14 +157,10 @@ class TicketController extends Controller
             TicketMessage::create($message);
 
             $admin = AdminUser::all();
+            $emails = [];
             foreach ($admin as $item) {
                 $sender = $this->dbUserRepository->findByID($item->user_id);
-                Mail::to($sender->email)->send(new SendEmail(
-                        '',
-                        'Tienes un nuevo mensaje de soporte, responde lo antes posible',
-                        '¡Han creado un nuevo ticket!.'
-                    )
-                );
+                array_push($emails, $sender->email);
 
                 if (env('SMS_ENABLED')) {
                     $this->sendSMSService->sendMessage(
@@ -174,6 +170,13 @@ class TicketController extends Controller
                     );
                 }
             }
+
+            Mail::to($emails)->send(new SendEmail(
+                    '',
+                    'Tienes un nuevo mensaje de soporte, responde lo antes posible',
+                    '¡Han creado un nuevo ticket!.'
+                )
+            );
 
             if ($request->ajax()) {
                 return [
@@ -296,15 +299,11 @@ class TicketController extends Controller
             $adminResponse = true;
             $messages = $this->dbTicketRepository->findMessagesByTicket($request['ticket_id']);
 
+            $emails = [];
             foreach ($messages as $item) {
                 if ($item->sender_type === User::ADMIN_ROLE) {
                     $sender = $this->dbUserRepository->findByID($item->user_id);
-                    Mail::to($sender->email)->send(new SendEmail(
-                            '',
-                            'Tienes un nuevo mensaje de soporte, responde lo antes posible',
-                            '¡Han respondido tu mensaje!.'
-                        )
-                    );
+                    array_push($emails, $sender->email);
 
                     if (env('SMS_ENABLED')) {
                         $this->sendSMSService->sendMessage(
@@ -318,16 +317,19 @@ class TicketController extends Controller
                 }
             }
 
+            Mail::to($emails)->send(new SendEmail(
+                    '',
+                    'Tienes un nuevo mensaje de soporte, responde lo antes posible',
+                    '¡Han respondido tu mensaje!.'
+                )
+            );
+
+            $emails = [];
             if (! $adminResponse) {
                 $admin = AdminUser::all();
                 foreach ($admin as $item) {
                     $sender = $this->dbUserRepository->findByID($item->user_id);
-                    Mail::to($sender->email)->send(new SendEmail(
-                            '',
-                            '¡Han creado un nuevo ticket!.',
-                            'Tienes un nuevo mensaje de soporte, responde lo antes posible'
-                        )
-                    );
+                    array_push($emails, $sender->email);
 
                     if (env('SMS_ENABLED')) {
                         $this->sendSMSService->sendMessage(
@@ -337,6 +339,13 @@ class TicketController extends Controller
                         );
                     }
                 }
+
+                Mail::to($emails)->send(new SendEmail(
+                        '',
+                        '¡Han creado un nuevo ticket!.',
+                        'Tienes un nuevo mensaje de soporte, responde lo antes posible'
+                    )
+                );
             }
 
             TicketMessage::create($message);

@@ -234,7 +234,7 @@ class DistributorController extends Controller
 
             if (env('SMS_ENABLED')) {
                 $this->sendSMSService->sendMessage(
-                    'Bienvenido a nuap, se ha creado tu usuario exitosamente',
+                    'Bienvenido a NuAp, se ha creado tu usuario exitosamente',
                     $user->phone,
                     ! is_null($user->country_code) ? $user->country_code : 57
                 );

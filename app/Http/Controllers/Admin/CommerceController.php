@@ -105,8 +105,8 @@ class CommerceController extends Controller
                         ->orderBy('user_id', 'desc');
                 })->processRequestAndGet(
                     $request,
-                    ['user_id', 'commission', 'name_legal_representative', 'business_name', 'nit'],
-                    ['user_id', 'commission', 'name_legal_representative', 'business_name', 'nit']
+                    ['user_id', 'commission', 'type', 'name_legal_representative', 'business_name', 'nit'],
+                    ['user_id', 'commission', 'type', 'name_legal_representative', 'business_name', 'nit']
                 );
 
             if ($request->ajax()) {

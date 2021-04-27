@@ -129,5 +129,5 @@
     function execute() {
         document.getElementsByClassName("epayco-button-render")[0].click();
     }
-    setTimeout(execute, 3000);
+    setTimeout(execute, 2000);
 </script>
