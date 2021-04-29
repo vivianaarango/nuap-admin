@@ -31,6 +31,11 @@ Route::group(['prefix' => 'reports'], function () {
     ]);
 });
 
+Route::post('/confirm-payment', [
+    'as' => 'api-confirm-payment',
+    'uses' => 'Api\PaymentConfirmController'
+]);
+
 Route::group(['prefix' => 'users'], function () {
     Route::post('/init', [
         'as' => 'api-users-login',

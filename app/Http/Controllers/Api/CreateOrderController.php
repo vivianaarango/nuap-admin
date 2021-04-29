@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Api;
 
 use App\Libraries\Responders\Contracts\ArrayResponseInterface;
@@ -12,16 +13,11 @@ use App\Models\Distributor;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Product;
-use App\Models\Ticket;
-use App\Models\TicketMessage;
-use App\Repositories\Contracts\DbCommerceRepositoryInterface;
-use App\Repositories\Contracts\DbDistributorRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use Exception;
 use Throwable;
 
 /**

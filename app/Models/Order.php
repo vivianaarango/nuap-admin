@@ -10,6 +10,7 @@ use Illuminate\Foundation\Application;
  * @property int id
  * @property int user_id
  * @property string reference
+ * @property string signature
  * @property string user_type
  * @property string status
  * @property string cancel_reason

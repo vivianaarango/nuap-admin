@@ -6,18 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="cfe844a3-0449-46b6-ada4-b8bd6f26ec78" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/AdminUsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/AdminUsersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/ClientController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/ClientController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/CommerceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/CommerceController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/DistributorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/DistributorController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/PaymentGatewayController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/PaymentGatewayController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/TicketController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/TicketController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/VerifyCsrfToken.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/VerifyCsrfToken.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/Commerce/IndexCommerce.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Admin/Commerce/IndexCommerce.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/CreateOrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/CreateOrderController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Order.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bootstrap/cache/config.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/payments/payment-gateway.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/payments/payment-gateway.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/Contracts/DbOrderRepositoryInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/Contracts/DbOrderRepositoryInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/DbOrderRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/DbOrderRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -199,7 +193,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/images/vendor/craftable" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../merqueo-producto-api" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -252,7 +246,10 @@
       <workItem from="1619186779896" duration="22000" />
       <workItem from="1619278263520" duration="27847000" />
       <workItem from="1619369018637" duration="9943000" />
-      <workItem from="1619490887917" duration="6745000" />
+      <workItem from="1619490887917" duration="7082000" />
+      <workItem from="1619530329438" duration="170000" />
+      <workItem from="1619657411357" duration="5449000" />
+      <workItem from="1619706858236" duration="64000" />
     </task>
     <servers />
   </component>

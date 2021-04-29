@@ -72,7 +72,7 @@ class PaymentGatewayController extends Controller
         $description = substr($description, 0, -3);
         $name = substr($name, 0, -3). ')';
         return view('admin.payments.payment-gateway', [
-            'key' => '25acf336d3d5bd50167eb5e21cb363e1',
+            'key' => env('EPAYCO_PUBLIC_KEY'),
             'amount' => $total,
             'name' => $name,
             'description' => $description,
@@ -80,8 +80,8 @@ class PaymentGatewayController extends Controller
             'country' => 'co',
             'test' => 'true',
             'external' => 'true',
-            'response' => 'http://127.0.0.1:8000/payment-response?orders='.$ordersIDs,
-            'confirmation' => '',
+            'response' => 'https://thenuap.com/payment-response?orders='.$ordersIDs,
+            'confirmation' => 'https://thenuap.com/confirm-payment',
             'error' => $error
         ]);
     }

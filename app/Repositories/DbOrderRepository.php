@@ -148,4 +148,15 @@ class DbOrderRepository implements DbOrderRepositoryInterface
             ->whereBetween('orders.created_at', [$year . '-' . $month . '-' . $lastWeek . ' 00:00:00', $year . '-' . $month . '-' .$currentDay . ' 23:59:59'])
             ->sum('total');
     }
+
+    /**
+     * @param string $reference
+     * @return Collection
+     */
+    public function findByReference(string $reference): Collection
+    {
+        return Order::where('reference', $reference)
+            ->where('status', Order::STATUS_INITIATED)
+            ->get();
+    }
 }

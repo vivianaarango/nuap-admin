@@ -70,4 +70,10 @@ interface DbOrderRepositoryInterface
      * @return float
      */
     public function findMonthDeliveredByUserID(int $userID): float;
+
+    /**
+     * @param string $reference
+     * @return Collection
+     */
+    public function findByReference(string $reference): Collection;
 }
