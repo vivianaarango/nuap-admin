@@ -21,7 +21,7 @@ class LoginTransformer extends TransformerAbstract
             'role' => $user->role,
             'email' => $user->email,
             'phone' => $user->phone,
-            'phone_validated' => $user->phone_validated,
+            'phone_validated' => (int) $user->phone_validated,
             'phone_validated_date' => $user->phone_validated_date,
             'api_token' => $user->api_token
         ];

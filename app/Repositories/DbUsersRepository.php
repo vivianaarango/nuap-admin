@@ -74,6 +74,17 @@ class DbUsersRepository implements DbUsersRepositoryInterface
     }
 
     /**
+     * @param string $phone
+     * @return User|null
+     */
+    public function findClientOrCommerceByPhone(string $phone): ? User
+    {
+        return User::where('phone', $phone)
+            ->whereIn('role', [User::COMMERCE_ROLE, User::USER_ROLE])
+            ->first();
+    }
+
+    /**
      * @param string $otp
      * @param string $phone
      * @return User|null
@@ -82,7 +93,6 @@ class DbUsersRepository implements DbUsersRepositoryInterface
     {
         return User::where('otp', $otp)
             ->where('phone', $phone)
-            ->whereIn('role', [User::ADMIN_ROLE, User::DISTRIBUTOR_ROLE])
             ->first();
     }
 
@@ -301,6 +311,22 @@ class DbUsersRepository implements DbUsersRepositoryInterface
     public function clientOrCommerceByEmailAndPassword(string $email, string $password, string $type): Collection
     {
         return User::where('email', $email)
+            ->where('password', $password)
+            ->where('role', $type)
+            ->get();
+    }
+
+    /**
+     * Login to users type client or commerce
+     *
+     * @param string $phone
+     * @param string $password
+     * @param string $type
+     * @return Collection
+     */
+    public function clientOrCommerceByPhoneAndPassword(string $phone, string $password, string $type): Collection
+    {
+        return User::where('phone', $phone)
             ->where('password', $password)
             ->where('role', $type)
             ->get();

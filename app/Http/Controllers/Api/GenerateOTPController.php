@@ -6,8 +6,9 @@ use App\Libraries\Responders\Contracts\JsonApiResponseInterface;
 use App\Libraries\Responders\ErrorObject;
 use App\Libraries\Responders\HttpObject;
 use App\Libraries\Responders\JsonApiErrorsFormatter;
-use App\Repositories\Contracts\DbClientRepositoryInterface;
+use App\Models\User;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
+use App\Repositories\Contracts\SendSMSServiceRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
@@ -15,10 +16,10 @@ use Illuminate\Http\Request;
 use Exception;
 
 /**
- * Class EditUserProfileController
+ * Class GenerateOTPController
  * @package App\Http\Controllers\Api
  */
-class EditUserProfileController
+class GenerateOTPController
 {
     /**
      * @type string
@@ -29,16 +30,6 @@ class EditUserProfileController
      * @type string
      */
     protected const USER_NOT_FOUND = 'USER_NOT_FOUND';
-
-    /**
-     * @type string
-     */
-    protected const INVALID_PHONE = 'INVALID_PHONE';
-
-    /**
-     * @type string
-     */
-    protected const INVALID_EMAIL = 'INVALID_EMAIL';
 
     /**
      * @type string
@@ -71,40 +62,40 @@ class EditUserProfileController
     private $dbUserRepository;
 
     /**
-     * @var DbClientRepositoryInterface
-     */
-    private $dbClientRepository;
-
-    /**
      * @var JsonApiErrorsFormatter
      */
     private $jsonErrorFormat;
 
     /**
+     * @var SendSMSServiceRepositoryInterface
+     */
+    private $sendSMSService;
+
+    /**
      * EditUserProfileController constructor.
+     * @param SendSMSServiceRepositoryInterface $sendSMSService
      * @param ArrayResponseInterface $arrayResponse
      * @param HttpObject $httpObject
      * @param ErrorObject $errorObject
      * @param JsonApiResponseInterface $jsonApiResponse
      * @param DbUsersRepositoryInterface $dbUserRepository
-     * @param DbClientRepositoryInterface $dbClientRepository
      * @param JsonApiErrorsFormatter $jsonApiErrorsFormatter
      */
     public function __construct(
+        SendSMSServiceRepositoryInterface $sendSMSService,
         ArrayResponseInterface $arrayResponse,
         HttpObject $httpObject,
         ErrorObject $errorObject,
         JsonApiResponseInterface $jsonApiResponse,
         DbUsersRepositoryInterface $dbUserRepository,
-        DbClientRepositoryInterface $dbClientRepository,
         JsonApiErrorsFormatter $jsonApiErrorsFormatter
     ) {
+        $this->sendSMSService = $sendSMSService;
         $this->arrayResponse = $arrayResponse;
         $this->httpObject = $httpObject;
         $this->errorObject = $errorObject;
         $this->jsonApiResponse = $jsonApiResponse;
         $this->dbUserRepository = $dbUserRepository;
-        $this->dbClientRepository = $dbClientRepository;
         $this->jsonErrorFormat = $jsonApiErrorsFormatter;
     }
 
@@ -116,8 +107,6 @@ class EditUserProfileController
     {
         try {
             $validator = Validator::make($request->all(), [
-                'name' => 'required|string',
-                'email' => 'required|string',
                 'phone' => 'required|string'
             ]);
 
@@ -128,61 +117,37 @@ class EditUserProfileController
                 );
             }
 
-            $token = $request->header('Authorization');
-            $token = explode(' ',$token)[1];
-
-            $user = $this->dbUserRepository->getUserByToken($token);
+            $user = $this->dbUserRepository->findClientOrCommerceByPhone($request->input('phone'));
 
             if (is_null($user)) {
                 $error = new ErrorObject();
                 $error->setCode(self::USER_NOT_FOUND)
                     ->setTitle(self::ERROR_TITLE)
-                    ->setDetail('No se encontroó el usuario.')
+                    ->setDetail('El código es incorrecto por favor vuelve a intentarlo..')
                     ->setStatus((string) Response::HTTP_BAD_REQUEST);
                 $this->jsonErrorFormat->add($error);
 
                 return $this->jsonApiResponse->respondError($this->jsonErrorFormat, Response::HTTP_BAD_REQUEST);
             }
 
-            if ($user->email != $request->input('email')){
-                $userEdit = $this->dbUserRepository->getUserByEmail($request->input('email'));
+            if (! $user->phone_validated) {
+                $error = new ErrorObject();
+                $error->setCode(self::USER_NOT_FOUND)
+                    ->setTitle(self::ERROR_TITLE)
+                    ->setDetail('Para continuar debes haber ingresado tus credenciales.')
+                    ->setStatus((string) Response::HTTP_BAD_REQUEST);
+                $this->jsonErrorFormat->add($error);
 
-                if (is_null($userEdit)) {
-                    $user->email = $request->input('email');
-                } else {
-                    $error = new ErrorObject();
-                    $error->setCode(self::INVALID_EMAIL)
-                        ->setTitle(self::ERROR_TITLE)
-                        ->setDetail('Este email ya está en uso.')
-                        ->setStatus((string) Response::HTTP_BAD_REQUEST);
-                    $this->jsonErrorFormat->add($error);
-
-                    return $this->jsonApiResponse->respondError($this->jsonErrorFormat, Response::HTTP_BAD_REQUEST);
-                }
+                return $this->jsonApiResponse->respondError($this->jsonErrorFormat, Response::HTTP_BAD_REQUEST);
             }
 
-            if ($user->phone != $request->input('phone')){
-                $userEdit = $this->dbUserRepository->getUserByPhone($request->input('phone'));
-
-                if (is_null($userEdit)) {
-                    $user->phone = $request->input('phone');
-                } else {
-                    $error = new ErrorObject();
-                    $error->setCode(self::INVALID_PHONE)
-                        ->setTitle(self::ERROR_TITLE)
-                        ->setDetail('Este teléfono ya está en uso.')
-                        ->setStatus((string) Response::HTTP_BAD_REQUEST);
-                    $this->jsonErrorFormat->add($error);
-
-                    return $this->jsonApiResponse->respondError($this->jsonErrorFormat, Response::HTTP_BAD_REQUEST);
-                }
-            }
-
-            $user->save();
-
-            $client = $this->dbClientRepository->findByUserID($user->id);
-            $client->name = $request->input('name');
-            $client->save();
+            $otp = $this->generateOTP($user);
+            $message = sprintf('%s %d', 'Tu código de verificación para ingresar a NuAp es', $otp);
+            $this->sendSMSService->sendMessage(
+                $message,
+                $user->phone,
+                ! is_null($user->country_code) ? $user->country_code : 57
+            );
 
             $this->httpObject->setBody([
                 'data' => null
@@ -200,5 +165,18 @@ class EditUserProfileController
 
             return $this->jsonApiResponse->respondError($this->jsonErrorFormat, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
+
+    /**
+     * @param User $user
+     * @return int
+     */
+    public function generateOTP(User $user): int
+    {
+        $otp = rand(100000, 999999);
+        $user->otp = $otp;
+        $user->save();
+
+        return $otp;
     }
 }

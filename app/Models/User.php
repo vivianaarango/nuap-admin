@@ -99,7 +99,6 @@ class User extends Model
      */
     protected $dates = [
         'last_logged_in',
-        'phone_validated_date',
         'created_at',
         'updated_at',
     ];

@@ -42,6 +42,16 @@ Route::group(['prefix' => 'users'], function () {
         'uses' => 'Api\LoginController'
     ]);
 
+    Route::post('/generate-otp', [
+        'as' => 'api-generate-otp',
+        'uses' => 'Api\GenerateOTPController'
+    ]);
+
+    Route::post('/verify-otp', [
+        'as' => 'api-verify-otp',
+        'uses' => 'Api\VerifyOTPController'
+    ]);
+
     Route::post('/register/client', [
         'as' => 'api-users-register-client',
         'uses' => 'Api\RegisterClientController'

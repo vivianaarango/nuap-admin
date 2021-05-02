@@ -1,13 +1,15 @@
 <?php
 namespace App\Http\Controllers\Api;
 
+use App\Http\Transformers\LoginTransformer;
 use App\Libraries\Responders\Contracts\ArrayResponseInterface;
 use App\Libraries\Responders\Contracts\JsonApiResponseInterface;
 use App\Libraries\Responders\ErrorObject;
 use App\Libraries\Responders\HttpObject;
 use App\Libraries\Responders\JsonApiErrorsFormatter;
-use App\Repositories\Contracts\DbClientRepositoryInterface;
+use App\Models\SessionLog;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
+use App\Repositories\Contracts\SendSMSServiceRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
@@ -15,10 +17,10 @@ use Illuminate\Http\Request;
 use Exception;
 
 /**
- * Class EditUserProfileController
+ * Class VerifyOTPController
  * @package App\Http\Controllers\Api
  */
-class EditUserProfileController
+class VerifyOTPController
 {
     /**
      * @type string
@@ -29,16 +31,6 @@ class EditUserProfileController
      * @type string
      */
     protected const USER_NOT_FOUND = 'USER_NOT_FOUND';
-
-    /**
-     * @type string
-     */
-    protected const INVALID_PHONE = 'INVALID_PHONE';
-
-    /**
-     * @type string
-     */
-    protected const INVALID_EMAIL = 'INVALID_EMAIL';
 
     /**
      * @type string
@@ -71,23 +63,18 @@ class EditUserProfileController
     private $dbUserRepository;
 
     /**
-     * @var DbClientRepositoryInterface
-     */
-    private $dbClientRepository;
-
-    /**
      * @var JsonApiErrorsFormatter
      */
     private $jsonErrorFormat;
 
     /**
      * EditUserProfileController constructor.
+     * @param SendSMSServiceRepositoryInterface $sendSMSService
      * @param ArrayResponseInterface $arrayResponse
      * @param HttpObject $httpObject
      * @param ErrorObject $errorObject
      * @param JsonApiResponseInterface $jsonApiResponse
      * @param DbUsersRepositoryInterface $dbUserRepository
-     * @param DbClientRepositoryInterface $dbClientRepository
      * @param JsonApiErrorsFormatter $jsonApiErrorsFormatter
      */
     public function __construct(
@@ -96,7 +83,6 @@ class EditUserProfileController
         ErrorObject $errorObject,
         JsonApiResponseInterface $jsonApiResponse,
         DbUsersRepositoryInterface $dbUserRepository,
-        DbClientRepositoryInterface $dbClientRepository,
         JsonApiErrorsFormatter $jsonApiErrorsFormatter
     ) {
         $this->arrayResponse = $arrayResponse;
@@ -104,7 +90,6 @@ class EditUserProfileController
         $this->errorObject = $errorObject;
         $this->jsonApiResponse = $jsonApiResponse;
         $this->dbUserRepository = $dbUserRepository;
-        $this->dbClientRepository = $dbClientRepository;
         $this->jsonErrorFormat = $jsonApiErrorsFormatter;
     }
 
@@ -116,9 +101,8 @@ class EditUserProfileController
     {
         try {
             $validator = Validator::make($request->all(), [
-                'name' => 'required|string',
-                'email' => 'required|string',
-                'phone' => 'required|string'
+                'phone' => 'required|string',
+                'code' => 'required|string'
             ]);
 
             if ($validator->fails()) {
@@ -128,68 +112,36 @@ class EditUserProfileController
                 );
             }
 
-            $token = $request->header('Authorization');
-            $token = explode(' ',$token)[1];
-
-            $user = $this->dbUserRepository->getUserByToken($token);
+            $user = $this->dbUserRepository->findByOTPCodeAndPhone($request->input('code'), $request->input('phone'));
 
             if (is_null($user)) {
                 $error = new ErrorObject();
                 $error->setCode(self::USER_NOT_FOUND)
                     ->setTitle(self::ERROR_TITLE)
-                    ->setDetail('No se encontroó el usuario.')
+                    ->setDetail('El código es incorrecto por favor vuelve a intentarlo.')
                     ->setStatus((string) Response::HTTP_BAD_REQUEST);
                 $this->jsonErrorFormat->add($error);
 
                 return $this->jsonApiResponse->respondError($this->jsonErrorFormat, Response::HTTP_BAD_REQUEST);
             }
 
-            if ($user->email != $request->input('email')){
-                $userEdit = $this->dbUserRepository->getUserByEmail($request->input('email'));
-
-                if (is_null($userEdit)) {
-                    $user->email = $request->input('email');
-                } else {
-                    $error = new ErrorObject();
-                    $error->setCode(self::INVALID_EMAIL)
-                        ->setTitle(self::ERROR_TITLE)
-                        ->setDetail('Este email ya está en uso.')
-                        ->setStatus((string) Response::HTTP_BAD_REQUEST);
-                    $this->jsonErrorFormat->add($error);
-
-                    return $this->jsonApiResponse->respondError($this->jsonErrorFormat, Response::HTTP_BAD_REQUEST);
-                }
-            }
-
-            if ($user->phone != $request->input('phone')){
-                $userEdit = $this->dbUserRepository->getUserByPhone($request->input('phone'));
-
-                if (is_null($userEdit)) {
-                    $user->phone = $request->input('phone');
-                } else {
-                    $error = new ErrorObject();
-                    $error->setCode(self::INVALID_PHONE)
-                        ->setTitle(self::ERROR_TITLE)
-                        ->setDetail('Este teléfono ya está en uso.')
-                        ->setStatus((string) Response::HTTP_BAD_REQUEST);
-                    $this->jsonErrorFormat->add($error);
-
-                    return $this->jsonApiResponse->respondError($this->jsonErrorFormat, Response::HTTP_BAD_REQUEST);
-                }
-            }
-
+            $user->otp = null;
+            $user->phone_validated = false;
             $user->save();
 
-            $client = $this->dbClientRepository->findByUserID($user->id);
-            $client->name = $request->input('name');
-            $client->save();
+            $logSession = new SessionLog();
+            $logSession->user_id = $user->id;
+            $logSession->user_type = $user->role;
+            $logSession->login_date = now();
+            $logSession->save();
 
-            $this->httpObject->setBody([
-                'data' => null
-            ]);
+            $this->httpObject->setItem($user);
 
-            return $this->arrayResponse->respond($this->httpObject);
-
+            return $this->arrayResponse->responseWithItem(
+                $this->httpObject,
+                new LoginTransformer(),
+                'data'
+            );
         } catch (Exception $exception) {
             $error = new ErrorObject();
             $error->setCode(self::GENERAL_ERROR)

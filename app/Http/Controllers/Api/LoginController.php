@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Exception;
@@ -105,7 +106,7 @@ class LoginController
     {
         try {
             $validator = Validator::make($request->all(), [
-                'email' => 'required|email',
+                'email' => 'required|string',
                 'password' => 'required|string',
                 'type' => 'required|string'
             ]);
@@ -129,26 +130,39 @@ class LoginController
             )->first();
 
             if (is_null($user)) {
+                $user = $this->dbUserRepository->clientOrCommerceByPhoneAndPassword(
+                    $request->input('email'),
+                    $password,
+                    $type
+                )->first();
+            }
+
+            if (is_null($user)) {
                 $error = new ErrorObject();
                 $error->setCode(self::USER_NOT_FOUND)
                     ->setTitle(self::ERROR_TITLE)
-                    ->setDetail('Verifique su correo electrónico y contraseña.')
+                    ->setDetail('Verifique su correo electrónico/celular y contraseña.')
                     ->setStatus((string) Response::HTTP_BAD_REQUEST);
                 $this->jsonErrorFormat->add($error);
 
                 return $this->jsonApiResponse->respondError($this->jsonErrorFormat, Response::HTTP_BAD_REQUEST);
             }
 
-
             if ($user->status == User::STATUS_INACTIVE) {
                 $error = new ErrorObject();
                 $error->setCode(self::USER_NOT_ACTIVE)
                     ->setTitle(self::ERROR_TITLE)
-                    ->setDetail('Su usuario no se encuentra activado.')
+                    ->setDetail('Su usuario no se encuentra activo.')
                     ->setStatus((string) Response::HTTP_BAD_REQUEST);
                 $this->jsonErrorFormat->add($error);
 
                 return $this->jsonApiResponse->respondError($this->jsonErrorFormat, Response::HTTP_BAD_REQUEST);
+            }
+
+            if (env('SMS_ENABLED')) {
+                $user->phone_validated = true;
+                $user->phone_validated_date = now();
+                $user->save();
             }
 
             $logSession = new SessionLog();

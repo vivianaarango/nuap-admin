@@ -26,6 +26,12 @@ interface DbUsersRepositoryInterface
 
     /**
      * @param string $phone
+     * @return User|null
+     */
+    public function findClientOrCommerceByPhone(string $phone): ? User;
+
+    /**
+     * @param string $phone
      * @param string $password
      * @return User|null
      */
@@ -149,6 +155,16 @@ interface DbUsersRepositoryInterface
      * @return Collection
      */
     public function clientOrCommerceByEmailAndPassword(string $email, string $password, string $type): Collection;
+
+    /**
+     * Login to users type client or commerce
+     *
+     * @param string $phone
+     * @param string $password
+     * @param string $type
+     * @return Collection
+     */
+    public function clientOrCommerceByPhoneAndPassword(string $phone, string $password, string $type): Collection;
 
     /**
      * @param int $userID

@@ -138,7 +138,7 @@ class UsersController extends Controller
             }
 
             $otp = $this->generateOTP($user);
-            $message = sprintf('%s %d', 'Tu código de verificación de nuap es', $otp);
+            $message = sprintf('%s %d', 'Tu código de verificación para ingresar a NuAp es', $otp);
             $this->sendSMSService->sendMessage(
                 $message,
                 $user->phone,
