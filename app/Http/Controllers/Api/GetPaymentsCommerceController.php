@@ -1,28 +1,24 @@
 <?php
 namespace App\Http\Controllers\Api;
 
-use App\Http\Transformers\LoginTransformer;
+use App\Http\Transformers\PaymentTransformer;
 use App\Libraries\Responders\Contracts\ArrayResponseInterface;
 use App\Libraries\Responders\Contracts\JsonApiResponseInterface;
 use App\Libraries\Responders\ErrorObject;
 use App\Libraries\Responders\HttpObject;
 use App\Libraries\Responders\JsonApiErrorsFormatter;
-use App\Models\SessionLog;
-use App\Models\User;
+use App\Repositories\Contracts\DbPaymentRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
-use App\Repositories\DbBalanceRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Exception;
 
 /**
- * Class LoginController
+ * Class LocationController
  * @package App\Http\Controllers\Api
  */
-class LoginController
+class GetPaymentsCommerceController
 {
     /**
      * @type string
@@ -32,12 +28,12 @@ class LoginController
     /**
      * @type string
      */
-    protected const USER_NOT_ACTIVE = 'USER_NOT_ACTIVE';
+    protected const USER_NOT_FOUND = 'USER_NOT_FOUND';
 
     /**
      * @type string
      */
-    protected const USER_NOT_FOUND = 'USER_NOT_FOUND';
+    protected const PAYMENTS_NOT_FOUND = 'PAYMENTS_NOT_FOUND';
 
     /**
      * @type string
@@ -70,17 +66,23 @@ class LoginController
     private $dbUserRepository;
 
     /**
+     * @var DbPaymentRepositoryInterface
+     */
+    private $dbPaymentRepository;
+
+    /**
      * @var JsonApiErrorsFormatter
      */
     private $jsonErrorFormat;
 
     /**
-     * LoginController constructor.
+     * GetPaymentsCommerceController constructor.
      * @param ArrayResponseInterface $arrayResponse
      * @param HttpObject $httpObject
      * @param ErrorObject $errorObject
      * @param JsonApiResponseInterface $jsonApiResponse
      * @param DbUsersRepositoryInterface $dbUserRepository
+     * @param DbPaymentRepositoryInterface $dbPaymentRepository
      * @param JsonApiErrorsFormatter $jsonApiErrorsFormatter
      */
     public function __construct(
@@ -89,6 +91,7 @@ class LoginController
         ErrorObject $errorObject,
         JsonApiResponseInterface $jsonApiResponse,
         DbUsersRepositoryInterface $dbUserRepository,
+        DbPaymentRepositoryInterface $dbPaymentRepository,
         JsonApiErrorsFormatter $jsonApiErrorsFormatter
     ) {
         $this->arrayResponse = $arrayResponse;
@@ -96,6 +99,7 @@ class LoginController
         $this->errorObject = $errorObject;
         $this->jsonApiResponse = $jsonApiResponse;
         $this->dbUserRepository = $dbUserRepository;
+        $this->dbPaymentRepository = $dbPaymentRepository;
         $this->jsonErrorFormat = $jsonApiErrorsFormatter;
     }
 
@@ -106,77 +110,39 @@ class LoginController
     public function __invoke(Request $request): JsonResponse
     {
         try {
-            $validator = Validator::make($request->all(), [
-                'email' => 'required|string',
-                'password' => 'required|string',
-                'type' => 'required|string'
-            ]);
+            $token = $request->header('Authorization');
+            $token = explode(' ',$token)[1];
 
-            if ($validator->fails()) {
-                return $this->jsonApiResponse->respondFormError($validator->errors(), Response::HTTP_UNPROCESSABLE_ENTITY);
-            }
-
-            $password = md5($request->input('password'));
-
-            if (strtolower($request->input('type')) === "comercio") {
-                $type = User::COMMERCE_ROLE;
-            } else {
-                $type = User::USER_ROLE;
-            }
-
-            $user = $this->dbUserRepository->clientOrCommerceByEmailAndPassword(
-                $request->input('email'),
-                $password,
-                $type
-            )->first();
-
-            if (is_null($user)) {
-                $user = $this->dbUserRepository->clientOrCommerceByPhoneAndPassword(
-                    $request->input('email'),
-                    $password,
-                    $type
-                )->first();
-            }
+            $user = $this->dbUserRepository->getUserByToken($token);
 
             if (is_null($user)) {
                 $error = new ErrorObject();
                 $error->setCode(self::USER_NOT_FOUND)
                     ->setTitle(self::ERROR_TITLE)
-                    ->setDetail('Verifique su correo electrónico/celular y contraseña.')
+                    ->setDetail('No se encontró el usuario.')
                     ->setStatus((string) Response::HTTP_BAD_REQUEST);
                 $this->jsonErrorFormat->add($error);
 
                 return $this->jsonApiResponse->respondError($this->jsonErrorFormat, Response::HTTP_BAD_REQUEST);
             }
 
-            if ($user->status == User::STATUS_INACTIVE) {
+            $data = $this->dbPaymentRepository->findAllByUserID($user->id);
+
+            if (! count($data)) {
                 $error = new ErrorObject();
-                $error->setCode(self::USER_NOT_ACTIVE)
+                $error->setCode(self::PAYMENTS_NOT_FOUND)
                     ->setTitle(self::ERROR_TITLE)
-                    ->setDetail('Su usuario no se encuentra activo.')
+                    ->setDetail('No se encontraron solicitudes de pago.')
                     ->setStatus((string) Response::HTTP_BAD_REQUEST);
                 $this->jsonErrorFormat->add($error);
 
                 return $this->jsonApiResponse->respondError($this->jsonErrorFormat, Response::HTTP_BAD_REQUEST);
             }
+            $this->httpObject->setCollection($data);
 
-            if (env('SMS_ENABLED')) {
-                $user->phone_validated = true;
-                $user->phone_validated_date = now();
-                $user->save();
-            }
-
-            $logSession = new SessionLog();
-            $logSession->user_id = $user->id;
-            $logSession->user_type = $user->role;
-            $logSession->login_date = now();
-            $logSession->save();
-
-            $this->httpObject->setItem($user);
-
-            return $this->arrayResponse->responseWithItem(
+            return $this->arrayResponse->respondWithCollection(
                 $this->httpObject,
-                new LoginTransformer(new DbBalanceRepository()),
+                new PaymentTransformer(),
                 'data'
             );
         } catch (Exception $exception) {

@@ -1,28 +1,26 @@
 <?php
 namespace App\Http\Controllers\Api;
 
-use App\Http\Transformers\LoginTransformer;
 use App\Libraries\Responders\Contracts\ArrayResponseInterface;
 use App\Libraries\Responders\Contracts\JsonApiResponseInterface;
 use App\Libraries\Responders\ErrorObject;
 use App\Libraries\Responders\HttpObject;
 use App\Libraries\Responders\JsonApiErrorsFormatter;
-use App\Models\SessionLog;
-use App\Models\User;
+use App\Models\Payment;
+use App\Repositories\Contracts\DbBalanceRepositoryInterface;
+use App\Repositories\Contracts\DbBankAccountRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
-use App\Repositories\DbBalanceRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Exception;
 
 /**
- * Class LoginController
+ * Class RequestPaymentController
  * @package App\Http\Controllers\Api
  */
-class LoginController
+class RequestPaymentController
 {
     /**
      * @type string
@@ -32,12 +30,17 @@ class LoginController
     /**
      * @type string
      */
-    protected const USER_NOT_ACTIVE = 'USER_NOT_ACTIVE';
+    protected const USER_NOT_FOUND = 'USER_NOT_FOUND';
 
     /**
      * @type string
      */
-    protected const USER_NOT_FOUND = 'USER_NOT_FOUND';
+    protected const BANK_ACCOUNT_NOT_FOUND = 'BANK_ACCOUNT_NOT_FOUND';
+
+    /**
+     * @type string
+     */
+    protected const VALUE_NOT_AVAILABLE = 'VALUE_NOT_AVAILABLE';
 
     /**
      * @type string
@@ -70,17 +73,29 @@ class LoginController
     private $dbUserRepository;
 
     /**
+     * @var DbBankAccountRepositoryInterface
+     */
+    private $dbBankAccountRepository;
+
+    /**
+     * @var DbBalanceRepositoryInterface
+     */
+    private $dbBalanceRepository;
+
+    /**
      * @var JsonApiErrorsFormatter
      */
     private $jsonErrorFormat;
 
     /**
-     * LoginController constructor.
+     * RequestPaymentController constructor.
      * @param ArrayResponseInterface $arrayResponse
      * @param HttpObject $httpObject
      * @param ErrorObject $errorObject
      * @param JsonApiResponseInterface $jsonApiResponse
      * @param DbUsersRepositoryInterface $dbUserRepository
+     * @param DbBankAccountRepositoryInterface $dbBankAccountRepository
+     * @param DbBalanceRepositoryInterface $dbBalanceRepository
      * @param JsonApiErrorsFormatter $jsonApiErrorsFormatter
      */
     public function __construct(
@@ -89,6 +104,8 @@ class LoginController
         ErrorObject $errorObject,
         JsonApiResponseInterface $jsonApiResponse,
         DbUsersRepositoryInterface $dbUserRepository,
+        DbBankAccountRepositoryInterface $dbBankAccountRepository,
+        DbBalanceRepositoryInterface $dbBalanceRepository,
         JsonApiErrorsFormatter $jsonApiErrorsFormatter
     ) {
         $this->arrayResponse = $arrayResponse;
@@ -96,6 +113,8 @@ class LoginController
         $this->errorObject = $errorObject;
         $this->jsonApiResponse = $jsonApiResponse;
         $this->dbUserRepository = $dbUserRepository;
+        $this->dbBankAccountRepository = $dbBankAccountRepository;
+        $this->dbBalanceRepository = $dbBalanceRepository;
         $this->jsonErrorFormat = $jsonApiErrorsFormatter;
     }
 
@@ -107,78 +126,74 @@ class LoginController
     {
         try {
             $validator = Validator::make($request->all(), [
-                'email' => 'required|string',
-                'password' => 'required|string',
-                'type' => 'required|string'
+                'value' => 'required|numeric'
             ]);
 
             if ($validator->fails()) {
-                return $this->jsonApiResponse->respondFormError($validator->errors(), Response::HTTP_UNPROCESSABLE_ENTITY);
+                return $this->jsonApiResponse->respondFormError(
+                    $validator->errors(),
+                    Response::HTTP_UNPROCESSABLE_ENTITY
+                );
             }
 
-            $password = md5($request->input('password'));
+            $token = $request->header('Authorization');
+            $token = explode(' ',$token)[1];
 
-            if (strtolower($request->input('type')) === "comercio") {
-                $type = User::COMMERCE_ROLE;
-            } else {
-                $type = User::USER_ROLE;
-            }
-
-            $user = $this->dbUserRepository->clientOrCommerceByEmailAndPassword(
-                $request->input('email'),
-                $password,
-                $type
-            )->first();
-
-            if (is_null($user)) {
-                $user = $this->dbUserRepository->clientOrCommerceByPhoneAndPassword(
-                    $request->input('email'),
-                    $password,
-                    $type
-                )->first();
-            }
+            $user = $this->dbUserRepository->getUserByToken($token);
 
             if (is_null($user)) {
                 $error = new ErrorObject();
                 $error->setCode(self::USER_NOT_FOUND)
                     ->setTitle(self::ERROR_TITLE)
-                    ->setDetail('Verifique su correo electrónico/celular y contraseña.')
+                    ->setDetail('No se encontró el usuario.')
                     ->setStatus((string) Response::HTTP_BAD_REQUEST);
                 $this->jsonErrorFormat->add($error);
 
                 return $this->jsonApiResponse->respondError($this->jsonErrorFormat, Response::HTTP_BAD_REQUEST);
             }
 
-            if ($user->status == User::STATUS_INACTIVE) {
+            $account = $this->dbBankAccountRepository->findByUserID($user->id);
+            if (is_null($account)) {
                 $error = new ErrorObject();
-                $error->setCode(self::USER_NOT_ACTIVE)
+                $error->setCode(self::BANK_ACCOUNT_NOT_FOUND)
                     ->setTitle(self::ERROR_TITLE)
-                    ->setDetail('Su usuario no se encuentra activo.')
+                    ->setDetail('Necesitas tener una cuenta bancaria asociada a tu cuenta.')
                     ->setStatus((string) Response::HTTP_BAD_REQUEST);
                 $this->jsonErrorFormat->add($error);
 
                 return $this->jsonApiResponse->respondError($this->jsonErrorFormat, Response::HTTP_BAD_REQUEST);
             }
 
-            if (env('SMS_ENABLED')) {
-                $user->phone_validated = true;
-                $user->phone_validated_date = now();
-                $user->save();
+            $balance = $this->dbBalanceRepository->findByUserID($user->id);
+            if ($request['value'] <= $balance->requested_value) {
+                $account = $this->dbBankAccountRepository->findByUserID($user->id);
+                $payment['user_id'] = $user->id;
+                $payment['user_type'] = $user->role;
+                $payment['account_id'] = $account->id;
+                $payment['value'] = $request['value'];
+                $payment['status'] = Payment::STATUS_PENDING;
+                $payment['request_date'] = now();
+                Payment::create($payment);
+
+                $balance->requested_value = $balance->requested_value - $payment['value'];
+                $balance->save();
+            } else {
+                $error = new ErrorObject();
+                $error->setCode(self::VALUE_NOT_AVAILABLE)
+                    ->setTitle(self::ERROR_TITLE)
+                    ->setDetail('No cuentas con la cantidad de dinero solicitada.')
+                    ->setStatus((string) Response::HTTP_BAD_REQUEST);
+                $this->jsonErrorFormat->add($error);
+
+                return $this->jsonApiResponse->respondError($this->jsonErrorFormat, Response::HTTP_BAD_REQUEST);
             }
 
-            $logSession = new SessionLog();
-            $logSession->user_id = $user->id;
-            $logSession->user_type = $user->role;
-            $logSession->login_date = now();
-            $logSession->save();
+            $this->httpObject->setBody([
+                'data' => null
+            ]);
 
-            $this->httpObject->setItem($user);
+            return $this->arrayResponse->respond($this->httpObject);
 
-            return $this->arrayResponse->responseWithItem(
-                $this->httpObject,
-                new LoginTransformer(new DbBalanceRepository()),
-                'data'
-            );
         } catch (Exception $exception) {
             $error = new ErrorObject();
             $error->setCode(self::GENERAL_ERROR)

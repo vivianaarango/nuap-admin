@@ -129,6 +129,16 @@ Route::group(['prefix' => 'commerces'], function () {
         'uses' => 'Api\GetSalesByCommerceController'
     ]);
 
+    Route::middleware('auth:api')->get('/payments', [
+        'as' => 'api-payments',
+        'uses' => 'Api\GetPaymentsCommerceController'
+    ]);
+
+    Route::middleware('auth:api')->post('/request-payment', [
+        'as' => 'api-request-payment',
+        'uses' => 'Api\RequestPaymentController'
+    ]);
+
     Route::middleware('auth:api')->get('/order/{order}/update', [
         'as' => 'api-update-order',
         'uses' => 'Api\UpdateStatusController'

@@ -79,8 +79,6 @@ class Payment extends Model
      * @var string[]
      */
     protected $dates = [
-        'request_date',
-        'payment_date',
         'created_at',
         'updated_at',
     ];

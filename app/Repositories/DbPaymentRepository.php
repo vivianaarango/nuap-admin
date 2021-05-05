@@ -40,4 +40,14 @@ class DbPaymentRepository implements DbPaymentRepositoryInterface
             ->where('payments.status', Payment::STATUS_PENDING)
             ->get();
     }
+
+    /**
+     * @param int $userID
+     * @return Collection
+     */
+    public function findAllByUserID(int $userID): Collection
+    {
+        return Payment::where('payments.user_id', $userID)
+            ->get();
+    }
 }
