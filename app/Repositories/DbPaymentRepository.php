@@ -48,6 +48,7 @@ class DbPaymentRepository implements DbPaymentRepositoryInterface
     public function findAllByUserID(int $userID): Collection
     {
         return Payment::where('payments.user_id', $userID)
+            ->orderBy('id', 'desc')
             ->get();
     }
 }

@@ -5,7 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Exports\ProductsExport;
 use App\Http\Requests\Admin\Product\IndexCategory;
 use App\Http\Requests\Admin\Product\IndexDiscount;
+use App\Mail\SendEmail;
+use App\Models\AdminUser;
+use App\Models\Distributor;
 use Exception;
+use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Product\IndexProduct;
@@ -212,9 +216,27 @@ class ProductController extends Controller
                 $data['image'] = $urlImage;
             }
 
-            Product::create($data);
+            $product = Product::create($data);
 
-            if ($user->role === User::DISTRIBUTOR_ROLE){
+            if ($user->role === User::DISTRIBUTOR_ROLE) {
+                //send email
+                $admin = User::where('role', User::ADMIN_ROLE)->get();
+                $emails = [];
+                foreach ($admin as $item) {
+                    array_push($emails, $item->email);
+                }
+
+                $distributor = Distributor::where('user_id', $user->id)->first();
+                Mail::to($emails)->send(new SendEmail(
+                        '',
+                        sprintf('%s ha creado un nuevo producto con el id %d, por favor revisalo lo antes
+                                posible para gestionar su aprobación. Click en el siguiente enlace para ver el producto 
+                                https://thenuap.com/admin/product-list',
+                            $distributor->business_name, $product->id),
+                        '¡Han creado un nuevo producto!.'
+                    )
+                );
+
                 if ($request->ajax()) {
                     return [
                         'redirect' => url('admin/product-distributor-list'),

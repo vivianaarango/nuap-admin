@@ -47,7 +47,9 @@ class DbTicketRepository implements DbTicketRepositoryInterface
      */
     public function findByUserID(int $userID): Collection
     {
-        return Ticket::where('user_id', $userID)->get();
+        return Ticket::where('user_id', $userID)
+            ->orderBy('id', 'desc')
+            ->get();
     }
 
     /**

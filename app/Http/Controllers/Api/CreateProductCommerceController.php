@@ -7,12 +7,17 @@ use App\Libraries\Responders\Contracts\JsonApiResponseInterface;
 use App\Libraries\Responders\ErrorObject;
 use App\Libraries\Responders\HttpObject;
 use App\Libraries\Responders\JsonApiErrorsFormatter;
+use App\Mail\SendEmail;
+use App\Models\Commerce;
+use App\Models\Distributor;
 use App\Models\Product;
+use App\Models\User;
 use App\Models\UserLocation;
 use App\Repositories\Contracts\DbProductRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Exception;
@@ -169,7 +174,25 @@ class CreateProductCommerceController
                 $data['special_price'] = $request->input('special_price');
                 $data['is_featured'] = $request->input('is_featured');
                 $data['has_special_price'] = $request->input('has_special_price');
-                Product::create($data);
+                $product = Product::create($data);
+
+                //send email
+                $admin = User::where('role', User::ADMIN_ROLE)->get();
+                $emails = [];
+                foreach ($admin as $item) {
+                    array_push($emails, $item->email);
+                }
+
+                $commerce = Commerce::where('user_id', $user->id)->first();
+                Mail::to($emails)->send(new SendEmail(
+                        '',
+                        sprintf("%s ha creado un nuevo producto con el id %d, por favor revisalo lo antes
+                                posible para gestionar su aprobación. Click en el siguiente enlace para ver el producto 
+                                https://thenuap.com/admin/product-list",
+                            $commerce->business_name, $product->id),
+                        '¡Han creado un nuevo producto!.'
+                    )
+                );
             } else {
                 $product = $this->dbProductRepository->findByID($request->input('product_id'));
                 $product->status = Product::STATUS_INACTIVE;

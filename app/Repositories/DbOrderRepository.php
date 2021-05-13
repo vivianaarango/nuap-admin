@@ -68,6 +68,7 @@ class DbOrderRepository implements DbOrderRepositoryInterface
         return Order::select('orders.*', 'user_locations.address')
             ->where('client_id', $clientID)
             ->join('user_locations', 'user_locations.id', '=', 'orders.address_id')
+            ->orderBy('id', 'desc')
             ->get();
     }
 
@@ -80,6 +81,7 @@ class DbOrderRepository implements DbOrderRepositoryInterface
         return Order::select('orders.*', 'user_locations.address')
             ->where('orders.user_id', $userID)
             ->join('user_locations', 'user_locations.id', '=', 'orders.address_id')
+            ->orderBy('id', 'desc')
             ->get();
     }
 
