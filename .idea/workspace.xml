@@ -6,8 +6,17 @@
   <component name="ChangeListManager">
     <list default="true" id="cfe844a3-0449-46b6-ada4-b8bd6f26ec78" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/ProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/ProductController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/CreateProductCommerceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/CreateProductCommerceController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/PaymentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/PaymentController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/GetSalesByCommerceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/GetSalesByCommerceController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/VerifyOTPController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/VerifyOTPController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Transformers/CommerceTransformer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Transformers/CommerceTransformer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Transformers/OrderProductsTransformer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Transformers/OrderProductsTransformer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Transformers/OrdersTransformer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Transformers/OrdersTransformer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Transformers/PaymentTransformer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Transformers/PaymentTransformer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Transformers/ProductsTransformer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Transformers/ProductsTransformer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Transformers/SellerTransformer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Transformers/SellerTransformer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/tickets/view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/tickets/view.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -255,7 +264,9 @@
       <workItem from="1620256907182" duration="81000" />
       <workItem from="1620314267067" duration="629000" />
       <workItem from="1620424477487" duration="35000" />
-      <workItem from="1620871054441" duration="2800000" />
+      <workItem from="1620871054441" duration="3405000" />
+      <workItem from="1620914503888" duration="606000" />
+      <workItem from="1622600190015" duration="8014000" />
     </task>
     <servers />
   </component>

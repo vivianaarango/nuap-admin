@@ -45,8 +45,23 @@ class ProductsTransformer extends TransformerAbstract
             'sale_price' => $product->sale_price,
             'special_price' => $product->special_price,
             'has_special_price' => $product->has_special_price,
+            'format_purchase_price' => '$ '.$this->formatCurrency($product->purchase_price),
+            'format_sale_price' => '$ '.$this->formatCurrency($product->sale_price),
+            'format_special_price' => '$ '.$this->formatCurrency($product->special_price),
+            'format_has_special_price' => '$ '.$this->formatCurrency($product->has_special_price),
             'image' => $product->image,
             'position' => $product->position
         ];
+    }
+
+    /**
+     * @param $floatcurr
+     * @param string $curr
+     * @return string
+     */
+    public function formatCurrency($floatcurr, $curr = 'COP'): string
+    {
+        $currencies['COP'] = array(0, ',', '.');
+        return number_format($floatcurr, $currencies[$curr][0], $currencies[$curr][1], $currencies[$curr][2]);
     }
 }

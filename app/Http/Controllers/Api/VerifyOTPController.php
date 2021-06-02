@@ -14,7 +14,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use Exception;
+use App\Repositories\DbBalanceRepository;
+use Throwable;
 
 /**
  * Class VerifyOTPController
@@ -139,10 +140,10 @@ class VerifyOTPController
 
             return $this->arrayResponse->responseWithItem(
                 $this->httpObject,
-                new LoginTransformer(),
+                new LoginTransformer(new DbBalanceRepository()),
                 'data'
             );
-        } catch (Exception $exception) {
+        } catch (Throwable $exception) {
             $error = new ErrorObject();
             $error->setCode(self::GENERAL_ERROR)
                 ->setTitle(self::ERROR_TITLE)

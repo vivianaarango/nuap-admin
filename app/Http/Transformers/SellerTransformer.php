@@ -22,7 +22,7 @@ class SellerTransformer extends TransformerAbstract
             'status' => $item['status'],
             'business_name' => $item['business_name'],
             'nit' => $item['nit'],
-            'commission' => $item['commission'].'%',
+            'commission' => '$ '.$item['commission'].'%',
             'url_logo' => $item['url_logo'],
             'shipping_cost' => $this->formatCurrency($item['shipping_cost']),
             'distance' => $item['distance'].'km'
@@ -37,6 +37,6 @@ class SellerTransformer extends TransformerAbstract
     public function formatCurrency($floatcurr, $curr = "COP"): string
     {
         $currencies['COP'] = array(0,',','.');
-        return number_format($floatcurr, $currencies[$curr][0], $currencies[$curr][1], $currencies[$curr][2]).'$';
+        return number_format($floatcurr, $currencies[$curr][0], $currencies[$curr][1], $currencies[$curr][2]);
     }
 }

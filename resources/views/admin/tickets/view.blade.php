@@ -68,7 +68,7 @@
                     </div>
                     <div style="padding-top: 0" class="card-footer">
                         @if($data[0]->status !== 'Cerrado')
-                            <button style="color: white" type="submit" class="btn btn-success pull-right">
+                            <button id="sendButton" style="color: white" class="btn btn-success pull-right">
                                 <i class="fa fa-send"></i>
                                 &nbsp; Enviar
                             </button>
@@ -129,8 +129,16 @@
 </style>
 <script>
     window.addEventListener('load', setScroll, false);
+    window.addEventListener('load', sendMessage, false);
     function setScroll() {
         let div = document.getElementById('cont-message')
         div.scrollTop = div.scrollHeight;
+    }
+
+    function sendMessage() {
+        document.getElementById("sendButton").onclick = function fun() {
+            document.getElementById("form-basic").submit();
+            document.getElementById("sendButton").disabled = true;
+        }
     }
 </script>

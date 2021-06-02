@@ -196,7 +196,7 @@ class PaymentController extends Controller
                 );
 
             foreach ($data as $item){
-                $item->value = $this->formatCurrency($item->value) . ' $';
+                $item->value = '$ ' . $this->formatCurrency($item->value);
                 if ($item->user_type === User::DISTRIBUTOR_ROLE){
                     $ticketUser =$this->dbDistributorRepository->findByUserID($item->user_id);
                     $item->email = $ticketUser->business_name;
@@ -232,7 +232,7 @@ class PaymentController extends Controller
         if (isset($userAdmin) && $userAdmin->role == User::ADMIN_ROLE) {
             $payment = $this->dbPaymentRepository->findByID($payment->id);
             $account = $this->dbBankAccountRepository->findByID($payment->account_id);
-            $payment->value = $this->formatCurrency($payment->value) . ' $';
+            $payment->value = '$ ' . $this->formatCurrency($payment->value);
 
             $user = null;
             if ($payment->user_type === User::DISTRIBUTOR_ROLE)
@@ -352,10 +352,10 @@ class PaymentController extends Controller
 
             $balance = $this->dbBalanceRepository->findByUserID($user->id);
             $account = $this->dbBankAccountRepository->findByUserID($user->id);
-            $balance->requested_value = $this->formatCurrency($balance->requested_value) . ' $';
+            $balance->requested_value = '$ ' . $this->formatCurrency($balance->requested_value);
 
             foreach ($data as $item) {
-                $item->value = $this->formatCurrency($item->value) . ' $';
+                $item->value = '$ ' . $this->formatCurrency($item->value);
             }
 
             if ($request->ajax()) {
@@ -391,7 +391,7 @@ class PaymentController extends Controller
         if (isset($userAdmin) && $userAdmin->role == User::DISTRIBUTOR_ROLE) {
             $payment = $this->dbPaymentRepository->findByID($payment->id);
             $account = $this->dbBankAccountRepository->findByID($payment->account_id);
-            $payment->value = $this->formatCurrency($payment->value) . ' $';
+            $payment->value = '$ ' . $this->formatCurrency($payment->value);
 
             $user = null;
             if ($payment->user_type === User::DISTRIBUTOR_ROLE)

@@ -1,35 +1,30 @@
 <?php
 namespace App\Http\Controllers\Api;
 
-use App\Http\Transformers\OrdersTransformer;
+use App\Http\Transformers\BankAccountTransformer;
 use App\Libraries\Responders\Contracts\ArrayResponseInterface;
 use App\Libraries\Responders\Contracts\JsonApiResponseInterface;
 use App\Libraries\Responders\ErrorObject;
 use App\Libraries\Responders\HttpObject;
 use App\Libraries\Responders\JsonApiErrorsFormatter;
-use App\Repositories\Contracts\DbClientRepositoryInterface;
-use App\Repositories\Contracts\DbOrderRepositoryInterface;
+use App\Models\BankAccount;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use Throwable;
+use Exception;
 
 /**
- * Class GetSalesByCommerceController
+ * Class CreateAccountController
  * @package App\Http\Controllers\Api
  */
-class GetSalesByCommerceController
+class CreateAccountController
 {
     /**
      * @type string
      */
     protected const ERROR_TITLE = 'Error';
-
-    /**
-     * @type string
-     */
-    protected const SALES_NOT_FOUND = 'SALES_NOT_FOUND';
 
     /**
      * @type string
@@ -47,11 +42,6 @@ class GetSalesByCommerceController
     private $httpObject;
 
     /**
-     * @var ErrorObject
-     */
-    private $errorObject;
-
-    /**
      * @var ArrayResponseInterface
      */
     private $arrayResponse;
@@ -62,19 +52,9 @@ class GetSalesByCommerceController
     private $jsonApiResponse;
 
     /**
-     * @var DbClientRepositoryInterface
-     */
-    private $dbClientRepository;
-
-    /**
      * @var DbUsersRepositoryInterface
      */
     private $dbUserRepository;
-
-    /**
-     * @var DbOrderRepositoryInterface
-     */
-    private $dbOrderRepository;
 
     /**
      * @var JsonApiErrorsFormatter
@@ -82,33 +62,24 @@ class GetSalesByCommerceController
     private $jsonErrorFormat;
 
     /**
-     * GetSalesByCommerceController constructor.
+     * CreateAccountController constructor.
      * @param ArrayResponseInterface $arrayResponse
      * @param HttpObject $httpObject
-     * @param ErrorObject $errorObject
      * @param JsonApiResponseInterface $jsonApiResponse
      * @param DbUsersRepositoryInterface $dbUserRepository
-     * @param DbOrderRepositoryInterface $dbOrderRepository
-     * @param DbClientRepositoryInterface $dbClientRepository
      * @param JsonApiErrorsFormatter $jsonApiErrorsFormatter
      */
     public function __construct(
         ArrayResponseInterface $arrayResponse,
         HttpObject $httpObject,
-        ErrorObject $errorObject,
         JsonApiResponseInterface $jsonApiResponse,
         DbUsersRepositoryInterface $dbUserRepository,
-        DbOrderRepositoryInterface $dbOrderRepository,
-        DbClientRepositoryInterface $dbClientRepository,
         JsonApiErrorsFormatter $jsonApiErrorsFormatter
     ) {
         $this->arrayResponse = $arrayResponse;
         $this->httpObject = $httpObject;
-        $this->errorObject = $errorObject;
         $this->jsonApiResponse = $jsonApiResponse;
         $this->dbUserRepository = $dbUserRepository;
-        $this->dbOrderRepository = $dbOrderRepository;
-        $this->dbClientRepository = $dbClientRepository;
         $this->jsonErrorFormat = $jsonApiErrorsFormatter;
     }
 
@@ -119,6 +90,22 @@ class GetSalesByCommerceController
     public function __invoke(Request $request): JsonResponse
     {
         try {
+            $validator = Validator::make($request->all(), [
+                'owner_name' => 'required|string',
+                'owner_document' => 'required|string',
+                'owner_document_type' => 'required|string',
+                'account' => 'required|string',
+                'account_type' => 'required|string',
+                'bank' => 'required|string'
+            ]);
+
+            if ($validator->fails()) {
+                return $this->jsonApiResponse->respondFormError(
+                    $validator->errors(),
+                    Response::HTTP_UNPROCESSABLE_ENTITY
+                );
+            }
+
             $token = $request->header('Authorization');
             $token = explode(' ',$token)[1];
 
@@ -135,31 +122,26 @@ class GetSalesByCommerceController
                 return $this->jsonApiResponse->respondError($this->jsonErrorFormat, Response::HTTP_BAD_REQUEST);
             }
 
-            $orders = $this->dbOrderRepository->findAllByUserID($user->id);
-            foreach ($orders as $item) {
-                $data = $this->dbClientRepository->findByUserID($item->client_id);
-                $item->distributor_name = isset($data) ? $data->first()->name : '';
-            }
+            $account['user_id'] = $user->id;
+            $account['user_type'] = $user->role;
+            $account['owner_name'] = $request->input('owner_name');
+            $account['owner_document'] = $request->input('owner_document');
+            $account['owner_document_type'] = $request->input('owner_document_type');
+            $account['account'] = $request->input('account');
+            $account['account_type'] = $request->input('account_type');
+            $account['bank'] = $request->input('bank');
+            $account['status'] = BankAccount::ACCOUNT_INACTIVE;
 
-            if (!count($orders)) {
-                $error = new ErrorObject();
-                $error->setCode(self::SALES_NOT_FOUND)
-                    ->setTitle(self::ERROR_TITLE)
-                    ->setDetail('No se encontraron ventas.')
-                    ->setStatus((string) Response::HTTP_BAD_REQUEST);
-                $this->jsonErrorFormat->add($error);
+            $account = BankAccount::create($account);
 
-                return $this->jsonApiResponse->respondError($this->jsonErrorFormat, Response::HTTP_BAD_REQUEST);
-            }
+            $this->httpObject->setItem($account);
 
-            $this->httpObject->setCollection($orders);
-
-            return $this->arrayResponse->respondWithCollection(
+            return $this->arrayResponse->responseWithItem(
                 $this->httpObject,
-                new OrdersTransformer(),
+                new BankAccountTransformer(),
                 'data'
             );
-        } catch (Throwable $exception) {
+        } catch (Exception $exception) {
             $error = new ErrorObject();
             $error->setCode(self::GENERAL_ERROR)
                 ->setTitle(self::ERROR_TITLE)

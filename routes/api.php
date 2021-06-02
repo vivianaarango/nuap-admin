@@ -201,3 +201,8 @@ Route::group(['prefix' => 'products'], function () {
         'uses' => 'Api\CreateProductCommerceController'
     ]);
 });
+
+Route::middleware('auth:api')->post('/commerce/create-account', [
+    'as' => 'api-commerce-create-account',
+    'uses' => 'Api\CreateAccountController'
+]);
