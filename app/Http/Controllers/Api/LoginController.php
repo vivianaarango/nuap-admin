@@ -13,10 +13,9 @@ use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use App\Repositories\DbBalanceRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use Exception;
+use Throwable;
 
 /**
  * Class LoginController
@@ -179,7 +178,7 @@ class LoginController
                 new LoginTransformer(new DbBalanceRepository()),
                 'data'
             );
-        } catch (Exception $exception) {
+        } catch (Throwable $exception) {
             $error = new ErrorObject();
             $error->setCode(self::GENERAL_ERROR)
                 ->setTitle(self::ERROR_TITLE)

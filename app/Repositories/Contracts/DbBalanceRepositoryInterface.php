@@ -11,9 +11,9 @@ interface DbBalanceRepositoryInterface
 {
     /**
      * @param int $userID
-     * @return Balance
+     * @return Balance|null
      */
-    public function findByUserID(int $userID): Balance;
+    public function findByUserID(int $userID): ?Balance;
 
     /**
      * @param int $balanceID

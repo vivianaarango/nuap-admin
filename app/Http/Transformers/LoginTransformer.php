@@ -52,9 +52,11 @@ class LoginTransformer extends TransformerAbstract
     {
         if ($user->role === User::COMMERCE_ROLE) {
             $balance = $this->dbBalanceRepository->findByUserID($user->id);
-            $balance->requested_value = '$ '.$this->formatCurrency($balance->requested_value);
-
-            return $balance->requested_value;
+            if (! is_null($balance)) {
+                $balance->requested_value = '$ '.$this->formatCurrency($balance->requested_value);
+                return $balance->requested_value;
+            }
+            return '$ 0';
         }
 
         return '';

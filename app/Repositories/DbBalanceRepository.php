@@ -12,9 +12,9 @@ class DbBalanceRepository implements DbBalanceRepositoryInterface
 {
     /**
      * @param int $userID
-     * @return Balance
+     * @return Balance|null
      */
-    public function findByUserID(int $userID): Balance
+    public function findByUserID(int $userID): ?Balance
     {
         return Balance::where('user_id', $userID)
             ->first();
