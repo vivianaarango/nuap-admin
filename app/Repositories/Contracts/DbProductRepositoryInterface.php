@@ -95,6 +95,13 @@ interface DbProductRepositoryInterface
     public function getEnabledCategories(string $userType): Collection;
 
     /**
+     * @param int $categoryID
+     * @param int $userID
+     * @return Collection
+     */
+    public function getSubcategoriesByCategory(int $categoryID, int $userID): Collection;
+
+    /**
      * @return Collection
      */
     public function getEnabledStoresByDistributor(): Collection;

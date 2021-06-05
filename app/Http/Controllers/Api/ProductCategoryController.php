@@ -201,11 +201,11 @@ class ProductCategoryController
                 }
             }
 
-            $categoryList = [];
             $categories = Category::where('parent_id', $category)->get();
-            array_push($categoryList, $category);
+
+            $categoryList[] = $category;
             foreach ($categories as $category) {
-                array_push($categoryList, $category->id);
+                $categoryList[] = $category->id;
             }
 
             $products = $this->dbProductRepository->getSalesByUserIDAndCategoryID($storeIDS, $categoryList);

@@ -129,7 +129,7 @@ class ProductsByCategoryAndCommerceController
 
             $products = $this->dbProductRepository->findByCategoryAndUserID($categoryID, $user->id);
 
-            if (!count($products)) {
+            if (! count($products)) {
                 $error = new ErrorObject();
                 $error->setCode(self::PRODUCTS_NOT_FOUND)
                     ->setTitle(self::ERROR_TITLE)

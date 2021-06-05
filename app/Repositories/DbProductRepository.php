@@ -166,6 +166,26 @@ class DbProductRepository implements DbProductRepositoryInterface
     }
 
     /**
+     * @param int $categoryID
+     * @param int $userID
+     * @return Collection
+     */
+    public function getSubcategoriesByCategory(int $categoryID, int $userID): Collection
+    {
+        return Category::select('categories.*')
+            ->join('products', 'products.category_id', '=', 'categories.id')
+            ->join('users', 'products.user_id', '=', 'users.id')
+            ->where('users.id', $userID)
+            ->where('users.status', User::STATUS_ACTIVE)
+            ->where('products.status', Product::STATUS_ACTIVE)
+            ->where('products.stock', '>', 0)
+            ->where('categories.parent_id', $categoryID)
+            ->groupBy('categories.id')
+            ->inRandomOrder()
+            ->get();
+    }
+
+    /**
      * @return Collection
      */
     public function getEnabledStoresByDistributor(): Collection

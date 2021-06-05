@@ -6,8 +6,11 @@ use App\Libraries\Responders\Contracts\JsonApiResponseInterface;
 use App\Libraries\Responders\ErrorObject;
 use App\Libraries\Responders\HttpObject;
 use App\Libraries\Responders\JsonApiErrorsFormatter;
+use App\Models\Balance;
 use App\Models\Commerce;
 use App\Models\Distributor;
+use App\Models\Order;
+use App\Models\OrderProduct;
 use App\Models\Product;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use Illuminate\Http\JsonResponse;
@@ -22,6 +25,11 @@ use Throwable;
  */
 class CalculateDeliveryAmountController
 {
+    /**
+     * @type string
+     */
+    protected const PRODUCT_NOT_AVAILABLE = 'PRODUCT_NOT_AVAILABLE';
+
     /**
      * @type string
      */
@@ -136,7 +144,7 @@ class CalculateDeliveryAmountController
 
             $stores = array_unique($stores);
 
-            $total = 0;
+           /* $delivery = 0;
             foreach ($stores as $store) {
                 $data = Distributor::where('user_id', $store)
                     ->get();
@@ -146,12 +154,72 @@ class CalculateDeliveryAmountController
                         ->get();
                 }
 
-                $total = $total + $data->first()->shipping_cost;
+                $delivery = $delivery + $data->first()->shipping_cost;
+            }*/
+
+            $stores = [];
+
+            foreach ($request['products'] as $product) {
+                $data = Product::findOrFail($product['id']);
+                array_push($stores, $data->user_id);
+            }
+
+            $stores = array_unique($stores);
+
+            $totalAmount = 0;
+            $delivery = 0;
+            $newDiscount = 0;
+            $newTotal = 0;
+            foreach ($stores as $store) {
+                $dataStore = Distributor::where('user_id', $store)
+                    ->get();
+
+                if (count($dataStore) === 0) {
+                    $dataStore = Commerce::where('user_id', $store)
+                        ->get();
+                }
+
+                $total = 0;
+                $totalDiscount = 0;
+                foreach ($request['products'] as $product) {
+                    $data = Product::findOrFail($product['id']);
+                    if ($data->user_id === $store) {
+                        if ($product['quantity'] <= $data->stock) {
+                            if ($data->has_special_price) {
+                                $discount = ($data->special_price * $data->sale_price) / 100;
+
+                                $total += ($product['quantity'] * ($data->sale_price - $discount));
+                                $totalDiscount += ($product['quantity'] * $discount);
+                            } else {
+                                $total += ($product['quantity'] * $data->sale_price);
+                            }
+                            $data->stock -= $product['quantity'];
+                            $data->save();
+                        } else {
+                            $error = new ErrorObject();
+                            $error->setCode(self::PRODUCT_NOT_AVAILABLE)
+                                ->setTitle(self::ERROR_TITLE)
+                                ->setDetail('Producto no disponible.')
+                                ->setStatus((string)Response::HTTP_BAD_REQUEST);
+                            $this->jsonErrorFormat->add($error);
+
+                            return $this->jsonApiResponse->respondError($this->jsonErrorFormat, Response::HTTP_BAD_REQUEST);
+                        }
+                    }
+                }
+
+                $totalAmount += $total;
+                $delivery += $dataStore->first()->shipping_cost;
+                $newDiscount += $totalDiscount;
+                $newTotal += $total + $dataStore->first()->shipping_cost;
             }
 
             $this->httpObject->setBody([
                 'data' => [
-                    'discount' => $total
+                    'delivery' => '$ ' .$this->formatCurrency($delivery), //13000
+                    'totalAmount' => '$ ' .$this->formatCurrency($totalAmount),
+                    'total' => '$ ' .$this->formatCurrency($newTotal),
+                    'discount' => '$ ' .$this->formatCurrency($newDiscount)
                 ]
             ]);
 
@@ -167,5 +235,16 @@ class CalculateDeliveryAmountController
 
             return $this->jsonApiResponse->respondError($this->jsonErrorFormat, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
+
+    /**
+     * @param $floatcurr
+     * @param string $curr
+     * @return string
+     */
+    public function formatCurrency($floatcurr, $curr = 'COP'): string
+    {
+        $currencies['COP'] = array(0, ',', '.');
+        return number_format($floatcurr, $currencies[$curr][0], $currencies[$curr][1], $currencies[$curr][2]);
     }
 }
