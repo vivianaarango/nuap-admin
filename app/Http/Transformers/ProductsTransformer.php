@@ -47,7 +47,6 @@ class ProductsTransformer extends TransformerAbstract
             'has_special_price' => $product->has_special_price,
             'format_purchase_price' => '$ '.$this->formatCurrency($product->purchase_price),
             'format_sale_price' => '$ '.$this->formatCurrency($product->sale_price),
-            'format_has_special_price' => '$ '.$this->formatCurrency($product->has_special_price),
             'image' => $product->image,
             'position' => $product->position,
             'total_price' => '$ '.$this->calculateTotal($product)
