@@ -2,6 +2,7 @@
 namespace App\Http\Transformers;
 
 use App\Models\OrderProduct;
+use App\Models\Product;
 use League\Fractal\TransformerAbstract;
 
 /**
@@ -38,10 +39,9 @@ class OrderProductsTransformer extends TransformerAbstract
             'has_special_price' => $product->has_special_price,
             'format_purchase_price' => '$ '.$this->formatCurrency($product->purchase_price),
             'format_sale_price' => '$ '.$this->formatCurrency($product->sale_price),
-            'format_special_price' => '$ '.$this->formatCurrency($product->special_price),
-            'format_has_special_price' => '$ '.$this->formatCurrency($product->has_special_price),
             'image' => $product->image,
-            'position' => $product->position
+            'position' => $product->position,
+            'total_price' => '$ '.$this->calculateTotal($product)
         ];
     }
 
@@ -54,5 +54,19 @@ class OrderProductsTransformer extends TransformerAbstract
     {
         $currencies['COP'] = array(0, ',', '.');
         return number_format($floatcurr, $currencies[$curr][0], $currencies[$curr][1], $currencies[$curr][2]);
+    }
+
+    /**
+     * @param OrderProduct $product
+     * @return string
+     */
+    private function calculateTotal(OrderProduct $product): string
+    {
+        if ($product->has_special_price) {
+            $discount = ($product->special_price * $product->sale_price) / 100;
+            return $this->formatCurrency($product->sale_price - $discount);
+        }
+
+        return $this->formatCurrency($product->sale_price);
     }
 }
