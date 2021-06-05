@@ -217,7 +217,7 @@ class CalculateDeliveryAmountController
             $this->httpObject->setBody([
                 'data' => [
                     'delivery' => '$ ' .$this->formatCurrency($delivery), //13000
-                    'totalAmount' => '$ ' .$this->formatCurrency($totalAmount),
+                    'total_amount' => '$ ' .$this->formatCurrency($totalAmount),
                     'total' => '$ ' .$this->formatCurrency($newTotal),
                     'discount' => '$ ' .$this->formatCurrency($newDiscount)
                 ]
