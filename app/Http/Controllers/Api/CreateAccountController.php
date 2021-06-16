@@ -8,6 +8,7 @@ use App\Libraries\Responders\ErrorObject;
 use App\Libraries\Responders\HttpObject;
 use App\Libraries\Responders\JsonApiErrorsFormatter;
 use App\Models\BankAccount;
+use App\Repositories\Contracts\DbBankAccountRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -57,6 +58,11 @@ class CreateAccountController
     private $dbUserRepository;
 
     /**
+     * @var DbBankAccountRepositoryInterface
+     */
+    private $dbBankAccountRepository;
+
+    /**
      * @var JsonApiErrorsFormatter
      */
     private $jsonErrorFormat;
@@ -74,12 +80,14 @@ class CreateAccountController
         HttpObject $httpObject,
         JsonApiResponseInterface $jsonApiResponse,
         DbUsersRepositoryInterface $dbUserRepository,
+        DbBankAccountRepositoryInterface $dbBankAccountRepository,
         JsonApiErrorsFormatter $jsonApiErrorsFormatter
     ) {
         $this->arrayResponse = $arrayResponse;
         $this->httpObject = $httpObject;
         $this->jsonApiResponse = $jsonApiResponse;
         $this->dbUserRepository = $dbUserRepository;
+        $this->dbBankAccountRepository = $dbBankAccountRepository;
         $this->jsonErrorFormat = $jsonApiErrorsFormatter;
     }
 
@@ -122,17 +130,20 @@ class CreateAccountController
                 return $this->jsonApiResponse->respondError($this->jsonErrorFormat, Response::HTTP_BAD_REQUEST);
             }
 
-            $account['user_id'] = $user->id;
-            $account['user_type'] = $user->role;
-            $account['owner_name'] = $request->input('owner_name');
-            $account['owner_document'] = $request->input('owner_document');
-            $account['owner_document_type'] = $request->input('owner_document_type');
-            $account['account'] = $request->input('account');
-            $account['account_type'] = $request->input('account_type');
-            $account['bank'] = $request->input('bank');
-            $account['status'] = BankAccount::ACCOUNT_INACTIVE;
+            $account = $this->dbBankAccountRepository->findByUserID($user->id);
+            If (is_null($account)) {
+                $account['user_id'] = $user->id;
+                $account['user_type'] = $user->role;
+                $account['owner_name'] = $request->input('owner_name');
+                $account['owner_document'] = $request->input('owner_document');
+                $account['owner_document_type'] = $request->input('owner_document_type');
+                $account['account'] = $request->input('account');
+                $account['account_type'] = $request->input('account_type');
+                $account['bank'] = $request->input('bank');
+                $account['status'] = BankAccount::ACCOUNT_INACTIVE;
 
-            $account = BankAccount::create($account);
+                $account = BankAccount::create($account);
+            }
 
             $this->httpObject->setItem($account);
 
