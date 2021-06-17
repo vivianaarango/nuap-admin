@@ -148,6 +148,11 @@ Route::group(['prefix' => 'commerces'], function () {
         'as' => 'api-commerce-create-account',
         'uses' => 'Api\CreateAccountController'
     ]);
+
+    Route::middleware('auth:api')->get('/detail/account', [
+        'as' => 'api-commerce-detail-account',
+        'uses' => 'Api\DetailAccountController'
+    ]);
 });
 
 Route::group(['prefix' => 'products'], function () {

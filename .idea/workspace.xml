@@ -6,11 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="cfe844a3-0449-46b6-ada4-b8bd6f26ec78" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/CalculateDeliveryAmountController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/CalculateDeliveryAmountController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/ProductCategoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/ProductCategoryController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/ProductsByCategoryAndCommerceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/ProductsByCategoryAndCommerceController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/Contracts/DbProductRepositoryInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/Contracts/DbProductRepositoryInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/DbProductRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/DbProductRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/CreateAccountController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/CreateAccountController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -192,18 +189,18 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Http/Controllers/Api" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="MTConfigurable" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/Http/Controllers/Api" />
       <recent name="$PROJECT_DIR$/public/images/vendor/craftable" />
       <recent name="$PROJECT_DIR$/resources/views/vendor/brackets/admin-auth/admin/auth" />
       <recent name="$PROJECT_DIR$/app/Services/Contracts" />
       <recent name="$PROJECT_DIR$/resources/views/admin/mail" />
-      <recent name="$PROJECT_DIR$/public/images" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/Repositories" />
@@ -262,7 +259,9 @@
       <workItem from="1620914503888" duration="606000" />
       <workItem from="1622600190015" duration="8212000" />
       <workItem from="1622649317458" duration="20000" />
-      <workItem from="1622849981368" duration="6603000" />
+      <workItem from="1622849981368" duration="8906000" />
+      <workItem from="1623166612531" duration="19000" />
+      <workItem from="1623884428830" duration="2594000" />
     </task>
     <servers />
   </component>

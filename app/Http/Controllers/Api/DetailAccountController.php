@@ -7,20 +7,18 @@ use App\Libraries\Responders\Contracts\JsonApiResponseInterface;
 use App\Libraries\Responders\ErrorObject;
 use App\Libraries\Responders\HttpObject;
 use App\Libraries\Responders\JsonApiErrorsFormatter;
-use App\Models\BankAccount;
 use App\Repositories\Contracts\DbBankAccountRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Exception;
 
 /**
- * Class CreateAccountController
+ * Class DetailAccountController
  * @package App\Http\Controllers\Api
  */
-class CreateAccountController
+class DetailAccountController
 {
     /**
      * @type string
@@ -31,6 +29,11 @@ class CreateAccountController
      * @type string
      */
     protected const USER_NOT_FOUND = 'USER_NOT_FOUND';
+
+    /**
+     * @type string
+     */
+    protected const ACCOUNT_NOT_FOUND = 'ACCOUNT_NOT_FOUND';
 
     /**
      * @type string
@@ -99,22 +102,6 @@ class CreateAccountController
     public function __invoke(Request $request): JsonResponse
     {
         try {
-            $validator = Validator::make($request->all(), [
-                'owner_name' => 'required|string',
-                'owner_document' => 'required|string',
-                'owner_document_type' => 'required|string',
-                'account' => 'required|string',
-                'account_type' => 'required|string',
-                'bank' => 'required|string'
-            ]);
-
-            if ($validator->fails()) {
-                return $this->jsonApiResponse->respondFormError(
-                    $validator->errors(),
-                    Response::HTTP_UNPROCESSABLE_ENTITY
-                );
-            }
-
             $token = $request->header('Authorization');
             $token = explode(' ',$token)[1];
 
@@ -133,17 +120,14 @@ class CreateAccountController
 
             $account = $this->dbBankAccountRepository->findByUserID($user->id);
             If (is_null($account)) {
-                $account['user_id'] = $user->id;
-                $account['user_type'] = $user->role;
-                $account['owner_name'] = $request->input('owner_name');
-                $account['owner_document'] = $request->input('owner_document');
-                $account['owner_document_type'] = $request->input('owner_document_type');
-                $account['account'] = $request->input('account');
-                $account['account_type'] = $request->input('account_type');
-                $account['bank'] = $request->input('bank');
-                $account['status'] = BankAccount::ACCOUNT_INACTIVE;
+                $error = new ErrorObject();
+                $error->setCode(self::ACCOUNT_NOT_FOUND)
+                    ->setTitle(self::ERROR_TITLE)
+                    ->setDetail('Cuenta no encontrada.')
+                    ->setStatus((string) Response::HTTP_BAD_REQUEST);
+                $this->jsonErrorFormat->add($error);
 
-                $account = BankAccount::create($account);
+                return $this->jsonApiResponse->respondError($this->jsonErrorFormat, Response::HTTP_BAD_REQUEST);
             }
 
             $this->httpObject->setItem($account);
