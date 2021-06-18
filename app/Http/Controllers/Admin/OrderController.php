@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Order\IndexOrder;
 use App\Mail\SendEmail;
+use App\Models\Balance;
 use App\Models\Order;
 use App\Models\User;
 use App\Repositories\Contracts\DbClientRepositoryInterface;
 use App\Repositories\Contracts\DbCommerceRepositoryInterface;
+use App\Repositories\Contracts\DbDistributorRepositoryInterface;
 use App\Repositories\Contracts\DbOrderRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use App\Repositories\Contracts\SendSMSServiceRepositoryInterface;
@@ -54,25 +56,33 @@ class OrderController extends Controller
     private $dbCommerceRepository;
 
     /**
+     * @var DbDistributorRepositoryInterface
+     */
+    private $dbDistributorRepository;
+
+    /**
      * OrderController constructor.
      * @param SendSMSServiceRepositoryInterface $sendSMSService
      * @param DbOrderRepositoryInterface $dbOrderRepository
      * @param DbUsersRepositoryInterface $dbUserRepository
      * @param DbClientRepositoryInterface $dbClientRepository
      * @param DbCommerceRepositoryInterface $dbCommerceRepository
+     * @param DbDistributorRepositoryInterface $dbDistributorRepository
      */
     public function __construct(
         SendSMSServiceRepositoryInterface $sendSMSService,
         DbOrderRepositoryInterface $dbOrderRepository,
         DbUsersRepositoryInterface $dbUserRepository,
         DbClientRepositoryInterface $dbClientRepository,
-        DbCommerceRepositoryInterface $dbCommerceRepository
+        DbCommerceRepositoryInterface $dbCommerceRepository,
+        DbDistributorRepositoryInterface $dbDistributorRepository
     ) {
         $this->sendSMSService = $sendSMSService;
         $this->dbOrderRepository = $dbOrderRepository;
         $this->dbUserRepository = $dbUserRepository;
         $this->dbClientRepository = $dbClientRepository;
         $this->dbCommerceRepository = $dbCommerceRepository;
+        $this->dbDistributorRepository = $dbDistributorRepository;
     }
 
     /**
@@ -247,6 +257,26 @@ class OrderController extends Controller
                         $client->phone,
                         ! is_null($client->country_code) ? $client->country_code : 57
                     );
+                }
+
+                if ($order->is_cash) {
+                    $distributor = $this->dbDistributorRepository->findByUserID($user->id);
+                    $balance = Balance::where('user_id', $distributor->id)->get();
+                    $commission = ($order->total_amount * $distributor->commission) / 100;
+                    if (! count($balance)) {
+                        $balance = new Balance();
+                        $balance->user_id = $distributor->id;
+                        $balance->user_type = User::DISTRIBUTOR_ROLE;
+                        $balance->balance = -$commission;
+                        $balance->paid_out = 0;
+                        $balance->total = -$commission;
+                        $balance->requested_value = 0;
+                    } else {
+                        $balance = Balance::findOrFail($balance->first()->id);
+                        $balance->first()->balance += -$commission;
+                        $balance->first()->total += -$commission;
+                    }
+                    $balance->save();
                 }
             }
 

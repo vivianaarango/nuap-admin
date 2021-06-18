@@ -146,6 +146,15 @@ class CreateAccountController
                 $account = BankAccount::create($account);
             }
 
+            $account->owner_name = $request->input('owner_name');
+            $account->owner_document = $request->input('owner_document');
+            $account->owner_document_type = $request->input('owner_document_type');
+            $account->account = $request->input('account');
+            $account->account_type = $request->input('account_type');
+            $account->bank = $request->input('bank');
+            $account->status = BankAccount::ACCOUNT_INACTIVE;
+            $account->save();
+
             $this->httpObject->setItem($account);
 
             return $this->arrayResponse->responseWithItem(

@@ -6,7 +6,10 @@ use App\Libraries\Responders\Contracts\JsonApiResponseInterface;
 use App\Libraries\Responders\ErrorObject;
 use App\Libraries\Responders\HttpObject;
 use App\Libraries\Responders\JsonApiErrorsFormatter;
+use App\Models\Balance;
 use App\Models\Order;
+use App\Models\User;
+use App\Repositories\Contracts\DbCommerceRepositoryInterface;
 use App\Repositories\Contracts\DbOrderRepositoryInterface;
 use App\Repositories\Contracts\DbUsersRepositoryInterface;
 use Illuminate\Http\JsonResponse;
@@ -24,11 +27,6 @@ class UpdateStatusController
      * @type string
      */
     protected const ERROR_TITLE = 'Error';
-
-    /**
-     * @type string
-     */
-    protected const UPDATE_ORDER_ERROR = 'UPDATE_ORDER_ERROR';
 
     /**
      * @type string
@@ -76,6 +74,11 @@ class UpdateStatusController
     private $dbOrderRepository;
 
     /**
+     * @var DbCommerceRepositoryInterface
+     */
+    private $dbCommerceRepository;
+
+    /**
      * @var JsonApiErrorsFormatter
      */
     private $jsonErrorFormat;
@@ -84,7 +87,6 @@ class UpdateStatusController
      * UpdateStatusController constructor.
      * @param ArrayResponseInterface $arrayResponse
      * @param HttpObject $httpObject
-     * @param ErrorObject $errorObject
      * @param JsonApiResponseInterface $jsonApiResponse
      * @param DbUsersRepositoryInterface $dbUserRepository
      * @param DbOrderRepositoryInterface $dbOrderRepository
@@ -93,19 +95,19 @@ class UpdateStatusController
     public function __construct(
         ArrayResponseInterface $arrayResponse,
         HttpObject $httpObject,
-        ErrorObject $errorObject,
         JsonApiResponseInterface $jsonApiResponse,
         DbUsersRepositoryInterface $dbUserRepository,
         DbOrderRepositoryInterface $dbOrderRepository,
-        JsonApiErrorsFormatter $jsonApiErrorsFormatter
+        JsonApiErrorsFormatter $jsonApiErrorsFormatter,
+        DbCommerceRepositoryInterface $dbCommerceRepository
     ) {
         $this->arrayResponse = $arrayResponse;
         $this->httpObject = $httpObject;
-        $this->errorObject = $errorObject;
         $this->jsonApiResponse = $jsonApiResponse;
         $this->dbUserRepository = $dbUserRepository;
         $this->dbOrderRepository = $dbOrderRepository;
         $this->jsonErrorFormat = $jsonApiErrorsFormatter;
+        $this->dbCommerceRepository = $dbCommerceRepository;
     }
 
     /**
@@ -173,6 +175,26 @@ class UpdateStatusController
                 $order->status = Order::STATUS_CIRCULATION;
             } else if ($order->status === Order::STATUS_CIRCULATION) {
                 $order->status = Order::STATUS_DELIVERED;
+
+                if ($order->is_cash) {
+                    $commerce = $this->dbCommerceRepository->findByUserID($user->id);
+                    $balance = Balance::where('user_id', $commerce->id)->get();
+                    $commission = ($order->total_amount * $commerce->commission) / 100;
+                    if (! count($balance)) {
+                        $balance = new Balance();
+                        $balance->user_id = $commerce->id;
+                        $balance->user_type = User::DISTRIBUTOR_ROLE;
+                        $balance->balance = -$commission;
+                        $balance->paid_out = 0;
+                        $balance->total = -$commission;
+                        $balance->requested_value = 0;
+                    } else {
+                        $balance = Balance::findOrFail($balance->first()->id);
+                        $balance->balance += -$commission;
+                        $balance->total += -$commission;
+                    }
+                    $balance->save();
+                }
             }
 
             $order->save();

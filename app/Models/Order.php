@@ -23,6 +23,7 @@ use Illuminate\Foundation\Application;
  * @property float total
  * @property int rating
  * @property int address_id
+ * @property bool is_cash
  * @property string comment
  * @property string delivery_date
  * @property string created_at
@@ -73,7 +74,6 @@ class Order extends Model
     /**
      * @var string[]
      */
-
     protected $fillable = [
         'user_id',
         'user_type',
@@ -90,7 +90,8 @@ class Order extends Model
         'rating',
         'comment',
         'address_id',
-        'reference'
+        'reference',
+        'is_cash'
     ];
 
     /**

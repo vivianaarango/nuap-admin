@@ -112,7 +112,8 @@ class CreateOrderController
             $validator = Validator::make($request->all(), [
                 'products' => 'required|array',
                 'products.*.id' => 'required|integer',
-                'products.*.quantity' => 'required|integer'
+                'products.*.quantity' => 'required|integer',
+                'is_cash' => 'required|boolean'
             ]);
 
             if ($validator->fails()) {
@@ -155,7 +156,7 @@ class CreateOrderController
 
             foreach ($request['products'] as $product) {
                 $data = Product::findOrFail($product['id']);
-                array_push($stores, $data->user_id);
+                $stores[] = $data->user_id;
             }
 
             $stores = array_unique($stores);
@@ -166,7 +167,7 @@ class CreateOrderController
                 $dataStore = Distributor::where('user_id', $store)
                     ->get();
 
-                if (count($dataStore) == 0) {
+                if (count($dataStore) === 0) {
                     $userType = "Comercio";
                     $dataStore = Commerce::where('user_id', $store)
                         ->get();
@@ -177,17 +178,17 @@ class CreateOrderController
                 $countProducts = 0;
                 foreach ($request['products'] as $product) {
                     $data = Product::findOrFail($product['id']);
-                    if ($data->user_id == $store) {
+                    if ($data->user_id === $store) {
                         if ($product['quantity'] <= $data->stock) {
                             $countProducts += $product['quantity'];
                             if ($data->has_special_price) {;
                                 $discount = ($data->special_price *  $data->sale_price) / 100;
-                                $total = $total + ($product['quantity'] * ($data->sale_price - $discount));
-                                $totalDiscount = $totalDiscount + ($product['quantity'] * $discount);
+                                $total += ($product['quantity'] * ($data->sale_price - $discount));
+                                $totalDiscount += ($product['quantity'] * $discount);
                             } else {
-                                $total = $total + ($product['quantity'] * $data->sale_price);
+                                $total += ($product['quantity'] * $data->sale_price);
                             }
-                            $data->stock = $data->stock - $product['quantity'];
+                            $data->stock -= $product['quantity'];
                             $data->save();
                         } else {
                             $error = new ErrorObject();
@@ -214,11 +215,12 @@ class CreateOrderController
                 $order->total_discount = $totalDiscount;
                 $order->total = $total + $dataStore->first()->shipping_cost;
                 $order->address_id = $address->id;
+                $order->is_cash = $request['is_cash'];
                 $order->save();
 
                 foreach ($request['products'] as $product) {
                     $data = Product::findOrFail($product['id']);
-                    if ($data->user_id == $store) {
+                    if ($data->user_id === $store) {
                         $orderProduct = new OrderProduct();
                         $orderProduct->product_id = $data->id;
                         $orderProduct->order_id = $order->id;
@@ -233,7 +235,7 @@ class CreateOrderController
                         $orderProduct->save();
                     }
                 }
-                array_push($orders, $order->id);
+                $orders[] = $order->id;
 
                 $balance = Balance::where('user_id', $dataStore->first()->id)->get();
                 $totalWithoutCommission = $total - (($total * $dataStore->first()->commission) / 100);
